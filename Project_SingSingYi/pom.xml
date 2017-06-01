@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.hexacore</groupId>
 	<artifactId>ssy</artifactId>
-	<name>Project_SingSingYi_v0.1</name>
+	<name>Project_SingSingYi</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>

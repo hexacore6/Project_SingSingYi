@@ -1,0 +1,47 @@
+2017-05-30 15:12:37 [INFO ] [org.springframework.web.context.ContextLoader:304] Root WebApplicationContext: initialization started 
+2017-05-30 15:12:37 [INFO ] [org.springframework.context.support.AbstractApplicationContext:582] Refreshing Root WebApplicationContext: startup date [Tue May 30 15:12:37 KST 2017]; root of context hierarchy 
+2017-05-30 15:12:37 [INFO ] [springframework.beans.factory.xml.XmlBeanDefinitionReader:317] Loading XML bean definitions from ServletContext resource [/WEB-INF/spring/root-context.xml] 
+2017-05-30 15:12:38 [INFO ] [org.springframework.jdbc.datasource.DriverManagerDataSource:133] Loaded JDBC driver: net.sf.log4jdbc.sql.jdbcapi.DriverSpy 
+2017-05-30 15:12:38 [INFO ] [org.springframework.web.context.ContextLoader:344] Root WebApplicationContext: initialization completed in 1166 ms 
+2017-05-30 15:12:38 [INFO ] [org.springframework.web.servlet.FrameworkServlet:489] FrameworkServlet 'appServlet': initialization started 
+2017-05-30 15:12:38 [INFO ] [org.springframework.context.support.AbstractApplicationContext:582] Refreshing WebApplicationContext for namespace 'appServlet-servlet': startup date [Tue May 30 15:12:38 KST 2017]; parent: Root WebApplicationContext 
+2017-05-30 15:12:38 [INFO ] [springframework.beans.factory.xml.XmlBeanDefinitionReader:317] Loading XML bean definitions from ServletContext resource [/WEB-INF/spring/appServlet/servlet-context.xml] 
+2017-05-30 15:12:39 [INFO ] [springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor:155] JSR-330 'javax.inject.Inject' annotation found and supported for autowiring 
+2017-05-30 15:12:39 [INFO ] [springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:543] Mapped "{[/],methods=[GET]}" onto public java.lang.String com.hexacore.ssy.HomeController.home(java.util.Locale,org.springframework.ui.Model) 
+2017-05-30 15:12:39 [INFO ] [servlet.mvc.method.annotation.RequestMappingHandlerAdapter:534] Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Tue May 30 15:12:38 KST 2017]; parent: Root WebApplicationContext 
+2017-05-30 15:12:40 [INFO ] [servlet.mvc.method.annotation.RequestMappingHandlerAdapter:534] Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Tue May 30 15:12:38 KST 2017]; parent: Root WebApplicationContext 
+2017-05-30 15:12:40 [INFO ] [springframework.web.servlet.handler.AbstractUrlHandlerMapping:362] Mapped URL path [/resources/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0' 
+2017-05-30 15:12:40 [INFO ] [org.springframework.web.servlet.FrameworkServlet:508] FrameworkServlet 'appServlet': initialization completed in 1410 ms 
+2017-05-30 15:12:40 [INFO ] [com.hexacore.ssy.HomeController:27] Welcome home! The client locale is ko_KR. 
+2017-05-30 15:12:41 [WARN ] [org.springframework.web.servlet.DispatcherServlet:1172] No mapping found for HTTP request with URI [/favicon.ico] in DispatcherServlet with name 'appServlet' 
+2017-05-30 17:18:13 [INFO ] [org.springframework.context.support.AbstractApplicationContext:987] Closing WebApplicationContext for namespace 'appServlet-servlet': startup date [Tue May 30 15:12:38 KST 2017]; parent: Root WebApplicationContext 
+2017-05-30 17:18:13 [INFO ] [org.springframework.context.support.AbstractApplicationContext:987] Closing Root WebApplicationContext: startup date [Tue May 30 15:12:37 KST 2017]; root of context hierarchy 
+2017-05-30 17:18:15 [INFO ] [org.springframework.web.context.ContextLoader:304] Root WebApplicationContext: initialization started 
+2017-05-30 17:18:15 [INFO ] [org.springframework.context.support.AbstractApplicationContext:582] Refreshing Root WebApplicationContext: startup date [Tue May 30 17:18:15 KST 2017]; root of context hierarchy 
+2017-05-30 17:18:15 [INFO ] [springframework.beans.factory.xml.XmlBeanDefinitionReader:317] Loading XML bean definitions from ServletContext resource [/WEB-INF/spring/root-context.xml] 
+2017-05-30 17:18:16 [INFO ] [org.springframework.jdbc.datasource.DriverManagerDataSource:133] Loaded JDBC driver: net.sf.log4jdbc.sql.jdbcapi.DriverSpy 
+2017-05-30 17:18:16 [INFO ] [org.springframework.web.context.ContextLoader:344] Root WebApplicationContext: initialization completed in 835 ms 
+2017-05-30 17:18:16 [INFO ] [org.springframework.web.servlet.FrameworkServlet:489] FrameworkServlet 'appServlet': initialization started 
+2017-05-30 17:18:16 [INFO ] [org.springframework.context.support.AbstractApplicationContext:582] Refreshing WebApplicationContext for namespace 'appServlet-servlet': startup date [Tue May 30 17:18:16 KST 2017]; parent: Root WebApplicationContext 
+2017-05-30 17:18:16 [INFO ] [springframework.beans.factory.xml.XmlBeanDefinitionReader:317] Loading XML bean definitions from ServletContext resource [/WEB-INF/spring/appServlet/servlet-context.xml] 
+2017-05-30 17:18:16 [INFO ] [springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor:155] JSR-330 'javax.inject.Inject' annotation found and supported for autowiring 
+2017-05-30 17:18:16 [INFO ] [springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:543] Mapped "{[/],methods=[GET]}" onto public java.lang.String com.hexacore.ssy.HomeController.home(java.util.Locale,org.springframework.ui.Model) 
+2017-05-30 17:18:17 [INFO ] [servlet.mvc.method.annotation.RequestMappingHandlerAdapter:534] Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Tue May 30 17:18:16 KST 2017]; parent: Root WebApplicationContext 
+2017-05-30 17:18:17 [INFO ] [servlet.mvc.method.annotation.RequestMappingHandlerAdapter:534] Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Tue May 30 17:18:16 KST 2017]; parent: Root WebApplicationContext 
+2017-05-30 17:18:17 [INFO ] [springframework.web.servlet.handler.AbstractUrlHandlerMapping:362] Mapped URL path [/resources/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0' 
+2017-05-30 17:18:17 [INFO ] [org.springframework.web.servlet.FrameworkServlet:508] FrameworkServlet 'appServlet': initialization completed in 1466 ms 
+2017-05-30 19:01:23 [INFO ] [org.springframework.web.context.ContextLoader:304] Root WebApplicationContext: initialization started 
+2017-05-30 19:01:23 [INFO ] [org.springframework.context.support.AbstractApplicationContext:582] Refreshing Root WebApplicationContext: startup date [Tue May 30 19:01:23 KST 2017]; root of context hierarchy 
+2017-05-30 19:01:23 [INFO ] [springframework.beans.factory.xml.XmlBeanDefinitionReader:317] Loading XML bean definitions from ServletContext resource [/WEB-INF/spring/root-context.xml] 
+2017-05-30 19:01:24 [INFO ] [org.springframework.jdbc.datasource.DriverManagerDataSource:133] Loaded JDBC driver: net.sf.log4jdbc.sql.jdbcapi.DriverSpy 
+2017-05-30 19:01:24 [INFO ] [org.springframework.web.context.ContextLoader:344] Root WebApplicationContext: initialization completed in 1446 ms 
+2017-05-30 19:01:24 [INFO ] [org.springframework.web.servlet.FrameworkServlet:489] FrameworkServlet 'appServlet': initialization started 
+2017-05-30 19:01:24 [INFO ] [org.springframework.context.support.AbstractApplicationContext:582] Refreshing WebApplicationContext for namespace 'appServlet-servlet': startup date [Tue May 30 19:01:24 KST 2017]; parent: Root WebApplicationContext 
+2017-05-30 19:01:25 [INFO ] [springframework.beans.factory.xml.XmlBeanDefinitionReader:317] Loading XML bean definitions from ServletContext resource [/WEB-INF/spring/appServlet/servlet-context.xml] 
+2017-05-30 19:01:25 [INFO ] [springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor:155] JSR-330 'javax.inject.Inject' annotation found and supported for autowiring 
+2017-05-30 19:01:25 [INFO ] [springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:543] Mapped "{[/],methods=[GET]}" onto public java.lang.String com.hexacore.ssy.HomeController.home(java.util.Locale,org.springframework.ui.Model) 
+2017-05-30 19:01:26 [INFO ] [servlet.mvc.method.annotation.RequestMappingHandlerAdapter:534] Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Tue May 30 19:01:24 KST 2017]; parent: Root WebApplicationContext 
+2017-05-30 19:01:26 [INFO ] [servlet.mvc.method.annotation.RequestMappingHandlerAdapter:534] Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Tue May 30 19:01:24 KST 2017]; parent: Root WebApplicationContext 
+2017-05-30 19:01:26 [INFO ] [springframework.web.servlet.handler.AbstractUrlHandlerMapping:362] Mapped URL path [/resources/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0' 
+2017-05-30 19:01:26 [INFO ] [org.springframework.web.servlet.FrameworkServlet:508] FrameworkServlet 'appServlet': initialization completed in 1699 ms 
+2017-05-30 19:01:33 [INFO ] [com.hexacore.ssy.HomeController:27] Welcome home! The client locale is ko_KR. 

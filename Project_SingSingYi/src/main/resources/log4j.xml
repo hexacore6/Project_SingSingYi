@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- Console Appender 설정 -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm} [%-5p] %m(%F:%L)\n" />
+		</layout>
+	</appender>
+
+	<!-- DailyRollingFileAppender(주기적 로그 파일 생성) 설정 -->
+	<appender name="rolling" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="C:/Users/01091731595/Documents/2017JavaCourse/workspace/Project_SingSingYi_v0.1/log/project_name" />
+		<param name="encoding" value="utf-8" />
+		<!-- <param name="datePattern" value="'.'yyyy-MM-dd'.log'" /> --><!-- 매일 자정에 날짜가 추가된 로그파일 생성 -->
+		<param name="datePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%C{5}:%L] %m %n" />
+		</layout>
+	</appender>
+
+	<!-- 패키지별 로그 설정
+		<logger name="kr.or.kosta.example"><level value="info" /></logger>
+	-->
+
+	<!-- 3rdparty 로그레벨 설정 -->
+	<logger name="org.springframework.core">
+		<level value="warn" />
+	</logger>
+
+	<!-- 루트 로거 설정 -->
+	<root>
+		<level value="info" /> <!-- 디폴트 로그 레벨 -->
+		<appender-ref ref="console" />
+		<appender-ref ref="rolling" />
+	</root>
+	
+</log4j:configuration>

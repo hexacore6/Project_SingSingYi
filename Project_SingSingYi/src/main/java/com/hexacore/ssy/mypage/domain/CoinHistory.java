@@ -3,12 +3,13 @@ package com.hexacore.ssy.mypage.domain;
 import java.util.Date;
 
 public class CoinHistory {
-	int chid;
-	String id;
-	String chtype;
-	String chcontent;
-	int chcount;
-	Date chdate;
+	
+	private int chid;
+	private String id;
+	private String chtype;
+	private String chcontent;
+	private int chcount;
+	private Date chdate;
 	
 	public CoinHistory() {
 		super();

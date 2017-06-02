@@ -4,22 +4,19 @@ import java.util.Date;
 
 public class Sharing {
 	
-	int shid;
-	String id;
-	int sid;
-	String shcontent;
-	int likecnt;
-	int commentcnt;
-	String eximgfilename;
-	Date shregdate;
-	
+	private int shid;
+	private String id;
+	private int sid;
+	private String shcontent;
+	private int likecnt;
+	private int commentcnt;
+	private String eximgfilename;
+	private Date shregdate;
 	
 	public Sharing() {
 		super();
 	}
-
 	
-
 	public Sharing(int shid, String id, int sid, String shcontent, int likecnt, int commentcnt, String eximgfilename,
 			Date shregdate) {
 		super();
@@ -32,8 +29,6 @@ public class Sharing {
 		this.eximgfilename = eximgfilename;
 		this.shregdate = shregdate;
 	}
-
-
 
 	public int getShid() {
 		return shid;
@@ -90,21 +85,14 @@ public class Sharing {
 	public void setEximgfilename(String eximgfilename) {
 		this.eximgfilename = eximgfilename;
 	}
-
-	
-	
 	
 	public Date getShregdate() {
 		return shregdate;
 	}
 
-
-
 	public void setShregdate(Date shregdate) {
 		this.shregdate = shregdate;
 	}
-
-
 
 	@Override
 	public String toString() {

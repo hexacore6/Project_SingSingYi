@@ -2,16 +2,16 @@ package com.hexacore.ssy.mypage.domain;
 
 public class Song {
 	
-	int sid;
-	String simgfilename;
-	String sfilename;
-	String stitle;
-	String singer;
-	String musicalnote1;
-	String musicalnote2;
-	String musicalnote3;
-	String musicalnote4;
-	int playcnt;
+	private int sid;
+	private String simgfilename;
+	private String sfilename;
+	private String stitle;
+	private String singer;
+	private String musicalnote1;
+	private String musicalnote2;
+	private String musicalnote3;
+	private String musicalnote4;
+	private int playcnt;
 	
 	public Song() {
 		super();

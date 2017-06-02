@@ -2,9 +2,9 @@ package com.hexacore.ssy.mypage.domain;
 
 public class Favorite {
 	
-	int fid;
-	String id;
-	int sid;
+	private int fid;
+	private String id;
+	private int sid;
 	
 	public Favorite() {
 		super();

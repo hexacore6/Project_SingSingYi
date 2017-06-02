@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class RecordRepository {
 	
-	int rrid;
-	String id;
-	String recordfilename;
-	Date recordregdate;
+	private int rrid;
+	private String id;
+	private String recordfilename;
+	private Date recordregdate;
 	
 	public RecordRepository() {
 		super();

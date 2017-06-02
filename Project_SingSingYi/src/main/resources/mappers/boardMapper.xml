@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+                        
+<!-- 네임스페이스(사용영역) 설정 -->
+<mapper namespace="com.hexacore.ssy.mapper.BoardMapper">
+
+
+	<!-- QnA 글 등록 -->
+	<insert id="create">
+	insert into Articles(id, bid, atitle, acontent)
+	values (#{id}, #{bid}, #{atitle}, #{acontent})
+	</insert>	
+	
+	<!-- QnA 글 조회 -->
+	<select id="read" resultType="com.hexacore.ssy.baord.domain.Article">
+	select *
+	from Articles
+	where aid = #{aid}
+	</select>
+	
+	<!-- QnA 글 수정 -->
+	<update id="update">
+	UPDATE Articles 
+	SET atitle = #{atitle}, acontent = #{acontent}
+	where aid = #{aid}
+	</update>
+	
+	<!-- QnA 글 삭제 -->
+	<delete id="delete">
+	delete from Articles 
+	where aid = #{aid}
+	</delete>
+	
+	<!-- QnA 글 전체 리스트 -->
+	<select id="listAll" resultType="com.hexacore.ssy.baord.domain.Article">
+	<![CDATA[
+	select *
+	from Articles
+	where aid > 0 and bid = #{bid}
+	order by aid desc, aregdate desc
+	]]>
+	</select>
+	
+	<!-- QnA 페이징 -->
+	<select id="listPage" resultType="com.hexacore.ssy.baord.domain.Article">
+	<![CDATA[
+	select *
+	from Articles
+	where aid > 0 and bid = #{bid}
+	order by aid desc, aregdate desc
+	limit #{page}, 10
+	]]>
+	</select>
+	
+	<!-- QnA 파라미터 2개 페이징 -->
+	<select id="listCriteria" resultType="com.hexacore.ssy.baord.domain.Article">
+	<![CDATA[
+	select aid, atitle, acontent, id, aregdate, viewcnt
+	from Articles
+	where aid > 0 and bid = #{bid}
+	order by aid desc, aregdate desc
+	limit #{pageStart}, #{perPageNum}
+	]]>
+	</select>
+	
+	<!-- QnA 게시글 수 카운트 -->
+	<select id="countPaging" resultType="int">
+	<![CDATA[
+	select count(aid)
+	from Articles
+	where aid > 0 and bid = #{bid}
+	]]>
+	</select>
+	
+	<!-- QnA 검색 결과 게시글 수 카운트 -->
+	<select id="listSearchCount" resultType="int">
+	<![CDATA[
+	select count(aid)
+	from Articles
+	where aid > 0 and bid = #{bid}
+	]]>
+	<include refid="search"></include>
+	</select>
+	
+	<!-- QnA 조회수 증가 -->
+	<update id="updateViewCnt">
+		update articles
+		set viewcnt = viewcnt + 1
+		where aid = #{aid}
+	</update>
+	
+	<!-- QnA 검색 결과 페이징 -->
+	<select id="listSearch" resultType="com.hexacore.ssy.baord.domain.Article">
+	<![CDATA[
+	select *
+	from Articles
+	where aid > 0 and bid = #{bid}
+	]]>
+	<include refid="search"></include>
+	<![CDATA[
+		order by aid desc
+		limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+	
+	<!-- QnA 검색 종류 분류 모듈화 -->
+	<sql id="search">
+	<if test="searchType != null">
+		<if test="searchType == 't'.toString()">
+		and atitle like CONCAT('%', #{keyword}, '%')	
+		</if>
+		<if test="searchType == 'c'.toString()">
+		and acontent like CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="searchType == 'w'.toString()">
+		and id like CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="searchType == 'tc'.toString()">
+		and (atitle like CONCAT('%', #{keyword}, '%') OR acontent like CONCAT('%', #{keyword}, '%'))
+		</if>
+		<if test="searchType == 'cw'.toString()">
+		and (acontent like CONCAT('%', #{keyword}, '%') OR id like CONCAT('%', #{keyword}, '%'))
+		</if>
+		<if test="searchType == 'tcw'.toString()">
+		and (atitle like CONCAT('%', #{keyword}, '%')
+		 	OR
+		  	acontent like CONCAT('%', #{keyword}, '%')
+		  	OR
+		  	id like CONCAT('%', #{keyword}, '%'))
+		</if>
+	</if>
+	</sql>
+
+</mapper>

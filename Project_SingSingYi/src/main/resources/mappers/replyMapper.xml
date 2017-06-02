@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+                        
+<!-- 네임스페이스(사용영역) 설정 -->
+<mapper namespace="com.hexacore.ssy.mapper.ReplyMapper">
+
+	
+	<select id="list" resultType="Reply">
+	select *
+	from Replies
+	where aid = #{aid}
+	order by rid desc
+	</select>
+	
+	
+	<insert id="create">
+	insert into Replies(aid, id, bid, rcontent)
+	values (#{aid}, #{id}, #{bid}, #{rcontent})
+	</insert>	
+	
+	<update id="update">
+	update Replies 
+	set rcontent = #{rcontent}, rregdate = now()
+	where rid = #{rid}
+	</update>
+	
+	<delete id="delete">
+	delete from Replies 
+	where rid = #{rid}
+	</delete>
+	
+	<select id="listPage" resultType="Reply">
+	select *
+	from Replies
+	where aid = #{aid}
+	order by rid desc
+	limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="count" resultType="int">
+	select count(aid)
+	from Replies
+	where aid = #{aid}
+	</select>
+	
+	<select id="getAid" resultType="int">
+		select aid 
+		from Replies 
+		where rid = #{rid}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+</mapper>

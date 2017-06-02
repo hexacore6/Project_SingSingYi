@@ -23,6 +23,7 @@
 		select chid, id, chtype, chcontent, chcount, chdate
 		from coinhistory
 		where id = #{id}
+		ORDER BY chid DESC
 	</select>
 	
 	<!-- Top5 랭킹 조회 -->
@@ -31,7 +32,7 @@
 		select id, password, pwquestion, pwanswer, rankpoint, 
 		(SELECT count(*)+1 from members where rankpoint > t.rankpoint) AS Rank
 		From members As t
-		ORDER BY rank desc limit 5
+		ORDER BY rankpoint desc limit 5
 	]]>
 	</select>
 	
@@ -48,6 +49,13 @@
 		ORDER BY rankpoint desc 
 		) AS cnt where  id = #{id}
 	</select>
+	
+	<!-- 받은 좋아요 개수 총합 조회 -->
+	<select id = "readMyLikeCnt" resultType="com.hexacore.ssy.mypage.domain.Sharing">
+		select SUM(likecnt) As likecnt
+		from sharings 
+		where id = #{id}
+	</select>	
 	
 	<!-- 내 랭킹기준 조회 -->
 	<select id = "readMyRankArea" resultType="com.hexacore.ssy.mypage.domain.Member">

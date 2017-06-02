@@ -39,7 +39,7 @@ public class MyPageServiceTest {
 	}
 	
 	// Top5 랭킹 조회
-	//@Test
+	@Test
 	public void readTopRankTest(){
 		service.readTopRank();		
 	}
@@ -71,30 +71,30 @@ public class MyPageServiceTest {
 	
 	
 	// 내 애창곡 조회 (등록한 노래번호 조회)
-	@Test
+	//@Test
 	public List<HashMap<String, Object>> readMyFavorite(){
 		return service.readMyFavorite("woong");
 	}
 	
 	// 내 애창곡 삭제
-	@Test
+	//@Test
 	public void deleteMyFavorite(){
 		service.deleteMyFavorite(1);
 	}
 	
 	// 내 녹음 저장소 삭제
-	@Test
+	//@Test
 	public void deleteMyRecord(){
 		service.deleteMyRecord(1);
 	}
 	
 	// 코인 충전
-	@Test
+	//@Test
 	public void addCoin(){
 		service.addCoin(3, "woong1");
 	}
 	// 해당 노래번호인 노래 조회
-	@Test
+	//@Test
 	public Song selectSong(){
 		return service.selectSong(1);
 	}

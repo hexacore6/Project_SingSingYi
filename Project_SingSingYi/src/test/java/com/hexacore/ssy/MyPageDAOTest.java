@@ -1,7 +1,5 @@
 package com.hexacore.ssy;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -11,7 +9,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hexacore.ssy.mypage.dao.MypageDAO;
-import com.hexacore.ssy.mypage.domain.Favorite;
 import com.hexacore.ssy.mypage.domain.Member;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,7 +24,7 @@ public class MyPageDAOTest {
 	
 	
 	// 나의 공유글 조회 테스트
-	@Test
+	//@Test
 	public void readMySharingTest() {
 		logger.info(dao.readMySharing("woong"));
 	}
@@ -39,7 +36,7 @@ public class MyPageDAOTest {
 	}
 	
 	// Top5 랭킹 조회
-	//@Test
+	@Test
 	public void readTopRankTest(){
 		dao.readTopRank();		
 	}
@@ -56,6 +53,12 @@ public class MyPageDAOTest {
 		dao.readMyRankArea(10);
 	}
 	
+	// 내 좋아요 개수 총합 조회
+	//@Test
+	public void readMyLikeCnt(){
+		dao.readMyLikeCnt("woong1");
+	}
+	
 	// 내 녹음저장소 조회
 	//@Test
 	public void readMyRecord(){
@@ -69,7 +72,7 @@ public class MyPageDAOTest {
 	}
 	
 	// 내 애창곡 조회 (등록한 노래번호 조회)
-	@Test
+	//@Test
 	public void readMyFavorite(){
 		dao.readMyFavorite("woong1");
 	}

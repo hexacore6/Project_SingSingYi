@@ -45,7 +45,7 @@ public class MypageController {
 	@RequestMapping(value="/myCoin", method=RequestMethod.GET)
 	public void readMyCoin(@RequestParam("id") String id, Model model){
 		model.addAttribute("myCoin", service.readMyInformation(id));
-		model.addAttribute("myCoinHistory", service.readCoinHistory(id));
+		model.addAttribute("list", service.readCoinHistory(id));
 	}
 	// 나의 애창곡 조회
 	@RequestMapping(value="/myFavorite", method=RequestMethod.GET)
@@ -60,6 +60,17 @@ public class MypageController {
 	}
 	
 	
+	// 나의 랭킹 조회
+	@RequestMapping(value="/myRank", method=RequestMethod.GET)
+	public void readMyRank(@RequestParam("id") String id, Model model){
+		logger.info("처음");
+		model.addAttribute("rank", service.readMyRank(id));
+		model.addAttribute("top5List", service.readTopRank());
+		logger.info("하이");
+		int rank = service.readMyRank(id).getRank();
+		logger.info("나의 랭킹 : " + rank);
+		model.addAttribute("myRankArea", service.readMyRankArea(rank));
+	}
 	
 	// 나의 정보 수정 (비밀번호 수정)
 	@RequestMapping(value="/myModify", method=RequestMethod.GET)

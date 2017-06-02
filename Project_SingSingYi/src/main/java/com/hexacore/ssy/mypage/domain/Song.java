@@ -1,0 +1,121 @@
+package com.hexacore.ssy.mypage.domain;
+
+public class Song {
+	
+	int sid;
+	String simgfilename;
+	String sfilename;
+	String stitle;
+	String singer;
+	String musicalnote1;
+	String musicalnote2;
+	String musicalnote3;
+	String musicalnote4;
+	int playcnt;
+	
+	public Song() {
+		super();
+	}
+
+	public Song(int sid, String simgfilename, String sfilename, String stitle, String singer, String musicalnote1,
+			String musicalnote2, String musicalnote3, String musicalnote4, int playcnt) {
+		super();
+		this.sid = sid;
+		this.simgfilename = simgfilename;
+		this.sfilename = sfilename;
+		this.stitle = stitle;
+		this.singer = singer;
+		this.musicalnote1 = musicalnote1;
+		this.musicalnote2 = musicalnote2;
+		this.musicalnote3 = musicalnote3;
+		this.musicalnote4 = musicalnote4;
+		this.playcnt = playcnt;
+	}
+
+	public int getSid() {
+		return sid;
+	}
+
+	public void setSid(int sid) {
+		this.sid = sid;
+	}
+
+	public String getSimgfilename() {
+		return simgfilename;
+	}
+
+	public void setSimgfilename(String simgfilename) {
+		this.simgfilename = simgfilename;
+	}
+
+	public String getSfilename() {
+		return sfilename;
+	}
+
+	public void setSfilename(String sfilename) {
+		this.sfilename = sfilename;
+	}
+
+	public String getStitle() {
+		return stitle;
+	}
+
+	public void setStitle(String stitle) {
+		this.stitle = stitle;
+	}
+
+	public String getSinger() {
+		return singer;
+	}
+
+	public void setSinger(String singer) {
+		this.singer = singer;
+	}
+
+	public String getMusicalnote1() {
+		return musicalnote1;
+	}
+
+	public void setMusicalnote1(String musicalnote1) {
+		this.musicalnote1 = musicalnote1;
+	}
+
+	public String getMusicalnote2() {
+		return musicalnote2;
+	}
+
+	public void setMusicalnote2(String musicalnote2) {
+		this.musicalnote2 = musicalnote2;
+	}
+
+	public String getMusicalnote3() {
+		return musicalnote3;
+	}
+
+	public void setMusicalnote3(String musicalnote3) {
+		this.musicalnote3 = musicalnote3;
+	}
+
+	public String getMusicalnote4() {
+		return musicalnote4;
+	}
+
+	public void setMusicalnote4(String musicalnote4) {
+		this.musicalnote4 = musicalnote4;
+	}
+
+	public int getPlaycnt() {
+		return playcnt;
+	}
+
+	public void setPlaycnt(int playcnt) {
+		this.playcnt = playcnt;
+	}
+
+	@Override
+	public String toString() {
+		return "Song [sid=" + sid + ", simgfilename=" + simgfilename + ", sfilename=" + sfilename + ", stitle=" + stitle
+				+ ", singer=" + singer + ", musicalnote1=" + musicalnote1 + ", musicalnote2=" + musicalnote2
+				+ ", musicalnote3=" + musicalnote3 + ", musicalnote4=" + musicalnote4 + ", playcnt=" + playcnt + "]";
+	}
+}

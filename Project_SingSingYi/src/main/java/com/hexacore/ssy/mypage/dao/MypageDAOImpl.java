@@ -38,8 +38,8 @@ public class MypageDAOImpl implements MypageDAO{
 	
 	// 나의 코인변경내역 조회
 	@Override
-	public CoinHistory readCoinHistory(String id) {
-		return session.selectOne(namespace+".readCoinHistory", id);
+	public List<CoinHistory> readCoinHistory(String id) {
+		return session.selectList(namespace+".readCoinHistory", id);
 	}
 	
 	// Top5 랭킹 조회
@@ -59,6 +59,13 @@ public class MypageDAOImpl implements MypageDAO{
 	public List<Member> readMyRankArea(int rank) {
 		return session.selectList(namespace+".readMyRankArea", rank);
 	}
+	
+	// 내 좋아요 개수 총합 조회
+	@Override
+	public List<Sharing> readMyLikeCnt(String id) {
+		return session.selectOne(namespace+".readMyLikeCnt", id);
+	}
+	
 	
 	// 내 녹음 저장소 조회
 	@Override
@@ -115,4 +122,6 @@ public class MypageDAOImpl implements MypageDAO{
 	public Song selectSong(int sid) {
 		return session.selectOne(namespace+".selectSong", sid);
 	}
+
+
 }

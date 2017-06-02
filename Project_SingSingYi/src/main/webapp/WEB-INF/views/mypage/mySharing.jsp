@@ -8,7 +8,7 @@
     <title>노래방</title>
     <!-- 합쳐지고 최소화된 최신 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../../resources/css/main.css?ver=1">
+    <link rel="stylesheet" href="../../../resources/css/main.css?ver=2">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../resources/css/bootstrap3-wysihtml5.min.css?ver=2">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -213,26 +213,5 @@
     </section>
     <!--푸터끝-->
     
-  <!-- Modal -->
-  <div id="modifyModal" class="modal modal-primary fade" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"></h4>
-        </div>
-        <div class="modal-body" data-rno>
-          <p><input type="text" id="replytext" class="form-control"></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="replyModBtn">Modify</button>
-          <button type="button"  id="replyDelBtn">Delete</button>
-          <button type="button" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-   </div>
-</body>
 
 </html>

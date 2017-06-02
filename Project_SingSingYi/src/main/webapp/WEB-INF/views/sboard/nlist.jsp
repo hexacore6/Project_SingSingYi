@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>listPage</title>
+<title>공지사항</title>
 <script src="/resources/js/jquery-3.2.0.min.js"></script>
 <script>
 	var result = '${msg}';
@@ -111,15 +111,15 @@
       <ul class="pagination">
 
         <c:if test="${pageMaker.prev }">
-          <li><a href="list${pageMaker.makeSearch(pageMaker.startPage-1)}">&laquo;</a></li>
+          <li><a href="nlist${pageMaker.makeSearch(pageMaker.startPage-1)}">&laquo;</a></li>
         </c:if>
 
         <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-          <li <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>><a href="list${pageMaker.makeSearch(idx)}">${idx }</a></li>
+          <li <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>><a href="nlist${pageMaker.makeSearch(idx)}">${idx }</a></li>
         </c:forEach>
 
         <c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
-          <li><a href="list${pageMaker.makeSearch(pageMaker.endPage+1)}">&raquo;</a></li>
+          <li><a href="nlist${pageMaker.makeSearch(pageMaker.endPage+1)}">&raquo;</a></li>
         </c:if>
 
       </ul>

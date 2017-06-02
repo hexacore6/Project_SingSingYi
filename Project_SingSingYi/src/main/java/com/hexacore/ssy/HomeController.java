@@ -1,7 +1,5 @@
 package com.hexacore.ssy;
 
-import java.util.Locale;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,10 +19,15 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Model model) {
 		logger.info("Welcome SingSingYi!");
 		
-		return "member/login";
+		return "home";
+	}
+	
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public String main(Model model) {
+		return "main";
 	}
 	
 }

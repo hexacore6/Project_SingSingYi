@@ -53,8 +53,8 @@
 	<context:component-scan base-package="com.hexacore.ssy" />
 	
 	<!-- 서버의 파일 저장 경로 설정 -->
-	<bean id="uploadPath" class="java.lang.String">
+<!-- 	<bean id="uploadPath" class="java.lang.String">
 		<constructor-arg value="C:/Users/01091731595/Documents/2017JavaCourse/upload"></constructor-arg>
 	</bean>
-	
+	 -->
 </beans>

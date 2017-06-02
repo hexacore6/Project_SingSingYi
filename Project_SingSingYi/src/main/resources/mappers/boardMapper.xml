@@ -13,7 +13,7 @@
 	</insert>	
 	
 	<!-- QnA 글 조회 -->
-	<select id="read" resultType="com.hexacore.ssy.baord.domain.Article">
+	<select id="read" resultType="com.hexacore.ssy.board.domain.Article">
 	select *
 	from Articles
 	where aid = #{aid}
@@ -33,7 +33,7 @@
 	</delete>
 	
 	<!-- QnA 글 전체 리스트 -->
-	<select id="listAll" resultType="com.hexacore.ssy.baord.domain.Article">
+	<select id="listAll" resultType="com.hexacore.ssy.board.domain.Article">
 	<![CDATA[
 	select *
 	from Articles
@@ -43,7 +43,7 @@
 	</select>
 	
 	<!-- QnA 페이징 -->
-	<select id="listPage" resultType="com.hexacore.ssy.baord.domain.Article">
+	<select id="listPage" resultType="com.hexacore.ssy.board.domain.Article">
 	<![CDATA[
 	select *
 	from Articles
@@ -54,7 +54,7 @@
 	</select>
 	
 	<!-- QnA 파라미터 2개 페이징 -->
-	<select id="listCriteria" resultType="com.hexacore.ssy.baord.domain.Article">
+	<select id="listCriteria" resultType="com.hexacore.ssy.board.domain.Article">
 	<![CDATA[
 	select aid, atitle, acontent, id, aregdate, viewcnt
 	from Articles
@@ -91,7 +91,7 @@
 	</update>
 	
 	<!-- QnA 검색 결과 페이징 -->
-	<select id="listSearch" resultType="com.hexacore.ssy.baord.domain.Article">
+	<select id="listSearch" resultType="com.hexacore.ssy.board.domain.Article">
 	<![CDATA[
 	select *
 	from Articles

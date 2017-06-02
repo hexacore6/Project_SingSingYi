@@ -33,7 +33,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			
 			Object dest = httpSession.getAttribute("dest");
 			
-			response.sendRedirect(dest != null ? (String)dest : "/");
+			response.sendRedirect(dest != null ? (String)dest : "/main");
 		}
 		
 	}

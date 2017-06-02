@@ -6,7 +6,7 @@
 <mapper namespace="com.hexacore.ssy.mapper.ReplyMapper">
 
 	
-	<select id="list" resultType="Reply">
+	<select id="list" resultType="com.hexacore.ssy.board.domain.Reply">
 	select *
 	from Replies
 	where aid = #{aid}

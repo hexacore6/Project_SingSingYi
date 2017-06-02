@@ -3,7 +3,7 @@
 
 <mapper namespace="com.hexacore.ssy.mapper.MemberMapper">
 
-	<select id="login" resultType="Member">
+	<select id="login" resultType="com.hexacore.ssy.member.domain.Member">
 		SELECT 	id, password
 		FROM   	members
 		WHERE	id = #{id} and password = #{password}

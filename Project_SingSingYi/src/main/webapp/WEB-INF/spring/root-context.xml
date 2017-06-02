@@ -43,13 +43,18 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
-	<!-- AOP 인식 설정 -->
-	<!-- <context:component-scan base-package="com.hexacore.ssy" /> -->
-	
 	<aop:config>
 	</aop:config>
 	
 	<!-- AOP 자동 Proxy 객체 생성을 위한 AspectJ 설정 -->
 	<aop:aspectj-autoproxy />
+	
+	<!-- AOP 인식 설정 -->
+	<context:component-scan base-package="com.hexacore.ssy" />
+	
+	<!-- 서버의 파일 저장 경로 설정 -->
+	<bean id="uploadPath" class="java.lang.String">
+		<constructor-arg value="C:/Users/01091731595/Documents/2017JavaCourse/upload"></constructor-arg>
+	</bean>
 	
 </beans>

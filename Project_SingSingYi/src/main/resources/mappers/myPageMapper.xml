@@ -90,7 +90,7 @@
 	</delete>
 	
 	<!-- 내 정보 조회 (코인 개수 조회) -->
-	<select id = "readMyInformation" resultType="com.hexacore.ssy.domain.Member">
+	<select id = "readMyInformation" resultType="com.hexacore.ssy.mypage.domain.Member">
 		select id, password, pwquestion, pwanswer, coincnt, rankpoint 
 		from members 
 		where id = #{id}

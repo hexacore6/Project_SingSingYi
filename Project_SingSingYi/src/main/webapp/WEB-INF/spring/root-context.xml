@@ -56,5 +56,4 @@
 	<bean id="uploadPath" class="java.lang.String">
 		<constructor-arg value="C:/eximg/upload"></constructor-arg>
 	</bean>
-	
 </beans>

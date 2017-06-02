@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hexacore.ssy.mapper.MyPageMapper">
+	
+	<!-- 나의 공유글 목록 조회 -->
+	<select id = "readMySharing" resultType="com.hexacore.ssy.domain.Sharing">
+		select shid, id, rrid, shcontent, likecnt, commentcnt, eximgfilename, shregdate
+		from sharings 
+		where id = #{id}
+		ORDER BY shregdate DESC
+	</select>
+	
+	<!-- 나의 공유글 삭제 -->
+	<delete id="deleteMySharing">
+		delete from sharings
+		where shid = #{shid}
+	</delete>
+	
+	
+	<!-- 나의 코인변경내역 조회 -->
+	<select id = "readCoinHistory" resultType="com.hexacore.ssy.domain.CoinHistory">
+		select chid, id, chtype, chcontent, chcount, chdate
+		from coinhistory
+		where id = #{id}
+	</select>
+	
+	<!-- Top5 랭킹 조회 -->
+	<select id = "readTopRank" resultType="com.hexacore.ssy.domain.Member">
+	<![CDATA[
+		select id, password, pwquestion, pwanswer, rankpoint, 
+		(SELECT count(*)+1 from members where rankpoint > t.rankpoint) AS Rank
+		From members As t
+		ORDER BY rank desc limit 5
+	]]>
+	</select>
+	
+	<!-- 내 랭킹 조회 -->
+	<select id = "readMyRank" resultType="com.hexacore.ssy.domain.Member">
+		select id, password, pwquestion, pwanswer, rankpoint, rank from(
+		select id,
+	   		password,
+       		pwquestion,
+	       	pwanswer,
+	       	rankpoint,
+       		@vRank := @vRank + 1 AS rank
+		from   members AS p, (SELECT @vRank := 0) AS r
+		ORDER BY rankpoint desc 
+		) AS cnt where  id = #{id}
+	</select>
+	
+	<!-- 내 랭킹기준 조회 -->
+	<select id = "readMyRankArea" resultType="com.hexacore.ssy.domain.Member">
+		select id, password, pwquestion, pwanswer, rankpoint, rank from(
+		select id,
+	   		password,
+       		pwquestion,
+	       	pwanswer,
+	       	rankpoint,
+       		@vRank := @vRank + 1 AS rank
+		from   members AS p, (SELECT @vRank := 0) AS r
+		ORDER BY rankpoint desc 
+		) AS cnt where  rank between #{rank}-2 and #{rank}+2
+	</select>
+	
+	<!-- 내 애창곡 조회 (등록한 노래번호 조회) -->
+	<select id ="readMyFavorite" resultType="hashMap">
+		select fid, stitle, singer
+		from favorites natural join songs 
+		where id = #{id}
+	</select>
+	
+	<!-- 내 애창곡 삭제 -->
+	<delete id="deleteMyFavorite">
+		delete from favorites
+		where fid = #{fid}
+	</delete>
+	
+	<!-- 내 녹음 저장소 조회 -->
+	<select id = "readMyRecord" resultType="com.hexacore.ssy.domain.RecordRepository">
+		select rrid, id, recordfilename, recordregdate
+		from RecordRepository
+		where id = #{id}
+	</select>
+	
+	<!-- 내 녹음 저장소 삭제 -->
+	<delete id="deleteMyRecord">
+		delete from RecordRepository
+		where rrid = #{rrid}
+	</delete>
+	
+	<!-- 내 정보 조회 (코인 개수 조회) -->
+	<select id = "readMyInformation" resultType="com.hexacore.ssy.domain.Member">
+		select id, password, pwquestion, pwanswer, coincnt, rankpoint 
+		from members 
+		where id = #{id}
+	</select>
+	
+	<!-- 내 정보 수정 (비밀번호 수정) -->
+	<update id="updateMyInformation">
+		update members
+		set password = #{password}
+		where id = #{id}
+	</update>
+	
+	<!-- 코인 충전 업데이트 -->
+	<update id="addCoin">
+	update members 
+	set coincnt = coincnt+#{addCoin}
+	where id= #{id}
+	</update>
+	
+	<!-- 해당 노래번호인 노래 조회 -->
+	<select id="selectSong" resultType="com.hexacore.ssy.domain.Song">
+	select sid, simgfilename, sfilename, stitle, singer
+	from songs
+	where sid = #{sid}
+	</select>
+</mapper>

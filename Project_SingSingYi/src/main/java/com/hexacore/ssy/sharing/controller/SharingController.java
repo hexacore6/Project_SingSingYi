@@ -51,16 +51,22 @@ public class SharingController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(Sharing sharing, MultipartFile file, Model model) throws IOException {
-		
-		sharing.setEximgfilename(file.getOriginalFilename());
-		String savedName = uploadFile(file.getOriginalFilename(), file.getBytes());
-		sharing.setEximgfilename(savedName);
+		System.out.println("2222");
+		System.out.println(file);
+		System.out.println(sharing.getId() + "아이디");
+		System.out.println(sharing.getRrid() + "rr아이디");
+		// 
+		//System.out.println("123123123" + file.getOriginalFilename());
+		//sharing.setEximgfilename(file.getOriginalFilename());
+		//String savedName = uploadFile(file.getOriginalFilename(), file.getBytes());
+		//sharing.setEximgfilename(savedName);
 		
 		try {
 			sharingService.regist(sharing);
 			System.out.println("성공");
 		} catch (Exception e) {
 			System.out.println("실패");
+			e.printStackTrace();
 		}
 		return "redirect:/sharing/listAll";
 

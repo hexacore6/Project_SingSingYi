@@ -1,15 +1,7 @@
-<!-- 첨부파일 글쓰기 글 조회 -->
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
+<html>
 <head>	
 <script src="../resources/js/jquery.min.js"></script>
 <style>
@@ -91,38 +83,13 @@
 	content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
 <meta name="author" content="FREEHTML5.CO" />
 
-<!-- 
-	//////////////////////////////////////////////////////
-
-	FREE HTML5 TEMPLATE 
-	DESIGNED & DEVELOPED by FREEHTML5.CO
-		
-	Website: 		http://freehtml5.co/
-	Email: 			info@freehtml5.co
-	Twitter: 		http://twitter.com/fh5co
-	Facebook: 		https://www.facebook.com/fh5co
-
-	//////////////////////////////////////////////////////
-	 -->
-
-<!-- Facebook and Twitter integration -->
-<meta property="og:title" content="" />
-<meta property="og:image" content="" />
-<meta property="og:url" content="" />
-<meta property="og:site_name" content="" />
-<meta property="og:description" content="" />
-<meta name="twitter:title" content="" />
-<meta name="twitter:image" content="" />
-<meta name="twitter:url" content="" />
-<meta name="twitter:card" content="" />
-
 
 <!-- Google Webfonts -->
-<link
+<!-- <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500'
 	rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700'
-	rel='stylesheet' type='text/css'>
+	rel='stylesheet' type='text/css'> -->
 
 <!-- Animate.css -->
 <link rel="stylesheet" href="../resources/css/animate.css">
@@ -141,10 +108,6 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins 
          folder instead of downloading all of them to reduce the load. -->
     <link href="../resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-<!-- FOR IE9 below -->
-<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
 	
 
 
@@ -346,7 +309,7 @@ $(document).ready(function(){
 											<i class="fa fa-pencil"> </i>Sing Sing
 										</button>
 										<!-- 이미지 업로드 공간 -->
-										<div id="imageDrop" style="display: none;">
+										<div id="imageDrop">
 											<input type="file"  name="file"> 
 										</div>
 										<!-- 이미지 이름 -->
@@ -480,22 +443,16 @@ $(document).ready(function(){
 	</script>
 
 	<!-- jQuery -->
-	<script src="../resources/js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
+	
 	<script src="../resources/js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
 	<script src="../resources/js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
 	<script src="../resources/js/jquery.waypoints.min.js"></script>
-	<!-- Magnific Popup -->
-	<script src="../resources/js/jquery.magnific-popup.min.js"></script>
-	<!-- Salvattore -->
 	<script src="../resources/js/salvattore.min.js"></script>
 	<!-- Main JS -->
+	<script src="../resources/js/jquery.magnific-popup.min.js"></script>
 	<script src="../resources/js/main.js"></script>
     
 	<script src="../resources/dist/js/app.min.js" type="text/javascript"></script>
-    <!-- AdminLTE for demo purposes -->
     <script src="../resources/dist/js/demo.js" type="text/javascript"></script>
     
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->

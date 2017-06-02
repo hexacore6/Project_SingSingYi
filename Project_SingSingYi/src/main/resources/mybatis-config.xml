@@ -4,5 +4,7 @@
 
 <!-- MyBatis XML 설정 파일(MyBatis설정의 중앙 허브 역할) -->
 <configuration>
-	
+	<typeAliases>
+		<package name="com.hexacore.ssy.sharing.domain" />
+	</typeAliases>
 </configuration>

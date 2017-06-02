@@ -101,47 +101,19 @@
                                         <table class="table table-bordered">
                                             <tbody>
                                                 <tr>
-                                                    <th style="width: 10px; text-align:center;">번호</th>
+                                                    <th style="width: 50px; text-align:center;">번호</th>
                                                     <th style="text-align:center;">종류</th>
                                                     <th style="text-align:center;">지급 및 소모 내용</th>
-                                                    <th style="width: 40px; text-align:center;">날짜</th>
+                                                    <th style="width: 50px; text-align:center;">날짜</th>
                                                 </tr>
+                                                 <c:forEach items="${list}" var="historyCoint">
                                                 <tr>
-                                                    <th style="width: 10px; text-align:center;">${myCoinHistory.chid }</th>
-                                                    <th style="text-align:center;">${myCoinHistory.chtype }</th>
-                                                    <th style="text-align:center;">${myCoinHistory.chcontent }</th>
-                                                    <th style="width: 100px; text-align:center;"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${myCoinHistory.chdate }" /></th>
+                                                    <th style="width: 10px; text-align:center;">${historyCoint.chid }</th>
+                                                    <th style="text-align:center;">${historyCoint.chtype }</th>
+                                                    <th style="text-align:center;">${historyCoint.chcontent }</th>
+                                                    <th style="width: 400px; text-align:center;"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${historyCoint.chdate }" /></th>
                                                 </tr>
-                                                <tr>
-                                                    <td>2.</td>
-                                                    <td>Clean database</td>
-                                                    <td>
-                                                        <div class="progress progress-xs">
-                                                            <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="badge bg-yellow">70%</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3.</td>
-                                                    <td>Cron job running</td>
-                                                    <td>
-                                                        <div class="progress progress-xs progress-striped active">
-                                                            <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="badge bg-light-blue">30%</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4.</td>
-                                                    <td>Fix and squish bugs</td>
-                                                    <td>
-                                                        <div class="progress progress-xs progress-striped active">
-                                                            <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="badge bg-green">90%</span></td>
-                                                </tr>
+                                                </c:forEach>
                                             </tbody>
                                             
                                         </table>

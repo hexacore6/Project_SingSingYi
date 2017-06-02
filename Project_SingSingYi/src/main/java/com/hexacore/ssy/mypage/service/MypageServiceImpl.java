@@ -35,7 +35,7 @@ public class MypageServiceImpl implements MypageService {
 	
 	// 나의 코인변경내역 조회
 	@Override
-	public CoinHistory readCoinHistory(String id) {
+	public List<CoinHistory> readCoinHistory(String id) {
 		return dao.readCoinHistory(id);
 	}
 	
@@ -56,7 +56,13 @@ public class MypageServiceImpl implements MypageService {
 	public List<Member> readMyRankArea(int rank) {
 		return dao.readMyRankArea(rank);
 	}
-
+	
+	// 내 좋아요 총합 개수 조회
+	@Override
+	public List<Sharing> readMyLikeCnt(String id) {
+		return dao.readMyLikeCnt(id);
+	}
+	
 	// 내 녹음 저장소 조회
 	@Override
 	public List<RecordRepository> readMyRecord(String id) {
@@ -104,7 +110,4 @@ public class MypageServiceImpl implements MypageService {
 	public void updateMyInformation(Member member) {
 		dao.updateMyInformation(member);
 	}
-
-
-
 }

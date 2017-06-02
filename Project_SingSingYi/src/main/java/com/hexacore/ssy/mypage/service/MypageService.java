@@ -19,7 +19,7 @@ public interface MypageService  {
 	public void deleteMySharing(int shid);	
 	
 	// 나의 코인변경내역 조회
-	public CoinHistory readCoinHistory(String id);
+	public List<CoinHistory> readCoinHistory(String id);
 	
 	// Top5 랭킹 조회
 	public List<Member> readTopRank();
@@ -30,6 +30,9 @@ public interface MypageService  {
 	// 내 랭킹주변 순위 조회
 	public List<Member> readMyRankArea(int rank);
 	
+	// 내 좋아요 총합 개수 조회
+	public List<Sharing> readMyLikeCnt(String id);
+		
 	// 내 애창곡 조회 (등록한 노래번호 조회)
 	public List<HashMap<String, Object>> readMyFavorite(String id);
 	

@@ -3,14 +3,17 @@ package com.hexacore.ssy.sharing.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilePermission;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.UUID;
+import java.security.AccessControlContext;
+import java.security.AccessController;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import org.apache.commons.io.IOUtils;
+import org.eclipse.core.filesystem.provider.FileInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -48,15 +51,13 @@ public class SharingController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(Sharing sharing, MultipartFile file, Model model) throws IOException {
-		System.out.println(file);
-		//System.out.println("123123123" + file.getOriginalFilename());
-		//sharing.setEximgfilename(file.getOriginalFilename());
-		//String savedName = uploadFile(file.getOriginalFilename(), file.getBytes());
-		//sharing.setEximgfilename(savedName);
 		
+		sharing.setEximgfilename(file.getOriginalFilename());
 		try {
-			System.out.println("파라메터: " + sharing);
+			String savedName = uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid());
+			sharing.setEximgfilename(savedName);
 			sharingService.regist(sharing);
+			uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid());
 			System.out.println("성공");
 		} catch (Exception e) {
 			System.out.println("실패");
@@ -64,6 +65,17 @@ public class SharingController {
 		}
 		return "redirect:/sharing/list";
 
+	}
+	
+	private String uploadFile(String originalName, byte[] fileData, int shid) throws IOException{
+		String loginId = "kosta111";
+		
+		String savedName = loginId + "@" + shid + "@" + originalName;
+		File target = new File(uploadPath, savedName);
+		
+		FileCopyUtils.copy(fileData, target);
+		
+		return savedName;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -90,17 +102,24 @@ public class SharingController {
 
 	}
 	
-	private String uploadFile(String originalName, byte[] fileData) throws IOException{
-		UUID uid = UUID.randomUUID();
-		String loginId = "kosta111";
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public ResponseEntity<Sharing> update(@RequestBody Sharing sharing, Model model) {
 		
-		String savedName = loginId + "@" + originalName;
-		File target = new File(uploadPath, savedName);
-		
-		FileCopyUtils.copy(fileData, target);
-		
-		return savedName;
+		ResponseEntity<Sharing> entity = null;
+		//String id = sharingService.read(sharing.getShid()).getId();
+		try {
+			model.addAttribute("read", sharingService.read(sharing.getShid()));
+			System.out.println(sharingService.read(sharing.getShid()) + "결과");
+			entity = new ResponseEntity<Sharing>(sharingService.read(sharing.getShid()), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			//entity = new ResponseEntity<Sharing>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+
 	}
+	
+	
 
 	/*@ResponseBody
 	@RequestMapping(value = "/uploadImage", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
@@ -127,13 +146,12 @@ public class SharingController {
 
 		try {
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
 			MediaType mType = MediaUtils.getMediaType(formatName);
 
 			HttpHeaders headers = new HttpHeaders();
-
 			in = new FileInputStream(uploadPath + fileName);
 
+			logger.info(uploadPath + fileName);
 			if (mType != null) {
 				headers.setContentType(mType);
 			} else {

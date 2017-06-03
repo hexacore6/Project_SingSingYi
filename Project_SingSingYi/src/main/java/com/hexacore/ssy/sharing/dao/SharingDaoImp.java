@@ -1,6 +1,7 @@
 package com.hexacore.ssy.sharing.dao;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -63,6 +64,11 @@ public class SharingDaoImp implements SharingDao {
 	public void addAttach(String eximgfilename) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getShid() {
+		return session.selectOne(namespace + ".getShid");
 	}
 
 	

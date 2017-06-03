@@ -6,9 +6,14 @@
 	<insert id="create">
 		INSERT INTO sharings (id, rrid, shcontent, eximgfilename)
 		VALUES (#{id}, #{rrid}, #{shcontent}, #{eximgfilename})
-			
 	</insert>
-	<!-- VALUES(#{id}, #{rrid}, #{shcontent}, #{eximgfilename}) -->
+	
+	<select id="getShid" resultType="Integer">
+		SELECT shid
+		FROM sharings
+		ORDER BY shregdate desc limit 1
+	</select>
+	
 	
 	<select id="read" resultType="com.hexacore.ssy.sharing.domain.Sharing">
 		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename

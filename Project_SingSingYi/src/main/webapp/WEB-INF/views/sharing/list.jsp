@@ -26,8 +26,16 @@
 	background: transparent !important;
 }
 </style>
+
 <style type="text/css">
 #imageDrop{
+	width: 100%;
+	height: 25px;
+	background-color: #00ffbf;
+	
+}
+
+#updateImageDrop{
 	width: 100%;
 	height: 25px;
 	background-color: #00ffbf;
@@ -41,36 +49,48 @@
 </style>
 
 <script type="text/javascript">
+	
+	
+
+	/* $(document).scroll(function() {
+		var maxHeight = $(document).height();
+		var currentScroll = $(window).scrollTop() + $(window).height();
+
+		if (maxHeight <= currentScroll + 100) {
+			
+		}
+	}) */
+
 	//<![CDATA[
-	var pageLoaded = 1; //현재 페이지
+	/* var pageLoaded = 1; //현재 페이지
 
 	$(window)
 			.scroll(
 					function() {
 						if ($(window).scrollTop() == $(document).height()
-								- $(window).height()) {
+								- $(window).height()) { */
 
-							/* <div class="item">
-							<div class="animate-box">
-								<a href="../resources../resources/images/img_2.jpg"
+	/* <div class="item">
+	<div class="animate-box">
+		<a href="../resources../resources/images/img_2.jpg"
 				class="image-popup fh5co-board-img"><img
 				src="../resources/images/img_2.jpg"
 				alt="Free HTML5 Bootstrap template"></a>
-								<div class="fh5co-desc">Veniam voluptatum voluptas tempora
-									debitis harum totam vitae hic quos.</div>
-							</div>
-							</div> */
+		<div class="fh5co-desc">Veniam voluptatum voluptas tempora
+			debitis harum totam vitae hic quos.</div>
+	</div>
+	</div> */
 
-							$('#fh5co-board')
-									.append(
-											"<div id=\"fh5co-main\"><div class=\"container\"><div class=\"row\"><div class=\"item\">"
-													+ "<div class=\"animate-box\">"
-													+ "<a href=\"/resources/images/img_2.jpg\" class=\"image-popup fh5co-board-img\">"
-													+ "<img src=\"../resources/images/img_2.jpg\" alt=\"Free HTML5 Bootstrap template\"></a>"
-													+ "<div class=\"fh5co-desc\">Veniam voluptatum voluptas tempora debitis harum totam vitae hic quos.</div>"
-													+ "</div></div></div></div></div>");
-						}
-					});
+	/* $('#fh5co-board')
+			.append(
+					"<div id=\"fh5co-main\"><div class=\"container\"><div class=\"row\"><div class=\"item\">"
+							+ "<div class=\"animate-box\">"
+							+ "<a href=\"/resources/images/img_2.jpg\" class=\"image-popup fh5co-board-img\">"
+							+ "<img src=\"../resources/images/img_2.jpg\" alt=\"Free HTML5 Bootstrap template\"></a>"
+							+ "<div class=\"fh5co-desc\">Veniam voluptatum voluptas tempora debitis harum totam vitae hic quos.</div>"
+							+ "</div></div></div></div></div>");
+	}
+	}); */
 	//]]>
 </script>
 
@@ -116,6 +136,23 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function(){
+	
+	$("#closeButton").on("click", function() {
+		$("#readId").empty();
+		$("#readShcontent").empty();
+		$("#readLikecnt").empty();
+		$("#readCommentcnt").empty();
+	});
+	
+	$("#updateCloseButton").on("click", function() {
+		$("#updateId").empty();
+		$("#updateShcontent").empty();
+		$("#updateLikecnt").empty();
+		$("#updateCommentcnt").empty();
+	});
+	
+	/* var image = "<img src=\"displayFile?fileName=/${sharing.eximgfilename}\">"
+	$("#albumImage").append(image); */
 	/* $("#textAddbtn").on("click", function() {
 		
 		var shcontent = $("#newContentText").val();
@@ -158,9 +195,12 @@ $(document).ready(function(){
 		console.log(sharingVal);
 	});	 */
 	
-	/* $("#uploadImage").on("click", function() {
+	$("#uploadImage").on("click", function() {
 		$("#imageDrop").show("slow");
-}); */  
+});  
+	$("#updateUploadImage").on("click", function() {
+		$("#updateImageDrop").show("slow");
+});  
 	
 	/*
 	 $("#imageDrop").on("dragenter dragover", function(event) {
@@ -309,10 +349,9 @@ $(document).ready(function(){
 											<i class="fa fa-pencil"> </i>Sing Sing
 										</button>
 										<!-- 이미지 업로드 공간 -->
-										<div id="imageDrop">
+										<div id="imageDrop" hidden>
 											<input type="file" name="file">
 										</div>
-										<!-- 이미지 이름 -->
 									</div>
 								</form>
 							</div>
@@ -324,31 +363,29 @@ $(document).ready(function(){
 					<!-- /.modal -->
 
 					<!-- read modal -->
-					<div class="modal" id="myModal2">
+					<div class="modal" id="readModal">
 						<div class="modal-dialog">
 							<div class="modal-content">
 
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									<h4 class="modal-title">글 조회</h4>
-									<p id="hiddenShid"></p>
+											aria-label="Close" id="closeButton">
+											<span aria-hidden="true">&times;</span>
+										</button>
 								</div>
 
 								<div class="modal-body">
-									<div class="row">
-										<img alt="그림이 없습니다." align="center" style="width: 100%;"
-											src="../resources/images/twice-4th-mini-album-signal.jpg">
-									</div>
+										<div class="animate-box">
+											<img id="readImage" src="" style="margin-left: auto; margin-right: auto; display: block;">
+											<!-- <img alt="그림이 없습니다." align="center" style="width: 100%;"
+											src="../resources/images/twice-4th-mini-album-signal.jpg"> -->
+										</div>
 									<div class="row">
 										<h3>
-											<i class="fa fa-user"></i> <span id="readShid">@</span>
+											<i class="fa fa-user"></i> <span id="readId"></span>
 										</h3>
 									</div>
 									<div class="row">
-
 										<span class="bg-red"><i class="fa fa-heart"> <span
 												id="readLikecnt"> </span></i> <i class="fa fa-comment"> <span
 												id="readCommentcnt"> </span></i> <i class="fa fa-share"></i></span> <label
@@ -361,41 +398,120 @@ $(document).ready(function(){
 
 								<div class="modal-footer"></div>
 							</div>
+							
 							<!-- /.modal-content -->
 						</div>
 						<!-- /.modal-dialog -->
 					</div>
-
 					<!-- /.read modal -->
+
+
+					<!-- update modal -->
+					<div class="modal" id="updateModal">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form role="form" action="update" method="post"
+									enctype="multipart/form-data">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close" id="updateCloseButton">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title">글 수정</h4>
+									</div>
+
+									<div class="modal-body">
+										<div class="animate-box">
+											<img id="updateImage" src=""
+												style="margin-left: auto; margin-right: auto; display: block;">
+										</div>
+										<div class="row">
+											<h3>
+												<i class="fa fa-user"></i> <span id="updateId"></span>
+											</h3>
+										</div>
+										<div class="row">
+											<span class="bg-red"><i class="fa fa-heart"> <span
+													id="updateLikecnt"> </span></i> <i class="fa fa-comment"> <span
+													id="updateCommentcnt"> </span></i> <i class="fa fa-share"></i></span>
+											<label for="message-text" class="control-label"></label>
+										</div>
+										<textarea class="form-control" id="updateShcontent"
+											autofocus="autofocus" rows="5" cols="50">
+									</textarea>
+
+									</div>
+
+									<div class="modal-footer">
+										<div class="pull-left">
+											<i class="fa fa-microphone"> </i> <i class="fa fa-camera"
+												id="updateUploadImage"></i>
+										</div>
+										<div class="row">
+											<button type="button" id="updateBtn" class="btn btn-primary">
+												<i class="fa fa-pencil"> </i>UPDATE
+											</button>
+											<button type="button" class="btn btn-primary"
+												data-dismiss="modal" aria-label="Close">
+												<i class="fa fa-pencil"> </i>CANCEL
+											</button>
+										</div>
+										<div id="updateImageDrop" hidden>
+											<input type="file" name="file">
+										</div>
+									</div>
+								</form>
+							</div>
+
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal-dialog -->
+					</div>
+					<!-- /.update modal -->
+
+
 					<c:forEach items="${list}" var="sharing">
 						<div class="item">
+							
 							<div class="animate-box">
-								<!-- "../resources/images/twice-4th-mini-album-signal.jpg" -->
-								<img id="albumImage"
-									src="C:\eximg\upload\kosta111@twice-4th-mini-album-signal.jpg"
-									alt="../resources/images/twice_knockknock.jpg"
-									onclick="showModal('${sharing.shid}')">
+							
+								<img
+									src="displayFile?fileName=/${sharing.eximgfilename}"
+									alt="${pageContext.servletContext.contextPath }/resources/img/LOGOsingsing7.png"
+									onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; display: block;">
 								<!-- data-toggle="modal"
 									data-target="#myModal2" -->
 							</div>
-							<div style="margin: 20px;">#트와이스#Knock Knock</div>
-							<div style="margin: 20px;">
+							<div style="margin: 10px;">#트와이스#Knock Knock</div>
+							<div style="margin: 10px;">
 								<h3>
 
-									<span>@${sharing.shid}</span> <i class="fa fa-user"></i><span
-										id="sharingId">@${sharing.id}</span> <input id="sharingVal"
-										type="text" value="@${sharing.id}"> <input type="text"
-										value="@${sharing.eximgfilename}">
+									<i class="fa fa-user"></i><span id="sharingId">${sharing.id}</span>
+									<c:set var="target" value="${sharing.id}"/>
+									<c:set var="id" value="kosta111"/>
+									<c:if test="${target eq id}">
+										<div style="text-align: right;">
+											<i class="fa fa-pencil"
+												onclick="showUpdateModal('${sharing.shid}')"></i><span
+												id="sharingId"> </span> <i class="fa fa-trash-o"></i><span
+												id="sharingId"> </span>
+										</div>
+									</c:if>
+
 								</h3>
 
 							</div>
-							<div class="row" style="margin: 20px;">
+							<!-- <div class="row" style="margin: 10px;"><i class="fa fa-pencil-square-o">
+							<i class="fa fa-trash-o"></div> -->
+							<div class="row" style="margin: 10px;">
 								<span>${sharing.shcontent}</span>
 							</div>
-							<div class="row" style="margin: 20px;">
+							<div class="row" style="margin: 10px;">
+							<h3>
 								<span class="bg-red"><i class="fa fa-heart"><span>
 											${sharing.likecnt} </span></i> <i class="fa fa-comment"><span>
 											${sharing.commentcnt} </span></i> <i class="fa fa-share"></i></span>
+							</h3>
 							</div>
 						</div>
 					</c:forEach>
@@ -405,11 +521,9 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
-	</div>
 
-	<!-- <script type="text/javascript">
-		function showModal(shid) {
-			console.log(shid);
+	<script type="text/javascript">
+		function showReadModal(shid) {
 			$.ajax({
 				type : 'post',
 				url : '/sharing/read',
@@ -422,16 +536,13 @@ $(document).ready(function(){
 					shid : shid,
 				}), 
 				success : function(result) {
-					$("#myModal2").modal('show');
-					console.log(result);
-					
+					$("#readModal").modal('show');
 					var array = JSON.parse(result);
-					$("#readShid").append(array.shid);
+					$("#readImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);
+					$("#readId").append(array.id);
 					$("#readShcontent").append(array.shcontent);
 					$("#readLikecnt").append(array.likecnt);
 					$("#readCommentcnt").append(array.commentcnt);
-					console.log(array);
-					console.log("shid : " + array.shid);
 					
 
 				}
@@ -439,7 +550,33 @@ $(document).ready(function(){
 			
 
 		}
-	</script> -->
+		
+		function showUpdateModal(shid) {
+			$.ajax({
+				type : 'post',
+				url : '/sharing/read',
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				dataType : 'text',
+				data : JSON.stringify({
+					shid : shid,
+				}), 
+				success : function(result) {
+					$("#updateModal").modal('show');
+					var array = JSON.parse(result);
+					$("#updateImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);
+					$("#updateId").append(array.id);
+					$("#updateShcontent").append(array.shcontent);
+					$("#updateLikecnt").append(array.likecnt);
+					$("#updateCommentcnt").append(array.commentcnt);
+				}
+			});
+
+		}
+		
+	</script>
 
 	<!-- jQuery -->
 	

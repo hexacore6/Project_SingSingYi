@@ -1,5 +1,6 @@
 package com.hexacore.ssy.sharing.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.hexacore.ssy.sharing.domain.Sharing;
@@ -14,4 +15,5 @@ public interface SharingService {
 	public void remove(int shid);
 	public void updateCommentCnt(int shid);
 	public void updateLikeCnt(int shid);
+	public int getShid();
 }

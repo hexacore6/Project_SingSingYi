@@ -1,5 +1,6 @@
 package com.hexacore.ssy.sharing.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -63,6 +64,11 @@ public class SharingServiceImp implements SharingService {
 	@Override
 	public void updateLikeCnt(int shid) {
 		sharingDao.updateLikeCnt(shid);
+	}
+
+	@Override
+	public int getShid() {
+		return sharingDao.getShid();
 	}
 	
 

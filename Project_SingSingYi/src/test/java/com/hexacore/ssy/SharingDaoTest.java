@@ -1,5 +1,10 @@
 package com.hexacore.ssy;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -21,7 +26,7 @@ public class SharingDaoTest {
 	@Inject
 	private SharingDao dao;
 
-	@Test
+	//@Test
 	public void testCreate() throws Exception {
 		
 		Sharing sharing = new Sharing();
@@ -39,9 +44,9 @@ public class SharingDaoTest {
 //		logger.info(service.read(90));
 	}
 	
-	//@Test
+	@Test
 	public void testListAll(){
-		//logger.info("2" + dao.listAll());
+		logger.info("2" + dao.listAll());
 	}
 	
 	//@Test
@@ -54,6 +59,12 @@ public class SharingDaoTest {
 	public void testUpdateCommentCnt(){
 		//dao.updateCommentCnt(2);
 		logger.info("댓글");
+	}
+	
+	//@Test
+	public void testGetShid() throws Exception{
+		
+		System.out.println(dao.getShid());
 	}
 
 	

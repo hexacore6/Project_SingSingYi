@@ -1,5 +1,6 @@
 package com.hexacore.ssy.sharing.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.hexacore.ssy.sharing.domain.Sharing;
@@ -8,6 +9,7 @@ import com.hexacore.ssy.sharing.domain.Sharing;
 public interface SharingDao {
 	public List<Sharing> listAll();
 	public void create(Sharing sharing) throws Exception;
+	public int getShid();
 	public Sharing read(int shid);
 	public void update(Sharing shid);
 	public void delete(int shid);

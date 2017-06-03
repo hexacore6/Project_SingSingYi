@@ -9,8 +9,8 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.hexacore.ssy.common.Criteria;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
-import com.hexacore.ssy.mypage.domain.Favorite;
 import com.hexacore.ssy.mypage.domain.Member;
 import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.mypage.domain.Sharing;
@@ -122,6 +122,49 @@ public class MypageDAOImpl implements MypageDAO{
 	public Song selectSong(int sid) {
 		return session.selectOne(namespace+".selectSong", sid);
 	}
-
-
+	
+	
+	/// 코인 내역 조회 페이징 처리
+	@Override
+	public List<CoinHistory> coinListPage(int page, String id) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("page", page);
+		paramMap.put("id", id);
+		
+		if (page <= 0) {
+			page = 1;
+		}
+		
+		page = (page - 1) * 10;
+		
+		return session.selectList(namespace+".coinListPage", paramMap);
+	}
+	
+	/// 코인 내역 조회 페이징 처리2
+	@Override
+	public List<CoinHistory> coinListCriteria(Criteria cri, String id) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("pageStart", cri.getPageStart());
+		paramMap.put("perPageNum", cri.getPerPageNum());
+		paramMap.put("id", id);
+		
+		return session.selectList(namespace+".coinListCriteria", paramMap);
+	}
+	
+	// 코인 내역 테이블 행의 수 계산
+	@Override
+	public int countPaging(Criteria cri, String id) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("pageStart", cri.getPageStart());
+		paramMap.put("perPageNum", cri.getPerPageNum());
+		paramMap.put("id", id);
+		
+		return session.selectOne(namespace+".countPaging", paramMap);
+	}
 }

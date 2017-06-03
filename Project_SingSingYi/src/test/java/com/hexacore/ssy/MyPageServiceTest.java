@@ -11,7 +11,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.hexacore.ssy.mypage.domain.Favorite;
+import com.hexacore.ssy.common.Criteria;
+import com.hexacore.ssy.mypage.domain.CoinHistory;
 import com.hexacore.ssy.mypage.domain.Song;
 import com.hexacore.ssy.mypage.service.MypageService;
 
@@ -39,7 +40,7 @@ public class MyPageServiceTest {
 	}
 	
 	// Top5 랭킹 조회
-	@Test
+	//@Test
 	public void readTopRankTest(){
 		service.readTopRank();		
 	}
@@ -97,5 +98,14 @@ public class MyPageServiceTest {
 	//@Test
 	public Song selectSong(){
 		return service.selectSong(1);
+	}
+	
+	@Test
+	public void criList(){
+		Criteria cri = new Criteria();
+		cri.setPage(2);
+		cri.setPerPageNum(5);
+		String id = "woong1";
+		service.coninListCriteria(cri, id);
 	}
 }

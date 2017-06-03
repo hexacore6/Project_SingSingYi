@@ -3,6 +3,7 @@ package com.hexacore.ssy.mypage.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.hexacore.ssy.common.Criteria;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
 import com.hexacore.ssy.mypage.domain.Favorite;
 import com.hexacore.ssy.mypage.domain.Member;
@@ -56,4 +57,10 @@ public interface MypageService  {
 	
 	// 해당 노래번호인 노래 조회
 	public Song selectSong(int sid);
+	
+	// 나의 코인변경내역 조회 페이징 처리
+	public List<CoinHistory> coninListCriteria(Criteria cri, String id);
+	
+	// 코인 내역 테이블 행의 수 계산
+	public int countPaging(Criteria cri, String id);
 }

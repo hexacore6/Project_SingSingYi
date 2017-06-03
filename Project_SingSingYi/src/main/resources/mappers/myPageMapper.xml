@@ -124,4 +124,35 @@
 	from songs
 	where sid = #{sid}
 	</select>
+	
+	<!-- 나의 코인내역 조회 페이징처리 -->
+	<select id="coinListPage" resultType="com.hexacore.ssy.mypage.domain.CoinHistory">
+	<![CDATA[
+	select chid, id, chtype, chcontent, chcount, chdate
+	from coinhistory
+	where chid > 0
+	order by chid desc, chdate desc
+	limit #{page}, 10
+	]]>
+	</select>
+	
+	<!-- 나의 코인내역 조회 페이징처리2 -->
+	<select id="coinListCriteria" resultType="com.hexacore.ssy.mypage.domain.CoinHistory">
+	<![CDATA[
+	select chid, id, chtype, chcontent, chcount, chdate
+	from coinhistory
+	where chid > 0 AND id=#{id}
+	order by chid desc, chdate desc
+	limit #{pageStart}, #{perPageNum}
+	]]>
+	</select>
+	
+	<!-- 코인 내역 테이블 행의 수 계산 -->
+	<select id="countPaging" resultType="int" >
+	<![CDATA[
+	select count(chid)
+	from coinhistory
+	where chid > 0 AND id=#{id}
+	]]>
+	</select>
 </mapper>

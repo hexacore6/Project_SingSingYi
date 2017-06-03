@@ -5,8 +5,8 @@
 
 	<insert id="create">
 		INSERT INTO sharings (id, rrid, shcontent, eximgfilename)
-		VALUES(#{id}, #{rrid}, #{shcontent}, #{eximgfilename})
-		
+		VALUES (#{id}, #{rrid}, #{shcontent}, #{eximgfilename})
+			
 	</insert>
 	<!-- VALUES(#{id}, #{rrid}, #{shcontent}, #{eximgfilename}) -->
 	

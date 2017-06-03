@@ -1,12 +1,10 @@
 package com.hexacore.ssy.sharing.controller;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -22,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,8 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hexacore.ssy.sharing.domain.Sharing;
 import com.hexacore.ssy.sharing.service.SharingService;
-import com.hexacore.ssy.sharing.util.UploadFileUtils;
 import com.hexacore.ssy.sharing.util.MediaUtils;
+
 
 /**
  * Handles requests for the application home page.
@@ -51,22 +48,25 @@ public class SharingController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(Sharing sharing, MultipartFile file, Model model) throws IOException {
-		
-		sharing.setEximgfilename(file.getOriginalFilename());
-		String savedName = uploadFile(file.getOriginalFilename(), file.getBytes());
-		sharing.setEximgfilename(savedName);
+		System.out.println(file);
+		//System.out.println("123123123" + file.getOriginalFilename());
+		//sharing.setEximgfilename(file.getOriginalFilename());
+		//String savedName = uploadFile(file.getOriginalFilename(), file.getBytes());
+		//sharing.setEximgfilename(savedName);
 		
 		try {
+			System.out.println("파라메터: " + sharing);
 			sharingService.regist(sharing);
 			System.out.println("성공");
 		} catch (Exception e) {
 			System.out.println("실패");
+			e.printStackTrace();
 		}
-		return "redirect:/sharing/listAll";
+		return "redirect:/sharing/list";
 
 	}
 
-	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void list(Model model) {
 		logger.info("show all list...");
 		model.addAttribute("list", sharingService.listAll());

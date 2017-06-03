@@ -14,7 +14,7 @@
 <body>
 	<!-- header -->
 	<%@ include file="include/header.jsp" %>
-
+	
 	<section id="content">
         <!--내용시작-->
         <div class="row">

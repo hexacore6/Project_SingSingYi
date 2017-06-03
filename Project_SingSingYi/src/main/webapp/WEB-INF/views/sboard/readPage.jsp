@@ -4,8 +4,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/resources/css/main.css">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="<%=application.getContextPath() %>/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="<%=application.getContextPath() %>/resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins 
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="<%=application.getContextPath() %>/resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    
+    <!-- jQuery 2.1.4 -->
+    <script src="<%=application.getContextPath() %>/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    
 <meta charset="utf-8">
-<title>register</title>
+<title>readPage</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 <!-- handlebars template -->
@@ -28,6 +45,7 @@
                </li>
             {{/each}}
          </script>
+         
 </head>
 
 
@@ -75,7 +93,12 @@
             <button type="submit" class="btn btn-warning" id="modifyBtn">수정</button>
             <button type="submit" class="btn btn-danger"  id="removeBtn">삭제</button>
           </c:if>
-            <button type="submit" class="btn btn-primary" id="goListBtn">목록</button>
+          <c:if test="${article.bid == 1 }">
+            <button type="submit" class="btn btn-primary" id="qnaListBtn">목록</button>
+          </c:if>
+          <c:if test="${article.bid == 2 }">
+            <button type="submit" class="btn btn-primary" id="noticeListBtn">목록</button>
+          </c:if>
           </div>
 
           <!-- /.box-footer -->
@@ -150,10 +173,21 @@
 
 
   <!-- /.content -->
+  
+    <!-- Bootstrap 3.3.2 JS -->
+    <script src="/resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src='/resources/plugins/fastclick/fastclick.min.js'></script>
+    <!-- AdminLTE App -->
+    <script src="/resources/dist/js/app.min.js" type="text/javascript"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="/resources/dist/js/demo.js" type="text/javascript"></script>
+    
   <%@include file="../include/footer.jsp"%>
   
+    
+    
   <script>
-			$(document).ready(function() {
 
 				var formObj = $("form[role='form']");
 
@@ -165,9 +199,15 @@
 					formObj.submit();
 				});
 
-				$(".btn-primary").on("click", function() {
+				$("#qnaListBtn").on("click", function() {
 					formObj.attr("method", "get");
 					formObj.attr("action", "/sboard/list");
+					formObj.submit();
+				});
+				
+				$("#noticeListBtn").on("click", function() {
+					formObj.attr("method", "get");
+					formObj.attr("action", "/sboard/nlist");
 					formObj.submit();
 				});
 				
@@ -348,7 +388,6 @@
 				target.html(str);
 			};
 
-		});
 		</script>
 
 

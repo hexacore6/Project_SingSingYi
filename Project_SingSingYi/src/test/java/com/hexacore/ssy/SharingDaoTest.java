@@ -40,12 +40,13 @@ public class SharingDaoTest {
 
 	@Inject
 	private SharingService service;
+	private SharingDao	dao;
 
-	//@Test
+	@Test
 	public void testCreate() throws Exception {
 		
 		Sharing sharing = new Sharing();
-		sharing.setId("kosta111");
+		sharing.setId("woong");
 		sharing.setRrid(1);
 		sharing.setShcontent("test");
 		sharing.setEximgfilename("test.jpg");
@@ -53,7 +54,7 @@ public class SharingDaoTest {
 		service.regist(sharing);
 	}
 	
-	@Test
+	//@Test
 	public void testRead() {
 		//logger.info("2" + dao.read(2));
 		logger.info(service.read(90));

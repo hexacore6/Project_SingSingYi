@@ -158,9 +158,10 @@ $(document).ready(function(){
 		console.log(sharingVal);
 	});	 */
 	
-	$("#uploadImage").on("click", function() {
+	/* $("#uploadImage").on("click", function() {
 		$("#imageDrop").show("slow");
-});  
+}); */  
+	
 	/*
 	 $("#imageDrop").on("dragenter dragover", function(event) {
 		event.preventDefault();
@@ -234,7 +235,8 @@ $(document).ready(function(){
 		})
 		
 	}) */
-	function checkImageType(fileName) {
+	
+	/* function checkImageType(fileName) {
 		var pattern = /jpg|gif|png|jpeg/i;
 		return fileName.match(pattern);
 	}
@@ -257,22 +259,19 @@ $(document).ready(function(){
 		var end = fileName.substr(14);
 		
 		return front + end;
-	}
+	} */
 	
 });
 </script>
+
 	<%@include file="../include/header.jsp"%>
 
 
 
 	<div id="fh5co-main">
 		<div class="container">
-
 			<div class="row">
-
-
-				<div id="fh5co-board" data-columns>\
-				
+				<div id="fh5co-board" data-columns>
 					<!-- write button - open to write modal -->
 					<button type="button" class="btn btn-block btn-danger btn-lg"
 						data-toggle="modal" data-target="#myModal">
@@ -283,21 +282,22 @@ $(document).ready(function(){
 					<div class="modal" id="myModal">
 						<div class="modal-dialog">
 							<div class="modal-content">
-								<form role="form" action="register" method="post" enctype="multipart/form-data">
+								<form role="form" action="register" method="post"
+									enctype="multipart/form-data">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal"
 											aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
 										<h4 class="modal-title">새 글 작성</h4>
-										<input type="hidden" name="id" value="kosta111">
-										<input type="hidden" name="rrid" value=1>
+										<input type="hidden" name="id" value="kosta111"> <input
+											type="hidden" name="rrid" value=1>
 									</div>
 									<div class="modal-body">
 										<label for="message-text" class="control-label"></label>
 										<textarea class="form-control" name="shcontent"
-											placeholder="내용을 써주세요..."
-											autofocus="autofocus" rows="5" cols="50"></textarea>
+											placeholder="내용을 써주세요..." autofocus="autofocus" rows="5"
+											cols="50"></textarea>
 									</div>
 									<div class="modal-footer">
 										<div class="pull-left">
@@ -310,7 +310,7 @@ $(document).ready(function(){
 										</button>
 										<!-- 이미지 업로드 공간 -->
 										<div id="imageDrop">
-											<input type="file"  name="file"> 
+											<input type="file" name="file">
 										</div>
 										<!-- 이미지 이름 -->
 									</div>
@@ -359,9 +359,7 @@ $(document).ready(function(){
 
 								</div>
 
-								<div class="modal-footer">
-
-								</div>
+								<div class="modal-footer"></div>
 							</div>
 							<!-- /.modal-content -->
 						</div>
@@ -372,21 +370,22 @@ $(document).ready(function(){
 					<c:forEach items="${list}" var="sharing">
 						<div class="item">
 							<div class="animate-box">
-							<!-- "../resources/images/twice-4th-mini-album-signal.jpg" -->
+								<!-- "../resources/images/twice-4th-mini-album-signal.jpg" -->
 								<img id="albumImage"
 									src="C:\eximg\upload\kosta111@twice-4th-mini-album-signal.jpg"
-									alt="../resources/images/twice_knockknock.jpg" onclick="showModal('${sharing.shid}')">
-									<!-- data-toggle="modal"
+									alt="../resources/images/twice_knockknock.jpg"
+									onclick="showModal('${sharing.shid}')">
+								<!-- data-toggle="modal"
 									data-target="#myModal2" -->
 							</div>
 							<div style="margin: 20px;">#트와이스#Knock Knock</div>
 							<div style="margin: 20px;">
 								<h3>
-								
-									<span>@${sharing.shid}</span>
-									<i class="fa fa-user"></i><span id="sharingId">@${sharing.id}</span>
-									<input id="sharingVal" type="text" value="@${sharing.id}">
-									<input type="text" value="@${sharing.eximgfilename}">
+
+									<span>@${sharing.shid}</span> <i class="fa fa-user"></i><span
+										id="sharingId">@${sharing.id}</span> <input id="sharingVal"
+										type="text" value="@${sharing.id}"> <input type="text"
+										value="@${sharing.eximgfilename}">
 								</h3>
 
 							</div>
@@ -402,13 +401,13 @@ $(document).ready(function(){
 					</c:forEach>
 
 				</div>
-					
-				</div>
+
 			</div>
 		</div>
 	</div>
+	</div>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function showModal(shid) {
 			console.log(shid);
 			$.ajax({
@@ -440,7 +439,7 @@ $(document).ready(function(){
 			
 
 		}
-	</script>
+	</script> -->
 
 	<!-- jQuery -->
 	
@@ -451,12 +450,11 @@ $(document).ready(function(){
 	<!-- Main JS -->
 	<script src="../resources/js/jquery.magnific-popup.min.js"></script>
 	<script src="../resources/js/main.js"></script>
-    
 	<script src="../resources/dist/js/app.min.js" type="text/javascript"></script>
     <script src="../resources/dist/js/demo.js" type="text/javascript"></script>
     
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="${pageContext.servletContext.contextPath }../resources/css/main.css">
+    <link rel="stylesheet" href="../resources/css/main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
 

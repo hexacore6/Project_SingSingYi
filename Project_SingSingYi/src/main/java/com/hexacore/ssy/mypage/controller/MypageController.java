@@ -1,7 +1,5 @@
 package com.hexacore.ssy.mypage.controller;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -12,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.hexacore.ssy.mypage.domain.Favorite;
+import com.hexacore.ssy.common.Criteria;
+import com.hexacore.ssy.common.PageMaker;
 import com.hexacore.ssy.mypage.domain.Member;
 import com.hexacore.ssy.mypage.service.MypageService;
 
@@ -41,11 +40,19 @@ public class MypageController {
 		return "redirect:/mypage/mySharing";
 	}
 	
-	// 나의 코인개수 조회 (회원정보조회)
+	// 나의 코인개수 및 코인내역 조회 (회원정보조회)
 	@RequestMapping(value="/myCoin", method=RequestMethod.GET)
-	public void readMyCoin(@RequestParam("id") String id, Model model){
+	public void readMyCoin(@RequestParam("id") String id, Criteria cri, Model model){
 		model.addAttribute("myCoin", service.readMyInformation(id));
-		model.addAttribute("list", service.readCoinHistory(id));
+		logger.info("테이블 :" +  service.coninListCriteria(cri, id));
+		model.addAttribute("list", service.coninListCriteria(cri, id));
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		
+		pageMaker.setTotalCount(service.countPaging(cri, id));
+		
+		model.addAttribute("pageMaker", pageMaker);
+		
 	}
 	// 나의 애창곡 조회
 	@RequestMapping(value="/myFavorite", method=RequestMethod.GET)
@@ -84,4 +91,5 @@ public class MypageController {
 		service.updateMyInformation(member);
 		
 	}
+	
 }

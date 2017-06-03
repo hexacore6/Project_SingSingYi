@@ -89,51 +89,10 @@ public class SearchBoardController {
 		article.setBid(2);  // 공지사항 종류 번호
 		service.regist(article);
 		
-/*		rttr.addAttribute("page", cri.getPage());
-		rttr.addAttribute("perPageNum", cri.getPerPageNum());
-		rttr.addAttribute("searchType", cri.getSearchType());
-		rttr.addAttribute("keyword", cri.getKeyword());*/
-		
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		return "redirect:/sboard/nlist";
 	}
 	
-	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
-	public void listAll(Model model){
-		logger.info("Show all list");
-		model.addAttribute("list", service.listAll());
-	}
-	
-	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public void read(@RequestParam("aid") int aid ,Model model){
-		model.addAttribute(service.read(aid));
-	}
-	
-	@RequestMapping(value = "/remove", method = RequestMethod.POST)
-	public String remove(@RequestParam("aid") int aid , RedirectAttributes rttr){
-		
-		service.remove(aid);
-		rttr.addFlashAttribute("msg", "SUCCESS");
-		
-		return "redirect:/sboard/listAll";
-	}
-	
-	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public void modifyGET(int aid , Model model){
-		
-		model.addAttribute(service.read(aid));
-	}
-	
-	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modifyPOST(Article article, RedirectAttributes rttr){
-		
-		logger.info("MOD POST ..............");
-		
-		service.modify(article);
-		rttr.addFlashAttribute("msg", "SUCCESS");
-		
-		return "redirect:/sboard/listAll";
-	}
 	
 	@RequestMapping(value = "/listCri", method = RequestMethod.GET)
 	public void listAll(Criteria cri, Model model){
@@ -162,13 +121,13 @@ public class SearchBoardController {
 		model.addAttribute(service.read(aid));
 	}
 	
-	@RequestMapping(value ="/modifyPage", method = RequestMethod.GET)
-	public void modifyPagingGET(@RequestParam("aid") int aid, @ModelAttribute("cri") SearchCriteria cri, Model model){
+	@RequestMapping(value ="/qnaModifyPage", method = RequestMethod.GET)
+	public void qnaModifyPagingGET(@RequestParam("aid") int aid, @ModelAttribute("cri") SearchCriteria cri, Model model){
 		model.addAttribute(service.read(aid));
 	}
 	
-	@RequestMapping(value ="/modifyPage", method = RequestMethod.POST)
-	public String modifyPagingPOST(Article article, SearchCriteria cri, RedirectAttributes rttr){
+	@RequestMapping(value ="/qnaModifyPage", method = RequestMethod.POST)
+	public String qnaModifyPagingPOST(Article article, SearchCriteria cri, RedirectAttributes rttr){
 		
 		logger.info(cri.toString());
 		service.modify(article);
@@ -186,8 +145,32 @@ public class SearchBoardController {
 		
 	}
 	
-	@RequestMapping(value="/removePage", method = RequestMethod.POST)
-	public String remove(@RequestParam("aid") int aid , SearchCriteria cri, RedirectAttributes rttr){
+	@RequestMapping(value ="/noticeModifyPage", method = RequestMethod.GET)
+	public void noticeModifyPagingGET(@RequestParam("aid") int aid, @ModelAttribute("cri") SearchCriteria cri, Model model){
+		model.addAttribute(service.read(aid));
+	}
+	
+	@RequestMapping(value ="/noticeModifyPage", method = RequestMethod.POST)
+	public String noticeModifyPagingPOST(Article article, SearchCriteria cri, RedirectAttributes rttr){
+		
+		logger.info(cri.toString());
+		service.modify(article);
+		
+		rttr.addAttribute("page", cri.getPage());
+		rttr.addAttribute("perPageNum", cri.getPerPageNum());
+		rttr.addAttribute("searchType", cri.getSearchType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		
+		rttr.addFlashAttribute("msg", "SUCCESS");
+		
+		logger.info(rttr.toString());
+		
+		return "redirect:/sboard/nlist";
+		
+	}
+	
+	@RequestMapping(value="/qnaRemovePage", method = RequestMethod.POST)
+	public String qnaRemove(@RequestParam("aid") int aid , SearchCriteria cri, RedirectAttributes rttr){
 		
 		service.remove(aid);
 		
@@ -199,6 +182,21 @@ public class SearchBoardController {
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		
 		return "redirect:/sboard/list";
+	}
+	
+	@RequestMapping(value="/noticeRemovePage", method = RequestMethod.POST)
+	public String noticeRemove(@RequestParam("aid") int aid , SearchCriteria cri, RedirectAttributes rttr){
+		
+		service.remove(aid);
+		
+		rttr.addAttribute("page", cri.getPage());
+		rttr.addAttribute("perPageNum", cri.getPerPageNum());
+		rttr.addAttribute("searchType", cri.getSearchType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		
+		rttr.addFlashAttribute("msg", "SUCCESS");
+		
+		return "redirect:/sboard/nlist";
 	}
 	
 }

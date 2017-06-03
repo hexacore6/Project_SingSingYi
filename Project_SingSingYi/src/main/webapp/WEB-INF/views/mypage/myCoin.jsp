@@ -99,33 +99,47 @@
                                     <!-- /.box-header -->
                                     <div class="box-body">
                                         <table class="table table-bordered">
-                                            <tbody>
+                                            <thead>
                                                 <tr>
                                                     <th style="width: 50px; text-align:center;">번호</th>
                                                     <th style="text-align:center;">종류</th>
                                                     <th style="text-align:center;">지급 및 소모 내용</th>
                                                     <th style="width: 50px; text-align:center;">날짜</th>
                                                 </tr>
-                                                 <c:forEach items="${list}" var="historyCoint">
+                                            </thead>
+                                            <c:forEach items="${list}" var="historyCoin">
+                                            <tbody>
                                                 <tr>
-                                                    <th style="width: 10px; text-align:center;">${historyCoint.chid }</th>
-                                                    <th style="text-align:center;">${historyCoint.chtype }</th>
-                                                    <th style="text-align:center;">${historyCoint.chcontent }</th>
-                                                    <th style="width: 400px; text-align:center;"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${historyCoint.chdate }" /></th>
+                                                    <th style="width: 10px; text-align:center;">${historyCoin.chid }</th>
+                                                    <th style="text-align:center;">${historyCoin.chtype }</th>
+                                                    <th style="text-align:center;">${historyCoin.chcontent }</th>
+                                                    <th style="width: 400px; text-align:center;"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${historyCoin.chdate }" /></th>
                                                 </tr>
-                                                </c:forEach>
                                             </tbody>
-                                            
+                                            </c:forEach>
                                         </table>
                                     </div>
                                     <!-- /.box-body -->
+                                    
                                     <div class="box-footer clearfix text-center">
                                         <ul class="pagination  pagination-sm no-margin   ">
-                                            <li><a href="#">«</a></li>
-                                            <li><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">»</a></li>
+                                            <c:if test="${pageMaker.prev }">
+                                              <li><a href="myCoin${pageMaker.makeQuery(pageMaker.startPage-1 )}">&laquo;</a></li>
+                                            </c:if>
+                                            
+                                            <c:set value="woong1" var="id"></c:set>
+                                            <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                            <li
+                                              <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>>
+                                              <a href="myCoin${pageMaker.makeQuery(idx,id)}">${idx }</a>
+                                            </li>
+                                            </c:forEach>
+                                            
+                                            
+                                            <c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
+                                              <li><a
+                                                href="myCoin${pageMaker.makeQuery(pageMaker.endPage + 1)}">&raquo;</a>
+                                            </c:if>
                                         </ul>
                                         
                                     </div>

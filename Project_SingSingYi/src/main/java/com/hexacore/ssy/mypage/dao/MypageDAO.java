@@ -3,8 +3,8 @@ package com.hexacore.ssy.mypage.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import com.hexacore.ssy.common.Criteria;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
-import com.hexacore.ssy.mypage.domain.Favorite;
 import com.hexacore.ssy.mypage.domain.Member;
 import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.mypage.domain.Sharing;
@@ -56,4 +56,13 @@ public interface MypageDAO {
 	
 	// 해당 노래번호인 노래 조회
 	public Song selectSong(int sid); 
+	
+	// 코인 내역 조회 페이징 처리
+	public List<CoinHistory> coinListPage(int page, String id);
+	
+	// 코인 내역 조회 페이징 처리 2
+	public List<CoinHistory> coinListCriteria(Criteria cri, String id);
+	
+	// 코인 내역 테이블 행의 수 계산
+	public int countPaging(Criteria cri, String id);
 }

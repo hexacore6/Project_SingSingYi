@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.hexacore.ssy.common.Criteria;
 import com.hexacore.ssy.mypage.dao.MypageDAO;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
 import com.hexacore.ssy.mypage.domain.Favorite;
@@ -109,5 +110,16 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public void updateMyInformation(Member member) {
 		dao.updateMyInformation(member);
+	}
+	
+	// 나의 코인변경내역 조회 페이징 처리
+	@Override
+	public List<CoinHistory> coninListCriteria(Criteria cri, String id) {
+		return dao.coinListCriteria(cri, id);
+	}
+	// 코인 내역 테이블 행의 수 계산
+	@Override
+	public int countPaging(Criteria cri, String id) {
+		return dao.countPaging(cri, id);
 	}
 }

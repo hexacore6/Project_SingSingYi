@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,7 +69,13 @@
       </div>
  
     <button type="submit" class="btn btn-primary">저장</button>
-    <button type="button" class="btn btn-warning">취소</button>
+    <c:if test="${article.bid == 1 }">
+     <button type="button" class="btn btn-primary" id="qnaListBtn">취소</button>
+    </c:if>
+    <c:if test="${article.bid == 2 }">
+     <button type="button" class="btn btn-primary" id="noticeListBtn">취소</button>
+    </c:if>
+    
     </div>
     
   </form>
@@ -84,27 +91,26 @@ $(document).ready(function(){
      formObj.submit();
   }); 
   
-  //취소
-  $(".btn-warning").on("click", function(){
+  //취소 시 QnA 리스트로
+  $("#qnaListBtn").on("click", function(){
    self.location = "/sboard/list?page=${cri.page}&perPageNum=${cri.perPageNum}"
     +"&searchType=${cri.searchType}&keyword=${cri.keyword}";
+  });
+  //취소 시 공지사항 리스트로
+  $("#noticeListBtn").on("click", function(){
+	   self.location = "/sboard/nlist?page=${cri.page}&perPageNum=${cri.perPageNum}"
+	    +"&searchType=${cri.searchType}&keyword=${cri.keyword}";
   });
 
  var template = Handlebars.compile($("#template").html());
 
-  $("#registerForm").submit(function(event){
-    event.preventDefault();
-    
-    var that = $(this);
-    var str ="";
-    
-    $(".uploadedList .delbtn").each(function(index){
-      str+= "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("href") +"'>";
-    });
-    
-    that.append(str);
-    that.get(0).submit();
-  }); // registerForm END
+ $("#registerForm").submit(function(event){
+	    event.preventDefault();
+	    
+	    var that = $(this);
+	    
+	    that.get(0).submit();
+	  }); // registerForm END
 });
 
 </script>

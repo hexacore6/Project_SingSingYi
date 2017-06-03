@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
+
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,11 +27,10 @@ public class SharingDaoTest {
 	@Inject
 	private SharingDao dao;
 
-	//@Test
 	public void testCreate() throws Exception {
 		
 		Sharing sharing = new Sharing();
-		sharing.setId("kosta111");
+		sharing.setId("woong");
 		sharing.setRrid(1);
 		sharing.setShcontent("test");
 		sharing.setEximgfilename("test.jpg");

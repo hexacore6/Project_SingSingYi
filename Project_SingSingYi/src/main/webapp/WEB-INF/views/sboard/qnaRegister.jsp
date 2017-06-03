@@ -48,7 +48,7 @@
     
     <div class="form-group" style="margin: 5px;">
       <label for="exampleInputEamil1">Writer</label>
-      <input type="text" name="id" class="form-control">
+      <input type="text" name="id" class="form-control" value="${login.id}" readonly>
     </div>
     </div>
  
@@ -81,7 +81,7 @@ $(document).ready(function(){
 	  
   //취소
   $(".btn-warning").on("click", function(){
-   self.location = "list";
+	  self.location = "/sboard/list"
   });
 });
 

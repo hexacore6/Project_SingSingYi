@@ -89,16 +89,22 @@
           <!-- /.box-body -->
           
           <div class="box-footer">
-          <c:if test="${login.userid == article.id }">
-            <button type="submit" class="btn btn-warning" id="modifyBtn">수정</button>
-            <button type="submit" class="btn btn-danger"  id="removeBtn">삭제</button>
+          <c:if test="${login.id == article.id }">
+              <c:if test="${article.bid == 1 }">
+               <button type="submit" class="btn btn-warning" id="qnaModifyBtn">QnA 수정</button>
+               <button type="submit" class="btn btn-danger" id="qnaRemoveBtn">QnA 삭제</button>
+              </c:if>
+              <c:if test="${article.bid == 2 }">
+               <button type="submit" class="btn btn-warning" id="noticeModifyBtn">공지사항 수정</button>
+               <button type="submit" class="btn btn-danger"  id="noticeRemoveBtn">공지사항 삭제</button>
+              </c:if>
           </c:if>
-          <c:if test="${article.bid == 1 }">
-            <button type="submit" class="btn btn-primary" id="qnaListBtn">목록</button>
-          </c:if>
-          <c:if test="${article.bid == 2 }">
-            <button type="submit" class="btn btn-primary" id="noticeListBtn">목록</button>
-          </c:if>
+           <c:if test="${article.bid == 1 }">
+            <button type="submit" class="btn btn-primary" id="qnaListBtn">QnA 목록</button>
+           </c:if>
+           <c:if test="${article.bid == 2 }">
+            <button type="submit" class="btn btn-primary" id="noticeListBtn">공지사항 목록</button>
+           </c:if>
           </div>
 
           <!-- /.box-footer -->
@@ -111,10 +117,11 @@
             <h3 class="box-title">ADD NEW REPLY</h3>
           </div>
         
-        <!-- if START -->
+   <!-- if START -->
+        <c:if test="${not empty login}">
           <div class="box-body">
             <label for="exampleInputEmail1">Writer</label> 
-            <input class="form-control" type="text" placeholder="USER ID" id="newReplyWriter"> 
+            <input class="form-control" type="text" placeholder="USER ID" id="newReplyWriter" value="${login.id }" readonly="readonly"> 
             <label for="exampleInputEmail1">ReplyText</label>
             <input class="form-control" type="text" placeholder="REPLY TEXT" id="newReplyText">
           </div>
@@ -124,8 +131,15 @@
             <button type="submit" class="btn btn-info" id="replyAddBtn">댓글 등록</button>
           </div>
           <!-- /.box-footer -->
+        </c:if>
           
           <!-- if END --> 
+          
+          <c:if test="${empty login }">
+            <div class="box-body">
+              <div><a href="javascript:goLogin();"> 로그인을 해주세요.</a></div>
+            </div>
+          </c:if>
 
         </div>
           <!--  reply END -->
@@ -192,28 +206,40 @@
 				var formObj = $("form[role='form']");
 
 				console.log(formObj);
-
-				$(".btn-warning").on("click", function() {
-					formObj.attr("action", "/sboard/modifyPage");
+				
+				
+				//QnA 수정 버튼
+				$("#qnaModifyBtn").on("click", function() {
+					formObj.attr("action", "/sboard/qnaModifyPage");
 					formObj.attr("method", "get");
 					formObj.submit();
 				});
-
+				//공지사항 수정 버튼
+				$("#noticeModifyBtn").on("click", function() {
+					formObj.attr("action", "/sboard/noticeModifyPage");
+					formObj.attr("method", "get");
+					formObj.submit();
+				});
+				//QnA 리스트 버튼
 				$("#qnaListBtn").on("click", function() {
 					formObj.attr("method", "get");
 					formObj.attr("action", "/sboard/list");
 					formObj.submit();
 				});
-				
+				//공지사항 리스트 버튼
 				$("#noticeListBtn").on("click", function() {
 					formObj.attr("method", "get");
 					formObj.attr("action", "/sboard/nlist");
 					formObj.submit();
 				});
-				
-				//게시물 삭제
-				$("#removeBtn").on("click", function() {
-					formObj.attr("action", "/sboard/removePage");
+				//QnA 삭제 버튼
+				$("#qnaRemoveBtn").on("click", function() {
+					formObj.attr("action", "/sboard/qnaRemovePage");
+					formObj.submit();
+	             });
+				//공지사항 삭제 버튼
+				$("#noticeRemoveBtn").on("click", function() {
+					formObj.attr("action", "/sboard/noticeRemovePage");
 					formObj.submit();
 	             });
 
@@ -340,8 +366,9 @@
 			//댓글 목록 로그인 관계없이 접근, 수정삭제 작업은 로그인한 사용자
 			Handlebars.registerHelper("eqReplyer", function(id, block){
 				var accum ='';
-				accum += block.fn();
-
+				if(id == '${login.id}'){
+					accum += block.fn();
+				}
 				return accum;
 			});
 

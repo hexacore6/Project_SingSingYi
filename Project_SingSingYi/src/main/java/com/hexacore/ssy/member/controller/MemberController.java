@@ -18,7 +18,7 @@ import com.hexacore.ssy.member.service.MemberService;
 public class MemberController {
 	
 	@Inject
-	private MemberService userService;
+	private MemberService memberService;
 	
 	// 로그인 화면
 	@RequestMapping(value="/login", method=RequestMethod.GET)
@@ -29,7 +29,7 @@ public class MemberController {
 	// 결과 처리
 	@RequestMapping(value="/loginPost", method=RequestMethod.POST)
 	public void loginPOST(LoginDTO dto, HttpSession session, Model model) {
-		Member member = userService.login(dto);
+		Member member = memberService.login(dto);
 		
 		if(member == null) {
 			return;

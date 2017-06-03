@@ -1,3 +1,5 @@
+<!-- 수정 form submit 와 update 컨트롤러 하기 -->
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <!DOCTYPE html>

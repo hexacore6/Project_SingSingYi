@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+                        
+<!-- 네임스페이스(사용영역) 설정 -->
+<mapper namespace="com.hexacore.ssy.mapper.SongMapper">
+
+	<!-- 노래 가져오기 -->
+	<select id="randomMusic" resultType="com.hexacore.ssy.song.domain.Song">
+	select *
+	from Songs
+	where sid = #{sid}
+	</select>
+
+</mapper>

@@ -407,8 +407,8 @@ $(document).ready(function(){
 					</div>
 					<!-- /.read modal -->
 
-
-					<!-- update modal -->
+		
+					<!-- 수정하기 모달 -->
 					<div class="modal" id="updateModal">
 						<div class="modal-dialog">
 							<div class="modal-content">

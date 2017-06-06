@@ -102,6 +102,8 @@ public class SharingController {
 
 	}
 	
+	
+	//수정하기
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ResponseEntity<Sharing> update(@RequestBody Sharing sharing, Model model) {
 		

@@ -37,15 +37,21 @@ public class SharingDaoImp implements SharingDao {
 	}
 
 	@Override
-	public void update(Sharing shid) {
-		// TODO Auto-generated method stub
+	public void update(Sharing sharing) {
+		session.update(namespace + ".update", sharing);
+		
+	}
+	
+
+	@Override
+	public void updateImg(Sharing sharing) {
+		session.update(namespace + ".update", sharing);
 		
 	}
 
 	@Override
 	public void delete(int shid) {
-		// TODO Auto-generated method stub
-		
+		session.delete(namespace + ".delete", shid);
 	}
 
 	@Override

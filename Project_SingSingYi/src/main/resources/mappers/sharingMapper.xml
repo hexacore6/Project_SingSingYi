@@ -30,6 +30,20 @@
 		]]>
 	</select>
 	
+	<update id="update">
+		UPDATE sharings
+		SET shcontent = #{shcontent}
+		WHERE shid = #{shid}
+	</update>
+	
+	<update id="updateImg">
+	<![CDATA[
+		UPDATE sharings
+		SET shcontent = #{shcontent}, eximgfilename = #{eximgfilename}
+		WHERE shid = #{shid}
+		]]>
+	</update>
+	
 	<update id="updateLikeCnt">
 		UPDATE sharings
 		SET likecnt = likecnt + 1
@@ -41,5 +55,11 @@
 		SET commentcnt = commentcnt + 1
 		WHERE shid = #{shid}
 	</update>
+	
+	<delete id="delete">
+		DELETE FROM sharings
+		WHERE shid = #{shid}
+	</delete>
+	
 	
 </mapper>

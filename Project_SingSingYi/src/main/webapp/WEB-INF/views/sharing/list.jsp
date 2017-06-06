@@ -1,4 +1,3 @@
-<!-- 수정 form submit 와 update 컨트롤러 하기 -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
@@ -200,9 +199,6 @@ $(document).ready(function(){
 	$("#uploadImage").on("click", function() {
 		$("#imageDrop").show("slow");
 });  
-	$("#updateUploadImage").on("click", function() {
-		$("#updateImageDrop").show("slow");
-});  
 	
 	/*
 	 $("#imageDrop").on("dragenter dragover", function(event) {
@@ -319,7 +315,11 @@ $(document).ready(function(){
 						data-toggle="modal" data-target="#myModal">
 						<i class="fa fa-pencil"></i>Sing Sing
 					</button>
-
+					
+					<input type="text" class="form-control input-sm" placeholder="SEARCH">
+					
+					
+					<!-- 글 작성하기 모달 -->
 					<!-- write modal -->
 					<div class="modal" id="myModal">
 						<div class="modal-dialog">
@@ -378,7 +378,7 @@ $(document).ready(function(){
 
 								<div class="modal-body">
 										<div class="animate-box">
-											<img id="readImage" src="" style="margin-left: auto; margin-right: auto; display: block;">
+											<img id="readImage" src="" style="margin-left: auto; margin-right: auto; display: block; width: 100%">
 											<!-- <img alt="그림이 없습니다." align="center" style="width: 100%;"
 											src="../resources/images/twice-4th-mini-album-signal.jpg"> -->
 										</div>
@@ -388,17 +388,36 @@ $(document).ready(function(){
 										</h3>
 									</div>
 									<div class="row">
-										<span class="bg-red"><i class="fa fa-heart"> <span
-												id="readLikecnt"> </span></i> <i class="fa fa-comment"> <span
-												id="readCommentcnt"> </span></i> <i class="fa fa-share"></i></span> <label
-											for="message-text" class="control-label"></label>
+										<div class="btn-group">
+											<h3>
+												<button class="btn btn-danger" type="button">
+													<i class="fa fa-heart"><span id="readLikecnt"> ${sharing.likecnt}
+													</span></i>
+												</button>
+												<button class="btn btn-danger" type="button">
+													<i class="fa fa-comment"><span id="readCommentcnt">${sharing.commentcnt}
+													</span></i>
+												</button>
+												<button class="btn btn-danger" type="button">
+													<i class="fa fa-share"></i>
+												</button>
+											</h3>
+										</div>
 									</div>
 									<textarea class="form-control" id="readShcontent"
 										disabled="disabled" autofocus="autofocus" rows="5" cols="50"></textarea>
 
 								</div>
 
-								<div class="modal-footer"></div>
+								<div class="modal-footer">
+									<div class="box-header with-border">
+										<div class="row">
+										<h3><i class="fa fa-user"></i></h3>
+										</div>
+									</div>
+									<div class="box-body">
+									</div>
+								</div>
 							</div>
 							
 							<!-- /.modal-content -->
@@ -408,7 +427,7 @@ $(document).ready(function(){
 					<!-- /.read modal -->
 
 		
-					<!-- 수정하기 모달 -->
+					<!-- 글 수정하기 모달 -->
 					<div class="modal" id="updateModal">
 						<div class="modal-dialog">
 							<div class="modal-content">
@@ -420,6 +439,7 @@ $(document).ready(function(){
 											<span aria-hidden="true">&times;</span>
 										</button>
 										<h4 class="modal-title">글 수정</h4>
+										<input type="hidden" id="updateShid" name="shid">
 									</div>
 
 									<div class="modal-body">
@@ -438,28 +458,21 @@ $(document).ready(function(){
 													id="updateCommentcnt"> </span></i> <i class="fa fa-share"></i></span>
 											<label for="message-text" class="control-label"></label>
 										</div>
-										<textarea class="form-control" id="updateShcontent"
+										<textarea class="form-control" name="shcontent" id="updateShcontent"
 											autofocus="autofocus" rows="5" cols="50">
 									</textarea>
 
 									</div>
 
 									<div class="modal-footer">
-										<div class="pull-left">
-											<i class="fa fa-microphone"> </i> <i class="fa fa-camera"
-												id="updateUploadImage"></i>
-										</div>
 										<div class="row">
-											<button type="button" id="updateBtn" class="btn btn-primary">
+											<button type="submit" id="updateBtn" class="btn btn-primary">
 												<i class="fa fa-pencil"> </i>UPDATE
 											</button>
-											<button type="button" class="btn btn-primary"
+											<button type="button" class="btn btn-default"
 												data-dismiss="modal" aria-label="Close">
 												<i class="fa fa-pencil"> </i>CANCEL
 											</button>
-										</div>
-										<div id="updateImageDrop" hidden>
-											<input type="file" name="file">
 										</div>
 									</div>
 								</form>
@@ -470,6 +483,46 @@ $(document).ready(function(){
 						<!-- /.modal-dialog -->
 					</div>
 					<!-- /.update modal -->
+					
+					<!-- 글 삭제하기 모달 -->
+					<div class="modal" id="deleteModal">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form role="form" action="delete" method="post"
+									enctype="multipart/form-data">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close" id="updateCloseButton">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title">글 삭제</h4>
+										<input type="hidden" id="deleteShid" name="shid">
+									</div>
+									<div class="modal-body">
+										<p>해당 글을 삭제하시겠습니까?</p>
+
+									</div>
+
+									<div class="modal-footer">
+											<button type="submit" id="deleteBtn" class="btn btn-primary">
+												<i class="fa fa-pencil"> </i>DELETE
+											</button>
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal" aria-label="Close">
+												<i class="fa fa-trash"> </i>CANCEL
+											</button>
+									</div>
+								</form>
+							</div>
+
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal-dialog -->
+					</div>
+					<!-- /.update modal -->
+					
+					
+					
 
 
 					<c:forEach items="${list}" var="sharing">
@@ -489,13 +542,14 @@ $(document).ready(function(){
 								<h3>
 
 									<i class="fa fa-user"></i><span id="sharingId">${sharing.id}</span>
-									<c:set var="target" value="${sharing.id}"/>
-									<c:set var="id" value="kosta111"/>
+									<c:set var="target" value="${sharing.id}" />
+									<c:set var="id" value="kosta111" />
 									<c:if test="${target eq id}">
 										<div style="text-align: right;">
 											<i class="fa fa-pencil"
 												onclick="showUpdateModal('${sharing.shid}')"></i><span
-												id="sharingId"> </span> <i class="fa fa-trash-o"></i><span
+												id="sharingId"> </span> <i class="fa fa-trash-o"
+												onclick="showDeleteModal('${sharing.shid}')"></i><span
 												id="sharingId"> </span>
 										</div>
 									</c:if>
@@ -509,11 +563,16 @@ $(document).ready(function(){
 								<span>${sharing.shcontent}</span>
 							</div>
 							<div class="row" style="margin: 10px;">
+							
+							<div class="btn-group">
 							<h3>
-								<span class="bg-red"><i class="fa fa-heart"><span>
-											${sharing.likecnt} </span></i> <i class="fa fa-comment"><span>
-											${sharing.commentcnt} </span></i> <i class="fa fa-share"></i></span>
+								<button class="btn btn-danger" type="button"><i class="fa fa-heart"><span>
+											${sharing.likecnt} </span></i></button>
+								<button class="btn btn-danger" type="button"><i class="fa fa-comment"><span>${sharing.commentcnt} </span></i></button>
+								<button class="btn btn-danger" type="button"><i class="fa fa-share"></i></button> 
 							</h3>
+							</div>				 
+							
 							</div>
 						</div>
 					</c:forEach>
@@ -568,15 +627,38 @@ $(document).ready(function(){
 				success : function(result) {
 					$("#updateModal").modal('show');
 					var array = JSON.parse(result);
+					$("#updateShid").attr("value", array.shid);
 					$("#updateImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);
 					$("#updateId").append(array.id);
-					$("#updateShcontent").append(array.shcontent);
+					$("#updateShcontent").val(array.shcontent);
 					$("#updateLikecnt").append(array.likecnt);
 					$("#updateCommentcnt").append(array.commentcnt);
 				}
 			});
 
 		}
+		
+		function showDeleteModal(shid) {
+			$.ajax({
+				type : 'post',
+				url : '/sharing/read',
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				dataType : 'text',
+				data : JSON.stringify({
+					shid : shid,
+				}), 
+				success : function(result) {
+					$("#deleteModal").modal('show');
+					var array = JSON.parse(result);
+					$("#deleteShid").attr("value", array.shid);
+				}
+			});
+
+		}
+		
 		
 	</script>
 

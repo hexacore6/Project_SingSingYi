@@ -46,14 +46,12 @@ public class SharingServiceImp implements SharingService {
 
 	@Override
 	public void modify(Sharing sharing) {
-		// TODO Auto-generated method stub
-		
+		sharingDao.update(sharing);
 	}
 
 	@Override
 	public void remove(int shid) {
-		// TODO Auto-generated method stub
-		
+		sharingDao.delete(shid);
 	}
 
 	@Override

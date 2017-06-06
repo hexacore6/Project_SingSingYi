@@ -11,7 +11,8 @@ public interface SharingDao {
 	public void create(Sharing sharing) throws Exception;
 	public int getShid();
 	public Sharing read(int shid);
-	public void update(Sharing shid);
+	public void update(Sharing sharing);
+	public void updateImg(Sharing sharing);
 	public void delete(int shid);
 	public void updateCommentCnt(int shid);
 	public void updateLikeCnt(int shid);

@@ -105,19 +105,30 @@ public class SharingController {
 	
 	//수정하기
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public ResponseEntity<Sharing> update(@RequestBody Sharing sharing, Model model) {
+	public String update(Sharing sharing, MultipartFile file, Model model) throws IOException {
 		
-		ResponseEntity<Sharing> entity = null;
-		//String id = sharingService.read(sharing.getShid()).getId();
+		
 		try {
-			model.addAttribute("read", sharingService.read(sharing.getShid()));
-			System.out.println(sharingService.read(sharing.getShid()) + "결과");
-			entity = new ResponseEntity<Sharing>(sharingService.read(sharing.getShid()), HttpStatus.OK);
+			sharingService.modify(sharing);
+			System.out.println("성공");
 		} catch (Exception e) {
+			System.out.println("실패");
 			e.printStackTrace();
-			//entity = new ResponseEntity<Sharing>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-		return entity;
+		return "redirect:/sharing/list";
+
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String delete(Sharing sharing, Model model) {
+		
+		try {
+			sharingService.remove(sharing.getShid());
+		} catch (Exception e) {
+			System.out.println("삭제 실패");
+			e.printStackTrace();
+		}
+		return "redirect:/sharing/list";
 
 	}
 	

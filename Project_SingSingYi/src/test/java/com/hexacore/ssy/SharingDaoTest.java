@@ -27,7 +27,7 @@ public class SharingDaoTest {
 	@Inject
 	private SharingDao dao;
 	
-	@Test
+	//@Test
 	public void testCreate() throws Exception {
 		
 		Sharing sharing = new Sharing();
@@ -66,6 +66,29 @@ public class SharingDaoTest {
 	public void testGetShid() throws Exception{
 		
 		System.out.println(dao.getShid());
+	}
+	
+	//@Test
+	public void testUpdate() {
+		Sharing sharing = new Sharing();
+		sharing.setShid(4);
+		sharing.setShcontent("updateTest");
+		dao.update(sharing);
+	}
+	
+	//@Test
+	public void testUpdateImg() {
+		Sharing sharing = new Sharing();
+		sharing.setShid(18);
+		sharing.setEximgfilename("kosta111@18@twice_knockknock.jpg");
+		sharing.setShcontent("updateTest44");
+		System.out.println(sharing);
+		dao.updateImg(sharing);
+	}
+	
+	@Test
+	public void testRemove(){
+		dao.delete(18);
 	}
 
 	

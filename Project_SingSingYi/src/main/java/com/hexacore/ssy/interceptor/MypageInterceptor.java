@@ -22,9 +22,7 @@ public class MypageInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		HttpSession httpSession = request.getSession();
 		
-		System.out.println(request.getParameter("id"));
 		Member member = (Member)httpSession.getAttribute("login");
-		System.out.println(member.getId());
 		if(!member.getId().equals(request.getParameter("id"))) {
 			response.sendRedirect("/mypage/mySharing?id="+member.getId());
 			return false;

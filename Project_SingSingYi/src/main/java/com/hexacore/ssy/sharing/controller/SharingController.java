@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.AccessControlContext;
 import java.security.AccessController;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -29,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hexacore.ssy.sharing.domain.Comment;
+import com.hexacore.ssy.sharing.domain.LikeHistory;
 import com.hexacore.ssy.sharing.domain.Sharing;
 import com.hexacore.ssy.sharing.service.SharingService;
 import com.hexacore.ssy.sharing.util.MediaUtils;
@@ -77,6 +80,23 @@ public class SharingController {
 		
 		return savedName;
 	}
+	
+	@RequestMapping(value = "/addComment", method = RequestMethod.POST)
+	public ResponseEntity<Comment> addComment(@RequestBody Comment comment) throws IOException {
+		System.out.println("댓글 추가");
+		System.out.println(comment.getId() + "아이디++");
+		ResponseEntity<Comment> entity = null;
+		try {
+			sharingService.registComment(comment);
+			sharingService.updateCommentCnt(comment.getShid());
+			entity = new ResponseEntity<Comment>(sharingService.getComment(comment), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+
+	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void list(Model model) {
@@ -84,6 +104,46 @@ public class SharingController {
 		model.addAttribute("list", sharingService.listAll());
 
 	}
+	
+	@RequestMapping(value = "/like", method = RequestMethod.POST)
+	public ResponseEntity<LikeHistory> updateLike(Model model, @RequestBody Sharing sharing) {
+		
+		ResponseEntity<LikeHistory> entity = null;
+		System.out.println("증가될 공유글 아이디 : " + sharing.getShid());
+		System.out.println("DB에 있는 공유글 아이디 : " + sharingService.checkLike(sharing.getShid()).getShid());
+		if(sharing.getShid() != sharingService.checkLike(sharing.getShid()).getShid()){
+			try {
+				
+				sharingService.updateLikeCnt(sharing.getShid());
+				sharingService.likeHistory(sharing);
+				entity = new ResponseEntity<LikeHistory>(sharingService.checkLike(sharing.getShid()), HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			return entity;
+		} else{
+			entity = new ResponseEntity<LikeHistory>(sharingService.checkLike(sharing.getShid()), HttpStatus.OK);
+		}
+		return entity;
+		
+	}
+	
+	@RequestMapping(value = "/comment/list", method = RequestMethod.POST)
+	public ResponseEntity<List<Comment>> listComment(@RequestBody Sharing sharing, Model model) {
+		System.out.println("댓글");
+		ResponseEntity<List<Comment>> entity = null;
+		try {
+			model.addAttribute("listComment", sharingService.listComment(sharing.getShid()));
+			entity = new ResponseEntity<List<Comment>>(sharingService.listComment(sharing.getShid()), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+
+	}
+	
 
 	@RequestMapping(value = "/read", method = RequestMethod.POST)
 	public ResponseEntity<Sharing> read(@RequestBody Sharing sharing, Model model) {
@@ -92,6 +152,7 @@ public class SharingController {
 		//String id = sharingService.read(sharing.getShid()).getId();
 		try {
 			model.addAttribute("read", sharingService.read(sharing.getShid()));
+			model.addAttribute("listComment", sharingService.listComment(sharing.getShid()));
 			System.out.println(sharingService.read(sharing.getShid()) + "결과");
 			entity = new ResponseEntity<Sharing>(sharingService.read(sharing.getShid()), HttpStatus.OK);
 		} catch (Exception e) {

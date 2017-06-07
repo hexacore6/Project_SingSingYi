@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.hexacore.ssy.sharing.domain.Comment;
+import com.hexacore.ssy.sharing.domain.LikeHistory;
 import com.hexacore.ssy.sharing.domain.Sharing;
 
 
@@ -26,8 +28,25 @@ public class SharingDaoImp implements SharingDao {
 	}
 
 	@Override
+	public List<Comment> listComment(int shid) {
+		return session.selectList(namespace + ".listComment", shid);
+	}
+
+	@Override
 	public void create(Sharing sharing) throws Exception {
 		session.insert(namespace + ".create", sharing);
+		
+	}
+
+	@Override
+	public void comment(Comment comment) {
+		session.insert(namespace + ".comment", comment);
+	}
+	
+
+	@Override
+	public Comment getComment(Comment comment) {
+		return session.selectOne(namespace + ".getComment", comment);
 		
 	}
 
@@ -56,7 +75,7 @@ public class SharingDaoImp implements SharingDao {
 
 	@Override
 	public void updateCommentCnt(int shid) {
-		session.update(namespace + ".updateLikeCnt", shid);
+		session.update(namespace + ".updateCommentCnt", shid);
 		
 	}
 
@@ -64,6 +83,17 @@ public class SharingDaoImp implements SharingDao {
 	public void updateLikeCnt(int shid) {
 		session.update(namespace + ".updateLikeCnt", shid);
 		
+	}
+
+	@Override
+	public void likeHistory(Sharing sharing) {
+		session.insert(namespace + ".likeHistory", sharing);
+	}
+	
+
+	@Override
+	public LikeHistory checkLike(int shid) {
+		return session.selectOne(namespace + ".checkLike", shid);
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hexacore.ssy.sharing.dao.SharingDao;
+import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.Sharing;
 import com.hexacore.ssy.sharing.service.SharingService;
 
@@ -86,9 +87,45 @@ public class SharingDaoTest {
 		dao.updateImg(sharing);
 	}
 	
-	@Test
+	//@Test
 	public void testRemove(){
 		dao.delete(18);
+	}
+	
+	//@Test
+	public void testComment(){
+		Comment comment = new Comment();
+		comment.setShid(16);
+		comment.setId("kosta111");
+		comment.setCcontent("test2");
+		dao.comment(comment);
+	}
+	
+	//@Test
+	public void testListComment(){
+		int shid = 16;
+		logger.info(dao.listComment(shid));
+	}
+	
+	//@Test
+	public void testGetComment(){
+		Comment comment =  new Comment();
+		comment.setShid(16);
+		comment.setId("kosta111");
+		logger.info(dao.getComment(comment));
+	}
+	
+	//@Test
+	public void testLikeHistory(){
+		Sharing sharing = new Sharing();
+		sharing.setShid(16);
+		sharing.setId("kosta111");
+		dao.likeHistory(sharing);
+	}
+	
+	@Test
+	public void testCheckLike(){
+		logger.info(dao.checkLike(22).getShid() + "db 아이디");
 	}
 
 	

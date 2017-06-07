@@ -8,6 +8,23 @@
 		VALUES (#{id}, #{rrid}, #{shcontent}, #{eximgfilename})
 	</insert>
 	
+	<insert id="comment">
+		INSERT INTO comments (shid, id, ccontent)
+		VALUES (#{shid}, #{id}, #{ccontent})
+	</insert>
+	
+	<insert id="likeHistory">
+		INSERT INTO likehistory (shid, id)
+		VALUES (#{shid}, #{id})
+	</insert>
+	
+	<select id="getComment" resultType="com.hexacore.ssy.sharing.domain.Comment">
+		SELECT id, ccontent
+		FROM comments
+		WHERE shid = #{shid} and id = #{id}
+		ORDER BY cregdate desc limit 1
+	</select>
+	
 	<select id="getShid" resultType="Integer">
 		SELECT shid
 		FROM sharings
@@ -27,6 +44,15 @@
 		FROM sharings 
 		WHERE id in (SELECT target FROM followlist WHERE sender = 'kosta111') OR id = 'kosta111'
 		ORDER BY shregdate desc
+		]]>
+	</select>
+	
+	<select id="listComment" resultType="com.hexacore.ssy.sharing.domain.Comment">
+	<![CDATA[
+		SELECT id, ccontent
+		FROM comments 
+		WHERE shid = #{shid}
+		ORDER BY cregdate asc
 		]]>
 	</select>
 	
@@ -60,6 +86,14 @@
 		DELETE FROM sharings
 		WHERE shid = #{shid}
 	</delete>
+	
+	<select id="checkLike" resultType="com.hexacore.ssy.sharing.domain.LikeHistory">
+		SELECT shid, id
+		FROM likehistory
+		WHERE shid = #{shid}
+	</select>
+	
+	
 	
 	
 </mapper>

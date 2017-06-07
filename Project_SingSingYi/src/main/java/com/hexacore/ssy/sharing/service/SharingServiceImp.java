@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hexacore.ssy.sharing.dao.SharingDao;
+import com.hexacore.ssy.sharing.domain.Comment;
+import com.hexacore.ssy.sharing.domain.LikeHistory;
 import com.hexacore.ssy.sharing.domain.Sharing;
 
 @Service
@@ -23,20 +25,27 @@ public class SharingServiceImp implements SharingService {
 		return sharingDao.listAll();
 	}
 
+	@Override
+	public List<Comment> listComment(int shid) {
+		return sharingDao.listComment(shid);
+	}
+
 	//@Transactional
 	@Override
 	public void regist(Sharing sharing) throws Exception {
 		sharingDao.create(sharing);
-		
-		/*String[] files = board.getFiles();
-		
-		if(files == null){
-			return;
-		}
-		
-		for (String fileName : files) {
-			dao.addAttach(fileName);
-		}*/
+	}
+	
+	
+
+	@Override
+	public void registComment(Comment comment) {
+		sharingDao.comment(comment);
+	}
+	
+	@Override
+	public Comment getComment(Comment comment) {
+		return sharingDao.getComment(comment);
 	}
 
 	@Override
@@ -62,6 +71,16 @@ public class SharingServiceImp implements SharingService {
 	@Override
 	public void updateLikeCnt(int shid) {
 		sharingDao.updateLikeCnt(shid);
+	}
+
+	@Override
+	public void likeHistory(Sharing sharing) {
+		sharingDao.likeHistory(sharing);
+	}
+
+	@Override
+	public LikeHistory checkLike(int shid) {
+		return sharingDao.checkLike(shid);
 	}
 
 	@Override

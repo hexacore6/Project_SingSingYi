@@ -60,7 +60,7 @@ public class MyPageServiceTest {
 	// 내 녹음저장소 조회
 	//@Test
 	public void readMyRecord(){
-		service.readMyRecord("woong");
+		//service.readMyRecord("woong");
 	}
 	
 	// 내 회원정보 조회
@@ -92,7 +92,7 @@ public class MyPageServiceTest {
 	// 코인 충전
 	//@Test
 	public void addCoin(){
-		service.addCoin(3, "woong1");
+		//service.addCoin(3, "woong1");
 	}
 	// 해당 노래번호인 노래 조회
 	//@Test

@@ -1,0 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+      <div class="col-lg-3">
+        <!--탭-->
+        <div class="box box-solid">
+          <div class="box-header with-border">
+            <h3 class="box-title">마이페이지</h3>
+          </div>
+          <div class="box-body no-padding">
+            <ul class="nav nav-pills nav-stacked">
+
+
+              <c:choose>
+                <c:when test="${login.id==id }">
+                  <li><a href="mySharing?id=${login.id }">나의글</a></li>
+                </c:when>
+                <c:otherwise>
+                  <li><a href="mySharing?id=${id }">${id }님의 글</a></li>
+                </c:otherwise>
+              </c:choose>
+
+
+
+              <c:if test="${login.id==id }">
+
+                <li><a href="myCoin?id=${login.id }">코인관리</a></li>
+                <li><a href="myRank?id=${login.id }">내 랭킹</a></li>
+                <li><a href="myFavorite?id=${login.id }">애창곡 </a></li>
+                <li><a href="myRecord?id=${login.id }">녹음저장소</a></li>
+                <li><a href="myModify?id=${login.id }">회원정보수정</a></li>
+              </c:if>
+
+            </ul>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>

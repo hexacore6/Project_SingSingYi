@@ -3,23 +3,27 @@ package com.hexacore.ssy.mypage.domain;
 public class Member {
 
 	private String id;
-	private int password;
+	private String password;
 	private String pwquestion;
 	private String pwanswer;
 	private int coincnt;
 	private int rankpoint;
 	private int rank;
 	
-	public Member() {
-	}
 	
-	public Member(String id, int password) {
+	
+	public Member() {
+		super();
+	}
+
+	public Member(String id, String password) {
 		super();
 		this.id = id;
 		this.password = password;
 	}
 
-	public Member(String id, int password, String pwquestion, String pwanswer, int coincnt, int rankpoint) {
+	public Member(String id, String password, String pwquestion, String pwanswer, int coincnt, int rankpoint,
+			int rank) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -27,17 +31,7 @@ public class Member {
 		this.pwanswer = pwanswer;
 		this.coincnt = coincnt;
 		this.rankpoint = rankpoint;
-	}
-	
-	public Member(String id, int password, String pwquestion, String pwanswer, int coincnt, int rankpoint, int rank) {
-		super();
-		this.id = id;
-		this.password = password;
-		this.pwquestion = pwquestion;
-		this.pwanswer = pwanswer;
-		this.coincnt = coincnt;
-		this.rankpoint = rankpoint;
-		this.rank= rank;
+		this.rank = rank;
 	}
 
 	public String getId() {
@@ -48,12 +42,12 @@ public class Member {
 		this.id = id;
 	}
 
-	public int getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(int i) {
-		this.password = i;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getPwquestion() {
@@ -87,8 +81,7 @@ public class Member {
 	public void setRankpoint(int rankpoint) {
 		this.rankpoint = rankpoint;
 	}
-	
-	
+
 	public int getRank() {
 		return rank;
 	}
@@ -100,8 +93,8 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", password=" + password + ", pwquestion=" + pwquestion + ", pwanswer=" + pwanswer
-				+ ", coincnt=" + coincnt + ", rankpoint=" + rankpoint + "]";
-	}
+				+ ", coincnt=" + coincnt + ", rankpoint=" + rankpoint + ", rank=" + rank + "]";
+	}	
 }
 
 

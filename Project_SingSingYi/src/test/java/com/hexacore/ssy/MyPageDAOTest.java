@@ -1,5 +1,6 @@
 package com.hexacore.ssy;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -66,7 +67,11 @@ public class MyPageDAOTest {
 	// 내 녹음저장소 조회
 	//@Test
 	public void readMyRecord(){
-		dao.readMyRecord("woong");
+		Criteria cri = new Criteria();
+		cri.setPage(2);
+		cri.setPerPageNum(5);
+		String id = "woong1";
+		dao.readMyRecord(cri, id);
 	}
 	
 	// 내 회원정보 조회
@@ -81,6 +86,21 @@ public class MyPageDAOTest {
 		dao.readMyFavorite("woong1");
 	}
 	
+	// 내 애창곡 조회 (등록한 노래번호 조회) 페이징처리
+	@Test
+	public void myFavoriteCriteria(){
+		Criteria cri = new Criteria();
+		cri.setPage(2);
+		cri.setPerPageNum(5);
+		String id = "woong";
+		logger.info(cri.toString());
+		logger.info("크리스타트 : " + cri.getPageStart());
+		logger.info("퍼페이지넘"+ cri.getPerPageNum());
+		List<HashMap<String, Object>> list = dao.favoriteCriteria(cri, id);
+		
+			logger.info("애창곡로그 : " + list);
+	}
+	
 	// 내 애창곡 삭제
 	//@Test
 	public void deleteMyFavorite(){
@@ -92,16 +112,20 @@ public class MyPageDAOTest {
 	// 내 녹음저장소 삭제
 	//@Test
 	public void deleteMyRecord(){
-		logger.info("녹음번호 2번 삭제 전 : " + dao.readMyRecord("woong1"));
+		Criteria cri = new Criteria();
+		cri.setPage(2);
+		cri.setPerPageNum(5);
+		String id = "woong1";
+		logger.info("녹음번호 2번 삭제 전 : " + dao.readMyRecord(cri, id));
 		dao.deleteMyRecord(2);
-		logger.info("녹음번호 2번 삭제 후 : " + dao.readMyRecord("woong1"));
+		logger.info("녹음번호 2번 삭제 후 : " + dao.readMyRecord(cri, id));
 	}
 	
 	// 코인 충전
 	//@Test
 	public void addCoin(){
 		logger.info("코인 3개 충전 전 : " + dao.readMyInformation("woong1"));
-		dao.addCoin(3, "woong1");
+		//dao.addCoin(3, "woong1");
 		logger.info("코인 3개 충전 후 : " + dao.readMyInformation("woong1"));
 	}
 
@@ -109,7 +133,7 @@ public class MyPageDAOTest {
 	//@Test
 	public void updateMyInformation(){
 		Member member = new Member();
-		member.setPassword(4444);
+		member.setPassword("4444");
 		logger.info("회원정보 수정 전 :" + dao.readMyInformation("woong"));
 		dao.updateMyInformation(member);
 		logger.info("회원정보 수정 후 :" + dao.readMyInformation("woong"));
@@ -147,12 +171,12 @@ public class MyPageDAOTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testCount(){
 		Criteria cri = new Criteria();
 		cri.setPage(2);
 		cri.setPerPageNum(5);
 		String id = "woong1";
-		dao.countPaging(cri, id);
+		dao.countCoinPaging(cri, id);
 	}
 }

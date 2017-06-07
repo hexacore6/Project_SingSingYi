@@ -37,11 +37,14 @@ public interface MypageService  {
 	// 내 애창곡 조회 (등록한 노래번호 조회)
 	public List<HashMap<String, Object>> readMyFavorite(String id);
 	
+	// 내 애창곡 조회 (등록한 노래번호 조회) 페이징 처리
+	public List<HashMap<String, Object>> favoriteCriteria(Criteria cri, String id);	
+	
 	// 내 애창곡 삭제
 	public void deleteMyFavorite(int fid);
 	
 	// 내 녹음 저장소 조회
-	public List<RecordRepository> readMyRecord(String id);
+	public List<RecordRepository> readMyRecord(Criteria cri, String id);
 	
 	// 내 녹음 저장소 삭제
 	public void deleteMyRecord(int rrid);
@@ -53,7 +56,7 @@ public interface MypageService  {
 	public void updateMyInformation(Member member);
 	
 	// 코인 충전
-	public void addCoin(int addCoin, String id);
+	public void addCoin(Member member, String id);
 	
 	// 해당 노래번호인 노래 조회
 	public Song selectSong(int sid);
@@ -62,5 +65,12 @@ public interface MypageService  {
 	public List<CoinHistory> coninListCriteria(Criteria cri, String id);
 	
 	// 코인 내역 테이블 행의 수 계산
-	public int countPaging(Criteria cri, String id);
+	public int countCoinPaging(Criteria cri, String id);
+	
+	// 애창곡 테이블 행의 수 계산
+	public int countFavoritePaging(Criteria cri, String id);
+		
+	// 녹음저장소 테이블 행의 수 계산
+	public int countRecordPaging(Criteria cri, String id);
+
 }

@@ -66,8 +66,8 @@ public class MypageServiceImpl implements MypageService {
 	
 	// 내 녹음 저장소 조회
 	@Override
-	public List<RecordRepository> readMyRecord(String id) {
-		return dao.readMyRecord(id);
+	public List<RecordRepository> readMyRecord(Criteria cri, String id) {
+		return dao.readMyRecord(cri, id);
 	}
 	
 	// 내 정보 조회 (코인 개수 조회)
@@ -80,6 +80,11 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public List<HashMap<String, Object>> readMyFavorite(String id) {
 		return dao.readMyFavorite(id);
+	}
+	
+	@Override
+	public List<HashMap<String, Object>> favoriteCriteria(Criteria cri, String id) {
+		return dao.favoriteCriteria(cri, id);
 	}
 	
 	// 내 애창곡 삭제
@@ -96,8 +101,8 @@ public class MypageServiceImpl implements MypageService {
 	
 	// 코인 충전
 	@Override
-	public void addCoin(int addCoin, String id) {
-		dao.addCoin(addCoin, id);
+	public void addCoin(Member member, String id) {
+		dao.addCoin(member, id);
 	}
 	
 	// 해당 노래번호인 노래 조회
@@ -117,9 +122,25 @@ public class MypageServiceImpl implements MypageService {
 	public List<CoinHistory> coninListCriteria(Criteria cri, String id) {
 		return dao.coinListCriteria(cri, id);
 	}
+	
 	// 코인 내역 테이블 행의 수 계산
 	@Override
-	public int countPaging(Criteria cri, String id) {
-		return dao.countPaging(cri, id);
+	public int countCoinPaging(Criteria cri, String id) {
+		// TODO Auto-generated method stub
+		return dao.countCoinPaging(cri, id);
+	}
+	
+	// 애창곡 내역 테이블 행의 수 계산
+	@Override
+	public int countFavoritePaging(Criteria cri, String id) {
+		// TODO Auto-generated method stub
+		return dao.countFavoritePaging(cri, id);
+	}
+	
+	// 녹음저장소 내역 테이블 행의 수 계산
+	@Override
+	public int countRecordPaging(Criteria cri, String id) {
+		// TODO Auto-generated method stub
+		return dao.countRecordPaging(cri, id);
 	}
 }

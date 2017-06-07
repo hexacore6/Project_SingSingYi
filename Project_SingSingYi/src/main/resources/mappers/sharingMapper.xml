@@ -8,6 +8,23 @@
 		VALUES (#{id}, #{rrid}, #{shcontent}, #{eximgfilename})
 	</insert>
 	
+	<insert id="comment">
+		INSERT INTO comments (shid, id, ccontent)
+		VALUES (#{shid}, #{id}, #{ccontent})
+	</insert>
+	
+	<insert id="likeHistory">
+		INSERT INTO likehistory (shid, id)
+		VALUES (#{shid}, #{id})
+	</insert>
+	
+	<select id="getComment" resultType="com.hexacore.ssy.sharing.domain.Comment">
+		SELECT id, ccontent
+		FROM comments
+		WHERE shid = #{shid} and id = #{id}
+		ORDER BY cregdate desc limit 1
+	</select>
+	
 	<select id="getShid" resultType="Integer">
 		SELECT shid
 		FROM sharings
@@ -30,6 +47,29 @@
 		]]>
 	</select>
 	
+	<select id="listComment" resultType="com.hexacore.ssy.sharing.domain.Comment">
+	<![CDATA[
+		SELECT id, ccontent
+		FROM comments 
+		WHERE shid = #{shid}
+		ORDER BY cregdate asc
+		]]>
+	</select>
+	
+	<update id="update">
+		UPDATE sharings
+		SET shcontent = #{shcontent}
+		WHERE shid = #{shid}
+	</update>
+	
+	<update id="updateImg">
+	<![CDATA[
+		UPDATE sharings
+		SET shcontent = #{shcontent}, eximgfilename = #{eximgfilename}
+		WHERE shid = #{shid}
+		]]>
+	</update>
+	
 	<update id="updateLikeCnt">
 		UPDATE sharings
 		SET likecnt = likecnt + 1
@@ -41,5 +81,19 @@
 		SET commentcnt = commentcnt + 1
 		WHERE shid = #{shid}
 	</update>
+	
+	<delete id="delete">
+		DELETE FROM sharings
+		WHERE shid = #{shid}
+	</delete>
+	
+	<select id="checkLike" resultType="com.hexacore.ssy.sharing.domain.LikeHistory">
+		SELECT shid, id
+		FROM likehistory
+		WHERE shid = #{shid}
+	</select>
+	
+	
+	
 	
 </mapper>

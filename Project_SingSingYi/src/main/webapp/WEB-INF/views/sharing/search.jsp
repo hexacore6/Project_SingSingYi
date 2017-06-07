@@ -1,5 +1,4 @@
 
-<!-- checklike 구현, 검색페이지 구현, 팔로우, 음악파일 첨부 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -528,7 +527,7 @@ $(document).ready(function(){
 							
 							<div class="btn-group">
 							<h3>
-								<button class="btn btn-danger" type="button" onclick="upLike('${sharing.shid}', '${sharing.likecnt}', '${sharing.id}')"><i class="fa fa-heart"><span id="likeCnt">${sharing.likecnt}</span></i></button>
+								<button class="btn btn-danger" type="button" onclick="upLike('${sharing.shid}', '${sharing.likecnt}')"><i class="fa fa-heart"><span id="likeCnt">${sharing.likecnt}</span></i></button>
 								<button class="btn btn-danger" type="button" onclick="showReadModal('${sharing.shid}')"><i class="fa fa-comment"><span>${sharing.commentcnt}</span></i></button>
 								<button class="btn btn-danger" type="button"><i class="fa fa-share"></i></button> 
 							</h3>
@@ -545,7 +544,7 @@ $(document).ready(function(){
 	</div>
 
 	<script type="text/javascript">
-		function upLike(shid, likecnt, id) {
+		function upLike(shid, likecnt) {
 			var likecnt = likecnt;
 			var one = 1;
 			
@@ -559,11 +558,8 @@ $(document).ready(function(){
 				dataType : 'text',
 				data : JSON.stringify({
 					shid : shid,
-					id : id
 				}), 
 				success : function(result) {
-					var like = JSON.parse(result);
-					console.log(like.shid + "checklike");
 					self.location.href='/sharing/list';
 				}
 			});

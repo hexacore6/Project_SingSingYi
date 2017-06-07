@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hexacore.ssy.sharing.dao.SharingDao;
+import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.Sharing;
 import com.hexacore.ssy.sharing.service.SharingService;
 
@@ -26,11 +27,12 @@ public class SharingDaoTest {
 
 	@Inject
 	private SharingDao dao;
-
+	
+	//@Test
 	public void testCreate() throws Exception {
 		
 		Sharing sharing = new Sharing();
-		sharing.setId("woong");
+		sharing.setId("kosta111");
 		sharing.setRrid(1);
 		sharing.setShcontent("test");
 		sharing.setEximgfilename("test.jpg");
@@ -44,7 +46,7 @@ public class SharingDaoTest {
 //		logger.info(service.read(90));
 	}
 	
-	@Test
+	//@Test
 	public void testListAll(){
 		logger.info("2" + dao.listAll());
 	}
@@ -65,6 +67,65 @@ public class SharingDaoTest {
 	public void testGetShid() throws Exception{
 		
 		System.out.println(dao.getShid());
+	}
+	
+	//@Test
+	public void testUpdate() {
+		Sharing sharing = new Sharing();
+		sharing.setShid(4);
+		sharing.setShcontent("updateTest");
+		dao.update(sharing);
+	}
+	
+	//@Test
+	public void testUpdateImg() {
+		Sharing sharing = new Sharing();
+		sharing.setShid(18);
+		sharing.setEximgfilename("kosta111@18@twice_knockknock.jpg");
+		sharing.setShcontent("updateTest44");
+		System.out.println(sharing);
+		dao.updateImg(sharing);
+	}
+	
+	//@Test
+	public void testRemove(){
+		dao.delete(18);
+	}
+	
+	//@Test
+	public void testComment(){
+		Comment comment = new Comment();
+		comment.setShid(16);
+		comment.setId("kosta111");
+		comment.setCcontent("test2");
+		dao.comment(comment);
+	}
+	
+	//@Test
+	public void testListComment(){
+		int shid = 16;
+		logger.info(dao.listComment(shid));
+	}
+	
+	//@Test
+	public void testGetComment(){
+		Comment comment =  new Comment();
+		comment.setShid(16);
+		comment.setId("kosta111");
+		logger.info(dao.getComment(comment));
+	}
+	
+	//@Test
+	public void testLikeHistory(){
+		Sharing sharing = new Sharing();
+		sharing.setShid(16);
+		sharing.setId("kosta111");
+		dao.likeHistory(sharing);
+	}
+	
+	@Test
+	public void testCheckLike(){
+		logger.info(dao.checkLike(22).getShid() + "db 아이디");
 	}
 
 	

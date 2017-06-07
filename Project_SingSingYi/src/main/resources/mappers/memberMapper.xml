@@ -8,5 +8,6 @@
 		FROM   	members
 		WHERE	id = #{id} and password = #{password}
 	</select>
+	
 
 </mapper>

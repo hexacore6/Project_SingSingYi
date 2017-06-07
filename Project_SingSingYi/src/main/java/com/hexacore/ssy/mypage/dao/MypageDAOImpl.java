@@ -69,8 +69,15 @@ public class MypageDAOImpl implements MypageDAO{
 	
 	// 내 녹음 저장소 조회
 	@Override
-	public List<RecordRepository> readMyRecord(String id) {
-		return session.selectList(namespace+".readMyRecord", id);
+	public List<RecordRepository> readMyRecord(Criteria cri, String id) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("pageStart", cri.getPageStart());
+		paramMap.put("perPageNum", cri.getPerPageNum());
+		paramMap.put("id", id);		
+		
+		return session.selectList(namespace+".readMyRecord", paramMap);
 	}
 	
 	// 내 정보 조회 (코인 개수 조회)
@@ -89,9 +96,21 @@ public class MypageDAOImpl implements MypageDAO{
 	// 내 애창곡 조회 (등록한 노래번호 조회)
 	@Override
 	public List<HashMap<String, Object>> readMyFavorite(String id) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		return session.selectList(namespace+".readMyFavorite", id);
+	}
+	
+	// 내 애창곡 조회 (등록한 노래번호 조회) 페이징 처리
+	@Override
+	public List<HashMap<String, Object>> favoriteCriteria(Criteria cri, String id) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("pageStart", cri.getPageStart());
+		paramMap.put("perPageNum", cri.getPerPageNum());
+		paramMap.put("id", id);
+		
+		return session.selectList(namespace+".favoriteCriteria", paramMap);
 	}
 	
 	// 내 애창곡 삭제
@@ -108,10 +127,10 @@ public class MypageDAOImpl implements MypageDAO{
 
 	// 코인 충전
 	@Override
-	public void addCoin(int addCoin, String id) {
+	public void addCoin(Member member, String id) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		
-		paramMap.put("addCoin", addCoin);
+		paramMap.put("coincnt", member.getCoincnt());
 		paramMap.put("id", id);
 		
 		session.update(namespace+".addCoin", paramMap);
@@ -155,9 +174,10 @@ public class MypageDAOImpl implements MypageDAO{
 		return session.selectList(namespace+".coinListCriteria", paramMap);
 	}
 	
+	
 	// 코인 내역 테이블 행의 수 계산
 	@Override
-	public int countPaging(Criteria cri, String id) {
+	public int countCoinPaging(Criteria cri, String id) {
 		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		
@@ -165,6 +185,32 @@ public class MypageDAOImpl implements MypageDAO{
 		paramMap.put("perPageNum", cri.getPerPageNum());
 		paramMap.put("id", id);
 		
-		return session.selectOne(namespace+".countPaging", paramMap);
+		return session.selectOne(namespace+".countCoinPaging", paramMap);
+	}
+	
+	// 애창곡 내역 테이블 행의 수 계산
+	@Override
+	public int countFavoritePaging(Criteria cri, String id) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("pageStart", cri.getPageStart());
+		paramMap.put("perPageNum", cri.getPerPageNum());
+		paramMap.put("id", id);
+		
+		return session.selectOne(namespace+".countFavoritePaging", paramMap);
+	}
+	
+	// 녹음저장소 내역 테이블 행의 수 계산
+	@Override
+	public int countRecordPaging(Criteria cri, String id) {
+
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("pageStart", cri.getPageStart());
+		paramMap.put("perPageNum", cri.getPerPageNum());
+		paramMap.put("id", id);
+		
+		return session.selectOne(namespace+".countRecordPaging", paramMap);
 	}
 }

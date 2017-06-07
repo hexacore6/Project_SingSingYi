@@ -78,6 +78,17 @@
 		where id = #{id}
 	</select>
 	
+	<!-- 내 애창곡 조회 (등록한 노래번호 조회) 페이징 처리 -->
+	<select id ="favoriteCriteria" resultType="hashMap">
+		<![CDATA[
+		select fid, stitle, singer
+		from favorites natural join songs 
+		where fid > 0 AND id=#{id}
+		order by fid
+		limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+	
 	<!-- 내 애창곡 삭제 -->
 	<delete id="deleteMyFavorite">
 		delete from favorites
@@ -86,9 +97,13 @@
 	
 	<!-- 내 녹음 저장소 조회 -->
 	<select id = "readMyRecord" resultType="com.hexacore.ssy.mypage.domain.RecordRepository">
+		<![CDATA[
 		select rrid, id, recordfilename, recordregdate
-		from RecordRepository
-		where id = #{id}
+		from RecordRepository 
+		where rrid > 0 AND id=#{id}
+		order by rrid desc, recordregdate desc
+		limit #{pageStart}, #{perPageNum}
+		]]>
 	</select>
 	
 	<!-- 내 녹음 저장소 삭제 -->
@@ -111,10 +126,10 @@
 		where id = #{id}
 	</update>
 	
-	<!-- 코인 충전 업데이트 -->
+	<!-- 코인 업데이트 -->
 	<update id="addCoin">
 	update members 
-	set coincnt = coincnt+#{addCoin}
+	set coincnt = coincnt+#{coincnt}
 	where id= #{id}
 	</update>
 	
@@ -136,6 +151,12 @@
 	]]>
 	</select>
 	
+	<!-- 코인 내역 등록 -->
+	<insert id="coinList">
+	insert into coinhistory (id, chtype, chcontent)
+	values ('#{id}', '#{chtype}', '#{chcontent}');
+	</insert>
+	
 	<!-- 나의 코인내역 조회 페이징처리2 -->
 	<select id="coinListCriteria" resultType="com.hexacore.ssy.mypage.domain.CoinHistory">
 	<![CDATA[
@@ -148,11 +169,29 @@
 	</select>
 	
 	<!-- 코인 내역 테이블 행의 수 계산 -->
-	<select id="countPaging" resultType="int" >
+	<select id="countCoinPaging" resultType="int" >
 	<![CDATA[
 	select count(chid)
 	from coinhistory
 	where chid > 0 AND id=#{id}
+	]]>
+	</select>
+	
+	<!-- 애창곡 테이블 행의 수 계산 -->
+	<select id="countFavoritePaging" resultType="int" >
+	<![CDATA[
+	select count(fid)
+	from favorites
+	where fid > 0 AND id=#{id}
+	]]>
+	</select>
+	
+	<!-- 녹음저장소 테이블 행의 수 계산 -->
+	<select id="countRecordPaging" resultType="int" >
+	<![CDATA[
+	select count(rrid)
+	from RecordRepository
+	where rrid > 0 AND id=#{id}
 	]]>
 	</select>
 </mapper>

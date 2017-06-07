@@ -37,4 +37,10 @@ public class MemberController {
 		
 		model.addAttribute("member", member);
 	}
+	
+	// 회원가입
+	@RequestMapping(value="/regist", method=RequestMethod.GET)
+	public void regist() {
+		
+	}
 }

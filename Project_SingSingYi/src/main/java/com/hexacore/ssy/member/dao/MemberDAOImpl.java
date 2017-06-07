@@ -21,4 +21,9 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectOne(namespace + ".login", dto);
 	}
 	
+	@Override
+	public void regist(Member member) {
+//		return sqlSession.insert(namespace + ".regist", member);
+	}
+	
 }

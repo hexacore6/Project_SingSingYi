@@ -5,10 +5,8 @@
 <head>
 <title>씽씽이 타러 ㄱ</title>
 
-<link rel="stylesheet" type="text/css"
-	href="/resources/css/jquery.fullPage.css" />
-<link rel="stylesheet" type="text/css"
-	href="/resources/css/examples.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/jquery.fullPage.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/examples.css" />
 
 <!--[if IE]>
 		<script type="text/javascript">

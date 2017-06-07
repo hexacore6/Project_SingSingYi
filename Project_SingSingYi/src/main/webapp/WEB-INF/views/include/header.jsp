@@ -12,8 +12,18 @@
                         <iframe></iframe>
                     </div>
                 </div>
-                <h2>씽씽이</h2> </div>
+                <div class="container">
+	                <div class="row"> 
+	                    <div class="col-lg-3"></div>
+		                    <div class="col-lg-3 pull-left">
+		                        <a href="#"></a>
+		                    </div>
+	                    <div class="col-lg-3"></div>
+	                </div>
+                </div>
+           	</div>
         </div>
+        
     </div>
     <!--해어디이미지-->
     <section id='header'>

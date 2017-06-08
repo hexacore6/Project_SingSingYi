@@ -6,10 +6,21 @@
 <mapper namespace="com.hexacore.ssy.mapper.SongMapper">
 
 	<!-- 노래 가져오기 -->
-	<select id="randomMusic" resultType="com.hexacore.ssy.song.domain.Song">
-	select *
+	<select id="randomSong" resultType="com.hexacore.ssy.song.domain.Song">
+	select sid,stitle,sfilename
 	from Songs
-	where sid = #{sid}
+	where sid > 0
+	order by rand()
+	limit 0,3
+	</select>
+	
+	<!-- 노래  개수 -->
+	<select id="countSong" resultType="int">
+	<![CDATA[
+	select count(sid)
+	from Songs
+	where sid > 0
+	]]>
 	</select>
 
 </mapper>

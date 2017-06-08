@@ -1,6 +1,8 @@
 package com.hexacore.ssy.song.service;
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -14,9 +16,19 @@ public class SongServicelmpl implements SongService  {
 	@Inject
     private SongDAO songDao;
 
+/*	@Override
+	public List<Song> randomSong() {
+		return songDao.randomSong();
+	}*/
+	
 	@Override
-	public Song randomMusic(int sid) {
-		return songDao.randomMusic(sid);
+	public List<Song> randomSong() {
+		return songDao.randomSong();
+	}
+
+	@Override
+	public int countSong() {
+		return songDao.countSong();
 	}
 	
 	

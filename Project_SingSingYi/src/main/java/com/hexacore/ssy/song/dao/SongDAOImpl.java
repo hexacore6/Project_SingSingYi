@@ -1,6 +1,9 @@
 package com.hexacore.ssy.song.dao;
 
 
+import java.util.List;
+
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -16,8 +19,13 @@ public class SongDAOImpl implements SongDAO {
 	private static final String namespace = "com.hexacore.ssy.mapper.SongMapper";
 
 	@Override
-	public Song randomMusic(int sid) {
-		return sqlSession.selectOne(namespace+".randomMusic", sid);
+	public List<Song> randomSong() {
+		return sqlSession.selectList(namespace+".randomSong");
+	}
+
+	@Override
+	public int countSong() {
+		return sqlSession.selectOne(namespace+".countSong");
 	}
 
 	

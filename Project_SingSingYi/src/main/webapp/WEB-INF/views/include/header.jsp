@@ -3,22 +3,17 @@
         <div class="col-lg-12">
             <div class='headerimg'>
                 <!--좌표값수정-->
-                <div class="row">
-                    <div class="col-lg-3">
-                        <button href="#"></button>
-                    </div>
-                    <div class="col-lg-3"></div>
-                    <div class="col-lg-3">
-                        <iframe></iframe>
-                    </div>
-                </div>
                 <div class="container">
 	                <div class="row"> 
 	                    <div class="col-lg-3"></div>
 		                    <div class="col-lg-3 pull-left">
-		                        <a href="#"></a>
+		                        <a href="/main"></a>
 		                    </div>
-	                    <div class="col-lg-3"></div>
+	                    <div class="col-lg-3"style="margin-left: 50px;" >
+                          <div id="headimg" style="margin-left: 50px;">
+                            <img src="/resources/img/user.png">
+                          </div>
+                        </div>
 	                </div>
                 </div>
            	</div>
@@ -38,7 +33,7 @@
                 </div>
                 <div class="col-lg-3">
                     <a href="<%=application.getContextPath() %>/sharing/list" class="menuitem">
-                        <p class="text-center">sns</p>
+                        <p class="text-center"><strong>SNS</strong></p>
                     </a>
                 </div>
                 <div class="col-lg-3">

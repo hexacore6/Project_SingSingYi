@@ -50,7 +50,11 @@
 				})
 			})
 </script>
-
+<style type="text/css">
+  #content{
+    height: 1000px;
+  }
+</style>
 </head>
 <body>
   <jsp:include page="../include/header.jsp"></jsp:include>
@@ -85,33 +89,33 @@
   <!-- 검색 기능 END -->
 
   <!-- BOARD LIST START -->
-  <section class="content">
+  <section id="content" class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="box">
           <div class="box-header with-border">
             <table class="table table-bordered">
               <tr>
-                <th style="width: 100px">글번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th style="width: 100px">작성날짜</th>
-                <th>조회수</th>
+                <th style="width: 100px;text-align: center; font-size: 20px;">글번호</th>
+                <th style="width: 100px;text-align: center; font-size: 20px;">제목</th>
+                <th style="width: 100px;text-align: center; font-size: 20px;">작성자</th>
+                <th style="width: 100px;text-align: center; font-size: 20px;">작성날짜</th>
+                <th style="width: 100px;text-align: center; font-size: 20px;">조회수</th>
               </tr>
 
               <c:forEach items="${nlist}" var="article">
                 <tr>
-                  <td>${article.aid }</td>
-                  <td>
+                  <td style="width: 100px;text-align: center; font-size: 18px;">${article.aid }</td>
+                  <td style="width: 100px;text-align: center; font-size: 18px;">
                     <a href='/sboard/readPage${pageMaker.makeSearch(pageMaker.cri.page)
                  }&aid=${article.aid}'> ${article.atitle }
                     </a>
                   </td>
 
-                  <td>${article.id }</td>
-                  <td>${article.aregdate }</td>
-                  <td>
-                    <span class="badge bg-red">${article.viewcnt }</span>
+                  <td style="width: 100px;text-align: center; font-size: 18px;">${article.id }</td>
+                  <td style="width: 100px;text-align: center; font-size: 18px;">${article.aregdate }</td>
+                  <td style="width: 100px;text-align: center; font-size: 18px;">
+                    <span class="badge bg-red" style="font-size: 18px;">${article.viewcnt }</span>
                   </td>
                 </tr>
 

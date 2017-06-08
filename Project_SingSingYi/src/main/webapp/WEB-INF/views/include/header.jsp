@@ -37,12 +37,12 @@
                     </a>
                 </div>
                 <div class="col-lg-3">
-                    <a href="<%=application.getContextPath() %>/sboard/nlist" class="menuitem">
+                    <a href="<%=application.getContextPath() %>/board/nlist" class="menuitem">
                         <p class="text-center">공지사항</p>
                     </a>
                 </div>
                 <div class="col-lg-3">
-                    <a href="<%=application.getContextPath() %>/sboard/list" class="menuitem">
+                    <a href="<%=application.getContextPath() %>/board/list" class="menuitem">
                         <p class="text-center">고객센터</p>
                     </a>
                 </div>

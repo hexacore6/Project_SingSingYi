@@ -51,54 +51,12 @@
 </style>
 
 <script type="text/javascript">
-	
-	
 
-	/* $(document).scroll(function() {
-		var maxHeight = $(document).height();
-		var currentScroll = $(window).scrollTop() + $(window).height();
-
-		if (maxHeight <= currentScroll + 100) {
-			
-		}
-	}) */
-
-	//<![CDATA[
-	/* var pageLoaded = 1; //현재 페이지
-
-	$(window)
-			.scroll(
-					function() {
-						if ($(window).scrollTop() == $(document).height()
-								- $(window).height()) { */
-
-	/* <div class="item">
-	<div class="animate-box">
-		<a href="../resources../resources/images/img_2.jpg"
-				class="image-popup fh5co-board-img"><img
-				src="../resources/images/img_2.jpg"
-				alt="Free HTML5 Bootstrap template"></a>
-		<div class="fh5co-desc">Veniam voluptatum voluptas tempora
-			debitis harum totam vitae hic quos.</div>
-	</div>
-	</div> */
-
-	/* $('#fh5co-board')
-			.append(
-					"<div id=\"fh5co-main\"><div class=\"container\"><div class=\"row\"><div class=\"item\">"
-							+ "<div class=\"animate-box\">"
-							+ "<a href=\"/resources/images/img_2.jpg\" class=\"image-popup fh5co-board-img\">"
-							+ "<img src=\"../resources/images/img_2.jpg\" alt=\"Free HTML5 Bootstrap template\"></a>"
-							+ "<div class=\"fh5co-desc\">Veniam voluptatum voluptas tempora debitis harum totam vitae hic quos.</div>"
-							+ "</div></div></div></div></div>");
-	}
-	}); */
-	//]]>
 </script>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Hydrogen &mdash; A free HTML5 Template by FREEHTML5.CO</title>
+<title>씽씽이 SNS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
 <meta name="keywords"
@@ -131,8 +89,6 @@
          folder instead of downloading all of them to reduce the load. -->
     <link href="../resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	
-
-
 </head>
 
 <body>
@@ -245,32 +201,33 @@ $(document).ready(function(){
 
 
 
-	<div id="fh5co-main">
+	<div id="fh5co-main" style="background-color: #f5f5f0;">
 		<div class="container">
 			<div class="row">
 				<div class="row">
 				<form method="post" action="searchInput">
-					<div class="form-group" style="width: 10%; float: left; margin: 10px;">
+					<div class="col-xs-2">
 						<select class="form-control">
 								<option>유저이름</option>
 								<option>노래이름</option>
 								<option>가수이름</option>
 						</select>
 					</div>
-					<div class="form-group" style="width: 30%; float: left; margin: 10px;">
+					<div class="col-xs-3">
 						<input type="text" class="form-control" id="keywordInput"
 							placeholder="SEARCH">
 					</div>
-					<div class="form-group" style="width: 20%; float: left; margin: 10px;">
-						<button type="button" class="btn btn-block btn-lg" id="searchBtn">
-							<i class="fa fa-search"></i>Search
+					<div class="col-xs-2">
+						<button type="button" class="btn btn-block btn-lg" id="searchBtn" style="background-color: #d6d6c2; color: white;" >
+							<i class="fa fa-search" style="color: white;"></i>Search
 						</button>
 					</div>
-					<div class="form-group" style="width: 20%; margin: 10px;">
+					<!-- ddd222222 -->
+					<div class="col-xs-3">
 						<!-- write button - open to write modal -->
-						<button type="button" class="btn btn-block btn-danger btn-lg"
+						<button type="button" class="btn btn-block btn-lg" style="background-color: #d6d6c2; color: white;"
 							data-toggle="modal" data-target="#myModal" data-backdrop="static">
-							<i class="fa fa-pencil"></i>Sing Sing
+							<i class="fa fa-pencil" style="color: white;"></i>Sing Sing
 						</button>
 					</div>
 					</form>
@@ -278,11 +235,6 @@ $(document).ready(function(){
 				</div>
 
 				<div id="fh5co-board" data-columns>
-					
-					
-					
-					
-					
 					<!-- 글 작성하기 모달 -->
 					<!-- write modal -->
 					<div class="modal" id="myModal">
@@ -303,7 +255,7 @@ $(document).ready(function(){
 										<label for="message-text" class="control-label"></label>
 										<textarea class="form-control" name="shcontent"
 											placeholder="내용을 써주세요..." autofocus="autofocus" rows="5"
-											cols="50"></textarea>
+											cols="50" style="resize: none;"></textarea>
 									</div>
 									<div class="modal-footer">
 										<div class="pull-left">
@@ -311,7 +263,7 @@ $(document).ready(function(){
 												id="uploadImage"></i>
 										</div>
 
-										<button type="submit" id="textAddbtn" class="btn btn-primary">
+										<button type="submit" id="textAddbtn" class="btn" style="background-color: #d6d6c2;">
 											<i class="fa fa-pencil"> </i>Sing Sing
 										</button>
 										<!-- 이미지 업로드 공간 -->
@@ -327,7 +279,8 @@ $(document).ready(function(){
 					</div>
 
 					<!-- /.modal -->
-
+					
+					<!-- 상세조회 -->
 					<!-- read modal -->
 					<div class="modal" id="readModal" data-backdrop="static">
 						<div class="modal-dialog">
@@ -354,30 +307,30 @@ $(document).ready(function(){
 									<div class="row">
 										<div class="btn-group">
 											<h3>
-												<button class="btn btn-danger" type="button">
+												<button class="btn" type="button" style="background-color: #d6d6c2;">
 													<i class="fa fa-heart"><span id="readLikecnt">${sharing.likecnt}</span></i>
 												</button>
-												<button class="btn btn-danger" type="button">
+												<button class="btn" type="button" style="background-color: #d6d6c2;">
 													<i class="fa fa-comment"><span id="readCommentcnt">${sharing.commentcnt}</span></i>
 												</button>
-												<button class="btn btn-danger" type="button">
+												<button class="btn" type="button" style="background-color: #d6d6c2;">
 													<i class="fa fa-share"></i>
 												</button>
 											</h3>
 										</div>
 									</div>
 									<textarea class="form-control" id="readShcontent"
-										disabled="disabled" autofocus="autofocus" rows="5" cols="50"></textarea>
+										disabled="disabled" autofocus="autofocus" rows="5" cols="50" style="resize: none;"></textarea>
 
 								</div>
 
 								<div class="modal-footer">
 									<div class="box-header with-border"
-										style="background-color: red;">
+										style="background-color: #d6d6c2; margin: 2px;">
 										<div class="row">
 												<div class="pull-left">
 													<input class="form-control input-lg" type="text"
-														id="readReplyId" name="ccontent" style="background-color: white;">
+														id="readReplyId" name="ccontent" style="background-color: white; width: 100%">
 													<input type="hidden" id="readShid" name="shid">
 													<input type="hidden" id="commentId" name="id" value="${login.id}">
 												</div>
@@ -389,16 +342,8 @@ $(document).ready(function(){
 											</div>
 										</div>
 									</div>
-									<div class="box-body" id="comments">
+									<div id="comments" style="background-color: #d6d6c2;">
 									
-										<!-- <div class="box-header with-border">
-											<div class="row">
-												<h3>
-													<i class="fa fa-user"></i>
-												</h3>
-											</div>
-										</div> -->
-										
 									</div>
 								</div>
 							</div>
@@ -435,26 +380,19 @@ $(document).ready(function(){
 												<i class="fa fa-user"></i> <span id="updateId"></span>
 											</h3>
 										</div>
-										<div class="row">
-											<span class="bg-red"><i class="fa fa-heart"> <span
-													id="updateLikecnt"> </span></i> <i class="fa fa-comment"> <span
-													id="updateCommentcnt"> </span></i> <i class="fa fa-share"></i></span>
-											<label for="message-text" class="control-label"></label>
-										</div>
 										<textarea class="form-control" name="shcontent" id="updateShcontent"
-											autofocus="autofocus" rows="5" cols="50">
+											autofocus="autofocus" rows="5" cols="50" style="resize: none;">
 									</textarea>
 
 									</div>
 
 									<div class="modal-footer">
-										<div class="row">
-											<button type="submit" id="updateBtn" class="btn btn-primary">
-												<i class="fa fa-pencil"> </i>UPDATE
+										<div class="btn-group">
+											<button type="submit" id="updateBtn" class="btn" style="background-color: #d6d6c2; color: black;">
+												<i class="fa fa-pencil" style="color: black;"> </i>UPDATE
 											</button>
 											<button type="button" class="btn btn-default"
-												data-dismiss="modal" aria-label="Close">
-												<i class="fa fa-pencil"> </i>CANCEL
+												data-dismiss="modal" aria-label="Close">CANCEL
 											</button>
 										</div>
 									</div>
@@ -505,22 +443,17 @@ $(document).ready(function(){
 					<!-- /.update modal -->
 					
 					
-					
-
-
+					<!-- 리스트 -->
 					<c:forEach items="${list}" var="sharing" varStatus="stat">
-						<div class="item" style="border-color: gray;">
+						<div class="item" style="border: 1px solid #ebebe0; border-radius: 10px;">
 							
-							<div class="animate-box">
-							
+							<div class="animate-box" style="border-radius: 10px;">
 								<img
 									src="displayFile?fileName=/${sharing.eximgfilename}"
 									alt="${pageContext.servletContext.contextPath }/resources/img/LOGOsingsing7.png"
 									onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; display: block;">
-								<!-- data-toggle="modal"
-									data-target="#myModal2" -->
 							</div>
-							<div style="margin: 10px;">#트와이스#Knock Knock</div>
+							<!-- <div style="margin: 10px;">#트와이스#Knock Knock</div> -->
 							<div style="margin: 10px;">
 								<h3>
 
@@ -542,16 +475,16 @@ $(document).ready(function(){
 							</div>
 							<!-- <div class="row" style="margin: 10px;"><i class="fa fa-pencil-square-o">
 							<i class="fa fa-trash-o"></div> -->
-							<div class="row" style="margin: 10px;">
+							<div class="row" style="margin: 10px;" onclick="showReadModal('${sharing.shid}')">
 								<span>${sharing.shcontent}</span>
 							</div>
 							<div class="row" style="margin: 10px;">
 							
 							<div class="btn-group">
 							<h3>
-								<button class="btn btn-danger" type="button" onclick="upLike('${sharing.shid}', '${sharing.likecnt}', '${sharing.id}', '${stat.index}')"><i class="fa fa-heart"><span id="likeCnt${stat.index}">${sharing.likecnt}</span></i></button>
-								<button class="btn btn-danger" type="button" onclick="showReadModal('${sharing.shid}')"><i class="fa fa-comment"><span>${sharing.commentcnt}</span></i></button>
-								<button class="btn btn-danger" type="button"><i class="fa fa-share"></i></button>
+								<button class="btn" style="background-color: #d6d6c2;" type="button" onclick="upLike('${sharing.shid}', '${sharing.likecnt}', '${sharing.id}', '${stat.index}')"><i class="fa fa-heart" id="likeIcon"><span id="likeCnt${stat.index}">${sharing.likecnt}</span></i></button>
+								<button class="btn" style="background-color: #d6d6c2;" type="button" onclick="showReadModal('${sharing.shid}')"><i class="fa fa-comment"><span>${sharing.commentcnt}</span></i></button>
+								<button class="btn" style="background-color: #d6d6c2;" type="button"><i class="fa fa-share"></i></button>
 								<input type="hidden" id="buttonNum" value="${stat.index}">
 							</h3>
 							</div>				 
@@ -559,7 +492,6 @@ $(document).ready(function(){
 							</div>
 						</div>
 					</c:forEach>
-
 				</div>
 
 			</div>
@@ -621,25 +553,20 @@ $(document).ready(function(){
 				data : JSON.stringify({
 					shid : shid,
 					id : id,
-					ccontent : ccontent
+					ccontent : ccontent                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 				}), 
 				success : function(result) {
-					var e = 22223232323222222222;
 					var str = "";
 					var comment = JSON.parse(result);
-					str += "<div class=\"box-header with-border\">"
-						+ "<div class=\"pull-left\">"
+					str += "<div class=\"pull-left\">"
 						+ "<i class=\"fa fa-user\">" + comment.id +"</i>"
 						+ "</div>"
-						+ "<div class=\"box-header with-border\">"
-						+ "<div class=\"box-body\">"
+						+ "<div class=\"box-header\">"
 						+ "<dl class=\"dl-horizontal\">"
 						+ "<h3>"
 						+ "<dt>" + comment.ccontent +"</dt>"
 						+ "</h3>"
 						+ "</dl>"
-						+ "</div>"
-						+ "</div>"
 						+ "</div>";
 					$("#comments").append(str);
 					$("#readReplyId").val("");
@@ -664,7 +591,7 @@ $(document).ready(function(){
 					$("#readImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);
 					$("#readId").append(array.id);
 					$("#readShid").attr("value", array.shid);
-					$("#readReplyId").attr("placeholder", array.id + "님에게 댓글을 달아주세요.");
+					$("#readReplyId").attr("placeholder", "댓글을 입력하세요!");
 					$("#readShcontent").append(array.shcontent);
 					$("#readLikecnt").append(array.likecnt);
 					$("#readCommentcnt").append(array.commentcnt);
@@ -689,19 +616,16 @@ $(document).ready(function(){
 					var array = JSON.parse(result);
 					$(array).each(
 						function() {
-							console.log(this.id + "댓글 아이디");
-							str += "<div class=\"box-header with-border\">"
+							str += "<div class=\"box-header with-border\" style=\"margin : 4px;\">"
 								+ "<div class=\"pull-left\">"
 								+ "<i class=\"fa fa-user\">" + this.id +"</i>"
 								+ "</div>"
-								+ "<div class=\"box-header with-border\">"
 								+ "<div class=\"box-body\">"
 								+ "<dl class=\"dl-horizontal\">"
 								+ "<h3>"
 								+ "<dt>" + this.ccontent +"</dt>"
 								+ "</h3>"
 								+ "</dl>"
-								+ "</div>"
 								+ "</div>"
 								+ "</div>";
 						});

@@ -59,8 +59,13 @@ public class SharingServiceImp implements SharingService {
 	}
 
 	@Override
-	public void remove(int shid) {
-		sharingDao.delete(shid);
+	public void removeSharing(int shid) {
+		sharingDao.deleteSharing(shid);
+	}
+	
+	@Override
+	public void removeComment(int shid) {
+		sharingDao.deleteComment(shid);
 	}
 
 	@Override

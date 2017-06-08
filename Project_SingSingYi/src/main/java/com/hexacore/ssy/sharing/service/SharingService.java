@@ -17,7 +17,8 @@ public interface SharingService {
 	public Comment getComment(Comment comment);
 	public Sharing read(int shid);
 	public void modify(Sharing sharing);
-	public void remove(int shid);
+	public void removeSharing(int shid);
+	public void removeComment(int shid);
 	public void likeHistory(Sharing sharing);
 	public LikeHistory checkLike(int shid);
 	public void updateCommentCnt(int shid);

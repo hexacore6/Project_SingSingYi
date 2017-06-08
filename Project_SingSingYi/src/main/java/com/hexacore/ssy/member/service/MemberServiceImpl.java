@@ -23,5 +23,13 @@ public class MemberServiceImpl implements MemberService {
 	public void regist(Member member) {
 		memberDao.regist(member);
 	}
+	
+	@Override
+	public boolean confirm(String id) {
+		if(memberDao.confirm(id) == null) {
+			return false;
+		}
+		return true;
+	}
 
 }

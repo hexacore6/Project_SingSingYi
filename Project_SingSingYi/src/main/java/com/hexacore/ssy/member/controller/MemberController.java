@@ -1,14 +1,21 @@
 package com.hexacore.ssy.member.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.inject.Inject;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.WebUtils;
@@ -16,6 +23,7 @@ import org.springframework.web.util.WebUtils;
 import com.hexacore.ssy.dto.LoginDTO;
 import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.member.service.MemberService;
+import com.hexacore.ssy.sharing.domain.Sharing;
 
 @Controller
 @RequestMapping("/member")
@@ -85,4 +93,27 @@ public class MemberController {
 		
 		return "/member/login";
 	}
+	
+	// 아이디 중복확인
+	@RequestMapping(value="/iddup", method=RequestMethod.POST)
+	public ResponseEntity<Boolean> read(String id, Model model) {
+		System.out.println(id);
+		
+		ResponseEntity<Boolean> entity = null;
+		
+		try {
+//			String id = memberService.confirm(id);
+			if(id == null) {
+				entity = new ResponseEntity<Boolean>(true , HttpStatus.OK);
+			} else {
+				entity = new ResponseEntity<Boolean>(false, HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
 }

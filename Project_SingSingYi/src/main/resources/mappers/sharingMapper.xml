@@ -93,8 +93,13 @@
 		WHERE shid = #{shid}
 	</update>
 	
-	<delete id="delete">
+	<delete id="deleteSharing">
 		DELETE FROM sharings
+		WHERE shid = #{shid}
+	</delete>
+	
+	<delete id="deleteComment">
+		DELETE FROM comments
 		WHERE shid = #{shid}
 	</delete>
 	

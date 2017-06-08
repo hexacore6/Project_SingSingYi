@@ -69,8 +69,13 @@ public class SharingDaoImp implements SharingDao {
 	}
 
 	@Override
-	public void delete(int shid) {
-		session.delete(namespace + ".delete", shid);
+	public void deleteSharing(int shid) {
+		session.delete(namespace + ".deleteSharing", shid);
+	}
+	
+	@Override
+	public void deleteComment(int shid) {
+		session.delete(namespace + ".deleteComment", shid);
 	}
 
 	@Override

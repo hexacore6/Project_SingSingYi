@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.hexacore.ssy.common.Criteria;
+import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
-import com.hexacore.ssy.mypage.domain.Favorite;
-import com.hexacore.ssy.mypage.domain.Member;
 import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.mypage.domain.Sharing;
 import com.hexacore.ssy.mypage.domain.Song;
@@ -66,6 +65,9 @@ public interface MypageService  {
 	
 	// 코인 내역 테이블 행의 수 계산
 	public int countCoinPaging(Criteria cri, String id);
+
+	// 코인 충전 내역 추가
+	public void coinListAdd(CoinHistory coinHistory);
 	
 	// 애창곡 테이블 행의 수 계산
 	public int countFavoritePaging(Criteria cri, String id);

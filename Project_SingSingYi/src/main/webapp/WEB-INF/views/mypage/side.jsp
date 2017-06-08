@@ -11,10 +11,10 @@
 
               <c:choose>
                 <c:when test="${login.id==id }">
-                  <li><a href="mySharing?id=${login.id }">나의글</a></li>
+                  <li><a href="sharing">나의글</a></li>
                 </c:when>
                 <c:otherwise>
-                  <li><a href="mySharing?id=${id }">${id }님의 글</a></li>
+                  <li><a href="sharing">${id }님의 글</a></li>
                 </c:otherwise>
               </c:choose>
 
@@ -22,11 +22,11 @@
 
               <c:if test="${login.id==id }">
 
-                <li><a href="myCoin?id=${login.id }">코인관리</a></li>
-                <li><a href="myRank?id=${login.id }">내 랭킹</a></li>
-                <li><a href="myFavorite?id=${login.id }">애창곡 </a></li>
-                <li><a href="myRecord?id=${login.id }">녹음저장소</a></li>
-                <li><a href="myModify?id=${login.id }">회원정보수정</a></li>
+                <li><a href="coin">코인관리</a></li>
+                <li><a href="rank">내 랭킹</a></li>
+                <li><a href="favorite">애창곡 </a></li>
+                <li><a href="record">녹음저장소</a></li>
+                <li><a href="modify">회원정보수정</a></li>
               </c:if>
 
             </ul>

@@ -12,6 +12,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.eclipse.core.filesystem.provider.FileInfo;
@@ -27,9 +30,11 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
 import com.hexacore.ssy.sharing.domain.Sharing;
@@ -45,7 +50,7 @@ import com.hexacore.ssy.sharing.util.MediaUtils;
 public class SharingController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SharingController.class);
-
+	
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 	
@@ -99,31 +104,39 @@ public class SharingController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void list(Model model) {
-		logger.info("show all list...");
-		model.addAttribute("list", sharingService.listAll());
+	public void list(HttpServletRequest request, Model model, HttpSession httpSession) {
+		Member member = (Member)httpSession.getAttribute("login");
+		
+		String loginId = member.getId();
+		System.out.println(loginId + "로그인아이디");
+		model.addAttribute("list", sharingService.listAll("kosta111"));
 
 	}
 	
 	@RequestMapping(value = "/like", method = RequestMethod.POST)
-	public ResponseEntity<LikeHistory> updateLike(Model model, @RequestBody Sharing sharing) {
+	public ResponseEntity<Boolean> updateLike(Model model, @RequestBody Sharing sharing) {
 		
-		ResponseEntity<LikeHistory> entity = null;
+		ResponseEntity<Boolean> entity = null;
+		LikeHistory likeHistory = new LikeHistory();
+		likeHistory = null;
 		System.out.println("증가될 공유글 아이디 : " + sharing.getShid());
-		System.out.println("DB에 있는 공유글 아이디 : " + sharingService.checkLike(sharing.getShid()).getShid());
-		if(sharing.getShid() != sharingService.checkLike(sharing.getShid()).getShid()){
+		System.out.println("DB에 있는 공유글 아이디 : " + sharingService.checkLike(sharing.getShid()));
+		if(sharingService.checkLike(sharing.getShid()) == null){
+			//DB상에 좋아요 기록이 없을 경우
 			try {
-				
+				System.out.println("checklike는 널");
 				sharingService.updateLikeCnt(sharing.getShid());
 				sharingService.likeHistory(sharing);
-				entity = new ResponseEntity<LikeHistory>(sharingService.checkLike(sharing.getShid()), HttpStatus.OK);
+				entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
 				entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
-			return entity;
 		} else{
-			entity = new ResponseEntity<LikeHistory>(sharingService.checkLike(sharing.getShid()), HttpStatus.OK);
+			//DB상에 좋아요 기록이 있을 경우
+			sharingService.deleteLikeHistory(sharing.getShid());
+			sharingService.fallLikeCnt(sharing.getShid());
+			entity = new ResponseEntity<Boolean>(false, HttpStatus.OK);;
 		}
 		return entity;
 		
@@ -190,6 +203,13 @@ public class SharingController {
 			e.printStackTrace();
 		}
 		return "redirect:/sharing/list";
+
+	}
+	
+	@RequestMapping(value = "/searchInput", method = RequestMethod.GET)
+	public String search(Model model) throws IOException {
+
+		return "redirect:/sharing/search";
 
 	}
 	

@@ -42,7 +42,7 @@
 	<![CDATA[
 		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
 		FROM sharings 
-		WHERE id in (SELECT target FROM followlist WHERE sender = 'kosta111') OR id = 'kosta111'
+		WHERE id in (SELECT target FROM followlist WHERE sender = #{id}) OR id = #{id}
 		ORDER BY shregdate desc
 		]]>
 	</select>
@@ -73,6 +73,17 @@
 	<update id="updateLikeCnt">
 		UPDATE sharings
 		SET likecnt = likecnt + 1
+		WHERE shid = #{shid}
+	</update>
+	
+	<delete id="deleteLikeHistory">
+		DELETE FROM likehistory
+		WHERE shid = #{shid}
+	</delete>
+	
+	<update id="fallLikeCnt">
+		UPDATE sharings
+		SET likecnt = likecnt - 1
 		WHERE shid = #{shid}
 	</update>
 	

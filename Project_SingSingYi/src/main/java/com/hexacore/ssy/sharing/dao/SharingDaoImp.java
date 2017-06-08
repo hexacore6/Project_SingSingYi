@@ -23,8 +23,8 @@ public class SharingDaoImp implements SharingDao {
 	private SqlSession session;
 
 	@Override
-	public List<Sharing> listAll() {
-		return session.selectList(namespace + ".listAll");
+	public List<Sharing> listAll(String id) {
+		return session.selectList(namespace + ".listAll", id);
 	}
 
 	@Override
@@ -82,6 +82,18 @@ public class SharingDaoImp implements SharingDao {
 	@Override
 	public void updateLikeCnt(int shid) {
 		session.update(namespace + ".updateLikeCnt", shid);
+		
+	}
+
+	@Override
+	public void fallLikeCnt(int shid) {
+		session.update(namespace + ".fallLikeCnt", shid);
+		
+	}
+
+	@Override
+	public void deleteLikeHistory(int shid) {
+		session.delete(namespace + ".deleteLikeHistory", shid);
 		
 	}
 

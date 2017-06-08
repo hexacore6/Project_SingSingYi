@@ -21,8 +21,8 @@ public class SharingServiceImp implements SharingService {
 	private SharingDao sharingDao;
 
 	@Override
-	public List<Sharing> listAll() {
-		return sharingDao.listAll();
+	public List<Sharing> listAll(String id) {
+		return sharingDao.listAll(id);
 	}
 
 	@Override
@@ -71,6 +71,16 @@ public class SharingServiceImp implements SharingService {
 	@Override
 	public void updateLikeCnt(int shid) {
 		sharingDao.updateLikeCnt(shid);
+	}
+
+	@Override
+	public void fallLikeCnt(int shid) {
+		sharingDao.fallLikeCnt(shid);
+	}
+
+	@Override
+	public void deleteLikeHistory(int shid) {
+		sharingDao.deleteLikeHistory(shid);
 	}
 
 	@Override

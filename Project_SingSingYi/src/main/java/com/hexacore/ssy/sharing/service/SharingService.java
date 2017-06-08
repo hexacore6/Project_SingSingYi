@@ -10,7 +10,7 @@ import com.hexacore.ssy.sharing.domain.Sharing;
 
 
 public interface SharingService {
-	public List<Sharing> listAll();
+	public List<Sharing> listAll(String id);
 	public List<Comment> listComment(int shid);
 	public void regist(Sharing sharing) throws Exception;
 	public void registComment(Comment comment);
@@ -22,5 +22,7 @@ public interface SharingService {
 	public LikeHistory checkLike(int shid);
 	public void updateCommentCnt(int shid);
 	public void updateLikeCnt(int shid);
+	public void fallLikeCnt(int shid);
+	public void deleteLikeHistory(int shid);
 	public int getShid();
 }

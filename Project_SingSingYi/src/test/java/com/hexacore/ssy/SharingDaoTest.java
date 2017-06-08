@@ -46,9 +46,9 @@ public class SharingDaoTest {
 //		logger.info(service.read(90));
 	}
 	
-	//@Test
+	@Test
 	public void testListAll(){
-		logger.info("2" + dao.listAll());
+		logger.info("2" + dao.listAll("kosta111"));
 	}
 	
 	//@Test
@@ -123,9 +123,9 @@ public class SharingDaoTest {
 		dao.likeHistory(sharing);
 	}
 	
-	@Test
+	//@Test
 	public void testCheckLike(){
-		logger.info(dao.checkLike(22).getShid() + "db 아이디");
+		System.out.println(dao.checkLike(6) + "db 아이디");
 	}
 
 	

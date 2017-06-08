@@ -9,7 +9,7 @@ import com.hexacore.ssy.sharing.domain.Sharing;
 
 
 public interface SharingDao {
-	public List<Sharing> listAll();
+	public List<Sharing> listAll(String id);
 	public List<Comment> listComment(int shid);
 	public void create(Sharing sharing) throws Exception;
 	public void comment(Comment comment);
@@ -23,5 +23,7 @@ public interface SharingDao {
 	public void delete(int shid);
 	public void updateCommentCnt(int shid);
 	public void updateLikeCnt(int shid);
+	public void fallLikeCnt(int shid);
+	public void deleteLikeHistory(int shid);
 	public void addAttach(String eximgfilename);
 }

@@ -7,11 +7,11 @@
 	                <div class="row"> 
 	                    <div class="col-lg-3"></div>
 		                    <div class="col-lg-3 pull-left">
-		                        <a href="/main"></a>
+		                        <a id='logo' href="/main"></a>
 		                    </div>
 	                    <div class="col-lg-3"style="margin-left: 50px;" >
                           <div id="headimg" style="margin-left: 50px;">
-                            <img src="/resources/img/user.png">
+                            <a href="/mypage/sharing"><img src="/resources/img/user.png"></a>
                           </div>
                         </div>
 	                </div>

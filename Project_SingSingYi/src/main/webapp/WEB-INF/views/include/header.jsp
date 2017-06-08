@@ -23,7 +23,6 @@
                 </div>
            	</div>
         </div>
-        
     </div>
     <!--해어디이미지-->
     <section id='header' class="container">
@@ -38,7 +37,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3">
-                    <a href='#' class="menuitem">
+                    <a href="<%=application.getContextPath() %>/sharing/list" class="menuitem">
                         <p class="text-center">sns</p>
                     </a>
                 </div>

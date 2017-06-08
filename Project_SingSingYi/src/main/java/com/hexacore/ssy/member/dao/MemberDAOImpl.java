@@ -23,7 +23,7 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	@Override
 	public void regist(Member member) {
-//		return sqlSession.insert(namespace + ".regist", member);
+		sqlSession.insert(namespace + ".regist", member);
 	}
 	
 }

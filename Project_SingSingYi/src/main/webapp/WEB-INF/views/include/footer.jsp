@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<section id="footer" class="container">
+<section id="footer">
 	<!--푸터시작-->
 	<!--한글폰트-->
 	<div class='footervar'>

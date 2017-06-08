@@ -18,5 +18,10 @@ public class MemberServiceImpl implements MemberService {
 	public Member login(LoginDTO dto) {
 		return memberDao.login(dto);
 	}
+	
+	@Override
+	public void regist(Member member) {
+		memberDao.regist(member);
+	}
 
 }

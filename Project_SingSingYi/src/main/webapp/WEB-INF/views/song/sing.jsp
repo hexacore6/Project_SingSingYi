@@ -8,6 +8,8 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/resources/css/main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+    
     <style type="text/css">
         #light {
             width: 300px;
@@ -102,7 +104,7 @@
         #playbutton {
             width: 100px;
             height: 100px;
-            background-image: url("img/play.png");
+            background-image: url("/resources/img/play.png");
             background-size: 100px, 2px;
             background-position: center;
             background-repeat: no-repeat;
@@ -117,45 +119,14 @@
             background-repeat: no-repeat;
         }
         #content{
-        height: 1900px;
+        height: 1200px;<!-- 마지막 체크하는 부분 -->
         }
     </style>
+    
 </head>
 
 <body onload="init();">
     <%@include file="../include/header.jsp"%>
-    
-    <!--해어디이미지-->
-    <section id='header' class="container">
-        <!--해더스타트-->
-        <div class='headerbar'>
-            <div class="row">
-                <!--해더 메뉴바-->
-                <!--한글폰트-->
-                <div class="col-lg-3">
-                    <a href='#' class="menuitem">
-                        <p class="text-center">노래하기</p>
-                    </a>
-                </div>
-                <div class="col-lg-3">
-                    <a href='#' class="menuitem">
-                        <p class="text-center">sns</p>
-                    </a>
-                </div>
-                <div class="col-lg-3">
-                    <a href='#' class="menuitem">
-                        <p class="text-center">공지사항</p>
-                    </a>
-                </div>
-                <div class="col-lg-3">
-                    <a href='#' class="menuitem">
-                        <p class="text-center">고객센터</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--해더END-->
     <section id="content" class="container">
         <!--내용시작-->
         <div class="row">
@@ -167,7 +138,8 @@
                     <div class="col-lg-5"></div>
                     <div class="col-lg-1">
                         <div class="music-controller">
-                            <button class="btn btn-primary" id="playbutton"></button>
+                            <button class="btn btn-primary" id="playbutton" onclick="readFile()"></button>
+                            
                         </div>
                     </div>
                     <div class="col-lg-6"></div>
@@ -220,22 +192,25 @@
                     </div>
                 </div>
                 <div class="signalbar">
-                    <!--불륨조절--><img src="img/blacklight.png" id="light"> </div>
+                    <!--불륨조절--><img src="/resources/img/blacklight.png" id="light"> </div>
             </div>
         </div>
         <!--/content-->
     </section>
-    <!--내용끝-->\
+    <!--내용끝-->
     <%@include file="../include/footer.jsp"%>
     
-</body>
-<script>
+    
+    <script>
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
+var requestId = 0;
+var elm;
+var playing = false;
 var audioContext = null;
 var isPlaying = false;
 var analyser = null;
 var mediaStreamSource = null;
+var noteCorrect = true;
 let ENERGY_LIMIT = 20000;
 let ZERO_CROSSING_LIMIT = 0.5;
 let FRAME_SIZE = 2048;
@@ -247,10 +222,34 @@ var rafID = null;
 var buflen = 1024;
 var buf = new Float32Array( buflen );
 
+var noteV = 440;
+var timeArr=[], stateArr=[], channelArr=[], intervalArr=[], veloArr=[];
+
+var checkCnt = 0;
+var noteAc = "";
+var tick = 0.0016622340425532;
+
+//마이크 정보를 얻어오기 위해서 사용하는 함수
+function getUserMedia(dictionary, callback) {
+    try {
+        navigator.getUserMedia = 
+         navigator.getUserMedia ||
+         navigator.webkitGetUserMedia ||
+         navigator.mozGetUserMedia;
+        navigator.getUserMedia(dictionary, callback, error);
+    } catch (e) {
+        alert('getUserMedia threw exception :' + e);
+    }
+}
+
 //윈도우가 처음 load 될 때 audioContext에 객체 할당
 window.onload = function() {
  audioContext = new AudioContext();
   init();
+}
+
+function error() {
+    alert('Stream generation failed.');
 }
 
 function init() {
@@ -262,7 +261,7 @@ function init() {
                    "googAutoGainControl": "false",
                    "googNoiseSuppression": "false",
                    "googHighpassFilter": "false"
-               			},
+                  },
                "optional": []
            },
      }, gotStream);
@@ -285,7 +284,7 @@ function gotStream(stream) {
 
 //음정을 추출하는 함수
 function updatePitch( time ) {
-	
+ 
    var cycles = new Array;
    analyser.getFloatTimeDomainData( buf );
    var ac = autoCorrelate( buf, audioContext.sampleRate ); // 자기 상관 함수
@@ -300,7 +299,7 @@ function updatePitch( time ) {
    singNote[2] = "D4";
    singNote[3] = "D#4";
    if(noteAc == singNote[0])
-   	 console.log("good!");
+     console.log("good!");
    */
    
    if (!window.requestAnimationFrame)
@@ -334,14 +333,14 @@ function autoCorrelate( buf, sampleRate ) {
     var eng = short_time_energy(buf, FRAME_SIZE, avg);
     if(eng < ENERGY_LIMIT)
     {
-    	return -1;
+     return -1;
     }
     
     var zcr = zero_crossing_rate(buf, SIZE);
     
     if(zcr > ZERO_CROSSING_LIMIT)
     {
-    	return -1;
+     return -1;
     }
     
     var lastCorrelation=1;
@@ -349,39 +348,39 @@ function autoCorrelate( buf, sampleRate ) {
       var correlation = 0;
       
       for (var i=0; i<MAX_SAMPLES; i++) {
-       	correlation += Math.abs((buf[i])-(buf[i+offset]));
+        correlation += Math.abs((buf[i])-(buf[i+offset]));
       }
       correlation = 1 - (correlation/MAX_SAMPLES);
       correlations[offset] = correlation; // store it, for the tweaking we need to do below.
       if ((correlation>GOOD_ENOUGH_CORRELATION) && (correlation > lastCorrelation)) {
          foundGoodCorrelation = true;
          if (correlation > best_correlation) {          
-						best_correlation = correlation;
-						best_offset = offset;
-					}
-			} else if (foundGoodCorrelation) {
+      best_correlation = correlation;
+      best_offset = offset;
+     }
+   } else if (foundGoodCorrelation) {
 
-				var shift = (correlations[best_offset + 1] - correlations[best_offset - 1])/ correlations[best_offset];
-				return sampleRate / (best_offset + (8 * shift));
-			}
-			lastCorrelation = correlation;
-		}
-		if (best_correlation > 0.01) {
-			return sampleRate / best_offset;
-		}
-		return -1;
-	}
-	
+    var shift = (correlations[best_offset + 1] - correlations[best_offset - 1])/ correlations[best_offset];
+    return sampleRate / (best_offset + (8 * shift));
+   }
+   lastCorrelation = correlation;
+  }
+  if (best_correlation > 0.01) {
+   return sampleRate / best_offset;
+  }
+  return -1;
+ }
+ 
 function average(buffer){
-	 var avg = 0;
-	 
-	 for(var i = 0;i<FRAME_SIZE;i++){
-	  avg += buffer[i];
-	 }
-	 
-	 avg /= FRAME_SIZE;
-	 return avg;
-	}
+  var avg = 0;
+  
+  for(var i = 0;i<FRAME_SIZE;i++){
+   avg += buffer[i];
+  }
+  
+  avg /= FRAME_SIZE;
+  return avg;
+ }
 
 function short_time_energy(buffer, avg){
  var eng = 0;
@@ -403,78 +402,244 @@ function zero_crossing_rate(buffer){
 }
 //음정을 추출한 숫자를 맞는 범위의 글자로 바꿔주는 함수 
 function divideNote(ac){
-	// C : 도 , D : 레, E : 미, F : 파, G : 솔, A : 라, B : 시 
-	//2옥타브
-	if(ac>=65 && ac<69) return "C2"; 
-	else if(ac>=69 && ac<73) return "C#2";
-	else if(ac>=73 && ac<78) return "D2";
-	else if(ac>=78 && ac<82) return "D#2";
-	else if(ac>=82 && ac<87) return "E2";
-	else if(ac>=87 && ac<92) return "F2";
-	else if(ac>=92 && ac<98) return "F#2";
-	else if(ac>=98 && ac<104) return "G2";
-	else if(ac>=104 && ac<110) return "G#2";
-	else if(ac>=110 && ac<117) return "A2";
-	else if(ac>=117 && ac<123) return "A#2";
-	else if(ac>=123 && ac<131) return "B2";
-	//3옥타브
-	else if(ac>=131 && ac<139) return "C3";
-	else if(ac>=139 && ac<147) return "C#3";
-	else if(ac>=147 && ac<156) return "D3";
-	else if(ac>=156 && ac<165) return "D#3";
-	else if(ac>=165 && ac<175) return "E3";
-	else if(ac>=175 && ac<185) return "F3";
-	else if(ac>=185 && ac<196) return "F#3";
-	else if(ac>=196 && ac<208) return "G3";
-	else if(ac>=208 && ac<220) return "G#3";
-	else if(ac>=220 && ac<233) return "A3";
-	else if(ac>=233 && ac<247) return "A#3";
-	else if(ac>=247 && ac<262) return "B3";
-	//4옥타브
-	else if(ac>=262 && ac<277) return "C4";
-	else if(ac>=277 && ac<294) return "C#4";
-	else if(ac>=294 && ac<311) return "D4";
-	else if(ac>=311 && ac<330) return "D#4";
-	else if(ac>=330 && ac<349) return "E4";
-	else if(ac>=349 && ac<370) return "F4";
-	else if(ac>=370 && ac<392) return "F#4";
-	else if(ac>=392 && ac<415) return "G4";
-	else if(ac>=415 && ac<440) return "G#4";
-	else if(ac>=440 && ac<466) return "A4";
-	else if(ac>=466 && ac<494) return "A#4";
-	else if(ac>=494 && ac<523) return "B4";
-	//5옥타브
-	else if(ac>=523 && ac<554) return "C5";
-	else if(ac>=554 && ac<587) return "C#5";
-	else if(ac>=587 && ac<622) return "D5";
-	else if(ac>=622 && ac<659) return "D#5";
-	else if(ac>=659 && ac<698) return "E5";
-	else if(ac>=698 && ac<740) return "F5";
-	else if(ac>=740 && ac<784) return "F#5";
-	else if(ac>=784 && ac<831) return "G5";
-	else if(ac>=831 && ac<880) return "G#5";
-	else if(ac>=880 && ac<932) return "A5";
-	else if(ac>=932 && ac<988) return "A#5";
-	else if(ac>=988 && ac<1047) return "B5";
-	//6옥타브
-	else if(ac>=1047 && ac<1109) return "C6";
-	else if(ac>=1109 && ac<1175) return "C#6";
-	else if(ac>=1175 && ac<1245) return "D6";
-	else if(ac>=1245 && ac<1319) return "D#6";
-	else if(ac>=1319 && ac<1397) return "E6";
-	else if(ac>=1397 && ac<1480) return "F6";
-	else if(ac>=1480 && ac<1568) return "F#6";
-	else if(ac>=1568 && ac<1661) return "G6";
-	else if(ac>=1661 && ac<1760) return "G#6";
-	else if(ac>=1760 && ac<1865) return "A6";
-	else if(ac>=1865 && ac<1976) return "A#6";
-	else if(ac>=1976 && ac<2093) return "B6";
+ // C : 도 , D : 레, E : 미, F : 파, G : 솔, A : 라, B : 시 
+ //2옥타브
+ if(ac>=65 && ac<69) return "C2"; 
+ else if(ac>=69 && ac<73) return "C#2";
+ else if(ac>=73 && ac<78) return "D2";
+ else if(ac>=78 && ac<82) return "D#2";
+ else if(ac>=82 && ac<87) return "E2";
+ else if(ac>=87 && ac<92) return "F2";
+ else if(ac>=92 && ac<98) return "F#2";
+ else if(ac>=98 && ac<104) return "G2";
+ else if(ac>=104 && ac<110) return "G#2";
+ else if(ac>=110 && ac<117) return "A2";
+ else if(ac>=117 && ac<123) return "A#2";
+ else if(ac>=123 && ac<131) return "B2";
+ //3옥타브
+ else if(ac>=131 && ac<139) return "C3";
+ else if(ac>=139 && ac<147) return "C#3";
+ else if(ac>=147 && ac<156) return "D3";
+ else if(ac>=156 && ac<165) return "D#3";
+ else if(ac>=165 && ac<175) return "E3";
+ else if(ac>=175 && ac<185) return "F3";
+ else if(ac>=185 && ac<196) return "F#3";
+ else if(ac>=196 && ac<208) return "G3";
+ else if(ac>=208 && ac<220) return "G#3";
+ else if(ac>=220 && ac<233) return "A3";
+ else if(ac>=233 && ac<247) return "A#3";
+ else if(ac>=247 && ac<262) return "B3";
+ //4옥타브
+ else if(ac>=262 && ac<277) return "C4";
+ else if(ac>=277 && ac<294) return "C#4";
+ else if(ac>=294 && ac<311) return "D4";
+ else if(ac>=311 && ac<330) return "D#4";
+ else if(ac>=330 && ac<349) return "E4";
+ else if(ac>=349 && ac<370) return "F4";
+ else if(ac>=370 && ac<392) return "F#4";
+ else if(ac>=392 && ac<415) return "G4";
+ else if(ac>=415 && ac<440) return "G#4";
+ else if(ac>=440 && ac<466) return "A4";
+ else if(ac>=466 && ac<494) return "A#4";
+ else if(ac>=494 && ac<523) return "B4";
+ //5옥타브
+ else if(ac>=523 && ac<554) return "C5";
+ else if(ac>=554 && ac<587) return "C#5";
+ else if(ac>=587 && ac<622) return "D5";
+ else if(ac>=622 && ac<659) return "D#5";
+ else if(ac>=659 && ac<698) return "E5";
+ else if(ac>=698 && ac<740) return "F5";
+ else if(ac>=740 && ac<784) return "F#5";
+ else if(ac>=784 && ac<831) return "G5";
+ else if(ac>=831 && ac<880) return "G#5";
+ else if(ac>=880 && ac<932) return "A5";
+ else if(ac>=932 && ac<988) return "A#5";
+ else if(ac>=988 && ac<1047) return "B5";
+ //6옥타브
+ else if(ac>=1047 && ac<1109) return "C6";
+ else if(ac>=1109 && ac<1175) return "C#6";
+ else if(ac>=1175 && ac<1245) return "D6";
+ else if(ac>=1245 && ac<1319) return "D#6";
+ else if(ac>=1319 && ac<1397) return "E6";
+ else if(ac>=1397 && ac<1480) return "F6";
+ else if(ac>=1480 && ac<1568) return "F#6";
+ else if(ac>=1568 && ac<1661) return "G6";
+ else if(ac>=1661 && ac<1760) return "G#6";
+ else if(ac>=1760 && ac<1865) return "A6";
+ else if(ac>=1865 && ac<1976) return "A#6";
+ else if(ac>=1976 && ac<2093) return "B6";
 }
+
+//마이크 입력을 받기 위해, plaing true로 바꾸고 마이크 입력을 받는 updatePitch를 실행함.
+function start() {
+    if (playing == false)
+     playing = true;
+      updatePitch(); // 이거 주석 하면 안됨!
+}
+// 위에꺼랑 반대
+function stop() {
+    if (playing)
+     playing = false;
+}
+
+
+// handle multiple browsers for requestAnimationFrame()
+window.requestAFrame = (function () {
+    return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            // if all else fails, use setTimeout
+            function (callback) {
+                return window.setTimeout(callback, 16); // shoot for 60 fps, 16 = 1000/60
+            };
+})();
+
+window.cancelAFrame = (function () {
+    return window.cancelAnimationFrame ||
+            window.webkitCancelAnimationFrame ||
+            window.mozCancelAnimationFrame ||
+            window.oCancelAnimationFrame ||
+            function (id) {
+                window.clearTimeout(id);
+            };
+})();
+
+function myFunction() {
+	var totalT = 0;
+	for (var i=0;i<=3;i++) {
+			totalT += sheetTime[i]*1000;
+			console.log(totalT);
+		  setTimeout("timerfun("+i+")", totalT);
+		}
+}
+function timerfun(i){
+		console.log(i);
+		
+		    
+		    if(i == 0){
+		    	document.getElementById('myImage').src="./resources/images/1.png";
+		    }
+		    else if(i == 1){
+		    	document.getElementById('myImage').src="./resources/images/2.png";
+		    }
+		    else if(i == 2){
+		    	document.getElementById('myImage').src="./resources/images/3.png";
+		    }
+		    else{
+		    	document.getElementById('myImage').src="./resources/images/4.png";
+		    }
+			}
+
+function readFile(){
+	var fileName = "/resources/notes/songTest.txt";
+	var fileObject = new XMLHttpRequest();
+	
+	var xmlhttp;
+	var songText;
+	
+	  if (window.XMLHttpRequest) {
+	    xmlhttp = new XMLHttpRequest();
+	  } else {
+	    // code for older browsers
+	    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	  xmlhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	    	songText = this.responseText;
+	    	//console.log("1 : "+songText);
+	    	//txt파일 파싱하기
+	    	var txtArr = songText.split(':');
+	    	//시간배열, on/off상태배열, 채널배열, 차이배열??, 노래크기 배열 
+	    	
+	    	var indexT = 0, indexS = 0, indexC = 0, indexI = 0, indexV = 0;
+	    	for(var a=0;a<txtArr.length;a++){
+	    		
+	    		if(a%5==0)
+ 	    			timeArr[indexT++] = txtArr[a];
+	    		else if(a%5==1)
+ 	    			stateArr[indexS++] = txtArr[a];
+	    		else if(a%5==2)
+ 	    			channelArr[indexC++] = txtArr[a];
+	    		else if(a%5==3)
+ 	    			intervalArr[indexI++] = txtArr[a];
+	    		else
+ 	    			veloArr[indexV++] = txtArr[a];
+	    		
+	    	}
+ 					console.log(timeArr);
+ 					var audio = new Audio('/resources/music/iloved.mp3');
+ 					audio.play();
+   				calNote();
+   				playing = true;
+					updatePitch();
+	    }
+	  };
+	  
+	  xmlhttp.open("GET", fileName, true);
+	  xmlhttp.send();
+
+}
+
+function calNote(){// 현재 음 계산하는 아이.
+	//console.log(intervalV);
+	if(stateArr[checkCnt] == 'On')
+		noteV += Number(intervalArr[checkCnt]);
+	else 
+		noteV -= Number(intervalArr[checkCnt]);
+	//console.log(noteV);
+	//checkCnt++;
+	noteVText = divideNote(noteV)
+	
+	console.log("noteVText : " + noteVText);
+	console.log("noteAc : " + noteAc);
+	if(noteAc == noteVText){
+		console.log("very good!");
+		noteCorrect = true;
+	}
+	else{
+		noteCorrect = false;
+	}
+	noteCheck();
+	if(checkCnt<intervalArr.length){
+		console.log("index : " + checkCnt +",  time : " + (timeArr[checkCnt] - timeArr[checkCnt-1]));
+		if(checkCnt == 0)
+  		setTimeout("calNote()",timeArr[checkCnt]*1000*tick);
+  	else
+  		setTimeout("calNote()",(timeArr[checkCnt] - timeArr[checkCnt-1])*1000*tick);
+		checkCnt++;
+	}
+}
+
+function loadimages() {
+    light01 = new Image;
+    light01.src = "./resources/img/greenlight.png";
+
+    light02 = new Image;
+    light02.src = "./resources/img/redlight.png";
+
+    pictures = new Array(2);
+    pictures[0] = light01;
+    pictures[1] = light02;
+
+}
+
+function noteCheck(){   
+		    if(noteCorrect == 0){
+		    	document.getElementById('light').src="/resources/img/greenlight.png";
+		    }
+		    else if(noteCorrect == 1){
+		    	console.log("들어옴!")
+		    	document.getElementById('light').src="/resources/img/redlight.png";
+		    }
+
+			}
+
 /* 
 //현재 어떤 음정인지 체크하는 함수(현재 사용X)
 function noteFromPitch( frequency ) {
-	 var noteNum = 12 * (Math.log( frequency / 440 )/Math.log(2) );
-	 return Math.round( noteNum ) + 69;
+  var noteNum = 12 * (Math.log( frequency / 440 )/Math.log(2) );
+  return Math.round( noteNum ) + 69;
 }
 
 //음정에서 주파수을 구하는 함수(현재 사용X)
@@ -489,4 +654,6 @@ return Math.floor( 1200 * Math.log( frequency / frequencyFromNoteNumber( note ))
  */
 
 </script>
+</body>
+
 </html>

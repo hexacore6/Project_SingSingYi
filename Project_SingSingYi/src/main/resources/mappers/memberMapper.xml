@@ -14,4 +14,10 @@
 		VALUES (#{id}, #{password}, #{pwquestion}, #{pwanswer})
 	</insert>
 	
+	<select id="confirm" resultType="String">
+		SELECT	id
+		FROM	members
+		WHERE	id = #{id}
+	</select>
+	
 </mapper>

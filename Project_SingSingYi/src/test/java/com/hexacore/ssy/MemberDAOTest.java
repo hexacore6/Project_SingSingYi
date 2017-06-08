@@ -44,4 +44,10 @@ public class MemberDAOTest {
 		dao.regist(member);
 	}
 	
+	/** 아이디 중복 확인 테스트 */
+	@Test
+	public void confirmTest() {
+		logger.info("아이디 중복? : " + dao.confirm("asdf"));
+	}
+	
 }

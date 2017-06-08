@@ -11,4 +11,6 @@ public interface MemberDAO {
 	/** 회원가입 */
 	public void regist(Member member);
 	
+	/** 아이디 중복 확인 */
+	public String confirm(String id);
 }

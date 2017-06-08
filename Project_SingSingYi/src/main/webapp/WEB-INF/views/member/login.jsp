@@ -28,7 +28,7 @@
 			navigation : true,
 			navigationPosition : 'left'
 		});
-
+/* 
 		// run the currently selected effect
 		function runEffect() {
 			// get effect type from
@@ -56,7 +56,7 @@
 			runEffect();
 		});
 		$("#effect").hide();
-
+ */
 		// 
 		$(".start").hide();
 		setTimeout(function() {
@@ -180,12 +180,14 @@ input {
 					<button type="submit" id="button">로그인</button>
 				</form>
 				
+				<!-- 
 				<div class="toggler">
 					<div id="effect">
 						<p>아이디와 비밀번호가 일치하지 않습니다!</p>
 						<a href="">비밀번호를 찾으시겠습니까?</a>
 					</div>
-				</div>
+				</div> 
+				-->
 			</div>
 		</div>
 		<div class="section" id="section1">

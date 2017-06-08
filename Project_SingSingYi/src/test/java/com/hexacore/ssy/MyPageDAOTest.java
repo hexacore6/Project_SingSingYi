@@ -12,9 +12,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hexacore.ssy.common.Criteria;
+import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.dao.MypageDAO;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
-import com.hexacore.ssy.mypage.domain.Member;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(

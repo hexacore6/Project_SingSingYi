@@ -39,7 +39,7 @@
       </div>
     </div>
     <!--해어디이미지-->
-    <section id='header'> <!--해더스타트-->
+    <section id='header' class='container'> <!--해더스타트-->
     <div class='headerbar'>
       <div class="row">
         <!--해더 메뉴바-->
@@ -71,7 +71,7 @@
     <section id="content" class='container'>
     <div class="row">
       <%@include file="side.jsp"%>
-      <div class="col-lg-9">
+      <div class="col-lg-9" style="margin-top: 50px;">
         <!--content-->
         <div class="row">
           <div class="col-lg-1"></div>

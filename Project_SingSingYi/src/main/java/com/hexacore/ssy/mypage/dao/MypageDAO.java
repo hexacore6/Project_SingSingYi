@@ -69,6 +69,9 @@ public interface MypageDAO {
 	// 코인 내역 테이블 행의 수 계산
 	public int countCoinPaging(Criteria cri, String id);
 	
+	// 코인 충전 내역 추가
+	public void coinListAdd(CoinHistory coinHistory);
+	
 	// 애창곡 테이블 행의 수 계산
 	public int countFavoritePaging(Criteria cri, String id);
 		

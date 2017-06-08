@@ -28,58 +28,7 @@ function modify_click() {
 }
 </script>
 <body>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class='headerimg'>
-        <!--좌표값수정-->
-        <div class="row">
-          <div class="col-lg-3"></div>
-          <div class="col-lg-3"></div>
-          <div class="col-lg-3">
-            <iframe></iframe>
-          </div>
-        </div>
-        <div class='container'>
-        <div class="row">
-          <div class="col-lg-3"></div>
-          <div class="col-lg-3">
-            <a href="#"></a>
-          </div>
-          <div class="col-lg-3"></div>
-        </div>
-      </div>
-     </div>
-    </div>
-    <!--해어디이미지-->
-    <section id='header' class='container'> <!--해더스타트-->
-    <div class='headerbar'>
-      <div class="row">
-        <!--해더 메뉴바-->
-        <!--한글폰트-->
-        <div class="col-lg-3">
-          <a href='#' class="menuitem">
-            <p class="text-center">노래하기</p>
-          </a>
-        </div>
-        <div class="col-lg-3">
-          <a href='#' class="menuitem">
-            <p class="text-center">sns</p>
-          </a>
-        </div>
-        <div class="col-lg-3">
-          <a href='#' class="menuitem">
-            <p class="text-center">공지사항</p>
-          </a>
-        </div>
-        <div class="col-lg-3">
-          <a href='#' class="menuitem">
-            <p class="text-center">고객센터</p>
-          </a>
-        </div>
-      </div>
-    </div>
-    </section>
-    <!--해더END-->
+  <jsp:include page="../include/header.jsp"></jsp:include>
     <section id="content " class='container'>
     <div class="row">
       <%@include file="side.jsp"%>
@@ -115,35 +64,7 @@ function modify_click() {
     </div>
     </section>
     <!--내용끝-->
-    <section id="footer" class='container'> <!--푸터시작--> <!--한글폰트-->
-    <div class='footervar'>
-      <div class="row">
-        <!--푸터 메뉴바-->
-        <div class="col-lg-3">
-          <a href='www.naevr.com' class="menuitem">
-            <p class="text-center">노래하기</p>
-          </a>
-        </div>
-        <div class="col-lg-3">
-          <a href='#' class="menuitem">
-            <p class="text-center">sns</p>
-          </a>
-        </div>
-        <div class="col-lg-3">
-          <a href='#' class="menuitem">
-            <p class="text-center">공지사항</p>
-          </a>
-        </div>
-        <div class="col-lg-3">
-          <a href='#' class="menuitem">
-            <p class="text-center">고객센터</p>
-          </a>
-        </div>
-      </div>
-    </div>
-    </section>
-  </div>
-  <!--푸터끝-->
+    <jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 
 </html>

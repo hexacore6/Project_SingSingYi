@@ -97,56 +97,7 @@
 <jsp:useBean id="now" class="java.util.Date" scope="request" />
 <body>
 
-  <div class="row">
-    <div class="col-lg-12">
-      <div class='headerimg'>
-        <!--좌표값수정-->
-        <div class="row">
-          <div class="col-lg-3"></div>
-          <div class="col-lg-3"></div>
-          <div class="col-lg-3">
-            <iframe></iframe>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-3"></div>
-          <div class="col-lg-3">
-            <a href="#"></a>
-          </div>
-          <div class="col-lg-3"></div>
-        </div>
-
-      </div>
-    </div>
-    <!--해어디이미지-->
-    <section id='header' class='container'> <!--해더스타트-->
-    <div class='headerbar'>
-      <div class="row">
-        <!--해더 메뉴바-->
-        <!--한글폰트-->
-        <div class="col-lg-3">
-          <a href='#' class="menuitem">
-            <p class="text-center">노래하기</p>
-          </a>
-        </div>
-        <div class="col-lg-3">
-          <a href='#' class="menuitem">
-            <p class="text-center">sns</p>
-          </a>
-        </div>
-        <div class="col-lg-3">
-          <a href='#' class="menuitem">
-            <p class="text-center">공지사항</p>
-          </a>
-        </div>
-        <div class="col-lg-3">
-          <a href='#' class="menuitem">
-            <p class="text-center">고객센터</p>
-          </a>
-        </div>
-      </div>
-    </div>
-    </section>
+    <jsp:include page="../include/header.jsp"></jsp:include>
     <!--해더END-->
     <section id="content" class='container'>
     <div class="row">
@@ -204,23 +155,18 @@
                         <c:set var="id" value="${login.id }" />
                         <c:if test="${target eq id}">
                           <div style="text-align: right; float: right;">
-                            <i class="fa fa-pencil" onclick="showUpdateModal('${sharing.shid}')">
-                            </i><span id="sharingId"> </span> <i class="fa fa-trash-o">
-                            </i><span id="sharingId"> </span>
+                            <i class="fa fa-pencil" onclick="showUpdateModal('${sharing.shid}')"> </i><span id="sharingId"> </span> <i class="fa fa-trash-o"> </i><span id="sharingId"> </span>
                           </div>
                         </c:if>
                       </h3>
                     </div>
-                  
+
                     <!-- <div class="row" style="margin: 10px;"><i class="fa fa-pencil-square-o">
               <i class="fa fa-trash-o"></div> -->
-                    
-                  
-                
-                </div>
-                <div class="row" style="margin: 10px;">
-                      <span style="float:left; margin-left: 120px;">${sharing.shcontent}</span>
-                    </div>
+                  </div>
+                  <div class="row" style="margin: 10px;">
+                    <span style="float: left; margin-left: 120px;">${sharing.shcontent}</span>
+                  </div>
                 </c:forEach>
               </div>
             </div>
@@ -266,32 +212,5 @@
   </div>
   <!-- /.read modal -->
   <!--내용끝-->
-  <section id="footer"> <!--푸터시작--> <!--한글폰트-->
-  <div class='footervar'>
-    <div class="row">
-      <!--푸터 메뉴바-->
-      <div class="col-lg-3">
-        <a href='www.naevr.com' class="menuitem">
-          <p class="text-center">노래하기</p>
-        </a>
-      </div>
-      <div class="col-lg-3">
-        <a href='#' class="menuitem">
-          <p class="text-center">sns</p>
-        </a>
-      </div>
-      <div class="col-lg-3">
-        <a href='#' class="menuitem">
-          <p class="text-center">공지사항</p>
-        </a>
-      </div>
-      <div class="col-lg-3">
-        <a href='#' class="menuitem">
-          <p class="text-center">고객센터</p>
-        </a>
-      </div>
-    </div>
-  </div>
-  </section>
-  <!--푸터끝-->
+  <jsp:include page="../include/footer.jsp"></jsp:include>
 </html>

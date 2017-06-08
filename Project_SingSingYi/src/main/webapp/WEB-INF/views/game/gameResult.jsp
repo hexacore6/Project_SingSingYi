@@ -28,7 +28,10 @@
      <!-- header -->
       <%@ include file="../include/header.jsp"%>
       <center>
-      <h1 style="margin-top: 50px;">${login.id}님은 5개중 5개를  맞추었습니다.</h1>
+      <h1 style="margin-top: 50px;">${login.id}님은 ${countSong }개중 <font color="red">${correct }</font>개를  맞추었습니다.</h1><br>
+      <c:if test="${countSong == correct}">
+      <h1>문제를 모두 맞추었으므로 보너스 코인 1개 충전!</h1>      
+      </c:if>
       </center>
 </body>
 </html>

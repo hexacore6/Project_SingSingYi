@@ -1,18 +1,22 @@
 package com.hexacore.ssy;
 
 import java.util.List;
+
 import java.util.Locale;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hexacore.ssy.song.domain.Song;
 import com.hexacore.ssy.song.service.SongService;
@@ -21,15 +25,13 @@ import com.hexacore.ssy.song.service.SongService;
 @RequestMapping("/game/*")
 public class GameController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(GameController.class);
-	
+	Logger logger = Logger.getLogger(GameController.class);
 	@Inject
 	private SongService service;
 	
 	@RequestMapping(value = "/gameStart", method = RequestMethod.GET)
 	public void gameStartGET(Locale locale, Model model) {
 		
-		logger.info("Welcome 종현이게임 스타트페이지! The client locale is {}.", locale);
 	}
 	
 	@RequestMapping(value = "/jhgame", method = RequestMethod.GET)
@@ -40,7 +42,7 @@ public class GameController {
 	
 	@RequestMapping(value = "/jhgame", method = RequestMethod.POST)
 		public ResponseEntity<List<Song>> jhgamePOST(Model model){
-			
+		logger.info("클라이언트: 게임결과페이지 입장1");
 			ResponseEntity<List<Song>> entity = null;
 			try{
 				entity = new ResponseEntity<List<Song>>(
@@ -87,10 +89,29 @@ public class GameController {
 	}*/
 	
 	@RequestMapping(value = "/gameResult", method = RequestMethod.GET)
-	public void gameResult(Locale locale, Model model) {
-		
-		logger.info("Welcome 종현이게임 결과페이지! The client locale is {}.", locale);
+	public void gameResultGET(Model model) {
+		model.addAttribute("countSong", service.countSong());
+		logger.info("클라이언트: 게임결과페이지 입장2");
 	}
+	
+	@RequestMapping(value = "/gameResult", method = RequestMethod.POST)
+	public ResponseEntity<String> gameResultPOST(Model model, @RequestBody int correct) {
+		
+		ResponseEntity<String> entity = null;
+		try{
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			model.addAttribute("correct", correct);
+			model.addAttribute("countSong", service.countSong());
+			logger.info("클라이언트: 게임결과페이지 입장3");
+			logger.info(correct);
+			
+		} catch (Exception e){
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
 	
 	
 	

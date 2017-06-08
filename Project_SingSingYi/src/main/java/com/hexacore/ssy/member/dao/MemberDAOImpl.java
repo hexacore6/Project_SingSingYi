@@ -26,4 +26,9 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.insert(namespace + ".regist", member);
 	}
 	
+	@Override
+	public String confirm(String id) {
+		return sqlSession.selectOne(namespace + ".confirm", id);
+	}
+	
 }

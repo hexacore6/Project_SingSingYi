@@ -36,7 +36,7 @@
 			sectionsColor : [ '#1bbc9b', '#4BBFC3', '#7BAABE' ],
 
 		});
-		
+		/* 
 		// run the currently selected effect
 		function runEffect() {
 			// get effect type from
@@ -64,20 +64,62 @@
 			runEffect();
 		});
 		$("#effect").hide();
-
-		// 
+		*/
+		
 		$(".start").hide();
 		setTimeout(function() {
 			$(".start").show();
 		}, 500);
+		
+		
+		/* 
+	    $('#id').keyup(function(){
+	        if ( $('#id').val().length >= 6 && $('#id').val().length <= 12) {
+	            var id = $(this).val();
+	            // ajax 실행
+	            $.ajax({
+	                type : 'POST',
+	                url : "/member/iddup",
+	                data:
+	                {
+	                    id: id
+	                },
+	                success : function(result) {
+	                    if (result === "false") {
+	                        $("#idcheck").html("<font color=green> 사용가능한 아이디 입니다.</font>");
+	                    } else {
+	                        $("#idcheck").html("<font color=red> 이미 사용중인 아이디 입니다.</font>");
+	                    }
+	                }
+	            }); // end ajax
+	        }else{
+	        	$("#idcheck").html("");    		  
+	  	  	}
+	    });  // end keyup
+			
+		
+		$('#repassword').keyup(function() {
+			if ($('#password').val() != $('#repassword').val()) {
+				$("#pwdcheck").html("<font color=red> 비밀번호 불일치</font>");
+			} else {
+				$("#pwdcheck").html("<font color=green> 비밀번호 일치</font>");
+			}
+		}); // end keyup 
+		*/
 	});
 </script>
 
+
+
 <style>
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+body {
+	font-family: 'Jeju Gothic', serif;
+}
 /* Style for our header texts
 		* --------------------------------------- */
 h1 {
-	font-family: arial, helvetica;
+	/* font-family: arial, helvetica; */
 	color: #fff;
 	margin: 0;
 	margin-bottom: 10px;
@@ -157,7 +199,7 @@ input {
 .start {
 	animation-name: fadeIn;
 	animation-duration: 0.5s;
-	opacity: 0.8;
+	opacity: 0.9;
 }
 
 .form-group {

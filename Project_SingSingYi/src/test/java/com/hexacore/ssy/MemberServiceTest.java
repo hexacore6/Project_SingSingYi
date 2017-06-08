@@ -24,7 +24,7 @@ public class MemberServiceTest {
 	Logger logger = Logger.getLogger(MemberServiceTest.class);
 	
 	/** 로그인 테스트 */
-	@Test
+//	@Test
 	public void loginTest() {
 		LoginDTO loginDTO = new LoginDTO();
 		loginDTO.setId("asdf");

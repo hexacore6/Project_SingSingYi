@@ -42,7 +42,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			
 			Object dest = httpSession.getAttribute("dest");
 			
-			response.sendRedirect(dest != null ? (String)dest : "/main");
+			response.sendRedirect(dest != null ? (String)dest : "/song/main");
 		}
 		
 	}
@@ -58,7 +58,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			
 			// 로그인한 상태에서 home, login, (regist) 페이지로 이동할 때
 			logger.info("is logined");
-			response.sendRedirect("/main");
+			response.sendRedirect("/song/main");
 			return true;
 		}
 		

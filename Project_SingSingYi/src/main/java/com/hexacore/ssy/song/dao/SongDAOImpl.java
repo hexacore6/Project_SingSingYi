@@ -27,7 +27,16 @@ public class SongDAOImpl implements SongDAO {
 	public int countSong() {
 		return sqlSession.selectOne(namespace+".countSong");
 	}
-
+	
+	@Override
+	public List<Song> bestSongs() {
+		return sqlSession.selectList(namespace + ".bestSongs");
+	}
+	
+	@Override
+	public List<Song> songsList() {
+		return sqlSession.selectList(namespace + ".songsList");
+	}
 	
 }
 

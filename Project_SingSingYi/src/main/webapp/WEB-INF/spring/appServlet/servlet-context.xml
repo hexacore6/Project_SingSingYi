@@ -34,7 +34,7 @@
 		</interceptor>
 		
 		<interceptor>
-			<mapping path="/main" />
+			<mapping path="/song/main" />
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 		

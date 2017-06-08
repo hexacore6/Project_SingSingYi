@@ -21,10 +21,10 @@ public class HomeController {
 		
 		return "home";
 	}
-	
+/*	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String main(Model model) {
-		return "main";
+	public void main(Model model) {
+		
 	}
-	
+	*/
 }

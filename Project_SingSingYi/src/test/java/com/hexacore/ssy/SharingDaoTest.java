@@ -89,7 +89,8 @@ public class SharingDaoTest {
 	
 	//@Test
 	public void testRemove(){
-		dao.delete(18);
+		dao.deleteComment(18);
+		dao.deleteSharing(18);
 	}
 	
 	//@Test

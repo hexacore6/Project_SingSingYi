@@ -25,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -86,6 +87,7 @@ public class SharingController {
 		return savedName;
 	}
 	
+	@Transactional
 	@RequestMapping(value = "/addComment", method = RequestMethod.POST)
 	public ResponseEntity<Comment> addComment(@RequestBody Comment comment) throws IOException {
 		System.out.println("댓글 추가");
@@ -113,6 +115,7 @@ public class SharingController {
 
 	}
 	
+	@Transactional
 	@RequestMapping(value = "/like", method = RequestMethod.POST)
 	public ResponseEntity<Boolean> updateLike(Model model, @RequestBody Sharing sharing) {
 		
@@ -170,7 +173,7 @@ public class SharingController {
 			entity = new ResponseEntity<Sharing>(sharingService.read(sharing.getShid()), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			//entity = new ResponseEntity<Sharing>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 
@@ -193,11 +196,13 @@ public class SharingController {
 
 	}
 	
+	@Transactional
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(Sharing sharing, Model model) {
 		
 		try {
-			sharingService.remove(sharing.getShid());
+			sharingService.removeComment(sharing.getShid());
+			sharingService.removeSharing(sharing.getShid());
 		} catch (Exception e) {
 			System.out.println("삭제 실패");
 			e.printStackTrace();

@@ -13,7 +13,6 @@
     <!-- Ionicons -->
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="<%=application.getContextPath() %>/resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- AdminLTE Skins. Choose a skin from the css/skins 
          folder instead of downloading all of them to reduce the load. -->
     <link href="<%=application.getContextPath() %>/resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
@@ -34,9 +33,9 @@
                      <span class="time">
                         <i class="fa fa-clock-o"></i>{{prettifyDate rregdate}}
                      </span>
-                     <h3 class="timeline-header"><strong>{{rid}}</strong> -{{id}}</h3>
-                    <div class="timeline-body">{{rcontent}} </div>
-                     <div class="timeline-footer">
+                     <h3 class="timeline-header"style="text-align: left;"><strong>{{rid}}</strong> -{{id}}</h3>
+                    <div class="timeline-body"style="text-align: left;">{{rcontent}} </div>
+                     <div class="timeline-footer" style="text-align: left;">
 					 {{#eqReplyer id}}
                         <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modifyModal">댓글 관리</a>
 					 {{/eqReplyer}}
@@ -45,7 +44,14 @@
                </li>
             {{/each}}
          </script>
-         
+         <style type="text/css">
+         .timeline:before {
+         background-color: none;
+         }
+         .timeline:before{
+         background-color: white;
+         }
+         </style>
 </head>
 
 
@@ -55,14 +61,14 @@
   <!-- Main content -->
   <%@include file="../include/header.jsp"%>
   
-  <section class="content">
+  <section id="content" class="container">
     <div class="row">
       <!-- left column -->
       <div class="col-md-12">
         <!-- general form elements -->
-        <div class="box">
+        <div class="box" >
           <div class="box-header with-border">
-            <h3 class="box-title">READ BOARD</h3>
+            <h3 class="box-title" style="text-align: left;">READ BOARD</h3>
           </div>
 
           <form role="form" action="" method="post">
@@ -74,7 +80,7 @@
             <input type="hidden" name="keyword" value="${cri.keyword}">
           </form>
 
-          <div class="box-body">
+          <div class="box-body"style="text-align: left;">
             <div class="form-group">
               <label for="exampleInputEmail1">Title</label> <input type="text" name="title" class="form-control" value="${article.atitle}" readonly />
             </div>
@@ -113,13 +119,13 @@
         <!-- Reply -->
         <div class="box box-success">
 
-          <div class="box-header">
+          <div class="box-header" style="text-align: left;">
             <h3 class="box-title">ADD NEW REPLY</h3>
           </div>
         
    <!-- if START -->
         <c:if test="${not empty login}">
-          <div class="box-body">
+          <div class="box-body" style="text-align: left;">
             <label for="exampleInputEmail1">Writer</label> 
             <input class="form-control" type="text" placeholder="USER ID" id="newReplyWriter" value="${login.id }" readonly="readonly"> 
             <label for="exampleInputEmail1">ReplyText</label>

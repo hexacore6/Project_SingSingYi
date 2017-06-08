@@ -21,59 +21,7 @@
 </head>
 
 <body>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class='headerimg'>
-        <!--좌표값수정-->
-        <div class="row">
-          <div class="col-lg-3"></div>
-          <div class="col-lg-3"></div>
-          <div class="col-lg-3">
-            <iframe></iframe>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-3"></div>
-            <div class="col-lg-3 pull-left">
-              <a href="#"></a>
-            </div>
-            <div class="col-lg-3"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--해어디이미지-->
-  <section id='header' class='container'> <!--해더스타트-->
-  <div class='headerbar'>
-    <div class="row">
-      <!--해더 메뉴바-->
-      <!--한글폰트-->
-      <div class="col-lg-3">
-        <a href='#' class="menuitem" style="text-decoration: none;">
-          <p class="text-center">노래하기</p>
-        </a>
-      </div>
-      <div class="col-lg-3">
-        <a href='#' class="menuitem" style="text-decoration: none;">
-          <p class="text-center">sns</p>
-        </a>
-      </div>
-      <div class="col-lg-3">
-        <a href='#' class="menuitem" style="text-decoration: none;">
-          <p class="text-center">공지사항</p>
-        </a>
-      </div>
-      <div class="col-lg-3">
-        <a href='#' class="menuitem" style="text-decoration: none;">
-          <p class="text-center">고객센터</p>
-        </a>
-      </div>
-    </div>
-  </div>
-  </section>
-  <!--해더END-->
+ <jsp:include page="../include/header.jsp"></jsp:include>
   <section class="container" id="content" class='container'>
   <div class="row">
     <%@include file="side.jsp"%>
@@ -84,7 +32,7 @@
         <div class="col-lg-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title pull-left">${rank.id }님의 랭킹</h3>
+              <h3 class="box-title pull-left" style="text-align: center; font-size: 20px;">${rank.id }님의 랭킹</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -92,15 +40,15 @@
                 <tbody>
 
                   <tr>
-                    <th style="width: 100px; text-align: center;">랭킹</th>
-                    <th style="text-align: center;">아이디</th>
-                    <th style="text-align: center;">좋아요 개수</th>
+                    <th style="width: 100px; text-align: center; font-size: 20px;">랭킹</th>
+                    <th style="text-align: center; font-size: 20px;">아이디</th>
+                    <th style="text-align: center; font-size: 20px;">좋아요 개수</th>
                   </tr>
                   <c:forEach items="${myRankArea}" var="RankArea">
                     <tr>
-                      <td style="text-align: center;">${RankArea.rank }</td>
-                      <td style="text-align: center;">${RankArea.id }</td>
-                      <td style="text-align: center;">${RankArea.rankpoint }</td>
+                      <td style="text-align: center; font-size: 18px;">${RankArea.rank }</td>
+                      <td style="text-align: center; font-size: 18px;">${RankArea.id }</td>
+                      <td style="text-align: center; font-size: 18px;"">${RankArea.rankpoint }</td>
                     </tr>
                   </c:forEach>
                 </tbody>
@@ -121,15 +69,15 @@
               <table class="table table-bordered">
                 <tbody>
                   <tr>
-                    <th style="width: 100px; text-align: center;">랭킹</th>
-                    <th style="text-align: center;">아이디</th>
-                    <th style="text-align: center;">좋아요 개수</th>
+                    <th style="width: 100px; text-align: center; font-size: 18px;"">랭킹</th>
+                    <th style="text-align: center; font-size: 18px;"">아이디</th>
+                    <th style="text-align: center; font-size: 18px;"">좋아요 개수</th>
                   </tr>
                   <c:forEach items="${top5List}" var="top5">
                     <tr>
-                      <td style="text-align: center;">${top5.rank }</td>
-                      <td style="text-align: center;">${top5.id }</td>
-                      <td style="text-align: center;">${top5.rankpoint }</td>
+                      <td style="text-align: center; font-size: 18px;"">${top5.rank }</td>
+                      <td style="text-align: center; font-size: 18px;"">${top5.id }</td>
+                      <td style="text-align: center; font-size: 18px;"">${top5.rankpoint }</td>
                     </tr>
                   </c:forEach>
                 </tbody>
@@ -151,25 +99,7 @@
     </div>
   </div>
   </section>
-  <!--내용끝-->
-  <section id="footer" class="container"> <!--푸터시작--> <!--한글폰트-->
-  <div class='footervar'>
-    <div class="row">
-      <!--푸터 메뉴바-->
-      <div class="col-lg-6">
-        <a href='www.naevr.com' class="menuitem" style="text-decoration: none;">
-          <p class="text-center">Copyright © 2017 by HAXCORE</p>
-        </a>
-      </div>
-      <div class="col-lg-6">
-        <a href='#' class="menuitem" style="text-decoration: none;">
-          <p class="text-center">서울시 금천구 가산동</p>
-        </a>
-      </div>
-    </div>
-  </div>
-  </section>
-  <!--푸터끝-->
+  <jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 
 </html>

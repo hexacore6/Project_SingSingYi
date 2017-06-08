@@ -125,8 +125,13 @@ public class MypageServiceImpl implements MypageService {
 	// 코인 내역 테이블 행의 수 계산
 	@Override
 	public int countCoinPaging(Criteria cri, String id) {
-		// TODO Auto-generated method stub
 		return dao.countCoinPaging(cri, id);
+	}
+	
+	// 코인 충전 내역 추가
+	@Override
+	public void coinListAdd(CoinHistory coinHistory) {
+		dao.coinListAdd(coinHistory);
 	}
 	
 	// 애창곡 내역 테이블 행의 수 계산

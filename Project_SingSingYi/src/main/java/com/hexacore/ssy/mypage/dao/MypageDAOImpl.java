@@ -188,6 +188,20 @@ public class MypageDAOImpl implements MypageDAO{
 		return session.selectOne(namespace+".countCoinPaging", paramMap);
 	}
 	
+	// 코인 충전 내역 추가
+	@Override
+	public void coinListAdd(CoinHistory coinHistory) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("id", coinHistory.getId());
+		paramMap.put("ctype", coinHistory.getChtype());
+		paramMap.put("content", coinHistory.getChcontent());
+		session.insert(namespace+".coinListAdd", paramMap);
+		
+		
+	}	
+	
 	// 애창곡 내역 테이블 행의 수 계산
 	@Override
 	public int countFavoritePaging(Criteria cri, String id) {
@@ -213,4 +227,6 @@ public class MypageDAOImpl implements MypageDAO{
 		
 		return session.selectOne(namespace+".countRecordPaging", paramMap);
 	}
+	
+
 }

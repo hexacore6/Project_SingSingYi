@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.hexacore.ssy.common.Criteria;
 import com.hexacore.ssy.common.PageMaker;
 import com.hexacore.ssy.member.domain.Member;
+import com.hexacore.ssy.mypage.domain.CoinHistory;
 import com.hexacore.ssy.mypage.service.MypageService;
 import com.hexacore.ssy.sharing.util.MediaUtils;
 
@@ -85,13 +86,21 @@ public class MypageController {
 	public String addCoin(String id, Member member){
 		logger.info("아이디 : "+ id);
 		service.addCoin(member, id);
-		
-		return "redirect:/mypage/myCoin?id="+id;
+		CoinHistory coinHistory = new CoinHistory();
+		coinHistory.setId(id);
+		coinHistory.setChtype("충전");
+		coinHistory.setChcontent(member.getCoincnt() +"개 충전");
+		service.coinListAdd(coinHistory);
+		return "redirect:/mypage/coin";
 	}
 	
 	// 나의 애창곡 조회
 	@RequestMapping(value="/favorite", method=RequestMethod.GET)
-	public void readMyFaovrite(@RequestParam("id") String id, Criteria cri, Model model){
+	public void readMyFaovrite(Criteria cri, Model model, HttpSession httpSession){
+		
+		Member member = (Member)httpSession.getAttribute("login");
+		
+		String id = member.getId();
 		model.addAttribute("list", service.favoriteCriteria(cri, id));
 		model.addAttribute("id", id);
 		PageMaker pageMaker = new PageMaker();
@@ -112,7 +121,10 @@ public class MypageController {
 	
 	// 나의 랭킹 조회
 	@RequestMapping(value="/rank", method=RequestMethod.GET)
-	public void readMyRank(@RequestParam("id") String id, Model model){
+	public void readMyRank(Model model, HttpSession httpSession){
+		Member member = (Member)httpSession.getAttribute("login");
+		
+		String id = member.getId();
 		model.addAttribute("id", id);
 		model.addAttribute("rank", service.readMyRank(id));
 		model.addAttribute("top5List", service.readTopRank());
@@ -121,8 +133,11 @@ public class MypageController {
 	}
 	
 	// 나의 녹음저장소 조회
-	@RequestMapping(value="myRecord", method=RequestMethod.GET)
-	public void readMyRecord(@RequestParam("id") String id, Criteria cri, Model model){
+	@RequestMapping(value="record", method=RequestMethod.GET)
+	public void readMyRecord(Criteria cri, Model model, HttpSession httpSession){
+		Member member = (Member)httpSession.getAttribute("login");
+		
+		String id = member.getId();
 		model.addAttribute("id", id);
 		model.addAttribute("list", service.readMyRecord(cri, id));
 		PageMaker pageMaker = new PageMaker();
@@ -148,7 +163,6 @@ public class MypageController {
 	@RequestMapping(value="/displayFile")
 	public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
 		
-		System.out.println("이미지 들어왔니?");
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
 
@@ -185,7 +199,10 @@ public class MypageController {
 	
 	// 나의 정보 수정 (비밀번호 수정)
 	@RequestMapping(value="/modify", method=RequestMethod.GET)
-	public void modifyGET(@RequestParam("id") String id, Member member, Model model){
+	public void modifyGET(Model model, HttpSession httpSession){
+		Member member = (Member)httpSession.getAttribute("login");
+		
+		String id = member.getId();
 		model.addAttribute("id", id);
 	}
 	

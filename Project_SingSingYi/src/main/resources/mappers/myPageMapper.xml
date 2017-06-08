@@ -9,6 +9,7 @@
 		from sharings 
 		where id = #{id}
 		ORDER BY shregdate DESC
+		limit 3
 	</select>
 	
 	<!-- 나의 공유글 삭제 -->
@@ -152,9 +153,9 @@
 	</select>
 	
 	<!-- 코인 내역 등록 -->
-	<insert id="coinList">
+	<insert id="coinListAdd">
 	insert into coinhistory (id, chtype, chcontent)
-	values ('#{id}', '#{chtype}', '#{chcontent}');
+	values ('#{id}', '#{chtype}', '#{chcontent}')
 	</insert>
 	
 	<!-- 나의 코인내역 조회 페이징처리2 -->

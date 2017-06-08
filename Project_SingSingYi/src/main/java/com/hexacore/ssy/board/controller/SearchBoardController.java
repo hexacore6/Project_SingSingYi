@@ -20,7 +20,7 @@ import com.hexacore.ssy.common.SearchCriteria;
 
 
 @Controller
-@RequestMapping("/sboard/*")
+@RequestMapping("/board/*")
 public class SearchBoardController {
 	
 	Logger logger = Logger.getLogger(SearchBoardController.class);
@@ -60,12 +60,12 @@ public class SearchBoardController {
 		model.addAttribute("pageMaker", pageMaker);
 	}
 	
-	@RequestMapping(value = "/qnaRegister", method = RequestMethod.GET)
+	@RequestMapping(value = "/qnaregister", method = RequestMethod.GET)
 	public void qnaRegistGET(){
 		logger.info("GET방식으로 등록.............");	
 	}
 	
-	@RequestMapping(value = "/qnaRegister", method = RequestMethod.POST)
+	@RequestMapping(value = "/qnaregister", method = RequestMethod.POST)
 	public String qnaRegistPOST(Article article, RedirectAttributes rttr) {
 		logger.info("POST방식으로 등록............");
 		logger.info(article.toString());
@@ -73,16 +73,16 @@ public class SearchBoardController {
 		service.regist(article);
 		
 		rttr.addFlashAttribute("msg", "SUCCESS");
-		return "redirect:/sboard/list";
+		return "redirect:/board/list";
 	}
 	
 	
-	@RequestMapping(value = "/noticeRegister", method = RequestMethod.GET)
+	@RequestMapping(value = "/noticeregister", method = RequestMethod.GET)
 	public void NoticeRegistGET(){
 		logger.info("GET방식으로 등록.............");	
 	}
 	
-	@RequestMapping(value = "/noticeRegister", method = RequestMethod.POST)
+	@RequestMapping(value = "/noticeregister", method = RequestMethod.POST)
 	public String NoticeRegistPOST(Article article, RedirectAttributes rttr) {
 		logger.info("POST방식으로 등록............");
 		logger.info(article.toString());
@@ -90,7 +90,7 @@ public class SearchBoardController {
 		service.regist(article);
 		
 		rttr.addFlashAttribute("msg", "SUCCESS");
-		return "redirect:/sboard/nlist";
+		return "redirect:/board/nlist";
 	}
 	
 	
@@ -116,17 +116,17 @@ public class SearchBoardController {
 		model.addAttribute("pageMaker", pageMaker);
 	}
 	
-	@RequestMapping(value="/readPage", method = RequestMethod.GET)
+	@RequestMapping(value="/readpage", method = RequestMethod.GET)
 	public void read(@RequestParam("aid") int aid, @ModelAttribute("cri") SearchCriteria cri, Model model){
 		model.addAttribute(service.read(aid));
 	}
 	
-	@RequestMapping(value ="/qnaModifyPage", method = RequestMethod.GET)
+	@RequestMapping(value ="/qnamodifypage", method = RequestMethod.GET)
 	public void qnaModifyPagingGET(@RequestParam("aid") int aid, @ModelAttribute("cri") SearchCriteria cri, Model model){
 		model.addAttribute(service.read(aid));
 	}
 	
-	@RequestMapping(value ="/qnaModifyPage", method = RequestMethod.POST)
+	@RequestMapping(value ="/qnamodifypage", method = RequestMethod.POST)
 	public String qnaModifyPagingPOST(Article article, SearchCriteria cri, RedirectAttributes rttr){
 		
 		logger.info(cri.toString());
@@ -141,16 +141,16 @@ public class SearchBoardController {
 		
 		logger.info(rttr.toString());
 		
-		return "redirect:/sboard/list";
+		return "redirect:/board/list";
 		
 	}
 	
-	@RequestMapping(value ="/noticeModifyPage", method = RequestMethod.GET)
+	@RequestMapping(value ="/noticemodifypage", method = RequestMethod.GET)
 	public void noticeModifyPagingGET(@RequestParam("aid") int aid, @ModelAttribute("cri") SearchCriteria cri, Model model){
 		model.addAttribute(service.read(aid));
 	}
 	
-	@RequestMapping(value ="/noticeModifyPage", method = RequestMethod.POST)
+	@RequestMapping(value ="/noticemodifypage", method = RequestMethod.POST)
 	public String noticeModifyPagingPOST(Article article, SearchCriteria cri, RedirectAttributes rttr){
 		
 		logger.info(cri.toString());
@@ -165,7 +165,7 @@ public class SearchBoardController {
 		
 		logger.info(rttr.toString());
 		
-		return "redirect:/sboard/nlist";
+		return "redirect:/board/nlist";
 		
 	}
 	
@@ -181,7 +181,7 @@ public class SearchBoardController {
 		
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		
-		return "redirect:/sboard/list";
+		return "redirect:/board/list";
 	}
 	
 	@RequestMapping(value="/noticeRemovePage", method = RequestMethod.POST)
@@ -196,7 +196,7 @@ public class SearchBoardController {
 		
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		
-		return "redirect:/sboard/nlist";
+		return "redirect:/board/nlist";
 	}
 	
 }

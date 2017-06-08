@@ -29,7 +29,7 @@
       <%@ include file="../include/header.jsp"%>
       <center>
       <p style="width: 20%; height:100px; margin: 100px; font-size: 50px;">종현이 게임</p>
-      <button id='gameStart' class="btn btn-primary" style="width: 20%; height:100px; font-size: 50px;"><b>START</b></button>
+      <button id='gameStart' class="btn btn-primary" style="width: 20%; height:100px; font-size: 50px; margin-bottom: 20px;"><b>START</b></button>
       </center>
 </body>
 </html>

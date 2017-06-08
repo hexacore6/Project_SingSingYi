@@ -38,7 +38,7 @@ public class MemberServiceTest {
 	public void registTest() {
 		Member member = new Member();
 		member.setId("kosta");
-		member.setPassword(1111);
+		member.setPassword("1111");
 		member.setPwquestion("보물1호는?");
 		member.setPwanswer("뭘까");
 		

@@ -76,6 +76,10 @@ h1 {
 	padding: 0;
 }
 
+#section0 {
+	background-image: url(/resources/img/login.jpg);
+}
+
 button {
 	background: #1AAB8A;
 	color: #fff;

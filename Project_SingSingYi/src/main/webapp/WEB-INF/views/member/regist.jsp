@@ -5,8 +5,8 @@
 <head>
 <title>씽씽이 회원가입</title>
 
-<link rel="stylesheet" type="text/css" href="../jquery.fullPage.css" />
-<link rel="stylesheet" type="text/css" href="examples.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/jquery.fullPage.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/examples.css" />
 
 <!--[if IE]>
 		<script type="text/javascript">
@@ -26,17 +26,17 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<script type="text/javascript" src="../vendors/scrolloverflow.js"></script>
+<script type="text/javascript" src="/resources/vendors/scrolloverflow.js"></script>
 
-<script type="text/javascript" src="../jquery.fullPage.js"></script>
-<script type="text/javascript" src="examples.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.fullPage.js"></script>
+<script type="text/javascript" src="/resources/js/examples.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#fullpage').fullpage({
 			sectionsColor : [ '#1bbc9b', '#4BBFC3', '#7BAABE' ],
 
 		});
-
+		
 		// run the currently selected effect
 		function runEffect() {
 			// get effect type from
@@ -84,8 +84,12 @@ h1 {
 	padding: 0;
 }
 
+.section {
+	background-image: url(/resources/img/section0.jpg);
+}
+
 button {
-	background: #1AAB8A;
+	background: #ed484e;
 	color: #fff;
 	border: none;
 	position: relative;
@@ -102,7 +106,7 @@ button {
 
 button:hover {
 	background: #fff;
-	color: #1AAB8A;
+	color: #ed484e;
 }
 
 button:before, button:after {
@@ -112,7 +116,7 @@ button:before, button:after {
 	right: 0;
 	height: 2px;
 	width: 0;
-	background: #1AAB8A;
+	background: #ed484e;
 	transition: 400ms ease all;
 }
 
@@ -146,13 +150,14 @@ input {
 		opacity:0;
 	}
 	to {
-		opacity: 1;
+		opacity:0.8;
 	}
 }
 
 .start {
 	animation-name: fadeIn;
 	animation-duration: 0.5s;
+	opacity: 0.8;
 }
 
 .form-group {
@@ -230,9 +235,9 @@ select#question {
 					</div>
 				</div>
 				<div class="main-login main-center">
-					<form class="form-horizontal" method="post" action="#">
+					<form class="form-horizontal" method="post" action="/member/regist">
 						<div class="form-group">
-							<label for="name" class="cols-sm-2 control-label">아이디</label>
+							<label class="cols-sm-2 control-label">아이디</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<input type="text" class="form-control" name="id" id="id"
@@ -242,17 +247,16 @@ select#question {
 						</div>
 
 						<div class="form-group">
-							<label for="email" class="cols-sm-2 control-label">비밀번호</label>
+							<label class="cols-sm-2 control-label">비밀번호</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<input type="password" class="form-control" name="password"
-										id="email" placeholder="비밀번호를 입력해 주세요" required />
+										id="password" placeholder="비밀번호를 입력해 주세요" required />
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="username" class="cols-sm-2 control-label">생년월일</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<select name=birth_year class="input birth" required>
@@ -370,9 +374,9 @@ select#question {
 								</div>
 							</div>
 						</div>
-
+						
 						<div class="form-group">
-							<label for="password" class="cols-sm-2 control-label">비밀번호찾기
+							<label class="cols-sm-2 control-label">비밀번호찾기
 								질문/답변</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
@@ -387,15 +391,17 @@ select#question {
 						</div>
 
 						<div class="form-group ">
-							<button type="button"
+							<button type="submit"
 								class="btn btn-primary btn-lg btn-block login-button">회원가입</button>
 						</div>
 						<div class="login-register">
-							<a style="font-size: 15px" href="#">로그인</a>
+							<a style="font-size: 15px" href="/member/login">로그인</a>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
+		<!-- section -->
+	</div>
 </body>
 </html>

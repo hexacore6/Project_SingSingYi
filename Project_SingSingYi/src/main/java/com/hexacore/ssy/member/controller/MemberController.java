@@ -44,7 +44,7 @@ public class MemberController {
 	
 	// 로그아웃
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public String lgout(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
+	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		Object obj = session.getAttribute("login");
 		
 		if(obj != null) {
@@ -62,9 +62,27 @@ public class MemberController {
 		return "member/logout";
 	}
 	
-	// 회원가입
+	// 회원가입 화면
 	@RequestMapping(value="/regist", method=RequestMethod.GET)
-	public void regist() {
+	public void registGET(@ModelAttribute("dto") LoginDTO dto) {
 		
+	}
+	
+	// 회원가입
+	@RequestMapping(value="/regist", method=RequestMethod.POST)
+	public String registPOST(HttpServletRequest request, HttpServletResponse response) {
+		Member member = new Member();
+		String id = request.getParameter("id");
+		String password = request.getParameter("password");
+		String pwquestion = request.getParameter("pwquestion");
+		String pwanswer = request.getParameter("pwanswer");
+		member.setId(id);
+		member.setPassword(password);
+		member.setPwquestion(pwquestion);
+		member.setPwanswer(pwanswer);
+		
+		memberService.regist(member);
+		
+		return "/member/login";
 	}
 }

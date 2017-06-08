@@ -9,5 +9,9 @@
 		WHERE	id = #{id} and password = #{password}
 	</select>
 	
-
+	<insert id="regist">
+		INSERT INTO members (id, password, pwquestion, pwanswer)
+		VALUES (#{id}, #{password}, #{pwquestion}, #{pwanswer})
+	</insert>
+	
 </mapper>

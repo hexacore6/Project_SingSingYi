@@ -15,7 +15,7 @@
 	<!-- header -->
 	<%@ include file="include/header.jsp" %>
 	
-	<section id="content">
+	<section id="content" class="container">
         <!--내용시작-->
         <div class="row">
             <form>
@@ -40,7 +40,7 @@
             <!--/검색부분-->
             <!--차트 순위-->
             <div class="box">
-                <div class="box box-header"><h2>BEST 3</h2></div>
+                <div class="box box-header"><h2 class="btn btn-danger" style="font-size: 40px;">BEST 3</h2></div>
             <div class="col-lg-4">
                 <div class="thumbnail"> <img src="${pageContext.servletContext.contextPath }/resources/img/1.jpg" alt="...">
                     <div class="caption">

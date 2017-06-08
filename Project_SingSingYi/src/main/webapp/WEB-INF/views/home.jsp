@@ -5,8 +5,10 @@
 <head>
 <title>씽씽이 타러 ㄱ</title>
 
-<link rel="stylesheet" type="text/css" href="/resources/css/jquery.fullPage.css" />
-<link rel="stylesheet" type="text/css" href="/resources/css/examples.css" />
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/jquery.fullPage.css" />
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/examples.css" />
 
 <!--[if IE]>
 		<script type="text/javascript">
@@ -29,7 +31,7 @@
 			navigation : true,
 			navigationPosition : 'left'
 		});
-		
+
 		$(".start").hide();
 		setTimeout(function() {
 			$(".start").show();
@@ -38,8 +40,8 @@
 </script>
 
 <style>
-/* Style for our header texts
-		* --------------------------------------- */
+
+/* Style for our header texts */
 h1 {
 	font-family: arial, helvetica;
 	color: #fff;
@@ -48,8 +50,16 @@ h1 {
 	padding: 0;
 }
 
+.section{
+	background-size: cover;
+}
+
+#section0 {
+	background-image: url(/resources/img/section1.jpg);
+}
+
 button {
-	background: #1AAB8A;
+	background: #ed484e;
 	color: #fff;
 	border: none;
 	position: relative;
@@ -61,12 +71,13 @@ button {
 	transition: 800ms ease all;
 	outline: none;
 	margin-bottom: 10px;
-	border-radius: 3px;
+	border-radius: 10px;
+	opacity: 0.7;
 }
 
 button:hover {
 	background: #fff;
-	color: #1AAB8A;
+	color: #ed484e;
 }
 
 button:before, button:after {
@@ -76,7 +87,7 @@ button:before, button:after {
 	right: 0;
 	height: 2px;
 	width: 0;
-	background: #1AAB8A;
+	background: #ed484e;
 	transition: 400ms ease all;
 }
 
@@ -94,9 +105,10 @@ button:hover:before, button:hover:after {
 
 @keyframes fadeIn {
 	from { 
-		opacity:0;	
+		opacity:0;
 	}
-	to {
+
+	to {	
 		opacity: 1;
 	}
 }
@@ -109,15 +121,15 @@ button:hover:before, button:hover:after {
 </head>
 <body>
 	<div id="fullpage">
-		<div class="section " id="section0">
+		<div class="section" id="section0">
 			<div class="start">
-			<h1>씽씽이</h1>
-			<div>
-				<button onclick="location.href='/member/login'">로그인</button>
-			</div>
-			<div>
-				<button onclick="location.href='/member/regist'">회원가입</button>
-			</div>
+				<h1>씽씽이</h1>
+				<div>
+					<button onclick="location.href='/member/login'">로그인</button>
+				</div>
+				<div>
+					<button onclick="location.href='/member/regist'">회원가입</button>
+				</div>
 			</div>
 		</div>
 		<div class="section" id="section1">

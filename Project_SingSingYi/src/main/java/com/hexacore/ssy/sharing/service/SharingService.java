@@ -22,5 +22,7 @@ public interface SharingService {
 	public LikeHistory checkLike(int shid);
 	public void updateCommentCnt(int shid);
 	public void updateLikeCnt(int shid);
+	public void fallLikeCnt(int shid);
+	public void deleteLikeHistory(int shid);
 	public int getShid();
 }

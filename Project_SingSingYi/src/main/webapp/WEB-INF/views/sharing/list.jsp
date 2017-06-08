@@ -487,7 +487,7 @@ $(document).ready(function(){
 					
 
 
-					<c:forEach items="${list}" var="sharing">
+					<c:forEach items="${list}" var="sharing" varStatus="stat">
 						<div class="item" style="border-color: gray;">
 							
 							<div class="animate-box">
@@ -528,9 +528,10 @@ $(document).ready(function(){
 							
 							<div class="btn-group">
 							<h3>
-								<button class="btn btn-danger" type="button" onclick="upLike('${sharing.shid}', '${sharing.likecnt}', '${sharing.id}')"><i class="fa fa-heart"><span id="likeCnt">${sharing.likecnt}</span></i></button>
+								<button class="btn btn-danger" type="button" onclick="upLike('${sharing.shid}', '${sharing.likecnt}', '${sharing.id}', '${stat.index}')"><i class="fa fa-heart"><span id="likeCnt${stat.index}">${sharing.likecnt}</span></i></button>
 								<button class="btn btn-danger" type="button" onclick="showReadModal('${sharing.shid}')"><i class="fa fa-comment"><span>${sharing.commentcnt}</span></i></button>
-								<button class="btn btn-danger" type="button"><i class="fa fa-share"></i></button> 
+								<button class="btn btn-danger" type="button"><i class="fa fa-share"></i></button>
+								<input type="hidden" id="buttonNum" value="${stat.index}">
 							</h3>
 							</div>				 
 							
@@ -545,10 +546,9 @@ $(document).ready(function(){
 	</div>
 
 	<script type="text/javascript">
-		function upLike(shid, likecnt, id) {
+		function upLike(shid, likecnt, id, index) {
 			var likecnt = likecnt;
 			var one = 1;
-			
 			$.ajax({
 				type : 'post',
 				url : '/sharing/like',
@@ -563,8 +563,23 @@ $(document).ready(function(){
 				}), 
 				success : function(result) {
 					var like = JSON.parse(result);
-					console.log(like.shid + "checklike");
-					self.location.href='/sharing/list';
+					console.log(like);
+					if(like == false){
+						//DB상에 좋아요 기록이 있을 경우
+						var likeCnt = "#likeCnt" + index;
+						console.log(likeCnt);
+						var x =  document.getElementById("likeCnt" + index);
+						$(likeCnt).empty();
+						$(likeCnt).text(parseInt(likecnt));
+					}
+					else{
+						//DB상에 좋아요 기록이 없을 경우
+						console.log(likeCnt);
+						var likeCnt = "#likeCnt" + index;
+						var x =  document.getElementById("likeCnt" + index);
+						$(likeCnt).empty();
+						$(likeCnt).text(parseInt(likecnt) + parseInt(one));
+					}
 				}
 			});
 		}

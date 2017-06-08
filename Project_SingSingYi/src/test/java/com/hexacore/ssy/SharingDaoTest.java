@@ -125,7 +125,7 @@ public class SharingDaoTest {
 	
 	@Test
 	public void testCheckLike(){
-		logger.info(dao.checkLike(22).getShid() + "db 아이디");
+		System.out.println(dao.checkLike(6) + "db 아이디");
 	}
 
 	

@@ -23,5 +23,7 @@ public interface SharingDao {
 	public void delete(int shid);
 	public void updateCommentCnt(int shid);
 	public void updateLikeCnt(int shid);
+	public void fallLikeCnt(int shid);
+	public void deleteLikeHistory(int shid);
 	public void addAttach(String eximgfilename);
 }

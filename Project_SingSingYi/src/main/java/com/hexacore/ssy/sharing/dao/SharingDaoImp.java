@@ -86,6 +86,18 @@ public class SharingDaoImp implements SharingDao {
 	}
 
 	@Override
+	public void fallLikeCnt(int shid) {
+		session.update(namespace + ".fallLikeCnt", shid);
+		
+	}
+
+	@Override
+	public void deleteLikeHistory(int shid) {
+		session.delete(namespace + ".deleteLikeHistory", shid);
+		
+	}
+
+	@Override
 	public void likeHistory(Sharing sharing) {
 		session.insert(namespace + ".likeHistory", sharing);
 	}

@@ -74,6 +74,16 @@ public class SharingServiceImp implements SharingService {
 	}
 
 	@Override
+	public void fallLikeCnt(int shid) {
+		sharingDao.fallLikeCnt(shid);
+	}
+
+	@Override
+	public void deleteLikeHistory(int shid) {
+		sharingDao.deleteLikeHistory(shid);
+	}
+
+	@Override
 	public void likeHistory(Sharing sharing) {
 		sharingDao.likeHistory(sharing);
 	}

@@ -76,6 +76,17 @@
 		WHERE shid = #{shid}
 	</update>
 	
+	<delete id="deleteLikeHistory">
+		DELETE FROM likehistory
+		WHERE shid = #{shid}
+	</delete>
+	
+	<update id="fallLikeCnt">
+		UPDATE sharings
+		SET likecnt = likecnt - 1
+		WHERE shid = #{shid}
+	</update>
+	
 	<update id="updateCommentCnt">
 		UPDATE sharings
 		SET commentcnt = commentcnt + 1

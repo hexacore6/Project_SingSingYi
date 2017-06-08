@@ -40,7 +40,7 @@
 		
 		<interceptor>
 			<mapping path="/mypage/*" />
-			<exclude-mapping path="/mypage/mySharing"/>
+			<exclude-mapping path="/mypage/sharing"/>
 			<beans:ref bean="mypageInterceptor"/>
 		</interceptor>
 	</interceptors>

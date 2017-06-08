@@ -10,8 +10,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.hexacore.ssy.common.Criteria;
+import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
-import com.hexacore.ssy.mypage.domain.Member;
 import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.mypage.domain.Sharing;
 import com.hexacore.ssy.mypage.domain.Song;

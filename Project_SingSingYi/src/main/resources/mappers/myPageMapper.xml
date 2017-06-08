@@ -27,7 +27,7 @@
 	</select>
 	
 	<!-- Top5 랭킹 조회 -->
-	<select id = "readTopRank" resultType="com.hexacore.ssy.mypage.domain.Member">
+	<select id = "readTopRank" resultType="com.hexacore.ssy.member.domain.Member">
 	<![CDATA[
 		select id, password, pwquestion, pwanswer, rankpoint, 
 		(SELECT count(*)+1 from members where rankpoint > t.rankpoint) AS Rank
@@ -37,7 +37,7 @@
 	</select>
 	
 	<!-- 내 랭킹 조회 -->
-	<select id = "readMyRank" resultType="com.hexacore.ssy.mypage.domain.Member">
+	<select id = "readMyRank" resultType="com.hexacore.ssy.member.domain.Member">
 		select id, password, pwquestion, pwanswer, rankpoint, rank from(
 		select id,
 	   		password,
@@ -58,7 +58,7 @@
 	</select>	
 	
 	<!-- 내 랭킹기준 조회 -->
-	<select id = "readMyRankArea" resultType="com.hexacore.ssy.mypage.domain.Member">
+	<select id = "readMyRankArea" resultType="com.hexacore.ssy.member.domain.Member">
 		select id, password, pwquestion, pwanswer, rankpoint, rank from(
 		select id,
 	   		password,
@@ -113,7 +113,7 @@
 	</delete>
 	
 	<!-- 내 정보 조회 (코인 개수 조회) -->
-	<select id = "readMyInformation" resultType="com.hexacore.ssy.mypage.domain.Member">
+	<select id = "readMyInformation" resultType="com.hexacore.ssy.member.domain.Member">
 		select id, password, pwquestion, pwanswer, coincnt, rankpoint 
 		from members 
 		where id = #{id}

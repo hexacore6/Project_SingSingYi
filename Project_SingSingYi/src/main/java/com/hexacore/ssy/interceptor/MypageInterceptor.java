@@ -18,7 +18,7 @@ public class MypageInterceptor extends HandlerInterceptorAdapter {
 	private static final Logger logger = Logger.getLogger(MypageInterceptor.class);
 	
 	// 현재 사용자가 로그인한 상태인지를 체크, 컨트롤러를 호출하게 할 것인지를 결정
-	@Override
+/*	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		HttpSession httpSession = request.getSession();
 		
@@ -29,6 +29,6 @@ public class MypageInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		return true;
-	}
+	}*/
 	
 }

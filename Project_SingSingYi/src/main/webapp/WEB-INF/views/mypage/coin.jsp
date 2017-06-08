@@ -6,6 +6,8 @@
 <html>
 <head>
 <title>노래방</title>
+<!-- Theme style -->
+   <!--  <link href="../resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" /> -->
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="../../../resources/css/main.css?ver=1">
@@ -52,7 +54,7 @@
         </div>
       </div>
       <!--해어디이미지-->
-      <section id='header'> <!--해더스타트-->
+      <section id='header' class='container'> <!--해더스타트-->
       <div class='headerbar' class='container'>
         <div class="row">
           <!--해더 메뉴바-->
@@ -90,7 +92,7 @@
             <div class="col-lg-12">
               <div class="box box-info" style="border: none">
                 <div class="box-header with-border">
-                  <h3 class="box-title">${myCoin.id }님이보유하신코인의개수는: ${myCoin.coincnt }개입니다.</h3>
+                  <h3 class="box-title">${myCoin.id }님이 보유하신 코인의 개수는: ${myCoin.coincnt } 개입니다.</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">

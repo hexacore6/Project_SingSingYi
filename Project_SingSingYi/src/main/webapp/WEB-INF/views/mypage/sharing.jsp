@@ -5,9 +5,57 @@
 
 <html>
 <head>
+<script src="../resources/js/jquery.min.js"></script>
+<style>
+.reverse {
+	background: Black;
+	color: White;
+}
+</style>
+
+<style>
+.example-modal .modal {
+	position: relative;
+	top: auto;
+	bottom: auto;
+	right: auto;
+	left: auto;
+	display: block;
+	z-index: 1;
+}
+
+.example-modal .modal {
+	background: transparent !important;
+}
+</style>
+
+<style type="text/css">
+#imageDrop {
+	width: 100%;
+	height: 25px;
+	background-color: #00ffbf;
+}
+
+#updateImageDrop {
+	width: 100%;
+	height: 25px;
+	background-color: #00ffbf;
+}
+
+.uploadedList {
+	width: 100%;
+	height: 100px;
+	background-color: gray;
+}
+</style>
 <title>노래방</title>
-<!-- Animate.css -->
-<link rel="stylesheet" href="../resources/css/animate.css">
+
+
+<!-- Theme style -->
+<!--   <link href="../resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" /> -->
+<!-- AdminLTE Skins. Choose a skin from the css/skins 
+         folder instead of downloading all of them to reduce the load. -->
+<link href="../resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="../../../resources/css/main.css?ver=2">
@@ -17,9 +65,12 @@
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+
 </head>
 <script type="text/javascript">
-	function showReadModal(shid) {
+	function showReadModal(shid)
+
+	{
 		$.ajax({
 			type : 'post',
 			url : '/sharing/read',
@@ -38,8 +89,6 @@
 						"displayFile?fileName=/" + array.eximgfilename);
 				$("#readId").append(array.id);
 				$("#readShcontent").append(array.shcontent);
-				$("#readLikecnt").append(array.likecnt);
-				$("#readCommentcnt").append(array.commentcnt);
 
 			}
 		});
@@ -102,85 +151,79 @@
     <section id="content" class='container'>
     <div class="row">
       <%@include file="side.jsp"%>
-      <div class="col-lg-9">
+      <div class="col-lg-6">
         <!--content-->
         <section class="content-header"> <c:choose>
           <c:when test="${login.id==id }">
-            <h1>나의 글</h1>
+            <h1 style="float: left;">나의 글</h1>
           </c:when>
           <c:otherwise>
-            <h1>${id }님의 글</h1>
+            <h1>${id }님의글</h1>
           </c:otherwise>
-        </c:choose>
-        </section>
-        <div class="row">
-          <div class="col-md-12">
-            <!-- The time line -->
-            <!-- timeline time label -->
+        </c:choose> </section>
+        <div id="fh5co-main">
+          <div id="fh5co-board" data-columns>
+            <div class="row" style="margin-top: 70px;">
+              <div class="col-md-12">
+                <!-- The time line -->
+                <!-- timeline time label -->
 
-            <!-- /.timeline-label -->
-            <!-- timeline item -->
-            <c:forEach items="${list}" var="sharing">
-              <div class="item" style="margin-left: 100px;">
+                <!-- /.timeline-label -->
+                <!-- timeline item -->
+                <c:forEach items="${list}" var="sharing">
 
-                <div class="animate-box" style="width: 500px;">
+                  <fmt:parseNumber value="${now.time/(1000)-(sharing.shregdate).time/(1000) }" integerOnly="true" var="secTime"></fmt:parseNumber>
+                  <fmt:parseNumber value="${now.time/(1000*60)-(sharing.shregdate).time/(1000*60) }" integerOnly="true" var="minTime"></fmt:parseNumber>
 
-                  <img src="displayFile?fileName=/${sharing.eximgfilename}" width="50%" alt="${pageContext.servletContext.contextPath }/resources/img/LOGOsingsing7.png" onclick="showReadModal('${sharing.shid}')" style="width: 100%; display: block;">
-                  <!-- data-toggle="modal"
+                  <div class="item" style="margin-left: 100px; margin-top: 100px; width: 500px; overflow: hidden;">
+
+                    <div class="animate-box" style="width: 500px;">
+
+                      <img src="displayFile?fileName=/${sharing.eximgfilename}" alt="${pageContext.servletContext.contextPath }/resources/img/LOGOsingsing7.png" onclick="showReadModal('${sharing.shid}')" style="width: 500px; height: auto; margin-left: auto; margin-right: auto; display: block;">
+                      <!-- data-toggle="modal"
                   data-target="#myModal2" -->
-                </div>
-                <div style="margin: 10px;">#트와이스#Knock Knock</div>
-                <div style="margin: 10px;">
-                  <h3>
+                    </div>
+                    <div style="margin: 10px;">
+                      <span class="time" style="float: right;"><i class="fa fa-clock-o"></i> <c:choose>
+                          <c:when test="${secTime<60 }">
+                       ${secTime}초 전
+                    </c:when>
+                          <c:when test="${secTime<3600 }">
+                      ${minTime}분 전
+                    </c:when>
+                          <c:otherwise>
+                            <fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${sharing.shregdate}" />
+                          </c:otherwise>
+                        </c:choose> </span>
+                    </div>
+                    <div style="margin: 30px;">
+                      <h3>
 
-                    <i class="fa fa-user"></i><span id="sharingId">${sharing.id}</span>
-                    <c:set var="target" value="${sharing.id}" />
-                    <c:set var="id" value="${login.id }" />
-                    <c:if test="${target eq id}">
-                      <div style="text-align: right;">
-                        <i class="fa fa-pencil" onclick="showUpdateModal('${sharing.shid}')"></i><span id="sharingId"> </span> <i class="fa fa-trash-o"></i><span id="sharingId"> </span>
-                      </div>
-                    </c:if>
-                  </h3>
-                </div>
-                <!-- <div class="row" style="margin: 10px;"><i class="fa fa-pencil-square-o">
+                        <span id="sharingId" style="float: left;"><i class="fa fa-user" style="margin-right: 10px;"></i>${sharing.id}</span>
+                        <c:set var="target" value="${sharing.id}" />
+                        <c:set var="id" value="${login.id }" />
+                        <c:if test="${target eq id}">
+                          <div style="text-align: right; float: right;">
+                            <i class="fa fa-pencil" onclick="showUpdateModal('${sharing.shid}')">
+                            </i><span id="sharingId"> </span> <i class="fa fa-trash-o">
+                            </i><span id="sharingId"> </span>
+                          </div>
+                        </c:if>
+                      </h3>
+                    </div>
+                  
+                    <!-- <div class="row" style="margin: 10px;"><i class="fa fa-pencil-square-o">
               <i class="fa fa-trash-o"></div> -->
-                <div class="row" style="margin: 10px;">
-                  <span>${sharing.shcontent}</span>
+                    
+                  
+                
                 </div>
                 <div class="row" style="margin: 10px;">
-                  <h3>
-                    <span class="bg-red"><i class="fa fa-heart"><span> ${sharing.likecnt} </span></i> <i class="fa fa-comment"><span> ${sharing.commentcnt} </span></i> <i class="fa fa-share"></i></span>
-                  </h3>
-                </div>
+                      <span style="float:left; margin-left: 120px;">${sharing.shcontent}</span>
+                    </div>
+                </c:forEach>
               </div>
-            </c:forEach>
-            <c:forEach items="${list}" var="sharing">
-
-              <fmt:parseNumber value="${now.time/(1000)-(sharing.shregdate).time/(1000) }" integerOnly="true" var="secTime"></fmt:parseNumber>
-              <fmt:parseNumber value="${now.time/(1000*60)-(sharing.shregdate).time/(1000*60) }" integerOnly="true" var="minTime"></fmt:parseNumber>
-              <li><i class="fa fa-envelope bg-blue"></i>
-                <div class="timeline-item" id="time">
-                  <c:choose>
-                    <c:when test="${secTime<60 }">
-                      <span class="time"><i class="fa fa-clock-o"></i> ${secTime}초 전</span>
-                    </c:when>
-                    <c:when test="${secTime<3600 }">
-                      <span class="time"><i class="fa fa-clock-o"></i> ${minTime}분 전</span>
-                    </c:when>
-                    <c:otherwise>
-                      <span class="time"><i class="fa fa-clock-o"></i> <fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${sharing.shregdate}" /></span>
-                    </c:otherwise>
-                  </c:choose>
-                  <h3 class="timeline-header">
-                    <a href="#">댓글 수 : </a> ${sharing.commentcnt }
-                  </h3>
-                  <div class="timeline-body">${sharing.shcontent }</div>
-                  <div class="timeline-footer">
-                    <a class="btn btn-primary btn-xs">Read more</a> <a class="btn btn-danger btn-xs" href="/mypage/removeSharing?shid=${sharing.shid }&id=${login.id}">Delete</a>
-                  </div>
-                </div></li>
-            </c:forEach>
+            </div>
           </div>
         </div>
       </div>
@@ -189,7 +232,7 @@
   </section>
 
   <!-- read modal -->
-  <div class="modal" id="readModal">
+  <div class="modal" id="readModal" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
 
@@ -209,9 +252,6 @@
             <h3>
               <i class="fa fa-user"></i> <span id="readId"></span>
             </h3>
-          </div>
-          <div class="row">
-            <span class="bg-red"><i class="fa fa-heart"> <span id="readLikecnt"> </span></i> <i class="fa fa-comment"> <span id="readCommentcnt"> </span></i> <i class="fa fa-share"></i></span> <label for="message-text" class="control-label"></label>
           </div>
           <textarea class="form-control" id="readShcontent" disabled="disabled" autofocus="autofocus" rows="5" cols="50"></textarea>
 

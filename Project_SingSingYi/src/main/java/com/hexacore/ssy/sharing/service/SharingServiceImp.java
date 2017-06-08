@@ -21,8 +21,8 @@ public class SharingServiceImp implements SharingService {
 	private SharingDao sharingDao;
 
 	@Override
-	public List<Sharing> listAll() {
-		return sharingDao.listAll();
+	public List<Sharing> listAll(String id) {
+		return sharingDao.listAll(id);
 	}
 
 	@Override

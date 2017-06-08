@@ -155,6 +155,11 @@ $(document).ready(function(){
 		self.location.href='/sharing/list';
 	});
 	
+	/* $("#searchBtn").on("click", function(event) {
+		console.log($("select option:selected").val() + "select");
+		self.location = "search?" + "searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput'));			
+	}); */
+	
 	/* var image = "<img src=\"displayFile?fileName=/${sharing.eximgfilename}\">"
 	$("#albumImage").append(image); */
 	/* $("#textAddbtn").on("click", function() {
@@ -243,21 +248,37 @@ $(document).ready(function(){
 	<div id="fh5co-main">
 		<div class="container">
 			<div class="row">
-			<div class="form-group" style="width: 30%;">
-					<select class="form-control">
-						<option >유저이름</option>
-						<option >노래이름</option>
-						<option >가수이름</option>
-					</select>
-				<input type="text" class="form-control input-lg" placeholder="SEARCH">
-			</div>
-			
+				<div class="row">
+				<form method="post" action="searchInput">
+					<div class="form-group" style="width: 10%; float: left; margin: 10px;">
+						<select class="form-control">
+								<option>유저이름</option>
+								<option>노래이름</option>
+								<option>가수이름</option>
+						</select>
+					</div>
+					<div class="form-group" style="width: 30%; float: left; margin: 10px;">
+						<input type="text" class="form-control" id="keywordInput"
+							placeholder="SEARCH">
+					</div>
+					<div class="form-group" style="width: 20%; float: left; margin: 10px;">
+						<button type="button" class="btn btn-block btn-lg" id="searchBtn">
+							<i class="fa fa-search"></i>Search
+						</button>
+					</div>
+					<div class="form-group" style="width: 20%; margin: 10px;">
+						<!-- write button - open to write modal -->
+						<button type="button" class="btn btn-block btn-danger btn-lg"
+							data-toggle="modal" data-target="#myModal" data-backdrop="static">
+							<i class="fa fa-pencil"></i>Sing Sing
+						</button>
+					</div>
+					</form>
+					
+				</div>
+
 				<div id="fh5co-board" data-columns>
-					<!-- write button - open to write modal -->
-					<button type="button" class="btn btn-block btn-danger btn-lg"
-						data-toggle="modal" data-target="#myModal" data-backdrop="static">
-						<i class="fa fa-pencil"></i>Sing Sing
-					</button>
+					
 					
 					
 					
@@ -275,7 +296,7 @@ $(document).ready(function(){
 											<span aria-hidden="true">&times;</span>
 										</button>
 										<h4 class="modal-title">새 글 작성</h4>
-										<input type="hidden" name="id" value="kosta111"> <input
+										<input type="hidden" name="id" value="${login.id}"> <input
 											type="hidden" name="rrid" value=1>
 									</div>
 									<div class="modal-body">
@@ -358,13 +379,13 @@ $(document).ready(function(){
 													<input class="form-control input-lg" type="text"
 														id="readReplyId" name="ccontent" style="background-color: white;">
 													<input type="hidden" id="readShid" name="shid">
-													<input type="hidden" id="commentId" name="id" value="kosta111">
+													<input type="hidden" id="commentId" name="id" value="${login.id}">
 												</div>
 												<div class="row">
 												<button type="button" id="commentAddbtn"
-															class="btn btn-primary" onclick="addComment()">
-															<i class="fa fa-pencil"> </i>댓글입력
-														</button>
+													class="btn btn-primary" onclick="addComment()">
+													<i class="fa fa-pencil"> </i>댓글입력
+												</button>
 											</div>
 										</div>
 									</div>
@@ -505,7 +526,7 @@ $(document).ready(function(){
 
 									<i class="fa fa-user"></i><span id="sharingId">${sharing.id}</span>
 									<c:set var="target" value="${sharing.id}" />
-									<c:set var="id" value="kosta111" />
+									<c:set var="id" value="${login.id}" />
 									<c:if test="${target eq id}">
 										<div style="text-align: right;">
 											<i class="fa fa-pencil"
@@ -603,6 +624,7 @@ $(document).ready(function(){
 					ccontent : ccontent
 				}), 
 				success : function(result) {
+					var e = 22223232323222222222;
 					var str = "";
 					var comment = JSON.parse(result);
 					str += "<div class=\"box-header with-border\">"
@@ -620,6 +642,7 @@ $(document).ready(function(){
 						+ "</div>"
 						+ "</div>";
 					$("#comments").append(str);
+					$("#readReplyId").val("");
 				}
 			});
 		}

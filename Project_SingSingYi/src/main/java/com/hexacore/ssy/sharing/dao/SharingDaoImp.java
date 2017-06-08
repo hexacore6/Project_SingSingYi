@@ -23,8 +23,8 @@ public class SharingDaoImp implements SharingDao {
 	private SqlSession session;
 
 	@Override
-	public List<Sharing> listAll() {
-		return session.selectList(namespace + ".listAll");
+	public List<Sharing> listAll(String id) {
+		return session.selectList(namespace + ".listAll", id);
 	}
 
 	@Override

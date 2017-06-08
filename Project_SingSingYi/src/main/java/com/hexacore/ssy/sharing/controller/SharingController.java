@@ -12,6 +12,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.eclipse.core.filesystem.provider.FileInfo;
@@ -27,9 +30,11 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
 import com.hexacore.ssy.sharing.domain.Sharing;
@@ -45,7 +50,7 @@ import com.hexacore.ssy.sharing.util.MediaUtils;
 public class SharingController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SharingController.class);
-
+	
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 	
@@ -99,9 +104,12 @@ public class SharingController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void list(Model model) {
-		logger.info("show all list...");
-		model.addAttribute("list", sharingService.listAll());
+	public void list(HttpServletRequest request, Model model, HttpSession httpSession) {
+		Member member = (Member)httpSession.getAttribute("login");
+		
+		String loginId = member.getId();
+		System.out.println(loginId + "로그인아이디");
+		model.addAttribute("list", sharingService.listAll("kosta111"));
 
 	}
 	
@@ -195,6 +203,13 @@ public class SharingController {
 			e.printStackTrace();
 		}
 		return "redirect:/sharing/list";
+
+	}
+	
+	@RequestMapping(value = "/searchInput", method = RequestMethod.GET)
+	public String search(Model model) throws IOException {
+
+		return "redirect:/sharing/search";
 
 	}
 	

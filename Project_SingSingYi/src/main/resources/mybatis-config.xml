@@ -7,5 +7,6 @@
 	<typeAliases>
 		<package name="com.hexacore.ssy.board.domain"/>
 		<package name="com.hexacore.ssy.sharing.domain" />
+		<package name="com.hexacore.ssy.song.domain" />
 	</typeAliases>
 </configuration>

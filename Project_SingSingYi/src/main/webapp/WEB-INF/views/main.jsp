@@ -15,12 +15,12 @@
 	<!-- header -->
 	<%@ include file="include/header.jsp" %>
 	
-	<section id="content">
+	<section id="content" class="container">
         <!--내용시작-->
         <div class="row">
             <form>
                 <!--검색부분-->
-                <div class="col-lg-1">
+                <div class="col-lg-2">
                     <select>
                         <option>통합검색</option>
                         <option>가수</option>

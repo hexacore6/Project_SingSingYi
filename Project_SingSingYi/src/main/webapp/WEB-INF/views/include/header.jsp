@@ -26,7 +26,7 @@
         
     </div>
     <!--해어디이미지-->
-    <section id='header'>
+    <section id='header' class="container">
         <!--해더스타트-->
         <div class='headerbar'>
             <div class="row">

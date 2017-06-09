@@ -28,39 +28,41 @@
 </head>
 <body>
   <jsp:include page="../include/header.jsp"></jsp:include>
+  <div id='content' class="container">
   <form role="form" id="registerForm" method="post">
     <input type="hidden" name="page" value="${cri.page }">
     <input type="hidden" name="perPageNum" value="${cri.perPageNum }">
     <input type="hidden" name="searchType" value="${cri.searchType }">
     <input type="hidden" name="keyword" value="${cri.keyword }">
     <!-- 게시글 작성시  제목, 내용, 작성자  -->
-
-    <div class="box-body">
-    <div class="form-group" style="margin: 5px;">
-      <label for="exampleInputEamil1">Title</label>
+  
+    <div class="box-body container">
+    <div class="form-group" style="margin: 5px; text-align: left;">
+      <label for="exampleInputEamil1" >Title</label>
       <input type="text" name="atitle" class="form-control" placeholder="Enter Title">
     </div>
       
-    <div class="form-group" style="margin: 5px;">
-      <label for="exampleInputPassword1">Content</label>
+    <div class="form-group" style="margin: 5px; text-align: left;">
+      <label for="exampleInputPassword1" style="text-align: left">Content</label>
       <textarea class="form-control" name="acontent" rows="3" placeholder="Enter..."></textarea>
     </div>
     
-    <div class="form-group" style="margin: 5px;">
-      <label for="exampleInputEamil1">Writer</label>
+    <div class="form-group" style="margin: 5px; text-align: left;">
+      <label for="exampleInputEamil1" style="text-align: left">Writer</label>
       <input type="text" name="id" class="form-control" value="${login.id}" readonly>
     </div>
     </div>
  
     <!-- /.box-body -->
     
-    <div class="box-footer">
+    <div class="box-footer container">
       <div>
         <hr>
       </div>
       
       <button type="submit" class="btn btn-primary">확인</button>
       <button type="button" class="btn btn-warning">취소</button>
+    </div>
     </div>
   </form>
   

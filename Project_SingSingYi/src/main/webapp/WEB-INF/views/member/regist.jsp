@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>씽씽이 회원가입</title>
+<title>씽씽이</title>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/jquery.fullPage.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/examples.css" />
@@ -265,10 +265,9 @@ select#question {
 	width: 300px;
 }
 </style>
-
 </head>
 <body>
-	<div id="fullpage">
+	<div id="fullpage" >
 		<div class="section">
 			<div class="start">
 				<div class="panel-heading">

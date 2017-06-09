@@ -1,0 +1,29 @@
+package com.hexacore.ssy.sharing.dao;
+
+import java.util.List;
+
+import com.hexacore.ssy.sharing.domain.Comment;
+import com.hexacore.ssy.sharing.domain.LikeHistory;
+import com.hexacore.ssy.sharing.domain.Sharing;
+
+
+public interface SharingDAO {
+	public List<Sharing> listAll(String id);
+	public List<Comment> listComment(int shid);
+	public void create(Sharing sharing) throws Exception;
+	public void comment(Comment comment);
+	public Comment getComment(Comment comment);
+	public int getShid();
+	public void likeHistory(Sharing sharing);
+	public LikeHistory checkLike(int shid);
+	public Sharing read(int shid);
+	public void update(Sharing sharing);
+	public void updateImg(Sharing sharing);
+	public void deleteSharing(int shid);
+	public void deleteComment(int shid);
+	public void updateCommentCnt(int shid);
+	public void updateLikeCnt(int shid);
+	public void fallLikeCnt(int shid);
+	public void deleteLikeHistory(int shid);
+	public void addAttach(String eximgfilename);
+}

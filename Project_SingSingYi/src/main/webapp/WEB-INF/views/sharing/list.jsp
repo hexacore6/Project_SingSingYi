@@ -248,8 +248,8 @@ $(document).ready(function(){
 											<span aria-hidden="true">&times;</span>
 										</button>
 										<h4 class="modal-title">새 글 작성</h4>
-										<input type="hidden" name="id" value="${login.id}"> <input
-											type="hidden" name="rrid" value=1>
+										<input type="hidden" name="id" value="${login.id}"><!--  <input
+											type="hidden" name="rrid" value=1> -->
 									</div>
 									<div class="modal-body">
 										<label for="message-text" class="control-label"></label>

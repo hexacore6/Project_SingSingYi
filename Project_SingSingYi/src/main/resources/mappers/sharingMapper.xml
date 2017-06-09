@@ -4,8 +4,8 @@
 <mapper namespace="com.hexacore.ssy.mapper.SharingMapper">
 
 	<insert id="create">
-		INSERT INTO sharings (id, rrid, shcontent, eximgfilename)
-		VALUES (#{id}, #{rrid}, #{shcontent}, #{eximgfilename})
+		INSERT INTO sharings (id, shcontent, eximgfilename)
+		VALUES (#{id}, #{shcontent}, #{eximgfilename})
 	</insert>
 	
 	<insert id="comment">

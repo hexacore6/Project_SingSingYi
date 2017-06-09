@@ -36,8 +36,8 @@
     <input type="hidden" name="perPageNum" value="${cri.perPageNum }">
     <input type="hidden" name="searchType" value="${cri.searchType }">
     <input type="hidden" name="keyword" value="${cri.keyword }">
-  
-  <div class="box-body">
+  <div id='content' class="container">
+  <div class="box-body container">
   
     <div class="form-group" style="text-align: left;">
       <label for="exampleInputEamil1" style="text-align: left">글번호</label>
@@ -62,7 +62,7 @@
   
   <!-- /.box-body -->
   
-   <div class="box-footer">
+   <div class="box-footer container">
       <div>
         <hr>
       </div>
@@ -76,7 +76,7 @@
     </c:if>
     
     </div>
-    
+   </div>
   </form>
   
   <script>

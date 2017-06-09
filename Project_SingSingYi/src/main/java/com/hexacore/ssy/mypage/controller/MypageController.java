@@ -1,6 +1,7 @@
 package com.hexacore.ssy.mypage.controller;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.annotation.Resource;
@@ -14,11 +15,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hexacore.ssy.common.Criteria;
@@ -26,6 +30,8 @@ import com.hexacore.ssy.common.PageMaker;
 import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
 import com.hexacore.ssy.mypage.service.MypageService;
+import com.hexacore.ssy.sharing.domain.Sharing;
+import com.hexacore.ssy.sharing.service.SharingService;
 import com.hexacore.ssy.sharing.util.MediaUtils;
 
 @Controller
@@ -39,6 +45,7 @@ public class MypageController {
 	
 	@Inject
 	MypageService service;
+	SharingService sharingService;
 	
 	// 나의 공유글 조회
 	@RequestMapping(value="/sharing", method=RequestMethod.GET)
@@ -82,6 +89,7 @@ public class MypageController {
 	}
 	
 	// 코인 충전
+	@Transactional
 	@RequestMapping(value="/addcoin", method=RequestMethod.POST)
 	public String addCoin(String id, Member member){
 		logger.info("아이디 : "+ id);
@@ -211,5 +219,58 @@ public class MypageController {
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
 	public void modifyPOST(Member member){
 		service.updateMyInformation(member);
+	}
+	
+	// 내 글 상세보기
+	@RequestMapping(value = "/read", method = RequestMethod.POST)
+	public ResponseEntity<Sharing> read(@RequestBody Sharing sharing, Model model) {
+		System.out.println("에스아이디 : " + sharing.getShid());
+		System.out.println(sharingService.read(sharing.getShid()) + "떠라");
+		ResponseEntity<Sharing> entity = null;
+		//String id = sharingService.read(sharing.getShid()).getId();
+		try {
+			model.addAttribute("read", sharingService.read(sharing.getShid()));
+			model.addAttribute("listComment", sharingService.listComment(sharing.getShid()));
+			System.out.println(sharingService.read(sharing.getShid()) + "결과");
+			entity = new ResponseEntity<Sharing>(sharingService.read(sharing.getShid()), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+
+	}
+	
+	// 내 글 수정하기
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(Sharing sharing, MultipartFile file, Model model) throws IOException {
+		
+		System.out.println(sharing);
+		System.out.println(file);
+		try {
+			sharingService.modify(sharing);
+			System.out.println("성공");
+		} catch (Exception e) {
+			System.out.println("실패");
+			e.printStackTrace();
+		}
+		return "redirect:/mypage/sharing";
+
+	}
+	
+	// 내 글 삭제
+	@Transactional
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String delete(Sharing sharing, Model model) {
+		
+		try {
+			sharingService.removeComment(sharing.getShid());
+			sharingService.removeSharing(sharing.getShid());
+		} catch (Exception e) {
+			System.out.println("삭제 실패");
+			e.printStackTrace();
+		}
+		return "redirect:/mypage/sharing";
+
 	}
 }

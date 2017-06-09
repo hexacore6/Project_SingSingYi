@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.AccessControlContext;
 import java.security.AccessController;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -184,7 +185,7 @@ public class SharingController {
 	
 	//공유글 삭제하기 처리
 	@Transactional
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/myDelete", method = RequestMethod.POST)
 	public String delete(Sharing sharing, Model model) {
 		try {
 			sharingService.removeComment(sharing.getShid());
@@ -194,6 +195,36 @@ public class SharingController {
 			e.printStackTrace();
 		}
 		return "redirect:/sharing/list";
+	}
+	
+	//내 글 수정하기 처리
+	@RequestMapping(value = "/myUpdate", method = RequestMethod.POST)
+	public String myUpdate(Sharing sharing, MultipartFile file, Model model) throws IOException {
+		
+		
+		try {
+			sharingService.modify(sharing);
+			System.out.println("성공");
+		} catch (Exception e) {
+			System.out.println("실패");
+			e.printStackTrace();
+		}
+		return "redirect:/mypage/sharing";
+
+	}
+	
+	//내 글 삭제하기 처리
+	@Transactional
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String myDelete(Sharing sharing, Model model) {
+		try {
+			sharingService.removeComment(sharing.getShid());
+			sharingService.removeSharing(sharing.getShid());
+		} catch (Exception e) {
+			System.out.println("삭제 실패");
+			e.printStackTrace();
+		}
+		return "redirect:/mypage/sharing";
 	}
 	
 	//검색 입력 처리 
@@ -227,7 +258,16 @@ public class SharingController {
 
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
-
+		File dir = new File(uploadPath);
+		File[] fileList = dir.listFiles();
+		for (int i = 0; i < fileList.length; i++) {
+			File file = fileList[i];
+			System.out.println(file.getName() + "파일 이름 보여주세요");
+			if(file.getName() == fileName){
+				
+			}
+		}
+		
 		logger.info("File NAME : " + fileName);
 
 		try {
@@ -236,6 +276,7 @@ public class SharingController {
 
 			HttpHeaders headers = new HttpHeaders();
 			in = new FileInputStream(uploadPath + fileName);
+			System.out.println("이미지 파일 들어왔니 : " + in.toString());
 			logger.info(uploadPath + fileName);
 			if (mType != null) {
 				headers.setContentType(mType);
@@ -254,4 +295,6 @@ public class SharingController {
 		}
 		return entity;
 	}
+	
+	
 }

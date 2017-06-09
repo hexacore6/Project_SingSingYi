@@ -204,6 +204,7 @@ $(document).ready(function(){
 	<div id="fh5co-main" style="background-color: #f5f5f0;">
 		<div class="container">
 			<div class="row">
+			<img src="${pageContext.servletContext.contextPath }/resources/img/haedlogo.png">
 				<div class="row">
 				<form method="post" action="searchInput">
 					<div class="col-xs-2">
@@ -450,7 +451,7 @@ $(document).ready(function(){
 							<div class="animate-box" style="border-radius: 10px;">
 								<img
 									src="displayFile?fileName=/${sharing.eximgfilename}"
-									alt="${pageContext.servletContext.contextPath }/resources/img/LOGOsingsing7.png"
+									alt="${pageContext.servletContext.contextPath }/resources/img/haedlogo.png"
 									onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; display: block;">
 							</div>
 							<!-- <div style="margin: 10px;">#트와이스#Knock Knock</div> -->

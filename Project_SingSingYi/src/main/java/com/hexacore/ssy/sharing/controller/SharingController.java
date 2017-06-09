@@ -258,16 +258,22 @@ public class SharingController {
 
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
-		File dir = new File(uploadPath);
+		
+		/*File dir = new File(uploadPath);
 		File[] fileList = dir.listFiles();
+		String originName[] = fileName.split("/");
 		for (int i = 0; i < fileList.length; i++) {
 			File file = fileList[i];
-			System.out.println(file.getName() + "파일 이름 보여주세요");
-			if(file.getName() == fileName){
-				
+			System.out.println(file.getName() + "폴더안에 파일 이름 보여주세요");
+			System.out.println(originName[1] + "db안에 파일 이름");
+			if(file.getName() == originName[1]){
+				System.out.println(fileName + "폴더안에 있는 파일이름");
+			}
+			else{
+				System.out.println("폴더에 이미지가 없어요");
 			}
 		}
-		
+		*/
 		logger.info("File NAME : " + fileName);
 
 		try {

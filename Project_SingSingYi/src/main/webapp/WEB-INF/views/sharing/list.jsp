@@ -204,7 +204,6 @@ $(document).ready(function(){
 	<div id="fh5co-main" style="background-color: #f5f5f0;">
 		<div class="container">
 			<div class="row">
-			<img src="${pageContext.servletContext.contextPath }/resources/img/haedlogo.png">
 				<div class="row">
 				<form method="post" action="searchInput">
 					<div class="col-xs-2">

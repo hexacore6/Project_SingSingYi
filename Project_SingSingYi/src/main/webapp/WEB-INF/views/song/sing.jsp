@@ -134,11 +134,14 @@
                 <!--왼쪽-->
                 <div class="music">
                     <!--곡명--><img src="/resources/img/ak.jpg"> </div>
+                    <div class="lyrics">
+                    <h1 id="songText">가사 준비중.. .</h1>
+                    </div>
                 <div class="row">
                     <div class="col-lg-5"></div>
                     <div class="col-lg-1">
                         <div class="music-controller">
-                            <button class="btn btn-primary" id="playbutton" onclick="readFile()"></button>
+                            <button class="btn btn-primary" id="playbutton" onclick="singAsong()"></button>
                             
                         </div>
                     </div>
@@ -214,7 +217,7 @@ var noteCorrect = true;
 let ENERGY_LIMIT = 20000;
 let ZERO_CROSSING_LIMIT = 0.5;
 let FRAME_SIZE = 2048;
-//최소 이만큼 있어야 음정 체크가 가능한 변수
+//최소 이만큼 있어야 음정 체크가 가능한 변수  
 var MIN_SAMPLES = 0;  // will be initialized when AudioContext is created.
 var GOOD_ENOUGH_CORRELATION = 0.9; // this is the "bar" for how close a correlation needs to be
 
@@ -224,12 +227,13 @@ var buf = new Float32Array( buflen );
 
 var noteV = 440;
 var timeArr=[], stateArr=[], channelArr=[], intervalArr=[], veloArr=[];
-
+var lyricsTxtArr=[], lyricsTimeTxtArr=[];
 var checkCnt = 0;
 var noteAc = "";
 var tick = 0.0016622340425532;
+var lyricsCnt = 0; // 가사 인덱스
 
-//마이크 정보를 얻어오기 위해서 사용하는 함수
+//마이크 정보를 얻어오기 위해서 사용하는 함수  
 function getUserMedia(dictionary, callback) {
     try {
         navigator.getUserMedia = 
@@ -282,7 +286,7 @@ function gotStream(stream) {
 }
 
 
-//음정을 추출하는 함수
+//음정을 추출하는 함수  
 function updatePitch( time ) {
  
    var cycles = new Array;
@@ -310,7 +314,7 @@ function updatePitch( time ) {
 }     
 
 
-//자기 상관 함수
+//자기 상관 함수  
 function autoCorrelate( buf, sampleRate ) {
     var SIZE = buf.length;
     var MAX_SAMPLES = Math.floor(SIZE/2);
@@ -506,109 +510,143 @@ window.cancelAFrame = (function () {
 })();
 
 function myFunction() {
-	var totalT = 0;
-	for (var i=0;i<=3;i++) {
-			totalT += sheetTime[i]*1000;
-			console.log(totalT);
-		  setTimeout("timerfun("+i+")", totalT);
-		}
+   var totalT = 0;
+   for (var i=0;i<=3;i++) {
+         totalT += sheetTime[i]*1000;
+         console.log(totalT);
+        setTimeout("timerfun("+i+")", totalT);
+      }
 }
 function timerfun(i){
-		console.log(i);
-		
-		    
-		    if(i == 0){
-		    	document.getElementById('myImage').src="./resources/images/1.png";
-		    }
-		    else if(i == 1){
-		    	document.getElementById('myImage').src="./resources/images/2.png";
-		    }
-		    else if(i == 2){
-		    	document.getElementById('myImage').src="./resources/images/3.png";
-		    }
-		    else{
-		    	document.getElementById('myImage').src="./resources/images/4.png";
-		    }
-			}
+      console.log(i);
+          
+          if(i == 0){
+             document.getElementById('myImage').src="./resources/images/1.png";
+          }
+          else if(i == 1){
+             document.getElementById('myImage').src="./resources/images/2.png";
+          }
+          else if(i == 2){
+             document.getElementById('myImage').src="./resources/images/3.png";
+          }
+          else{
+             document.getElementById('myImage').src="./resources/images/4.png";
+          }
+         }
+function singAsong(){
+	var audio = new Audio('/resources/music/iloved.mp3');
+    audio.play();
+    readFile("/resources/notes/songTest.txt");
+    readFile("/resources/lyrics/iloved.txt");
+	  readFile("/resources/lyrics/ilovedTime.txt");
+    //console.log(timeArr);
+    
+    playing = true;
+    updatePitch();
+  	console.log((lyricsTimeTxtArr[0]*1000));
+    setTimeout("calLyrics()",(lyricsTimeTxtArr[0]*1000));
+}
 
-function readFile(){
-	var fileName = "/resources/notes/songTest.txt";
-	var fileObject = new XMLHttpRequest();
-	
-	var xmlhttp;
-	var songText;
-	
-	  if (window.XMLHttpRequest) {
-	    xmlhttp = new XMLHttpRequest();
-	  } else {
-	    // code for older browsers
-	    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-	  xmlhttp.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) {
-	    	songText = this.responseText;
-	    	//console.log("1 : "+songText);
-	    	//txt파일 파싱하기
-	    	var txtArr = songText.split(':');
-	    	//시간배열, on/off상태배열, 채널배열, 차이배열??, 노래크기 배열 
-	    	
-	    	var indexT = 0, indexS = 0, indexC = 0, indexI = 0, indexV = 0;
-	    	for(var a=0;a<txtArr.length;a++){
-	    		
-	    		if(a%5==0)
- 	    			timeArr[indexT++] = txtArr[a];
-	    		else if(a%5==1)
- 	    			stateArr[indexS++] = txtArr[a];
-	    		else if(a%5==2)
- 	    			channelArr[indexC++] = txtArr[a];
-	    		else if(a%5==3)
- 	    			intervalArr[indexI++] = txtArr[a];
-	    		else
- 	    			veloArr[indexV++] = txtArr[a];
-	    		
-	    	}
- 					console.log(timeArr);
- 					var audio = new Audio('/resources/music/iloved.mp3');
- 					audio.play();
-   				calNote();
-   				playing = true;
-					updatePitch();
-	    }
-	  };
-	  
-	  xmlhttp.open("GET", fileName, true);
-	  xmlhttp.send();
+function parsingMIDI(songText){ // midi to txt 파싱하는 함수
+	//txt파일 파싱하기
+	var txtArr = songText.split(':');
+	//시간배열, on/off상태배열, 채널배열, 차이배열??, 노래크기 배열 
+	var indexT = 0, indexS = 0, indexC = 0, indexI = 0, indexV = 0;
+	for(var a=0;a<txtArr.length;a++){
+		
+		if(a%5==0)
+ 			timeArr[indexT++] = txtArr[a];
+		else if(a%5==1)
+ 			stateArr[indexS++] = txtArr[a];
+		else if(a%5==2)
+ 			channelArr[indexC++] = txtArr[a];
+		else if(a%5==3)
+ 			intervalArr[indexI++] = txtArr[a];
+		else
+ 			veloArr[indexV++] = txtArr[a];
+	}
+}
+
+function parsingLyricsText(lyricsText){ // 가사 txt 파싱하는 함수
+	lyricsTxtArr = lyricsText.split(':');
+}
+
+function parsingLyricsTimeText(lyricsTimeText){ // 가사 시간 txt 파싱하는 함수
+	lyricsTimeTxtArr = lyricsTimeText.split(':');
+}
+
+
+function readFile(filename){
+  // var fileName = "/resources/notes/songTest.txt";
+   var fileObject = new XMLHttpRequest();
+   
+   var xmlhttp;
+   var songText;
+   
+     if (window.XMLHttpRequest) {
+       xmlhttp = new XMLHttpRequest();
+     } else {
+       // code for older browsers
+       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+     }
+     xmlhttp.onreadystatechange = function() {
+       if (this.readyState == 4 && this.status == 200) {
+    	   if(filename.indexOf("/notes/") != -1) {// midi to txt 파일 일때
+          songText = this.responseText;
+          //console.log("1 : "+songText);
+          
+        
+         parsingMIDI(songText);
+               
+          calNote();
+    	   }
+    	   else if(filename.indexOf("Time.txt") != -1) {// 가사 시간 data txt일때
+    		   lyricsTimeText = this.responseText;
+       		parsingLyricsTimeText(lyricsTimeText);
+       		//console.log("Time");
+       		//console.log(lyricsTimeTxtArr);
+        	}
+        	else {// 가사 data txt일때
+        		lyricsText = this.responseText;
+        		parsingLyricsText(lyricsText);
+        		//console.log("no");
+           		//console.log(lyricsTxtArr);
+        	}
+       }
+     };
+     
+     xmlhttp.open("GET", filename, true);
+     xmlhttp.send();
 
 }
 
 function calNote(){// 현재 음 계산하는 아이.
-	//console.log(intervalV);
-	if(stateArr[checkCnt] == 'On')
-		noteV += Number(intervalArr[checkCnt]);
-	else 
-		noteV -= Number(intervalArr[checkCnt]);
-	//console.log(noteV);
-	//checkCnt++;
-	noteVText = divideNote(noteV)
-	
-	console.log("noteVText : " + noteVText);
-	console.log("noteAc : " + noteAc);
-	if(noteAc == noteVText){
-		console.log("very good!");
-		noteCorrect = true;
-	}
-	else{
-		noteCorrect = false;
-	}
-	noteCheck();
-	if(checkCnt<intervalArr.length){
-		console.log("index : " + checkCnt +",  time : " + (timeArr[checkCnt] - timeArr[checkCnt-1]));
-		if(checkCnt == 0)
-  		setTimeout("calNote()",timeArr[checkCnt]*1000*tick);
-  	else
-  		setTimeout("calNote()",(timeArr[checkCnt] - timeArr[checkCnt-1])*1000*tick);
-		checkCnt++;
-	}
+   //console.log(intervalV);
+   if(stateArr[checkCnt] == 'On')
+      noteV += Number(intervalArr[checkCnt]);
+   else 
+      noteV -= Number(intervalArr[checkCnt]);
+   //console.log(noteV);
+   //checkCnt++;
+   noteVText = divideNote(noteV)
+   
+   console.log("noteVText : " + noteVText);
+   console.log("noteAc : " + noteAc);
+   if(noteAc == noteVText){
+      console.log("very good!");
+      noteCorrect = true;
+   }
+   else{
+      noteCorrect = false;
+   }
+   noteCheck();
+   if(checkCnt<intervalArr.length){
+      if(checkCnt == 0)
+        setTimeout("calNote()",timeArr[checkCnt]*1000*tick);
+     else
+        setTimeout("calNote()",(timeArr[checkCnt] - timeArr[checkCnt-1])*1000*tick);
+      checkCnt++;
+   }
 }
 
 function loadimages() {
@@ -625,15 +663,33 @@ function loadimages() {
 }
 
 function noteCheck(){   
-		    if(noteCorrect == 0){
-		    	document.getElementById('light').src="/resources/img/greenlight.png";
-		    }
-		    else if(noteCorrect == 1){
-		    	console.log("들어옴!")
-		    	document.getElementById('light').src="/resources/img/redlight.png";
-		    }
+   if(noteCorrect == 0){
+      document.getElementById('light').src="/resources/img/greenlight.png";
+   }
+   else if(noteCorrect == 1){
+      document.getElementById('light').src="/resources/img/redlight.png";
+   }
+}
 
-			}
+function calLyrics(){ //시간에 맞는 가사 보여주는 함수
+	//console.log(lyricsTxtArr);
+	//console.log(lyricsTimeTxtArr);
+	if(lyricsCnt != 0){
+		console.log((lyricsTimeTxtArr[lyricsCnt] - lyricsTimeTxtArr[lyricsCnt-1]));
+		document.getElementById('songText').innerHTML=lyricsTxtArr[lyricsCnt - 1];
+		
+		setTimeout("calLyrics()",((lyricsTimeTxtArr[lyricsCnt] - lyricsTimeTxtArr[lyricsCnt-1])*1000));
+		lyricsCnt++;
+	}
+	else{
+		console.log(lyricsTimeTxtArr[lyricsCnt]);
+		document.getElementById('songText').innerHTML=lyricsTxtArr[lyricsCnt];
+		
+		setTimeout("calLyrics()",(lyricsTimeTxtArr[lyricsCnt++]*1000));
+	}
+	
+	
+}
 
 /* 
 //현재 어떤 음정인지 체크하는 함수(현재 사용X)
@@ -642,7 +698,7 @@ function noteFromPitch( frequency ) {
   return Math.round( noteNum ) + 69;
 }
 
-//음정에서 주파수을 구하는 함수(현재 사용X)
+//음정에서 주파수을 구하는 함수(현재 사용X)  
 function frequencyFromNoteNumber( note ) {
 return 440 * Math.pow(2,(note-69)/12);
 }

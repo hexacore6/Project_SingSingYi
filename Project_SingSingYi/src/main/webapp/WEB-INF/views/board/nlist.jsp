@@ -62,8 +62,9 @@
   <div class="box-header with-border" style="margin-left: 20px;">
   <h2 class="box-title">공지사항</h2> 
   </div>
-
-  <!-- 검색 기능 START -->
+  <!-- BOARD LIST START -->
+  <section id="content" class="container">
+    <!-- 검색 기능 START -->
   <div class='box-body' style="margin-left: 25px;">
     <select name="searchType" style="height: 30px;">
       <option value="tc" <c:out value="${cri.searchType eq 'tc'?'selected':''}"/>>제목+내용</option>
@@ -87,9 +88,6 @@
 
   </div>
   <!-- 검색 기능 END -->
-
-  <!-- BOARD LIST START -->
-  <section id="content" class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="box">

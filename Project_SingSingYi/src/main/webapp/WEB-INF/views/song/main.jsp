@@ -10,12 +10,17 @@
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/resources/css/main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    #content{
+      height: 1500px;
+    }
+  </style>
 </head>
 
-<body style="background-color: #f5f5f0;">
+<body>
 	<!-- header -->
 	<%@ include file="../include/header.jsp" %>
-	
+	<div></div>
 	<section id="content" class="container">
         <!--내용시작-->
         <div class="row">

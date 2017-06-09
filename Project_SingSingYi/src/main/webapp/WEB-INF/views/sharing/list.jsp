@@ -343,7 +343,7 @@ $(document).ready(function(){
 											</div>
 										</div>
 									</div>
-									<div id="comments" style="background-color: #d6d6c2;">
+									<div id="comments" style="background-color: #d6d6c2; margin: 2px;">
 									
 									</div>
 								</div>

@@ -5,7 +5,7 @@
 <html>
   
   <head>
-    <title>종현이게임3</title>
+    <title>종현이게임</title>
     
     <!-- 합쳐지고 최소화된 최신 CSS -->
     <script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.2.0.min.js"></script>
@@ -67,7 +67,7 @@
                         btn.textContent = "다음문제";
                         answer.type= "text";
                         document.getElementById("insert").style.visibility = "visible";
-                        clearTimeout(unmmute);
+                        clearTimeout();
                         mmute = setTimeout("mute()", 10000);
                         
                         
@@ -86,7 +86,7 @@
                         answer.type="hidden";
                         document.getElementById("insert").style.visibility = "hidden";
                         clearTimeout(mmute);
-                        unmmute = setInterval("unmute()", 10000);
+                        unmmute = setInterval("unmute()", 100);
                         count++;
 
                         switch (count) {
@@ -99,11 +99,12 @@
             default:
               $("#audiofile").attr("value","")
               $("#myaudio").remove();
-              $("#quizNum").html("");
+              $("#quizNum").html("게임이 끝났습니다 !");
               btn.textContent = "END GAME";
+              document.getElementById("play").style.visibility = "hidden";
+              document.getElementById("resultBtn").style.display = "block";
               btn.className = "btn btn-warning";
-              $("#play").attr('onclick','send()');
-              clearTimeout(ummute);
+              clearTimeout();
               break;
             }
                         /*count값에 따른 노래 교체  */
@@ -148,16 +149,20 @@
     
     <center>
     
-    <form role="form" method="post" action="/game/gameResult">
-     <input type="hidden" name="correct" id="correctinput" value=""> 
-    <button type="submit" class="btn btn-warning" id="resultBtn"
-    style="width: 20%; height:100px; margin: 50px; font-size: 50px;"><b>결과 보기</b></button>
-    
-    </form>
+
     
     <h1 style="margin-top: 30px;" id='quizNum'> 1번 문제 !</h1>
     <button class="btn btn-danger" id="play" onclick="playAudio();"
     style="width: 20%; height:100px; margin: 50px; font-size: 50px;"><b>재생</b></button>
+    
+    <form role="form" method="post" action="/game/gameResult">
+    
+    <input type="hidden" name="correct" id="correctinput" value=""> 
+    <button type="submit" class="btn btn-warning" id="resultBtn" onclick="send();"
+    style="width: 20%; height:100px; margin: 50px; font-size: 50px; display: none;"><b>결과 보기</b></button>
+    
+    </form>
+    
     <br>
     <span id="correct"><font style= 'font-size:20px;'>맞춘 개수 : 0</font></span>
     <br>

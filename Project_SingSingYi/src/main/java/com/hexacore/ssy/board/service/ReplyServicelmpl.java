@@ -39,6 +39,11 @@ public class ReplyServicelmpl implements ReplyService {
 	public void remove(int rid) {
 		replyDAO.delete(rid);
 	}
+	
+	@Override
+	public void boardRemove(int aid) {
+		replyDAO.delete(aid);
+	}
 
 	@Override
 	public List<Reply> listReplyPage(int aid, Criteria cri) {

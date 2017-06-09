@@ -38,6 +38,12 @@ public class ReplyDAOImpl implements ReplyDAO {
 	public void delete(int rid) {
 		sqlSession.delete(namespace+".delete", rid);
 	}
+	
+	@Override
+	public void boardDelete(int aid) {
+		sqlSession.delete(namespace+".boardDelete", aid);
+	}
+	
 	@Override
 	public List<Reply> listPage(int aid, Criteria cri) {
 		Map<String, Object> paramMap = new HashMap<>();

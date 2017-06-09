@@ -50,6 +50,14 @@
 		where rid = #{rid}
 	</select>
 	
+		
+	<!-- 게시글 삭제 전에 트랜잭션으로 댓글 삭제 -->
+	<delete id="boardDelete">
+	delete from replies 
+	where aid = #{aid}
+	</delete>
+	
+
 	
 	
 	

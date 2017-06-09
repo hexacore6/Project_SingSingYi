@@ -63,6 +63,7 @@ public class SharingController {
 	public String register(HttpServletRequest request, HttpSession httpSession, Sharing sharing, MultipartFile file, Model model) throws IOException {
 		Member member = (Member)httpSession.getAttribute("login");
 		String loginId = member.getId();
+		System.out.println(loginId + "로그인 아이디 알려주세요");
 		sharing.setEximgfilename(file.getOriginalFilename());
 		try {
 			String savedName = uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid(), loginId);

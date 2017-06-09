@@ -13,8 +13,8 @@ import com.hexacore.ssy.common.Criteria;
 import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
 import com.hexacore.ssy.mypage.domain.RecordRepository;
-import com.hexacore.ssy.mypage.domain.Sharing;
 import com.hexacore.ssy.mypage.domain.Song;
+import com.hexacore.ssy.sharing.domain.Sharing;
 
 @Repository
 public class MypageDAOImpl implements MypageDAO{

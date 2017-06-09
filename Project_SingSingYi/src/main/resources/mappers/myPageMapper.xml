@@ -4,7 +4,7 @@
 <mapper namespace="com.hexacore.ssy.mapper.MyPageMapper">
 	
 	<!-- 나의 공유글 목록 조회 -->
-	<select id = "readMySharing" resultType="com.hexacore.ssy.mypage.domain.Sharing">
+	<select id = "readMySharing" resultType="com.hexacore.ssy.sharing.domain.Sharing">
 		select shid, id, rrid, shcontent, likecnt, commentcnt, eximgfilename, shregdate
 		from sharings 
 		where id = #{id}
@@ -52,7 +52,7 @@
 	</select>
 	
 	<!-- 받은 좋아요 개수 총합 조회 -->
-	<select id = "readMyLikeCnt" resultType="com.hexacore.ssy.mypage.domain.Sharing">
+	<select id = "readMyLikeCnt" resultType="com.hexacore.ssy.sharing.domain.Sharing">
 		select SUM(likecnt) As likecnt
 		from sharings 
 		where id = #{id}

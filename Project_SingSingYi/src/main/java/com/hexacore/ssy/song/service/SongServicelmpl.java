@@ -31,8 +31,14 @@ public class SongServicelmpl implements SongService  {
 		return songDao.countSong();
 	}
 	
+	@Override
+	public List<Song> bestSongs() {
+		return songDao.bestSongs();
+	}
 	
-	
-
+	@Override
+	public List<Song> songsList() {
+		return songDao.songsList();
+	}
 
 }

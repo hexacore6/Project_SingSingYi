@@ -88,29 +88,20 @@ public class GameController {
 		
 	}*/
 	
-	@RequestMapping(value = "/gameResult", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/gameResult", method = RequestMethod.GET)
 	public void gameResultGET(Model model) {
 		model.addAttribute("countSong", service.countSong());
 		logger.info("클라이언트: 게임결과페이지 입장2");
-	}
+	}*/
 	
 	@RequestMapping(value = "/gameResult", method = RequestMethod.POST)
-	public ResponseEntity<String> gameResultPOST(Model model, @RequestBody int correct) {
-		
-		ResponseEntity<String> entity = null;
-		try{
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-			model.addAttribute("correct", correct);
-			model.addAttribute("countSong", service.countSong());
+	public void gameResultPOST(Model model, @RequestParam("correct") int correct ) {
 			logger.info("클라이언트: 게임결과페이지 입장3");
 			logger.info(correct);
+			model.addAttribute("correct", correct);
+			model.addAttribute("countSong", service.countSong());
 			
-		} catch (Exception e){
-			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-		return entity;
-	}
 	
 	
 	

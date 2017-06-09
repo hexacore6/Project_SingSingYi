@@ -86,7 +86,7 @@
                         answer.type="hidden";
                         document.getElementById("insert").style.visibility = "hidden";
                         clearTimeout(mmute);
-                        unmmute = setInterval("unmute()", 100);
+                        unmmute = setInterval("unmute()", 10000);
                         count++;
 
                         switch (count) {
@@ -99,10 +99,11 @@
             default:
               $("#audiofile").attr("value","")
               $("#myaudio").remove();
-              $("#quizNum").html("게임 끝 !");
-              btn.textContent = "결과 보기";
+              $("#quizNum").html("");
+              btn.textContent = "END GAME";
               btn.className = "btn btn-warning";
               $("#play").attr('onclick','send()');
+              clearTimeout(ummute);
               break;
             }
                         /*count값에 따른 노래 교체  */
@@ -118,14 +119,8 @@
         //결과 페이지로
 		function send(){		      
 	    	  console.log('클라이언트 요청');
-	    	  
-	    		/* if($("#play").className == "btn btn-warning"){
-					$("#play").style.visibility = "hidden";
-					$("#quizNum").html("<h1> ${login.id}님은${countSong }개중<font color='red'>"+correct+"</font>개를  맞추었습니다.</h1>");
-					if(${countSong == correct}){
-						$("#quizNum").append("<br><h1>문제를 모두 맞추었으므로 보너스 코인 1개 충전!</h1>");
-					}
-				} */
+
+				$("#correctinput").attr("value",correct)
 		}
         
          function mute(){
@@ -148,10 +143,18 @@
     <p>
       <input type="hidden" id="audiofile" size="80" value="" />
     </p>
-    <audio id="myaudio" controls="controls" >
+    <audio id="myaudio">
     </audio>
     
     <center>
+    
+    <form role="form" method="post" action="/game/gameResult">
+     <input type="hidden" name="correct" id="correctinput" value=""> 
+    <button type="submit" class="btn btn-warning" id="resultBtn"
+    style="width: 20%; height:100px; margin: 50px; font-size: 50px;"><b>결과 보기</b></button>
+    
+    </form>
+    
     <h1 style="margin-top: 30px;" id='quizNum'> 1번 문제 !</h1>
     <button class="btn btn-danger" id="play" onclick="playAudio();"
     style="width: 20%; height:100px; margin: 50px; font-size: 50px;"><b>재생</b></button>
@@ -164,6 +167,7 @@
     <br>
     <span id="answerCheck" style="margin: 30px;"></span>
     </center>
+    
  
 
    <script>

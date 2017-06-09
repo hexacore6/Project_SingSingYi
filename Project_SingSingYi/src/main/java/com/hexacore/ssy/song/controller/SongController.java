@@ -24,7 +24,7 @@ public class SongController {
 		
 	}
 	
-	@RequestMapping(value="main", method=RequestMethod.GET)
+	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public void songMain(Model model) {
 		model.addAttribute("bests", songService.bestSongs());
 		model.addAttribute("songs", songService.songsList());

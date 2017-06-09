@@ -265,10 +265,9 @@ select#question {
 	width: 300px;
 }
 </style>
-
 </head>
 <body>
-	<div id="fullpage">
+	<div id="fullpage" >
 		<div class="section">
 			<div class="start">
 				<div class="panel-heading">

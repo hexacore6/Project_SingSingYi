@@ -185,7 +185,7 @@ public class SharingController {
 	
 	//공유글 삭제하기 처리
 	@Transactional
-	@RequestMapping(value = "/myDelete", method = RequestMethod.POST)
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(Sharing sharing, Model model) {
 		try {
 			sharingService.removeComment(sharing.getShid());
@@ -215,7 +215,7 @@ public class SharingController {
 	
 	//내 글 삭제하기 처리
 	@Transactional
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/myDelete", method = RequestMethod.POST)
 	public String myDelete(Sharing sharing, Model model) {
 		try {
 			sharingService.removeComment(sharing.getShid());

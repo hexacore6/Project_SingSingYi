@@ -33,7 +33,7 @@
 #imageDrop{
 	width: 100%;
 	height: 25px;
-	background-color: #00ffbf;
+	background-color: #d6d6c2;;
 	
 }
 
@@ -215,7 +215,7 @@ $(document).ready(function(){
 					</div>
 					<div class="col-xs-3">
 						<input type="text" class="form-control" id="keywordInput"
-							placeholder="SEARCH">
+							placeholder="SEARCH" style="margin: 4px;">
 					</div>
 					<div class="col-xs-2">
 						<button type="button" class="btn btn-block btn-lg" id="searchBtn" style="background-color: #d6d6c2; color: white;" >
@@ -248,8 +248,8 @@ $(document).ready(function(){
 											<span aria-hidden="true">&times;</span>
 										</button>
 										<h4 class="modal-title">새 글 작성</h4>
-										<input type="hidden" name="id" value="${login.id}"> <input
-											type="hidden" name="rrid" value=1>
+										<input type="hidden" name="id" value="${login.id}"><!--  <input
+											type="hidden" name="rrid" value=1> -->
 									</div>
 									<div class="modal-body">
 										<label for="message-text" class="control-label"></label>
@@ -342,7 +342,7 @@ $(document).ready(function(){
 											</div>
 										</div>
 									</div>
-									<div id="comments" style="background-color: #d6d6c2;">
+									<div id="comments" style="background-color: #d6d6c2; margin: 2px;">
 									
 									</div>
 								</div>
@@ -450,7 +450,7 @@ $(document).ready(function(){
 							<div class="animate-box" style="border-radius: 10px;">
 								<img
 									src="displayFile?fileName=/${sharing.eximgfilename}"
-									alt="${pageContext.servletContext.contextPath }/resources/img/LOGOsingsing7.png"
+									alt="${pageContext.servletContext.contextPath }/resources/img/haedlogo.png"
 									onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; display: block;">
 							</div>
 							<!-- <div style="margin: 10px;">#트와이스#Knock Knock</div> -->
@@ -558,15 +558,15 @@ $(document).ready(function(){
 				success : function(result) {
 					var str = "";
 					var comment = JSON.parse(result);
-					str += "<div class=\"pull-left\">"
+					str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
+						+ "<div class=\"pull-left\">"
 						+ "<i class=\"fa fa-user\">" + comment.id +"</i>"
 						+ "</div>"
-						+ "<div class=\"box-header\">"
-						+ "<dl class=\"dl-horizontal\">"
+						+ "<div class=\"box-body\">"
 						+ "<h3>"
-						+ "<dt>" + comment.ccontent +"</dt>"
+						+ "<p style=\"text-align : left;\">" + comment.ccontent +"</p>"
 						+ "</h3>"
-						+ "</dl>"
+						+ "</div>"
 						+ "</div>";
 					$("#comments").append(str);
 					$("#readReplyId").val("");
@@ -616,16 +616,14 @@ $(document).ready(function(){
 					var array = JSON.parse(result);
 					$(array).each(
 						function() {
-							str += "<div class=\"box-header with-border\" style=\"margin : 4px;\">"
+							str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
 								+ "<div class=\"pull-left\">"
 								+ "<i class=\"fa fa-user\">" + this.id +"</i>"
 								+ "</div>"
 								+ "<div class=\"box-body\">"
-								+ "<dl class=\"dl-horizontal\">"
 								+ "<h3>"
-								+ "<dt>" + this.ccontent +"</dt>"
+								+ "<p style=\"text-align : left;\">" + this.ccontent +"</p>"
 								+ "</h3>"
-								+ "</dl>"
 								+ "</div>"
 								+ "</div>";
 						});

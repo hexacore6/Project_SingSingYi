@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>씽씽이 타러 ㄱ</title>
+<title>씽씽이</title>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/jquery.fullPage.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/examples.css" />
@@ -25,8 +25,6 @@
 	$(document).ready(function() {
 		$('#fullpage').fullpage({
 			sectionsColor : [ '#1bbc9b', '#4BBFC3', '#7BAABE' ],
-			navigation : true,
-			navigationPosition : 'left'
 		});
 /* 
 		// run the currently selected effect
@@ -81,7 +79,7 @@ h1 {
 }
 
 button {
-	background: #1AAB8A;
+	background: #ed484e;
 	color: #fff;
 	border: none;
 	position: relative;
@@ -98,7 +96,7 @@ button {
 
 button:hover {
 	background: #fff;
-	color: #1AAB8A;
+	color: #ed484e;
 }
 
 button:before, button:after {
@@ -108,7 +106,7 @@ button:before, button:after {
 	right: 0;
 	height: 2px;
 	width: 0;
-	background: #1AAB8A;
+	background: #ed484e;
 	transition: 400ms ease all;
 }
 
@@ -190,19 +188,7 @@ input {
 				-->
 			</div>
 		</div>
-		<div class="section" id="section1">
-			<div class="intro">
-				<h1>More Simple yet</h1>
-				<p>Sections won't contain anchor links. It's more simple to
-					configure but a bit more restrictive.</p>
-			</div>
-		</div>
-		<div class="section" id="section2">
-			<div class="intro">
-				<h1>URL without /#</h1>
-				<p>But back button won't work!</p>
-			</div>
-		</div>
+		
 	</div>
 
 </body>

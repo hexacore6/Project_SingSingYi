@@ -10,12 +10,17 @@
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/resources/css/main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    #content{
+      height: 1500px;
+    }
+  </style>
 </head>
 
-<body style="background-color: #f5f5f0;">
+<body>
 	<!-- header -->
 	<%@ include file="../include/header.jsp" %>
-	
+	<div></div>
 	<section id="content" class="container">
         <!--내용시작-->
         <div class="row">
@@ -26,7 +31,7 @@
                 <div class="box box-header"><h2 class="btn btn-danger" style="font-size: 40px;">BEST 3</h2></div>
             <c:forEach items="${bests }" var="best">
             <div class="col-lg-4">
-                <div class="thumbnail"> <img src="${pageContext.servletContext.contextPath }/resources/img/${best.simgfilename}" alt="..." style="width:1000px;">
+                <div class="thumbnail"> <img src="${pageContext.servletContext.contextPath }/resources/img/${best.simgfilename}" alt="..." style="height:340px">
                     <div class="caption">
                         <h3>${best.stitle }</h3>
                         <p>${best.singer }</p>

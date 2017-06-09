@@ -1,24 +1,21 @@
 package com.hexacore.ssy.sharing.service;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.hexacore.ssy.sharing.dao.SharingDao;
+import com.hexacore.ssy.sharing.dao.SharingDAO;
 import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
 import com.hexacore.ssy.sharing.domain.Sharing;
 
 @Service
-public class SharingServiceImp implements SharingService {
+public class SharingServiceImpl implements SharingService {
 	
 	@Inject
-	private SharingDao sharingDao;
+	private SharingDAO sharingDao;
 
 	@Override
 	public List<Sharing> listAll(String id) {

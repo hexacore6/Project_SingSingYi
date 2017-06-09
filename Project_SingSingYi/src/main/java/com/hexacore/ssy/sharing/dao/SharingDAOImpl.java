@@ -1,7 +1,6 @@
 package com.hexacore.ssy.sharing.dao;
 
 
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,7 +14,7 @@ import com.hexacore.ssy.sharing.domain.Sharing;
 
 
 @Repository
-public class SharingDaoImp implements SharingDao {
+public class SharingDAOImpl implements SharingDAO {
 
 	private String namespace = "com.hexacore.ssy.mapper.SharingMapper";
 

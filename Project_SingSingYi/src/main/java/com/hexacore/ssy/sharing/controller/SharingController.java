@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.AccessControlContext;
 import java.security.AccessController;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -57,41 +58,38 @@ public class SharingController {
 	
 	@Inject
 	private SharingService sharingService;
-
+	
+	//공유글 등록 처리
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(Sharing sharing, MultipartFile file, Model model) throws IOException {
-		
+	public String register(HttpServletRequest request, HttpSession httpSession, Sharing sharing, MultipartFile file, Model model) throws IOException {
+		Member member = (Member)httpSession.getAttribute("login");
+		String loginId = member.getId();
+		System.out.println(loginId + "로그인 아이디 알려주세요");
 		sharing.setEximgfilename(file.getOriginalFilename());
 		try {
-			String savedName = uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid());
+			String savedName = uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid(), loginId);
 			sharing.setEximgfilename(savedName);
 			sharingService.regist(sharing);
-			uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid());
+			uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid(), loginId);
 			System.out.println("성공");
 		} catch (Exception e) {
 			System.out.println("실패");
 			e.printStackTrace();
 		}
 		return "redirect:/sharing/list";
-
 	}
 	
-	private String uploadFile(String originalName, byte[] fileData, int shid) throws IOException{
-		String loginId = "kosta111";
-		
+	private String uploadFile(String originalName, byte[] fileData, int shid, String loginId) throws IOException{
 		String savedName = loginId + "@" + shid + "@" + originalName;
 		File target = new File(uploadPath, savedName);
-		
 		FileCopyUtils.copy(fileData, target);
-		
 		return savedName;
 	}
 	
+	//공유글 댓글 추가 처리
 	@Transactional
 	@RequestMapping(value = "/addComment", method = RequestMethod.POST)
 	public ResponseEntity<Comment> addComment(@RequestBody Comment comment) throws IOException {
-		System.out.println("댓글 추가");
-		System.out.println(comment.getId() + "아이디++");
 		ResponseEntity<Comment> entity = null;
 		try {
 			sharingService.registComment(comment);
@@ -102,32 +100,26 @@ public class SharingController {
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
-
 	}
-
+	
+	//공유글 리스트 출력 처리
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void list(HttpServletRequest request, Model model, HttpSession httpSession) {
 		Member member = (Member)httpSession.getAttribute("login");
-		
 		String loginId = member.getId();
-		System.out.println(loginId + "로그인아이디");
-		model.addAttribute("list", sharingService.listAll("kosta111"));
-
+		model.addAttribute("list", sharingService.listAll(loginId));
 	}
 	
+	//좋아요 업데이트 처리
 	@Transactional
 	@RequestMapping(value = "/like", method = RequestMethod.POST)
 	public ResponseEntity<Boolean> updateLike(Model model, @RequestBody Sharing sharing) {
-		
 		ResponseEntity<Boolean> entity = null;
 		LikeHistory likeHistory = new LikeHistory();
 		likeHistory = null;
-		System.out.println("증가될 공유글 아이디 : " + sharing.getShid());
-		System.out.println("DB에 있는 공유글 아이디 : " + sharingService.checkLike(sharing.getShid()));
 		if(sharingService.checkLike(sharing.getShid()) == null){
 			//DB상에 좋아요 기록이 없을 경우
 			try {
-				System.out.println("checklike는 널");
 				sharingService.updateLikeCnt(sharing.getShid());
 				sharingService.likeHistory(sharing);
 				entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
@@ -142,12 +134,11 @@ public class SharingController {
 			entity = new ResponseEntity<Boolean>(false, HttpStatus.OK);;
 		}
 		return entity;
-		
 	}
 	
+	//공유글 댓글 리스트 출력 처리
 	@RequestMapping(value = "/comment/list", method = RequestMethod.POST)
 	public ResponseEntity<List<Comment>> listComment(@RequestBody Sharing sharing, Model model) {
-		System.out.println("댓글");
 		ResponseEntity<List<Comment>> entity = null;
 		try {
 			model.addAttribute("listComment", sharingService.listComment(sharing.getShid()));
@@ -157,30 +148,26 @@ public class SharingController {
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
-
 	}
 	
-
+	
+	//공유글 상세조회 처리
 	@RequestMapping(value = "/read", method = RequestMethod.POST)
 	public ResponseEntity<Sharing> read(@RequestBody Sharing sharing, Model model) {
-		
 		ResponseEntity<Sharing> entity = null;
-		//String id = sharingService.read(sharing.getShid()).getId();
 		try {
 			model.addAttribute("read", sharingService.read(sharing.getShid()));
 			model.addAttribute("listComment", sharingService.listComment(sharing.getShid()));
-			System.out.println(sharingService.read(sharing.getShid()) + "결과");
 			entity = new ResponseEntity<Sharing>(sharingService.read(sharing.getShid()), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
-
 	}
 	
 	
-	//수정하기
+	//공유글 수정하기 처리
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(Sharing sharing, MultipartFile file, Model model) throws IOException {
 		
@@ -196,10 +183,10 @@ public class SharingController {
 
 	}
 	
+	//공유글 삭제하기 처리
 	@Transactional
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(Sharing sharing, Model model) {
-		
 		try {
 			sharingService.removeComment(sharing.getShid());
 			sharingService.removeSharing(sharing.getShid());
@@ -208,9 +195,39 @@ public class SharingController {
 			e.printStackTrace();
 		}
 		return "redirect:/sharing/list";
+	}
+	
+	//내 글 수정하기 처리
+	@RequestMapping(value = "/myUpdate", method = RequestMethod.POST)
+	public String myUpdate(Sharing sharing, MultipartFile file, Model model) throws IOException {
+		
+		
+		try {
+			sharingService.modify(sharing);
+			System.out.println("성공");
+		} catch (Exception e) {
+			System.out.println("실패");
+			e.printStackTrace();
+		}
+		return "redirect:/mypage/sharing";
 
 	}
 	
+	//내 글 삭제하기 처리
+	@Transactional
+	@RequestMapping(value = "/myDelete", method = RequestMethod.POST)
+	public String myDelete(Sharing sharing, Model model) {
+		try {
+			sharingService.removeComment(sharing.getShid());
+			sharingService.removeSharing(sharing.getShid());
+		} catch (Exception e) {
+			System.out.println("삭제 실패");
+			e.printStackTrace();
+		}
+		return "redirect:/mypage/sharing";
+	}
+	
+	//검색 입력 처리 
 	@RequestMapping(value = "/searchInput", method = RequestMethod.GET)
 	public String search(Model model) throws IOException {
 
@@ -234,13 +251,29 @@ public class SharingController {
 	}
 	*/
 	
+	//페이지에 이미지 출력하기 처리
 	@ResponseBody
 	@RequestMapping("/displayFile")
 	public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
 
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
-
+		
+		/*File dir = new File(uploadPath);
+		File[] fileList = dir.listFiles();
+		String originName[] = fileName.split("/");
+		for (int i = 0; i < fileList.length; i++) {
+			File file = fileList[i];
+			System.out.println(file.getName() + "폴더안에 파일 이름 보여주세요");
+			System.out.println(originName[1] + "db안에 파일 이름");
+			if(file.getName() == originName[1]){
+				System.out.println(fileName + "폴더안에 있는 파일이름");
+			}
+			else{
+				System.out.println("폴더에 이미지가 없어요");
+			}
+		}
+		*/
 		logger.info("File NAME : " + fileName);
 
 		try {
@@ -249,7 +282,7 @@ public class SharingController {
 
 			HttpHeaders headers = new HttpHeaders();
 			in = new FileInputStream(uploadPath + fileName);
-
+			System.out.println("이미지 파일 들어왔니 : " + in.toString());
 			logger.info(uploadPath + fileName);
 			if (mType != null) {
 				headers.setContentType(mType);
@@ -258,9 +291,7 @@ public class SharingController {
 				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 				headers.add("Content-Disposition",
 						"attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
-
 			}
-
 			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -268,30 +299,8 @@ public class SharingController {
 		} finally {
 			in.close();
 		}
-
 		return entity;
 	}
 	
-	/*
-	@ResponseBody
-	@RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
-	public ResponseEntity<String> deleteFile(String fileName){
-		
-		logger.info("delete file : " + fileName);
-		
-		String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-		
-		MediaType mType = MediaUtils.getMediaType(formatName);
-		
-		if(mType != null){
-			String front = fileName.substring(0, 12);
-			String end = fileName.substring(14);
-			new File(uploadPath + (front+end).replace('/', File.separatorChar)).delete();
-			
-		}
-		
-		new File(uploadPath + fileName.replace('/', File.separatorChar)).delete();
-		
-		return new ResponseEntity<String>("deleted" , HttpStatus.OK);
-	}*/
+	
 }

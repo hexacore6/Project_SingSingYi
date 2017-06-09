@@ -12,7 +12,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 
-<body style="background-color: #f5f5f0;">
+<body>
 	<!-- header -->
 	<%@ include file="../include/header.jsp" %>
 	

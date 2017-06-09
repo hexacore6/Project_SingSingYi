@@ -39,12 +39,12 @@
                 <div class="col-lg-3">
 
                     <a href="<%=application.getContextPath() %>/board/nlist" class="menuitem">
-                        <p class="text-center">공지사항</p>
+                        <p class="text-center"><strong>공지사항</strong></p>
                     </a>
                 </div>
                 <div class="col-lg-3">
                     <a href="<%=application.getContextPath() %>/board/list" class="menuitem">
-                        <p class="text-center">고객센터</p>
+                        <p class="text-center"><strong>Q&A</strong></p>
                     </a>
                 </div>
             </div>

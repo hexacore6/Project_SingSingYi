@@ -236,7 +236,7 @@
   <div class="modal" id="updateModal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form role="form" action="../sharing/update" method="post" enctype="multipart/form-data">
+        <form role="form" action="../sharing/myupdate" method="post" enctype="multipart/form-data">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="updateCloseButton">
               <span aria-hidden="true">&times;</span>
@@ -280,7 +280,7 @@
   <div class="modal" id="deleteModal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form role="form" action="../sharing/delete" method="post" enctype="multipart/form-data">
+        <form role="form" action="../sharing/mydelete" method="post" enctype="multipart/form-data">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="updateCloseButton">
               <span aria-hidden="true">&times;</span>

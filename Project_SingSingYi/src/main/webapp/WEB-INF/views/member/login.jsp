@@ -81,7 +81,7 @@ h1 {
 }
 
 button {
-	background: #1AAB8A;
+	background: #ed484e;
 	color: #fff;
 	border: none;
 	position: relative;
@@ -98,7 +98,7 @@ button {
 
 button:hover {
 	background: #fff;
-	color: #1AAB8A;
+	color: #ed484e;
 }
 
 button:before, button:after {
@@ -108,7 +108,7 @@ button:before, button:after {
 	right: 0;
 	height: 2px;
 	width: 0;
-	background: #1AAB8A;
+	background: #ed484e;
 	transition: 400ms ease all;
 }
 

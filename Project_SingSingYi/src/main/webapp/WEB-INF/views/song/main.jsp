@@ -26,7 +26,7 @@
                 <div class="box box-header"><h2 class="btn btn-danger" style="font-size: 40px;">BEST 3</h2></div>
             <c:forEach items="${bests }" var="best">
             <div class="col-lg-4">
-                <div class="thumbnail"> <img src="${pageContext.servletContext.contextPath }/resources/img/${best.simgfilename}" alt="..." style="width:1000px;">
+                <div class="thumbnail"> <img src="${pageContext.servletContext.contextPath }/resources/img/${best.simgfilename}" alt="..." style="height:340px">
                     <div class="caption">
                         <h3>${best.stitle }</h3>
                         <p>${best.singer }</p>

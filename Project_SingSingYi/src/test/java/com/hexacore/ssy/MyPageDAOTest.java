@@ -15,7 +15,6 @@ import com.hexacore.ssy.common.Criteria;
 import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.dao.MypageDAO;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
-import com.hexacore.ssy.sharing.dao.SharingDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
@@ -25,7 +24,6 @@ public class MyPageDAOTest {
 	
 	@Inject
 	private MypageDAO dao;
-	private SharingDao sharingDao;
 	
 	Logger logger = Logger.getLogger(MyPageDAOTest.class);
 	
@@ -180,12 +178,5 @@ public class MyPageDAOTest {
 		cri.setPerPageNum(5);
 		String id = "woong1";
 		dao.countCoinPaging(cri, id);
-	}
-	
-	@Test
-	public void readModal(){
-		sharingDao.read(1);
-		
-		
 	}
 }

@@ -185,7 +185,7 @@ public class SharingController {
 	
 	//공유글 삭제하기 처리
 	@Transactional
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/myDelete", method = RequestMethod.POST)
 	public String delete(Sharing sharing, Model model) {
 		try {
 			sharingService.removeComment(sharing.getShid());
@@ -198,7 +198,7 @@ public class SharingController {
 	}
 	
 	//내 글 수정하기 처리
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/myUpdate", method = RequestMethod.POST)
 	public String myUpdate(Sharing sharing, MultipartFile file, Model model) throws IOException {
 		
 		

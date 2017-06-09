@@ -36,18 +36,18 @@
     <!-- 게시글 작성시  제목, 내용, 작성자  -->
 
     <div class="box-body">
-    <div class="form-group" style="margin: 5px;">
-      <label for="exampleInputEamil1">Title</label>
+    <div class="form-group" style="margin: 5px; text-align: left;">
+      <label for="exampleInputEamil1" >Title</label>
       <input type="text" name="atitle" class="form-control" placeholder="Enter Title">
     </div>
       
-    <div class="form-group" style="margin: 5px;">
-      <label for="exampleInputPassword1">Content</label>
+    <div class="form-group" style="margin: 5px; text-align: left;">
+      <label for="exampleInputPassword1" style="text-align: left">Content</label>
       <textarea class="form-control" name="acontent" rows="3" placeholder="Enter..."></textarea>
     </div>
     
-    <div class="form-group" style="margin: 5px;">
-      <label for="exampleInputEamil1">Writer</label>
+    <div class="form-group" style="margin: 5px; text-align: left;">
+      <label for="exampleInputEamil1" style="text-align: left">Writer</label>
       <input type="text" name="id" class="form-control" value="${login.id}" readonly>
     </div>
     </div>

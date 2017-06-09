@@ -26,7 +26,6 @@
 <script src="/resources/js/jquery-3.2.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-
 </head>
 <body>
 
@@ -40,23 +39,23 @@
   
   <div class="box-body">
   
-    <div class="form-group">
-      <label for="exampleInputEamil1">글번호</label>
+    <div class="form-group" style="text-align: left;">
+      <label for="exampleInputEamil1" style="text-align: left">글번호</label>
       <input type="text" name="aid" class="form-control" value="${article.aid }" readonly="readonly">
     </div>
     
-    <div class="form-group">
-      <label for="exampleInputEamil1">글제목</label>
+    <div class="form-group" style="text-align: left;">
+      <label for="exampleInputEamil1" style="text-align: left;">글제목</label>
       <input type="text" name="atitle" class="form-control" value="${article.atitle }">
     </div>
     
-    <div class="form-group">
-      <label for="exampleInputPassword1">글내용</label>
+    <div class="form-group" style="text-align: left;">
+      <label for="exampleInputPassword1" style="text-align: left;">글내용</label>
       <textarea class="form-control" name="acontent" rows="3">${article.acontent }</textarea>
     </div>
     
-    <div class="form-group">
-      <label for="exampleInputEamil1">작성자</label>
+    <div class="form-group" style="text-align: left;">
+      <label for="exampleInputEamil1" style="text-align: left;">작성자</label>
       <input type="text" name="id" class="form-control" value="${article.id }" readonly="readonly">
     </div>
   </div>

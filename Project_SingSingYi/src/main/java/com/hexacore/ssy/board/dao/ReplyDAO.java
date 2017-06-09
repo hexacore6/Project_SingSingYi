@@ -16,6 +16,8 @@ public interface ReplyDAO {
 	
 	public void delete(int rno);
 	
+	public void boardDelete(int aid);
+	
 	public List<Reply> listPage(int aid, Criteria cri);
 	
 	public int count(int aid);

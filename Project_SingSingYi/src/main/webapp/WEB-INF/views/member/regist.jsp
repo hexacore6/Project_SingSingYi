@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>씽씽이 회원가입</title>
+<title>씽씽이</title>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/jquery.fullPage.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/examples.css" />

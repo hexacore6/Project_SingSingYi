@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>씽씽이 타러 ㄱ</title>
+<title>씽씽이</title>
 
 <link rel="stylesheet" type="text/css"
 	href="/resources/css/jquery.fullPage.css" />

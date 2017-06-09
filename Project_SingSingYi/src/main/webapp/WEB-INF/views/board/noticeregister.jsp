@@ -28,14 +28,15 @@
 </head>
 <body>
   <jsp:include page="../include/header.jsp"></jsp:include>
+  <div id='content' class="container">
   <form role="form" id="registerForm" method="post">
     <input type="hidden" name="page" value="${cri.page }">
     <input type="hidden" name="perPageNum" value="${cri.perPageNum }">
     <input type="hidden" name="searchType" value="${cri.searchType }">
     <input type="hidden" name="keyword" value="${cri.keyword }">
     <!-- 게시글 작성시  제목, 내용, 작성자  -->
-
-    <div class="box-body">
+  
+    <div class="box-body container">
     <div class="form-group" style="margin: 5px; text-align: left;">
       <label for="exampleInputEamil1" >Title</label>
       <input type="text" name="atitle" class="form-control" placeholder="Enter Title">
@@ -54,13 +55,14 @@
  
     <!-- /.box-body -->
     
-    <div class="box-footer">
+    <div class="box-footer container">
       <div>
         <hr>
       </div>
       
       <button type="submit" class="btn btn-primary">확인</button>
       <button type="button" class="btn btn-warning">취소</button>
+    </div>
     </div>
   </form>
   

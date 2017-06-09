@@ -14,6 +14,7 @@
 						<div id="headimg" style="margin-left: 50px;">
 							<a href="/mypage/sharing"><img src="/resources/img/user.png"></a>
                             <a class="btn btn-primary" href="/member/logout">로그아웃</a>
+                            <a class="btn btn-primary" href="/game/gameStart">노래맞추기게임</a>
 						</div>
 					</div>
 				</div>

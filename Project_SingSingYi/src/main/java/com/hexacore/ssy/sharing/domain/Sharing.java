@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Sharing {
 	
+	//Sharing 도메인 객체 속성
 	private int shid;
 	private String id;
 	private int rrid;

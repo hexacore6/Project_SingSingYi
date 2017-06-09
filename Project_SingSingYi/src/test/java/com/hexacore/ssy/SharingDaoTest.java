@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.hexacore.ssy.sharing.dao.SharingDao;
+import com.hexacore.ssy.sharing.dao.SharingDAO;
 import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.Sharing;
 import com.hexacore.ssy.sharing.service.SharingService;
@@ -26,7 +26,7 @@ public class SharingDaoTest {
 	Logger logger = Logger.getLogger(SharingDaoTest.class);
 
 	@Inject
-	private SharingDao dao;
+	private SharingDAO dao;
 	
 	//@Test
 	public void testCreate() throws Exception {

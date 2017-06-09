@@ -33,7 +33,7 @@
 #imageDrop{
 	width: 100%;
 	height: 25px;
-	background-color: #00ffbf;
+	background-color: #d6d6c2;;
 	
 }
 

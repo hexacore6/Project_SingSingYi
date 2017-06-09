@@ -28,7 +28,7 @@
                 <!--한글폰트-->
                 <div class="col-lg-3">
                     <a href='#' class="menuitem">
-                        <p class="text-center">노래하기</p>
+                        <p class="text-center"><strong>노래하기</strong></p>
                     </a>
                 </div>
                 <div class="col-lg-3">
@@ -38,12 +38,12 @@
                 </div>
                 <div class="col-lg-3">
                     <a href="<%=application.getContextPath() %>/sboard/nlist" class="menuitem">
-                        <p class="text-center">공지사항</p>
+                        <p class="text-center"><strong>공지사항</strong></p>
                     </a>
                 </div>
                 <div class="col-lg-3">
                     <a href="<%=application.getContextPath() %>/sboard/list" class="menuitem">
-                        <p class="text-center">고객센터</p>
+                        <p class="text-center"><strong>고객센터</strong></p>
                     </a>
                 </div>
             </div>

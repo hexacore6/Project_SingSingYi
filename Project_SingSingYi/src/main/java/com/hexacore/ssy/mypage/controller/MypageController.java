@@ -92,7 +92,8 @@ public class MypageController {
 	@Transactional
 	@RequestMapping(value="/addcoin", method=RequestMethod.POST)
 	public String addCoin(String id, Member member){
-		logger.info("아이디 : "+ id);
+		System.out.println("아이디" + id);
+		System.out.println("멤버" + member);
 		service.addCoin(member, id);
 		CoinHistory coinHistory = new CoinHistory();
 		coinHistory.setId(id);
@@ -235,7 +236,7 @@ public class MypageController {
 			entity = new ResponseEntity<Sharing>(sharingService.read(sharing.getShid()), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<Sharing>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 

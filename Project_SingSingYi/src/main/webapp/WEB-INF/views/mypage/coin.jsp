@@ -93,11 +93,8 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
   <button class="btn btn-primary pull-right" id='modal' onclick="showCoinModal()">코인충전</button>
-  </div>
-
+  </div>  
   </div>
   </section>
   <!--내용끝-->
@@ -115,7 +112,7 @@
           <h3 style="text-align: center;">코인충전</h3>
         </div>
 
-        <form class="form-horizontal" action="addCoin" method="post">
+        <form class="form-horizontal" action="addcoin" method="post">
           <input type="hidden" id="id" name="id" value="${login.id }">
           <div class="modal-body" style="border: none;">
             <div class="row" style="float: left; text-align: center;">

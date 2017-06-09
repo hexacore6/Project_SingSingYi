@@ -10,4 +10,10 @@ public interface SongService {
 	
 	public int countSong();
 	
+	/** BEST 3 노래 가져오기 */
+	public List<Song> bestSongs();
+	
+	/** 전체 노래 목록 가져오기 */
+	public List<Song> songsList();
+	
 }

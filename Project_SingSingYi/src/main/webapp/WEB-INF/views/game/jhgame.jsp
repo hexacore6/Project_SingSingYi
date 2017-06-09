@@ -42,6 +42,8 @@
         
         var currentFile = "";
         function playAudio() {
+        	var mmute;
+        	var unmmute;
             // Check for audio element support.
             if (window.HTMLAudioElement) {
                 try {
@@ -65,7 +67,10 @@
                         btn.textContent = "다음문제";
                         answer.type= "text";
                         document.getElementById("insert").style.visibility = "visible";
-                        setTimeout("mute()", 10000);
+                        clearTimeout(unmmute);
+                        mmute = setTimeout("mute()", 10000);
+                        
+                        
                     }
                     else {
                         oAudio.pause(); // 다음문제 버튼을 눌렀을 때 
@@ -80,7 +85,8 @@
                         $("#quizNum").html((count+2)+"번 문제 ! ");// 몇번째 문제
                         answer.type="hidden";
                         document.getElementById("insert").style.visibility = "hidden";
-                        document.getElementById('myaudio').muted = false;
+                        clearTimeout(mmute);
+                        unmmute = setInterval("unmute()", 100);
                         count++;
 
                         switch (count) {
@@ -111,29 +117,23 @@
        
         //결과 페이지로
 		function send(){		      
-	    	  console.log('클라이언트 요청')
-
-/* 					$.ajax({
-						type : 'post',
-						url : 'http://localhost/game/gameResult',
-						headers : {
-							"Content-Type" : "application/json",
-							"X-HTTP-Method-Override" : "POST"
-						},
-						dataType : 'text',
-						data : JSON.stringify({
-							correct : correct
-						}),
-						success : function(result) {
-							console.log("result : " + result);
-						}
-					}); */
-					$("#sendto").attr("value",correct).submit();
+	    	  console.log('클라이언트 요청');
+	    	  
+	    		/* if($("#play").className == "btn btn-warning"){
+					$("#play").style.visibility = "hidden";
+					$("#quizNum").html("<h1> ${login.id}님은${countSong }개중<font color='red'>"+correct+"</font>개를  맞추었습니다.</h1>");
+					if(${countSong == correct}){
+						$("#quizNum").append("<br><h1>문제를 모두 맞추었으므로 보너스 코인 1개 충전!</h1>");
+					}
+				} */
 		}
         
          function mute(){
         	 document.getElementById('myaudio').muted = true;
         } 
+         function unmute(){
+        	 document.getElementById('myaudio').muted = false;
+         }
        
     </script>
   </head>
@@ -148,7 +148,7 @@
     <p>
       <input type="hidden" id="audiofile" size="80" value="" />
     </p>
-    <audio id="myaudio">
+    <audio id="myaudio" controls="controls" >
     </audio>
     
     <center>
@@ -159,14 +159,12 @@
     <span id="correct"><font style= 'font-size:20px;'>맞춘 개수 : 0</font></span>
     <br>
     <input type="hidden" id="answer" name="answer" placeholder="노래 제목을 입력해주세요 !"
-    style="width: 20%; height:40px; font-size: 20px;">
+    style="width: 20%; height:40px; font-size: 20px; margin-bottom: 80px;">
     <button class="btn btn-primary" id="insert"  style="height:40px; font-size: 20px; margin-bottom: 5px; visibility: hidden;">입력</button>
     <br>
-    <span id="answerCheck"></span>
+    <span id="answerCheck" style="margin: 30px;"></span>
     </center>
-    <form id="sendto" action="/game/gameResult" method="post">
-    <input type="submit" value="" style="visibility: hidden;">
-    </form>
+ 
 
    <script>
     $(document).ready(function(){
@@ -188,7 +186,7 @@
         } else if($('#answer').val() == "") {
           alert("정답을 입력해주세요.");
         } else{
-          $("#answerCheck").html("<font color=red style= 'font-size:30px;'> 땡! 틀렸습니다.</font>");
+          $("#answerCheck").html("<font color=red style= 'font-size:30px; margin-bottom:50px;'> 땡! 틀렸습니다.</font>");
           $('#answer').val("");
           document.getElementById("insert").style.visibility = "hidden";   
   		  $("#answer").attr("type","hidden");

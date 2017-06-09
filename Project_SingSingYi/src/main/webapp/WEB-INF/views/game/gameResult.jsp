@@ -14,15 +14,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     
-    <script type="text/javascript">
-  $(document).ready(
-      function() {
-        $('#gameStart').on("click", function(evt) {
-          self.location = "jhgame"
-        })
-      })
-</script>
-    
 </head>
 <body>
      <!-- header -->

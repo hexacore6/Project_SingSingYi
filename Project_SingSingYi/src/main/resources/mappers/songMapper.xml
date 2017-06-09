@@ -22,5 +22,18 @@
 	where sid > 0
 	]]>
 	</select>
-
+	
+	<!-- BEST 3 가져오기 -->
+	<select id="bestSongs" resultType="com.hexacore.ssy.song.domain.Song">
+		select stitle, simgfilename, singer, playcnt
+		from songs
+		order by playcnt desc limit 3
+	</select>
+	
+	<!-- 전체 노래 목록 가져오기 -->
+	<select id="songsList" resultType="com.hexacore.ssy.song.domain.Song">
+		select sid, stitle, singer, playcnt
+		from songs
+	</select>
+	
 </mapper>

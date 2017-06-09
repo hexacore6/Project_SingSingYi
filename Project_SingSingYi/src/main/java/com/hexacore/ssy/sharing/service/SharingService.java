@@ -1,6 +1,5 @@
 package com.hexacore.ssy.sharing.service;
 
-import java.util.Date;
 import java.util.List;
 
 import com.hexacore.ssy.sharing.domain.Comment;

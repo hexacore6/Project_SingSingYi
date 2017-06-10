@@ -56,44 +56,6 @@ public class GameController {
 			return entity;
 	}
 	
-	
-/*	
-	@RequestMapping(value = "/jhgame2", method = RequestMethod.POST)
-	public void jhgame2POST(Song song, Model model){
-		
-	}
-	
-	@RequestMapping(value = "/jhgame2", method = RequestMethod.GET)
-		public void jhgame2GET(Song song, Model model){
-		
-				song = service.randomSong();
-				
-				model.addAttribute("countSong", service.countSong());
-				model.addAttribute("song", song);
-				
-				logger.info(song.toString());	
-			}
-	
-	*/
-	
-/*	@RequestMapping(value = "/gameStart", method = RequestMethod.POST)
-	public void gameStartPOST(Song song, Model model) {
-		logger.info("POST방식으로 등록............");
-		
-		int count = service.countSong(); //랜덤할 때 총 개수로 사용
-		double randomValue = Math.random();
-		int sid = (int)(randomValue * count) +1;
-		model.addAttribute("list", service.randomSong(sid));
-		logger.info(song.toString());
-		
-	}*/
-	
-/*	@RequestMapping(value = "/gameResult", method = RequestMethod.GET)
-	public void gameResultGET(Model model) {
-		model.addAttribute("countSong", service.countSong());
-		logger.info("클라이언트: 게임결과페이지 입장2");
-	}*/
-	
 	@RequestMapping(value = "/gameResult", method = RequestMethod.POST)
 	public void gameResultPOST(Model model, @RequestParam("correct") int correct ) {
 			logger.info("클라이언트: 게임결과페이지 입장3");

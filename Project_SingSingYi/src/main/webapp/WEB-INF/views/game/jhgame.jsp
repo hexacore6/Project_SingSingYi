@@ -67,7 +67,8 @@
                         btn.textContent = "다음문제";
                         answer.type= "text";
                         document.getElementById("insert").style.visibility = "visible";
-                        clearTimeout();
+                        clearTimeout(unmmute);
+                        document.getElementById("play").disabled = true;
                         mmute = setTimeout("mute()", 10000);
                         
                         
@@ -79,6 +80,7 @@
                         if($("#answerCheck").html() == "") {
                             alert("정답을 확인하고 다음 문제를 눌러주세요.");
                             oAudio.play();
+                            btn.textContent = "다음문제";
                             return;
                         }
                         $("#answerCheck").html("");             // 정답체크 문장 비우기
@@ -86,7 +88,7 @@
                         answer.type="hidden";
                         document.getElementById("insert").style.visibility = "hidden";
                         clearTimeout(mmute);
-                        unmmute = setInterval("unmute()", 100);
+                        unmmute = setTimeout("unmute()", 1000);
                         count++;
 
                         switch (count) {
@@ -104,7 +106,7 @@
               document.getElementById("play").style.visibility = "hidden";
               document.getElementById("resultBtn").style.display = "block";
               btn.className = "btn btn-warning";
-              clearTimeout();
+              clearTimeout(unmmute);
               break;
             }
                         /*count값에 따른 노래 교체  */
@@ -126,6 +128,7 @@
         
          function mute(){
         	 document.getElementById('myaudio').muted = true;
+        	 document.getElementById("play").disabled = false;
         } 
          function unmute(){
         	 document.getElementById('myaudio').muted = false;
@@ -182,6 +185,10 @@
       
       $("#insert").click(function(event){
     	check(count);
+    	
+
+    	
+    	
       })
       function check(data){
         if ($('#answer').val() == list[data].stitle) {
@@ -192,6 +199,7 @@
           document.getElementById("insert").style.visibility = "hidden";   
   		  $("#answer").attr("type","hidden");
   		  
+  		  
         } else if($('#answer').val() == "") {
           alert("정답을 입력해주세요.");
         } else{
@@ -199,9 +207,13 @@
           $('#answer').val("");
           document.getElementById("insert").style.visibility = "hidden";   
   		  $("#answer").attr("type","hidden");
+  		  //$("#play").attr("onclick","none");
           
         }
       }
+      
+       
+		  
 
   }); //END ready
 

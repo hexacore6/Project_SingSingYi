@@ -25,8 +25,6 @@
 	$(document).ready(function() {
 		$('#fullpage').fullpage({
 			sectionsColor : [ '#1bbc9b', '#4BBFC3', '#7BAABE' ],
-			navigation : true,
-			navigationPosition : 'left'
 		});
 /* 
 		// run the currently selected effect
@@ -190,19 +188,7 @@ input {
 				-->
 			</div>
 		</div>
-		<div class="section" id="section1">
-			<div class="intro">
-				<h1>More Simple yet</h1>
-				<p>Sections won't contain anchor links. It's more simple to
-					configure but a bit more restrictive.</p>
-			</div>
-		</div>
-		<div class="section" id="section2">
-			<div class="intro">
-				<h1>URL without /#</h1>
-				<p>But back button won't work!</p>
-			</div>
-		</div>
+		
 	</div>
 
 </body>

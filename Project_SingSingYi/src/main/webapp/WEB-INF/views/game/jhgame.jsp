@@ -24,7 +24,7 @@
         var correct =0
             $.ajax({
                 type: 'post',
-                url: 'http://localhost/game/jhgame', 
+                url: 'http://192.168.0.72/game/jhgame', 
                 headers : {
 						"Content-Type" : "application/json",
 					},
@@ -33,7 +33,7 @@
                     if (data.length != 0) {
                          list[0] = data[0];
                          console.log(list[0].sfilename)
-                         $("#audiofile").attr("value",list[0].sfilename)
+                         $("#audiofile").attr("value", list[0].sfilename)
                          list[1] = data[1];
                          list[2] = data[2];
                     }

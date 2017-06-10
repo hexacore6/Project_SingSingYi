@@ -86,7 +86,7 @@
                         answer.type="hidden";
                         document.getElementById("insert").style.visibility = "hidden";
                         clearTimeout(mmute);
-                        unmmute = setInterval("unmute()", 100);
+                        unmmute = setTimeout("unmute()", 1000);
                         count++;
 
                         switch (count) {
@@ -104,7 +104,7 @@
               document.getElementById("play").style.visibility = "hidden";
               document.getElementById("resultBtn").style.display = "block";
               btn.className = "btn btn-warning";
-              clearTimeout();
+              clearTimeout(unmmute);
               break;
             }
                         /*count값에 따른 노래 교체  */

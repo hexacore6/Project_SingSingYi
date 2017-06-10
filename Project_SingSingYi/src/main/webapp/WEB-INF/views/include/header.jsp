@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
 <div class="row">
 	<div class="col-lg-12">
 		<div class='headerimg'>
@@ -66,9 +67,3 @@
 	</div>
 </section>
 <!--해더END-->
-<!--부모창 제어-->
-<script>
-mypage = function () {
-    window.location.href="http://localhost/mypage/sharing";
-}
-</script>

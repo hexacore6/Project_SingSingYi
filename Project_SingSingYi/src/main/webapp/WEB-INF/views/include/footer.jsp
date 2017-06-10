@@ -21,3 +21,32 @@
 	</div>
 </section>
 <!--푸터끝-->
+
+<script>
+window.onload = function () {
+    $("#pluscoin").click(function () {
+        var iframeObj = $("#ifm").get(0);
+        var iframeDocument = iframeObj.contentWindow || iframeObj.contentDocument;
+        iframeDocument.pluscoin();
+    });
+    var allcookies = document.cookie;
+	
+    cookiearray  = allcookies.split(';');
+
+    // Now take key value pair out of this array
+
+    for(var i=0; i<cookiearray.length; i++){
+
+       name = cookiearray[i].split('=')[0];
+
+       value = cookiearray[i].split('=')[1];
+
+       alert("키 : " + name + " , 값 : " + value);
+
+    }
+
+
+
+}
+
+</script>

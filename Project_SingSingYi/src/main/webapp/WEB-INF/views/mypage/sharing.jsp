@@ -75,13 +75,15 @@
 			$("#readShcontent").empty();
 			$("#readLikecnt").empty();
 			$("#readCommentcnt").empty();
+			self.location.href='/mypage/sharing';
 		});
-
+		
 		$("#updateCloseButton").on("click", function() {
 			$("#updateId").empty();
 			$("#updateShcontent").empty();
 			$("#updateLikecnt").empty();
 			$("#updateCommentcnt").empty();
+			self.location.href='/mypage/sharing';
 		});
 	});
 </script>
@@ -92,7 +94,7 @@
 
   <jsp:include page="../include/header.jsp"></jsp:include>
   <!--해더END-->
-  <div class="row" id="fh5co-main" style="background-color: #f5f5f0;">
+  <div class="row" id="fh5co-main">
     <section id="content" class='container'>
     <div class="row">
       <%@include file="side.jsp"%>
@@ -121,7 +123,9 @@
               <div class="item" style="margin-left: 50px; margin-top: 100px; width: 500px; overflow: hidden; background-color: white-space:;">
                 <div class="animate-box" style="width: 500px;">
 
-                  <img src="displayFile?fileName=/${sharing.eximgfilename}" alt="${pageContext.servletContext.contextPath }/resources/img/LOGOsingsing7.png" onclick="showReadModal('${sharing.shid}')" style="width: 500px; height: auto; margin-left: auto; margin-right: auto; display: block;">
+                  <img src="displayFile?fileName=/${sharing.eximgfilename}" 
+                  alt="${pageContext.servletContext.contextPath }/resources/img/LOGOsingsing7.png" 
+                  onclick="showReadModal('${sharing.shid}')" style="width: 500px; height: auto; margin-left: auto; margin-right: auto; display: block;">
                   <!-- data-toggle="modal"
                   data-target="#myModal2" -->
                 </div>
@@ -190,7 +194,7 @@
             </h3>
           </div>
           <div class="row">
-            <div class="btn-group">
+<%--             <div class="btn-group">
               <h3>
                 <button class="btn" type="button" style="background-color: #d6d6c2;">
                   <i class="fa fa-heart"><span id="readLikecnt">${sharing.likecnt}</span></i>
@@ -202,7 +206,7 @@
                   <i class="fa fa-share"></i>
                 </button>
               </h3>
-            </div>
+            </div> --%>
           </div>
           <textarea class="form-control" id="readShcontent" disabled="disabled" autofocus="autofocus" rows="5" cols="50" style="resize: none;"></textarea>
 
@@ -221,7 +225,7 @@
               </div>
             </div>
           </div>
-          <div id="comments" style="background-color: #d6d6c2;"></div>
+          <div id="comments" style="background-color: #d6d6c2; margin: 2px;"></div>
         </div>
       </div>
 
@@ -236,7 +240,7 @@
   <div class="modal" id="updateModal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form role="form" action="../sharing/myupdate" method="post" enctype="multipart/form-data">
+        <form role="form" action="../sharing/myUpdate" method="post" enctype="multipart/form-data">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="updateCloseButton">
               <span aria-hidden="true">&times;</span>
@@ -280,7 +284,7 @@
   <div class="modal" id="deleteModal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form role="form" action="../sharing/mydelete" method="post" enctype="multipart/form-data">
+        <form role="form" action="../sharing/myDelete" method="post" enctype="multipart/form-data">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="updateCloseButton">
               <span aria-hidden="true">&times;</span>
@@ -310,159 +314,148 @@
   </div>
   <!-- /.update modal -->
   <script type="text/javascript">
-			function addComment() {
-				var shid = $("#readShid").val();
-				var id = $("#commentId").val();
-				var ccontent = $("#readReplyId").val();
-
-				$.ajax({
-					type : 'post',
-					url : '/sharing/addComment',
-					headers : {
-						"Content-Type" : "application/json",
-						"X-HTTP-Method-Override" : "POST"
-					},
-					dataType : 'text',
-					data : JSON.stringify({
-						shid : shid,
-						id : id,
-						ccontent : ccontent
-					}),
-					success : function(result) {
-						var str = "";
-						var comment = JSON.parse(result);
-						str += "<div class=\"pull-left\">"
-								+ "<i class=\"fa fa-user\">" + comment.id
-								+ "</i>" + "</div>"
-								+ "<div class=\"box-header\">"
-								+ "<dl class=\"dl-horizontal\">" + "<h3>"
-								+ "<dt>" + comment.ccontent + "</dt>" + "</h3>"
-								+ "</dl>" + "</div>";
-						$("#comments").append(str);
-						$("#readReplyId").val("");
-					}
-				});
+	function addComment() {
+		var shid = $("#readShid").val();
+		var id = $("#commentId").val();
+		var ccontent = $("#readReplyId").val();
+		
+		$.ajax({
+			type : 'post',
+			url : '/sharing/addComment',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				shid : shid,
+				id : id,
+				ccontent : ccontent                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+			}), 
+			success : function(result) {
+				var str = "";
+				var comment = JSON.parse(result);
+				str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
+					+ "<div class=\"pull-left\">"
+					+ "<i class=\"fa fa-user\">" + comment.id +"</i>"
+					+ "</div>"
+					+ "<div class=\"box-body\">"
+					+ "<h3>"
+					+ "<p style=\"text-align : left;\">" + comment.ccontent +"</p>"
+					+ "</h3>"
+					+ "</div>"
+					+ "</div>";
+				$("#comments").append(str);
+				$("#readReplyId").val("");
 			}
-			function showReadModal(shid) {
-				$
-						.ajax({
-							type : 'post',
-							url : '/sharing/read',
-							headers : {
-								"Content-Type" : "application/json",
-								"X-HTTP-Method-Override" : "POST"
-							},
-							dataType : 'text',
-							data : JSON.stringify({
-								shid : shid,
-							}),
-							success : function(result) {
-								$("#readModal").modal('show');
-								var array = JSON.parse(result);
-								$("#readImage").attr(
-										"src",
-										"displayFile?fileName=/"
-												+ array.eximgfilename);
-								$("#readId").append(array.id);
-								$("#readShid").attr("value", array.shid);
-								$("#readReplyId").attr("placeholder",
-										"댓글을 입력하세요!");
-								$("#readShcontent").append(array.shcontent);
-								$("#readLikecnt").append(array.likecnt);
-								$("#readCommentcnt").append(array.commentcnt);
-
-							}
-						});
-
-				$
-						.ajax({
-							type : 'post',
-							url : '/sharing/comment/list',
-							headers : {
-								"Content-Type" : "application/json",
-								"X-HTTP-Method-Override" : "POST"
-							},
-							dataType : 'text',
-							data : JSON.stringify({
-								shid : shid,
-							}),
-							success : function(result) {
-								var str = "";
-								var array = JSON.parse(result);
-								$(array)
-										.each(
-												function() {
-													str += "<div class=\"box-header with-border\" style=\"margin : 4px;\">"
-															+ "<div class=\"pull-left\">"
-															+ "<i class=\"fa fa-user\">"
-															+ this.id
-															+ "</i>"
-															+ "</div>"
-															+ "<div class=\"box-body\">"
-															+ "<dl class=\"dl-horizontal\">"
-															+ "<h3>"
-															+ "<dt>"
-															+ this.ccontent
-															+ "</dt>"
-															+ "</h3>"
-															+ "</dl>"
-															+ "</div>"
-															+ "</div>";
-												});
-								$("#comments").html(str);
-							}
-						});
+		});
+	}
+	function showReadModal(shid) {
+		$.ajax({
+			type : 'post',
+			url : '/sharing/read',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				shid : shid,
+			}), 
+			success : function(result) {
+				$("#readModal").modal('show');
+				var array = JSON.parse(result);
+				$("#readImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);
+				$("#readId").append(array.id);
+				$("#readShid").attr("value", array.shid);
+				$("#readReplyId").attr("placeholder", "댓글을 입력하세요!");
+				$("#readShcontent").append(array.shcontent);
+				$("#readLikecnt").append(array.likecnt);
+				$("#readCommentcnt").append(array.commentcnt);
+				
 
 			}
-
-			function showUpdateModal(shid) {
-				$
-						.ajax({
-							type : 'post',
-							url : '/sharing/read',
-							headers : {
-								"Content-Type" : "application/json",
-								"X-HTTP-Method-Override" : "POST"
-							},
-							dataType : 'text',
-							data : JSON.stringify({
-								shid : shid,
-							}),
-							success : function(result) {
-								$("#updateModal").modal('show');
-								var array = JSON.parse(result);
-								$("#updateShid").attr("value", array.shid);
-								$("#updateImage").attr(
-										"src",
-										"displayFile?fileName=/"
-												+ array.eximgfilename);
-								$("#updateId").append(array.id);
-								$("#updateShcontent").val(array.shcontent);
-								$("#updateLikecnt").append(array.likecnt);
-								$("#updateCommentcnt").append(array.commentcnt);
-							}
-						});
+		});
+		
+		$.ajax({
+			type : 'post',
+			url : '/sharing/comment/list',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				shid : shid,
+			}), 
+			success : function(result) {
+				var str = "";
+				var array = JSON.parse(result);
+				$(array).each(
+					function() {
+						str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
+							+ "<div class=\"pull-left\">"
+							+ "<i class=\"fa fa-user\">" + this.id +"</i>"
+							+ "</div>"
+							+ "<div class=\"box-body\">"
+							+ "<h3>"
+							+ "<p style=\"text-align : left;\">" + this.ccontent +"</p>"
+							+ "</h3>"
+							+ "</div>"
+							+ "</div>";
+					});
+				$("#comments").html(str);
 			}
+		});
+		
 
-			function showDeleteModal(shid) {
-				$.ajax({
-					type : 'post',
-					url : '/sharing/read',
-					headers : {
-						"Content-Type" : "application/json",
-						"X-HTTP-Method-Override" : "POST"
-					},
-					dataType : 'text',
-					data : JSON.stringify({
-						shid : shid,
-					}),
-					success : function(result) {
-						$("#deleteModal").modal('show');
-						var array = JSON.parse(result);
-						$("#deleteShid").attr("value", array.shid);
-					}
-				});
+	}
+	
+	function showUpdateModal(shid) {
+		$.ajax({
+			type : 'post',
+			url : '/sharing/read',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				shid : shid,
+			}), 
+			success : function(result) {
+				$("#updateModal").modal('show');
+				var array = JSON.parse(result);
+				$("#updateShid").attr("value", array.shid);
+				$("#updateImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);
+				$("#updateId").append(array.id);
+				$("#updateShcontent").val(array.shcontent);
+				$("#updateLikecnt").append(array.likecnt);
+				$("#updateCommentcnt").append(array.commentcnt);
 			}
+		});
+	}
+	
+	function showDeleteModal(shid) {
+		$.ajax({
+			type : 'post',
+			url : '/sharing/read',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				shid : shid,
+			}), 
+			success : function(result) {
+				$("#deleteModal").modal('show');
+				var array = JSON.parse(result);
+				$("#deleteShid").attr("value", array.shid);
+			}
+		});
+
+	}
 		</script>
   <jsp:include page="../include/footer.jsp"></jsp:include>
 

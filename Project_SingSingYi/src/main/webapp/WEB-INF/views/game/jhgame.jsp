@@ -5,7 +5,7 @@
 <html>
   
   <head>
-    <title>종현이게임3</title>
+    <title>종현이게임</title>
     
     <!-- 합쳐지고 최소화된 최신 CSS -->
     <script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.2.0.min.js"></script>
@@ -24,7 +24,7 @@
         var correct =0
             $.ajax({
                 type: 'post',
-                url: 'http://localhost/game/jhgame', 
+                url: 'http://192.168.0.72/game/jhgame', 
                 headers : {
 						"Content-Type" : "application/json",
 					},
@@ -33,7 +33,7 @@
                     if (data.length != 0) {
                          list[0] = data[0];
                          console.log(list[0].sfilename)
-                         $("#audiofile").attr("value",list[0].sfilename)
+                         $("#audiofile").attr("value", list[0].sfilename)
                          list[1] = data[1];
                          list[2] = data[2];
                     }
@@ -67,7 +67,7 @@
                         btn.textContent = "다음문제";
                         answer.type= "text";
                         document.getElementById("insert").style.visibility = "visible";
-                        clearTimeout(unmmute);
+                        clearTimeout();
                         mmute = setTimeout("mute()", 10000);
                         
                         
@@ -99,10 +99,12 @@
             default:
               $("#audiofile").attr("value","")
               $("#myaudio").remove();
-              $("#quizNum").html("게임 끝 !");
-              btn.textContent = "결과 보기";
+              $("#quizNum").html("게임이 끝났습니다 !");
+              btn.textContent = "END GAME";
+              document.getElementById("play").style.visibility = "hidden";
+              document.getElementById("resultBtn").style.display = "block";
               btn.className = "btn btn-warning";
-              $("#play").attr('onclick','send()');
+              clearTimeout();
               break;
             }
                         /*count값에 따른 노래 교체  */
@@ -118,14 +120,8 @@
         //결과 페이지로
 		function send(){		      
 	    	  console.log('클라이언트 요청');
-	    	  
-	    		/* if($("#play").className == "btn btn-warning"){
-					$("#play").style.visibility = "hidden";
-					$("#quizNum").html("<h1> ${login.id}님은${countSong }개중<font color='red'>"+correct+"</font>개를  맞추었습니다.</h1>");
-					if(${countSong == correct}){
-						$("#quizNum").append("<br><h1>문제를 모두 맞추었으므로 보너스 코인 1개 충전!</h1>");
-					}
-				} */
+
+				$("#correctinput").attr("value",correct)
 		}
         
          function mute(){
@@ -148,13 +144,25 @@
     <p>
       <input type="hidden" id="audiofile" size="80" value="" />
     </p>
-    <audio id="myaudio" controls="controls" >
+    <audio id="myaudio">
     </audio>
     
     <center>
+    
+
+    
     <h1 style="margin-top: 30px;" id='quizNum'> 1번 문제 !</h1>
     <button class="btn btn-danger" id="play" onclick="playAudio();"
     style="width: 20%; height:100px; margin: 50px; font-size: 50px;"><b>재생</b></button>
+    
+    <form role="form" method="post" action="/game/gameResult">
+    
+    <input type="hidden" name="correct" id="correctinput" value=""> 
+    <button type="submit" class="btn btn-warning" id="resultBtn" onclick="send();"
+    style="width: 20%; height:100px; margin: 50px; font-size: 50px; display: none;"><b>결과 보기</b></button>
+    
+    </form>
+    
     <br>
     <span id="correct"><font style= 'font-size:20px;'>맞춘 개수 : 0</font></span>
     <br>
@@ -164,6 +172,7 @@
     <br>
     <span id="answerCheck" style="margin: 30px;"></span>
     </center>
+    
  
 
    <script>

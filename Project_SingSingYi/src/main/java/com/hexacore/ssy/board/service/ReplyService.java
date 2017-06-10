@@ -16,6 +16,8 @@ public interface ReplyService {
 	
 	public void remove(int rid);
 	
+	public void boardRemove(int aid);
+	
 	public List<Reply> listReplyPage(int aid, Criteria cri);
 	
 	public int count(int aid);

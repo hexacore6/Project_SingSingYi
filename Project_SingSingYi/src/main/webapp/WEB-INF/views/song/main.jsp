@@ -9,7 +9,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/resources/css/main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sweetalert.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/jquery.min.js?ver=1"></script>
   <style type="text/css">
     #content{
       height: 1500px;
@@ -84,16 +88,16 @@
                                     <th style="width: 100px;text-align: center; font-size: 18px;">곡명</th>
                                     <th style="width: 100px;text-align: center; font-size: 18px;">가수</th>
                                     <th style="width: 100px;text-align: center; font-size: 18px;">부른 횟수</th>
-                                    <th style="width: 100px;text-align: center; font-size: 18px;">담기/즉시부르기</th>
+                                    <th style="width: 100px;text-align: center; font-size: 18px;">애창곡담기/즉시부르기</th>
                                 </tr>
-                                <c:forEach items="${songs }" var="song">
+                                <c:forEach items="${songs }" var="song" varStatus="stat">
                                 <tr>
                                     <td style="width: 100px;text-align: center; font-size: 15px;">${song.sid }</td>
                                     <td style="width: 100px;text-align: center; font-size: 15px;">${song.stitle }</td>
                                     <td style="width: 100px;text-align: center; font-size: 15px;">${song.singer }</td>
                                     <td style="width: 100px;text-align: center; font-size: 15px;">${song.playcnt }</td>
                                     <td style="width: 100px;text-align: center; font-size: 15px;">
-                                        <button class="btn btn-primary" id="">담기</button>
+                                        <button class="btn btn-primary" onclick="addFavorite(${song.sid})" >담기</button>
                                         <button class="btn btn-primary" id="" onclick="location.href='/song/sing?sid=${song.sid}'">즉시부르기</button>
                                     </td>
                                 </tr>
@@ -153,7 +157,41 @@
     </section>
     <!--내용끝-->
     
+  <!-- 애창곡 담기 ajax 처리 -->
+  <script type="text/javascript">
+    function addFavorite(sid){
+    	$.ajax({
+    		type : 'post',
+    		url : '/song/addFavorite',
+    		headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				sid : sid
+			}), 
+    	success : function(result){
+    		swal("애창곡 담기 완료!", "", "success");
+    	}
+    });
+    }
+  </script>    
+    
+      <!-- jQuery -->
+  
+  <script src="../resources/js/jquery.easing.1.3.js"></script>
+  <script src="../resources/js/bootstrap.min.js"></script>
+  <script src="../resources/js/jquery.waypoints.min.js"></script>
+  <script src="../resources/js/salvattore.min.js"></script>
+  <!-- Main JS -->
+  <script src="../resources/js/jquery.magnific-popup.min.js"></script>
+  <script src="../resources/js/main.js"></script>
+  <script src="../resources/dist/js/app.min.js" type="text/javascript"></script>
+    <script src="../resources/dist/js/demo.js" type="text/javascript"></script>
+    
     <!-- footer -->
     <%@include file="../include/footer.jsp"%>
+  
 </body>
 </html>

@@ -45,34 +45,35 @@
         <div class="col-lg-12">
           <div class="box box-info" style="border: none">
             <div class="box-header with-border">
-              <h3 class="box-title">${myCoin.id }님이보유하신 코인의 개수는: ${myCoin.coincnt } 개입니다.</h3>
+              <h4 class="box-title" style="text-align: left;">${myCoin.id } 님의 현재 보유 코인 수  <strong style="color: blue;">${myCoin.coincnt }</strong> 개</h4>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th style="width: 50px; text-align: center;">번호</th>
-                    <th style="text-align: center;">종류</th>
-                    <th style="text-align: center;">지급 및 소모 내용</th>
-                    <th style="width: 50px; text-align: center;">날짜</th>
+                    <th style="width: 70px; text-align: center; font-size: 20px;">번호</th>
+                    <th style="text-align: center; font-size: 20px;">종류</th>
+                    <th style="text-align: center; font-size: 20px;">지급 및 소모 내용</th>
+                    <th style="width: 50px; text-align: center; font-size: 20px;">지급 및 소모 날짜</th>
                   </tr>
                 </thead>
                 <c:forEach items="${list}" var="historyCoin" varStatus="stat">
                   <tbody>
                     <tr>
-                      <th style="width: 10px; text-align: center;">${((pageMaker.cri.page-1)*10)+(stat.index)}</th>
-                      <th style="text-align: center;">${historyCoin.chtype }</th>
-                      <th style="text-align: center;">${historyCoin.chcontent }</th>
-                      <th style="width: 400px; text-align: center;"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${historyCoin.chdate }" /></th>
+                      <th style="width: 10px; text-align: center; font-size: 18px;">${((pageMaker.cri.page-1)*10)+(stat.index)}</th>
+                      <th style="text-align: center; font-size: 18px;">${historyCoin.chtype }</th>
+                      <th style="text-align: center; font-size: 18px;">${historyCoin.chcontent }</th>
+                      <th style="width: 400px; text-align: center; font-size: 18px;"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${historyCoin.chdate }" /></th>
                     </tr>
                   </tbody>
                 </c:forEach>
               </table>
             </div>
             <!-- /.box-body -->
-
-            <div class="box-footer clearfix text-center">
+              
+              <!-- 페이징 번호 div -->
+<%--          <div class="box-footer clearfix text-center">
               <ul class="pagination  pagination-sm no-margin   ">
                 <c:if test="${pageMaker.prev }">
                   <li><a href="myCoin${pageMaker.makeQuery(pageMaker.startPage-1 )}">&laquo;</a></li>
@@ -89,7 +90,7 @@
                 </c:if>
               </ul>
 
-            </div>
+            </div> --%>
           </div>
         </div>
       </div>

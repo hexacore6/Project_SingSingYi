@@ -40,5 +40,15 @@ public class SongServicelmpl implements SongService  {
 	public List<Song> songsList() {
 		return songDao.songsList();
 	}
-
+	
+	/** 애창곡 추가 */
+	@Override
+	public void addFavorite(String id, int sid) {
+		songDao.addFavorite(id, sid);		
+	}
+	
+	/** 애창곡 삭제 */
+	public void removeFavorite(int fid) {
+		songDao.removeFavorite(fid);
+	}
 }

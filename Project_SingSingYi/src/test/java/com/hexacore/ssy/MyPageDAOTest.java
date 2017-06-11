@@ -87,7 +87,7 @@ public class MyPageDAOTest {
 	}
 	
 	// 내 애창곡 조회 (등록한 노래번호 조회) 페이징처리
-	@Test
+	//@Test
 	public void myFavoriteCriteria(){
 		Criteria cri = new Criteria();
 		cri.setPage(2);
@@ -178,5 +178,16 @@ public class MyPageDAOTest {
 		cri.setPerPageNum(5);
 		String id = "woong1";
 		dao.countCoinPaging(cri, id);
+	}
+	
+	@Test
+	public void testAddCoinList(){
+		CoinHistory coinHistory = new CoinHistory();
+		coinHistory.setId("kosta111");
+		coinHistory.setChtype("충전");
+		coinHistory.setChcontent("3개 충전");
+		System.out.println("코인히스토리 : " + coinHistory);
+		
+		dao.coinListAdd(coinHistory);
 	}
 }

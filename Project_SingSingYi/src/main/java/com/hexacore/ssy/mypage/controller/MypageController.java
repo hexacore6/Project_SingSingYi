@@ -98,7 +98,7 @@ public class MypageController {
 		CoinHistory coinHistory = new CoinHistory();
 		coinHistory.setId(id);
 		coinHistory.setChtype("충전");
-		coinHistory.setChcontent(member.getCoincnt() +"개 충전");
+		coinHistory.setChcontent("코인 " + member.getCoincnt() +" 개 충전");
 		service.coinListAdd(coinHistory);
 		return "redirect:/mypage/coin";
 	}
@@ -239,7 +239,6 @@ public class MypageController {
 			entity = new ResponseEntity<Sharing>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
-
 	}
 	
 	// 내 글 수정하기
@@ -272,6 +271,5 @@ public class MypageController {
 			e.printStackTrace();
 		}
 		return "redirect:/mypage/sharing";
-
 	}
 }

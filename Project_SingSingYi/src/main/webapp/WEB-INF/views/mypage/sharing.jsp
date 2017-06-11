@@ -172,9 +172,9 @@
 
   <!-- 상세조회 -->
   <!-- read modal -->
-  <div class="modal" id="readModal" data-backdrop="static">
+  <div class="modal" id="readModal" data-backdrop="static" >
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content" style="background-color: black;;">
 
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">

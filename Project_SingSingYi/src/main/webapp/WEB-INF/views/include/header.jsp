@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
 <div class="row">
 	<div class="col-lg-12">
 		<div class='headerimg'>
@@ -11,11 +12,12 @@
 						<a id='logo' href="/song/main"></a>
 					</div>
 					<div class="col-lg-3" style="margin-left: 50px;">
-						<div id="headimg" style="margin-left: 50px;">
+				<!-- 		<div id="headimg" style="margin-left: 50px;">
 							<a href="/mypage/sharing"><img src="/resources/img/user.png"></a>
                             <a class="btn btn-primary" href="/member/logout">로그아웃</a>
                             <a class="btn btn-primary" href="/game/gameStart">게임</a>
-						</div>
+						</div> -->
+                      <iframe src="http://192.168.0.63:3000/client" style="width: 200px;height: 200px; margin-left: 250px;"></iframe>
 					</div>
 				</div>
 			</div>

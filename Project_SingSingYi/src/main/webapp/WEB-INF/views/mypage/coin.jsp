@@ -132,7 +132,7 @@
           <div class="modal-footer" style="border: none;">
 
             <center>
-              <button type="submit" class="btn btn-primary;">충전</button>
+              <button class="btn btn-primary;" id="pluscoin">충전</button>
             </center>
           </div>
         </form>

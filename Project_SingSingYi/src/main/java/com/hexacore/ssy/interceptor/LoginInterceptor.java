@@ -9,6 +9,9 @@ import org.apache.log4j.Logger;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.util.WebUtils;
+
+import com.hexacore.ssy.member.domain.Member;
 
 /**
  * MemberController에서 HttpSession과 관련된 아무런 작업도 처리된 적 없기 때문에
@@ -26,16 +29,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		HttpSession httpSession = request.getSession();
 		
 		ModelMap modelMap = modelAndView.getModelMap();
-		Object member = modelMap.get("member");
+		Member member = (Member)modelMap.get("member");
 		
 		if(member != null) {
 			logger.info("new login success");
 			httpSession.setAttribute(LOGIN, member);
 			
-			if(request.getParameter("useCookie") != null) {
-				Cookie loginCookie = new Cookie("loginCookie", httpSession.getId());
-				loginCookie.setPath("/");
+			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+			if(loginCookie == null) {
+				loginCookie = new Cookie("loginCookie", member.getId());
 				loginCookie.setMaxAge(-1);
+				loginCookie.setPath("/");
 				response.addCookie(loginCookie);
 			}
 //			response.sendRedirect("/");

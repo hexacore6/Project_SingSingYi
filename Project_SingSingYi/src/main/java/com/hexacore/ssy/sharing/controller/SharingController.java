@@ -38,6 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.sharing.domain.Comment;
+import com.hexacore.ssy.sharing.domain.Encoding;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
 import com.hexacore.ssy.sharing.domain.Sharing;
 import com.hexacore.ssy.sharing.service.SharingService;
@@ -121,6 +122,7 @@ public class SharingController {
 				list.get(i).setRecordfilename(array[2]);
 			}
 		}
+		
 		model.addAttribute("list", list);
 	}
 	
@@ -245,16 +247,44 @@ public class SharingController {
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public void search(@RequestParam("keyword") String keyword, @RequestParam("type") String type, Model model)
 			throws IOException {
+		List<Sharing> list = null;
+		String name = null;
+		String[] array = null;
 		switch (type) {
 		case "user":
-			model.addAttribute("list", sharingService.searchById(keyword));
+			list = sharingService.searchById(keyword);
+			for (int i = 0; i < list.size(); i++) {
+				name = list.get(i).getRecordfilename();
+				if(name != null){
+					array = name.split("@");
+					list.get(i).setRecordfilename(array[2]);
+				}
+			}
+			model.addAttribute("list", list);
 			break;
 		case "title":
-			System.out.println("it is title");
+			list = sharingService.searchByTitle(keyword);
+			System.out.println(keyword + "입력한 노래 제목");
+			for (int i = 0; i < list.size(); i++) {
+				name = list.get(i).getRecordfilename();
+				if(name != null){
+					array = name.split("@");
+					list.get(i).setRecordfilename(array[2]);
+				}
+			}
+			model.addAttribute("list", list);
 			break;
-		case "singer":
-			System.out.println("it is singer");
-			break;	
+		case "content":
+			list = sharingService.searchByContent(keyword);
+			for (int i = 0; i < list.size(); i++) {
+				name = list.get(i).getRecordfilename();
+				if(name != null){
+					array = name.split("@");
+					list.get(i).setRecordfilename(array[2]);
+				}
+			}
+			model.addAttribute("list", list);
+			break;
 		}
 		
 	}
@@ -264,9 +294,12 @@ public class SharingController {
 	public String search(HttpServletRequest request, HttpSession httpSession, Model model,
 			@RequestParam String searchType, @RequestParam String keywordInput)
 			throws IOException {
+		Encoding enc = new Encoding();
 		String type = searchType;
 		String keyword = keywordInput;
-		return "redirect:/sharing/search?type=" + type + "&keyword=" + keyword;
+		System.out.println(keyword + "인코딩전쿼리");
+		System.out.println(Encoding.encodingKeyword(keyword) + "인코딩후쿼리");
+		return "redirect:/sharing/search?type=" + type + "&keyword=" + Encoding.encodingKeyword(keyword);
 
 	}
 	

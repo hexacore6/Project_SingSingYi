@@ -26,5 +26,7 @@ public interface SharingService {
 	public void deleteLikeHistory(int shid);
 	public int getShid();
 	public List<Sharing> searchById(String id);
+	public List<Sharing> searchByTitle(String recordfilename);
+	public List<Sharing> searchByContent(String shcontent);
 	public String getRecordFileName(int shid);
 }

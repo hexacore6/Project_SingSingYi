@@ -44,7 +44,7 @@
 	
 	
 	<select id="read" resultType="com.hexacore.ssy.sharing.domain.Sharing">
-		SELECT shid, rrid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
 		FROM sharings
 		WHERE shid = #{shid}
 	</select>
@@ -121,9 +121,23 @@
 	</select>
 	
 	<select id="searchById" resultType="com.hexacore.ssy.sharing.domain.Sharing">
-		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename, recordfilename
 		FROM sharings
-		WHERE id like '%' || #{id} || '%'
+		WHERE id like CONCAT('%', #{id}, '%')
+		ORDER BY shregdate desc
+	</select>
+	
+	<select id="searchByTitle" resultType="com.hexacore.ssy.sharing.domain.Sharing">
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename, recordfilename
+		FROM sharings
+		WHERE recordfilename like CONCAT('%', #{recordfilename}, '%')
+		ORDER BY shregdate desc
+	</select>
+	
+	<select id="searchByContent" resultType="com.hexacore.ssy.sharing.domain.Sharing">
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename, recordfilename
+		FROM sharings
+		WHERE shcontent like CONCAT('%', #{shcontent}, '%')
 		ORDER BY shregdate desc
 	</select>
 	

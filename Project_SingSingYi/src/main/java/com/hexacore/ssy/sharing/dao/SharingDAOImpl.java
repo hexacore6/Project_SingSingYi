@@ -127,6 +127,16 @@ public class SharingDAOImpl implements SharingDAO {
 	public List<Sharing> searchById(String id){
 		return session.selectList(namespace + ".searchById", id);
 	}
+	
+	@Override
+	public List<Sharing> searchByTitle(String recordfilename) {
+		return session.selectList(namespace + ".searchByTitle", recordfilename);
+	}
+
+	@Override
+	public List<Sharing> searchByContent(String shcontent) {
+		return session.selectList(namespace + ".searchByContent", shcontent);
+	}
 
 	@Override
 	public String getRecordFileName(int shid) {
@@ -134,6 +144,8 @@ public class SharingDAOImpl implements SharingDAO {
 		String[] array = name.split("@");
 		return array[2];
 	}
+
+	
 
 	
 	

@@ -109,6 +109,16 @@ public class SharingServiceImpl implements SharingService {
 	public String getRecordFileName(int shid) {
 		return sharingDao.getRecordFileName(shid);
 	}
+
+	@Override
+	public List<Sharing> searchByTitle(String recordfilename) {
+		return sharingDao.searchByTitle(recordfilename);
+	}
+
+	@Override
+	public List<Sharing> searchByContent(String shcontent) {
+		return sharingDao.searchByContent(shcontent);
+	}
 	
 
 }

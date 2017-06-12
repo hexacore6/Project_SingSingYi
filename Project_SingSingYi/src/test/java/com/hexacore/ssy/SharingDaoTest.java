@@ -133,12 +133,6 @@ public class SharingDaoTest {
 	}
 	
 	//@Test
-	public void testSearhcById(){
-		String id = "ost";
-		logger.info(dao.searchById(id));
-	}
-	
-	@Test
 	public void testGetSongTitle(){
 		
 		List<Sharing> list = dao.listAll("kosta111");
@@ -153,5 +147,22 @@ public class SharingDaoTest {
 		}
 	}
 	
+	//@Test
+	public void testSearhcById(){
+		String id = "113";
+		dao.searchById(id);
+	}
+	
+	//@Test
+	public void testSearhcByTitle() {
+		String recordfilename = "사랑";
+		dao.searchByTitle(recordfilename);
+	}
+	
+	@Test
+	public void testSearhcByContent() {
+		String shcontent = "4";
+		dao.searchByContent(shcontent);
+	}
 
 }

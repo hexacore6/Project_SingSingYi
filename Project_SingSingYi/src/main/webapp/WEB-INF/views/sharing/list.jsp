@@ -221,7 +221,7 @@ $(document).ready(function(){
 						<select class="form-control" name="searchType">
 								<option value="user">유저이름</option>
 								<option value="title">노래이름</option>
-								<option value="singer">가수이름</option>
+								<option value="content">내용</option>
 						</select>
 					</div>
 					<div class="col-xs-3">

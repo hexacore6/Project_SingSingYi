@@ -1,9 +1,7 @@
 package com.hexacore.ssy.sharing.util;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
 
 import org.springframework.http.MediaType;
 
@@ -15,6 +13,7 @@ public class MediaUtils {
 		mediaMap.put("JPG", MediaType.IMAGE_JPEG);
 		mediaMap.put("GIF", MediaType.IMAGE_GIF);
 		mediaMap.put("PNG", MediaType.IMAGE_PNG);
+		mediaMap.put("MP3", MediaType.MULTIPART_FORM_DATA);
 	}
 	
 	public static MediaType getMediaType(String type){

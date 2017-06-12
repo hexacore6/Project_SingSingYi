@@ -43,6 +43,9 @@ public class MypageController {
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 	
+	@Resource(name= "recordPath")
+	private String recordPath;
+	
 	@Inject
 	MypageService service;
 	SharingService sharingService;
@@ -206,6 +209,47 @@ public class MypageController {
 		return entity;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/displayRecord")
+	public ResponseEntity<byte[]> displayRecord(String fileName) throws Exception {
+		
+		InputStream in = null;
+		ResponseEntity<byte[]> entity = null;
+
+		logger.info("RecordFile NAME : " + fileName);
+
+		try {
+			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+			MediaType mType = MediaUtils.getMediaType(formatName);
+			System.out.println(formatName);
+			System.out.println(mType);
+
+			HttpHeaders headers = new HttpHeaders();
+			in = new FileInputStream(recordPath + fileName);
+
+			logger.info(recordPath + fileName);
+			if (mType != null) {
+				headers.setContentType(mType);
+			} else {
+				fileName = fileName.substring(fileName.indexOf("_") + 1);
+				headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+				headers.add("Content-Disposition",
+						"attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
+
+			}
+
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			System.out.println("엔티티 : " + entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+		} finally {
+			in.close();
+		}
+
+		return entity;
+	}
+	
 	// 나의 정보 수정 (비밀번호 수정)
 	@RequestMapping(value="/modify", method=RequestMethod.GET)
 	public void modifyGET(Model model, HttpSession httpSession){
@@ -272,4 +316,7 @@ public class MypageController {
 		}
 		return "redirect:/mypage/sharing";
 	}
+	
+	// 파일 업로드
+	
 }

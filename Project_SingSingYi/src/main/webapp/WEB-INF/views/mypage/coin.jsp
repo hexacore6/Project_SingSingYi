@@ -24,12 +24,6 @@
 
 	}
 
-	function addCoin() {
-		document.myForm.action = "/myShop/notice/List.jsp";
-		document.myForm.method = "post";
-		document.myForm.submit();
-
-	}
 </script>
 
 
@@ -126,13 +120,10 @@
             </div>
           </div>
 
-
-
-
           <div class="modal-footer" style="border: none;">
 
             <center>
-              <button class="btn btn-primary;" id="pluscoin">충전</button>
+              <button type="submit" class="btn btn-primary;" id="pluscoin">충전</button>
             </center>
           </div>
         </form>

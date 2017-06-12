@@ -123,6 +123,18 @@ public class SharingDAOImpl implements SharingDAO {
 		return session.selectOne(namespace + ".getShid");
 	}
 
+	@Override
+	public List<Sharing> searchById(String id){
+		return session.selectList(namespace + ".searchById", id);
+	}
+
+	@Override
+	public String getRecordFileName(int shid) {
+		String name = session.selectOne(namespace + ".getRecordFileName", shid);
+		String[] array = name.split("@");
+		return array[2];
+	}
+
 	
 	
 }

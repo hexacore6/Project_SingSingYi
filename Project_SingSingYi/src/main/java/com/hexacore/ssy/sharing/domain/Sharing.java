@@ -7,12 +7,13 @@ public class Sharing {
 	//Sharing 도메인 객체 속성
 	private int shid;
 	private String id;
-	private int rrid;
+	//private int rrid;
 	private String shcontent;
 	private int likecnt;
 	private int commentcnt;
 	private String eximgfilename;
 	private Date shregdate;
+	private String recordfilename;
 	
 
 	public Sharing() {
@@ -20,17 +21,18 @@ public class Sharing {
 	}
 
 
-	public Sharing(int shid, String id, int rrid, String shcontent, int likecnt, int commentcnt,
-			String eximgfilename, Date shregdate) {
+	public Sharing(int shid, String id, String shcontent, int likecnt, int commentcnt,
+			String eximgfilename, Date shregdate, String recordfilename) {
 		super();
 		this.shid = shid;
 		this.id = id;
-		this.rrid = rrid;
+		//this.rrid = rrid;
 		this.shcontent = shcontent;
 		this.likecnt = likecnt;
 		this.commentcnt = commentcnt;
 		this.eximgfilename = eximgfilename;
 		this.shregdate = shregdate;
+		this.recordfilename = recordfilename;
 	}
 
 
@@ -54,14 +56,14 @@ public class Sharing {
 	}
 
 
-	public int getRrid() {
+	/*public int getRrid() {
 		return rrid;
 	}
 
 
 	public void setRrid(int rrid) {
 		this.rrid = rrid;
-	}
+	}*/
 
 
 	public String getShcontent() {
@@ -114,10 +116,21 @@ public class Sharing {
 	}
 
 
+	public String getRecordfilename() {
+		return recordfilename;
+	}
+
+
+	public void setRecordfilename(String recordfilename) {
+		this.recordfilename = recordfilename;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Sharings [shid=" + shid + ", id=" + id + ", rrid=" + rrid + ", shcontent=" + shcontent + ", likecnt="
-				+ likecnt + ", commentcnt=" + commentcnt + ", eximgfilename=" + eximgfilename + ", shregdate=" + shregdate + "]";
+		return "Sharings [shid=" + shid + ", id=" + id + ", shcontent=" + shcontent + ", likecnt="
+				+ likecnt + ", commentcnt=" + commentcnt + ", eximgfilename=" + eximgfilename + ", shregdate=" + shregdate
+				+ ", recordfilename=" + recordfilename + "]";
 	}
 
 	

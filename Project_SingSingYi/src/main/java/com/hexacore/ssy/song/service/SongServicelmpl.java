@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.hexacore.ssy.mypage.domain.Favorite;
 import com.hexacore.ssy.song.dao.SongDAO;
 import com.hexacore.ssy.song.domain.Song;
 
@@ -50,5 +51,11 @@ public class SongServicelmpl implements SongService  {
 	/** 애창곡 삭제 */
 	public void removeFavorite(int fid) {
 		songDao.removeFavorite(fid);
+	}
+	
+	/** 애창곡 중복 체크 */
+	@Override
+	public Favorite checkFavorite(String id, int sid) {
+		return songDao.checkFavorite(id, sid);
 	}
 }

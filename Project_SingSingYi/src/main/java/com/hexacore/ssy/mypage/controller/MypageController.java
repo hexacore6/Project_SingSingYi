@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,11 +33,13 @@ import com.hexacore.ssy.common.Criteria;
 import com.hexacore.ssy.common.PageMaker;
 import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
+import com.hexacore.ssy.mypage.domain.Favorite;
 import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.mypage.service.MypageService;
 import com.hexacore.ssy.sharing.domain.Sharing;
 import com.hexacore.ssy.sharing.service.SharingService;
 import com.hexacore.ssy.sharing.util.MediaUtils;
+
 
 @Controller
 @RequestMapping("/mypage/*")
@@ -149,7 +152,7 @@ public class MypageController {
 	}
 	
 	// 나의 녹음저장소 조회
-	@RequestMapping(value="record", method=RequestMethod.GET)
+	@RequestMapping(value="/record", method=RequestMethod.GET)
 	public void readMyRecord(Criteria cri, Model model, HttpSession httpSession){
 		Member member = (Member)httpSession.getAttribute("login");
 		String id = member.getId();
@@ -357,6 +360,9 @@ public class MypageController {
 		return "redirect:/mypage/sharing";
 	}
 	
-	// 파일 업로드
-	
+	// 애창곡 중복 체크
+	public Favorite checkFavorite(){
+		
+		return null;
+	}
 }

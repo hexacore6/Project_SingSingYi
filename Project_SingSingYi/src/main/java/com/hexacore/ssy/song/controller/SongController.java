@@ -39,26 +39,28 @@ public class SongController {
 	}
 	
 	@RequestMapping(value="/addFavorite", method=RequestMethod.POST)
-	public ResponseEntity<Boolean> addFavorite(@RequestBody Song song, HttpSession httpSession){
+	public ResponseEntity<Boolean> addFavorite(@RequestBody Favorite favorite, HttpSession httpSession){
 		ResponseEntity<Boolean> entity = null;
 		
 		
 		Member member = (Member)httpSession.getAttribute("login");
-		int sid = song.getSid();
+		int sid = favorite.getSid();
 		String id = member.getId();
-		
-		songService.addFavorite(id, sid);
-		entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
-		
+		Favorite checkFavorite = songService.checkFavorite(id, sid);
+		if(checkFavorite != null){
+			entity = new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		} else {
+			songService.addFavorite(id, sid);
+			entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		}
 		return entity;
 		
-		//return "redirect:/song/main";
 	}
 	
 	@RequestMapping(value="/removeFavorite", method=RequestMethod.POST)
 	public ResponseEntity<Boolean> removeFavorite(@RequestBody Favorite favorite, HttpSession httpSession){
 		ResponseEntity<Boolean> entity = null;
-
+		
 		int fid = favorite.getFid();
 		
 		songService.removeFavorite(fid);
@@ -68,5 +70,4 @@ public class SongController {
 		
 		//return "redirect:/song/main";
 	}
-	
 }

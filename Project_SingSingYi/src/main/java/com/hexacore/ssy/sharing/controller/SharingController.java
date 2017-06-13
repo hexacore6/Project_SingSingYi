@@ -85,7 +85,7 @@ public class SharingController {
 	}
 	
 	private String uploadFile(String originalName, byte[] fileData, int shid, String loginId) throws IOException{
-		String savedName = loginId + "@" + shid + "@" + originalName;
+		String savedName = loginId + "-" + shid + "-" + originalName;
 		File target = new File(uploadPath, savedName);
 		FileCopyUtils.copy(fileData, target);
 		return savedName;
@@ -118,7 +118,7 @@ public class SharingController {
 		for (int i = 0; i < list.size(); i++) {
 			name = list.get(i).getRecordfilename();
 			if(name != null){
-				array = name.split("@");
+				array = name.split("-");
 				list.get(i).setRecordfilename(array[2]);
 			}
 		}

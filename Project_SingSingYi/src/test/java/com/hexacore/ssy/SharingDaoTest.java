@@ -159,7 +159,7 @@ public class SharingDaoTest {
 		dao.searchByTitle(recordfilename);
 	}
 	
-	@Test
+	//@Test
 	public void testSearhcByContent() {
 		String shcontent = "4";
 		dao.searchByContent(shcontent);

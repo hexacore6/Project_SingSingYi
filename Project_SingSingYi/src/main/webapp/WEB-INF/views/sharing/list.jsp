@@ -35,7 +35,7 @@ listAll,
 <style type="text/css">
 #mp3Drop{
 	width: 100%;
-	height: 25px;
+	height: 100px;
 	background-color: #d6d6c2;;
 	
 }
@@ -97,6 +97,7 @@ listAll,
 <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
 <link href="../resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 <script src="../../resources/js/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../resources/css/sweetalert.css">
 </head>
 
 <body>
@@ -273,7 +274,7 @@ $(document).ready(function(){
 											<i class="fa fa-camera" id="uploadImage"></i>
 										</div>
 
-										<button type="submit" id="textAddbtn" class="btn" style="background-color: #d6d6c2;">
+										<button type="submit" id="textAddbtn" class="btn" style="background-color: #d6d6c2;" onclick="writeAlert()">
 											<i class="fa fa-pencil"> </i>Sing Sing
 										</button>
 										<!-- MP3 업로드 공간 -->
@@ -528,192 +529,201 @@ $(document).ready(function(){
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		function upLike(shid, likecnt, id, index) {
-			var likecnt = likecnt;
-			var one = 1;
- 			$.ajax({
-				type : 'post',
-				url : '/sharing/like',
-				headers : {
-					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "POST"
-				},
-				dataType : 'text',
-				data : JSON.stringify({
-					shid : shid,
-					id : id
-				}), 
-				success : function(result) {
-					var like = JSON.parse(result);
-					console.log(like);
-					if(like == false){
-						//DB상에 좋아요 기록이 있을 경우
-						var likeCnt = "#likeCnt" + index;
-						console.log(likeCnt);
-						var x =  document.getElementById("likeCnt" + index);
-						$(likeCnt).empty();
-						$(likeCnt).text(parseInt(likecnt));
-						
-					}
-					else{
-						//DB상에 좋아요 기록이 없을 경우
-						console.log(likeCnt);
-						var likeCnt = "#likeCnt" + index;
-						var x =  document.getElementById("likeCnt" + index);
-						$(likeCnt).empty();
-						$(likeCnt).text(parseInt(likecnt) + parseInt(one));
-						iframeDocument.postMessage('2000:'+id,'*');
-					}
-				}
-			}); 
-		}
+<script type="text/javascript">
+	function writeAlert() {
+		swal("Good job!", "You clicked the button!", "success")
+	}
 	
-		function addComment() {
-			var shid = $("#readShid").val();
-			var id = $("#commentId").val();
-			var ccontent = $("#readReplyId").val();
-			
-			$.ajax({
-				type : 'post',
-				url : '/sharing/addComment',
-				headers : {
-					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "POST"
-				},
-				dataType : 'text',
-				data : JSON.stringify({
-					shid : shid,
-					id : id,
-					ccontent : ccontent                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
-				}), 
-				success : function(result) {
-					var str = "";
-					var comment = JSON.parse(result);
-					str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
-						+ "<div class=\"pull-left\">"
-						+ "<i class=\"fa fa-user\">" + comment.id +"</i>"
-						+ "</div>"
-						+ "<div class=\"box-body\">"
-						+ "<h3>"
-						+ "<p style=\"text-align : left;\">" + comment.ccontent +"</p>"
-						+ "</h3>"
-						+ "</div>"
-						+ "</div>";
-					$("#comments").append(str);
-					$("#readReplyId").val("");
-				}
-			});
-		}
-		function showReadModal(shid) {
-			$.ajax({
-				type : 'post',
-				url : '/sharing/read',
-				headers : {
-					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "POST"
-				},
-				dataType : 'text',
-				data : JSON.stringify({
-					shid : shid,
-				}), 
-				success : function(result) {
-					$("#readModal").modal('show');
-					var array = JSON.parse(result);
-					$("#readImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);
-					$("#readId").append(array.id);
-					$("#readShid").attr("value", array.shid);
-					$("#readReplyId").attr("placeholder", "댓글을 입력하세요!");
-					$("#readShcontent").append(array.shcontent);
-					$("#readLikecnt").append(array.likecnt);
-					$("#readCommentcnt").append(array.commentcnt);
-					
+	
 
+	function upLike(shid, likecnt, id, index) {
+		var likecnt = likecnt;
+		var one = 1;
+		$.ajax({
+			type : 'post',
+			url : '/sharing/like',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				shid : shid,
+				id : id
+			}),
+			success : function(result) {
+				var like = JSON.parse(result);
+				console.log(like);
+				if (like == false) {
+					//DB상에 좋아요 기록이 있을 경우
+					var likeCnt = "#likeCnt" + index;
+					console.log(likeCnt);
+					var x = document.getElementById("likeCnt" + index);
+					$(likeCnt).empty();
+					$(likeCnt).text(parseInt(likecnt));
+
+				} else {
+					//DB상에 좋아요 기록이 없을 경우
+					console.log(likeCnt);
+					var likeCnt = "#likeCnt" + index;
+					var x = document.getElementById("likeCnt" + index);
+					$(likeCnt).empty();
+					$(likeCnt).text(parseInt(likecnt) + parseInt(one));
+					iframeDocument.postMessage('2000:' + id, '*');
 				}
-			});
-			
-			$.ajax({
-				type : 'post',
-				url : '/sharing/comment/list',
-				headers : {
-					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "POST"
-				},
-				dataType : 'text',
-				data : JSON.stringify({
-					shid : shid,
-				}), 
-				success : function(result) {
-					var str = "";
-					var array = JSON.parse(result);
-					$(array).each(
-						function() {
-							str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
+			}
+		});
+	}
+
+	function addComment() {
+		var shid = $("#readShid").val();
+		var id = $("#commentId").val();
+		var ccontent = $("#readReplyId").val();
+		$.ajax({
+					type : 'post',
+					url : '/sharing/addComment',
+					headers : {
+						"Content-Type" : "application/json",
+						"X-HTTP-Method-Override" : "POST"
+					},
+					dataType : 'text',
+					data : JSON.stringify({
+						shid : shid,
+						id : id,
+						ccontent : ccontent
+					}),
+					success : function(result) {
+						var str = "";
+						var comment = JSON.parse(result);
+						str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
 								+ "<div class=\"pull-left\">"
-								+ "<i class=\"fa fa-user\">" + this.id +"</i>"
+								+ "<i class=\"fa fa-user\">"
+								+ comment.id
+								+ "</i>"
 								+ "</div>"
 								+ "<div class=\"box-body\">"
 								+ "<h3>"
-								+ "<p style=\"text-align : left;\">" + this.ccontent +"</p>"
+								+ "<p style=\"text-align : left;\">"
+								+ comment.ccontent
+								+ "</p>"
 								+ "</h3>"
-								+ "</div>"
-								+ "</div>";
-						});
-					$("#comments").html(str);
-				}
-			});
-			
+								+ "</div>" + "</div>";
+						$("#comments").append(str);
+						$("#readReplyId").val("");
+					}
+				});
+	}
+	function showReadModal(shid) {
+		$.ajax({
+			type : 'post',
+			url : '/sharing/read',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				shid : shid,
+			}),
+			success : function(result) {
+				$("#readModal").modal('show');
+				var array = JSON.parse(result);
+				$("#readImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);
+				$("#readId").append(array.id);
+				$("#readShid").attr("value", array.shid);
+				$("#readReplyId").attr("placeholder", "댓글을 입력하세요!");
+				$("#readShcontent").append(array.shcontent);
+				$("#readLikecnt").append(array.likecnt);
+				$("#readCommentcnt").append(array.commentcnt);
 
-		}
-		
-		function showUpdateModal(shid) {
-			$.ajax({
-				type : 'post',
-				url : '/sharing/read',
-				headers : {
-					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "POST"
-				},
-				dataType : 'text',
-				data : JSON.stringify({
-					shid : shid,
-				}), 
-				success : function(result) {
-					$("#updateModal").modal('show');
-					var array = JSON.parse(result);
-					$("#updateShid").attr("value", array.shid);
-					$("#updateImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);
-					$("#updateId").append(array.id);
-					$("#updateShcontent").val(array.shcontent);
-					$("#updateLikecnt").append(array.likecnt);
-					$("#updateCommentcnt").append(array.commentcnt);
-				}
-			});
-		}
-		
-		function showDeleteModal(shid) {
-			$.ajax({
-				type : 'post',
-				url : '/sharing/read',
-				headers : {
-					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "POST"
-				},
-				dataType : 'text',
-				data : JSON.stringify({
-					shid : shid,
-				}), 
-				success : function(result) {
-					$("#deleteModal").modal('show');
-					var array = JSON.parse(result);
-					$("#deleteShid").attr("value", array.shid);
-				}
-			});
+			}
+		});
 
-		}
-		
-		
-	</script>
+		$.ajax({
+					type : 'post',
+					url : '/sharing/comment/list',
+					headers : {
+						"Content-Type" : "application/json",
+						"X-HTTP-Method-Override" : "POST"
+					},
+					dataType : 'text',
+					data : JSON.stringify({
+						shid : shid,
+					}),
+					success : function(result) {
+						var str = "";
+						var array = JSON.parse(result);
+						$(array).each(function() {
+											str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
+													+ "<div class=\"pull-left\">"
+													+ "<i class=\"fa fa-user\">"
+													+ this.id
+													+ "</i>"
+													+ "</div>"
+													+ "<div class=\"box-body\">"
+													+ "<h3>"
+													+ "<p style=\"text-align : left;\">"
+													+ this.ccontent
+													+ "</p>"
+													+ "</h3>"
+													+ "</div>"
+													+ "</div>";
+										});
+						$("#comments").html(str);
+					}
+				});
+
+	}
+
+	function showUpdateModal(shid) {
+		$.ajax({
+			type : 'post',
+			url : '/sharing/read',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				shid : shid,
+			}),
+			success : function(result) {
+				$("#updateModal").modal('show');
+				var array = JSON.parse(result);
+				$("#updateShid").attr("value", array.shid);
+				$("#updateImage").attr("src",
+						"displayFile?fileName=/" + array.eximgfilename);
+				$("#updateId").append(array.id);
+				$("#updateShcontent").val(array.shcontent);
+				$("#updateLikecnt").append(array.likecnt);
+				$("#updateCommentcnt").append(array.commentcnt);
+			}
+		});
+	}
+
+
+
+	function showDeleteModal(shid) {
+		$.ajax({
+			type : 'post',
+			url : '/sharing/read',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				shid : shid,
+			}),
+			success : function(result) {
+				$("#deleteModal").modal('show');
+				var array = JSON.parse(result);
+				$("#deleteShid").attr("value", array.shid);
+			}
+		});
+
+	}
+</script>
 
 	<!-- jQuery -->
 	

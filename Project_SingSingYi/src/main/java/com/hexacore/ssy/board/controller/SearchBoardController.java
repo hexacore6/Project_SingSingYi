@@ -29,7 +29,7 @@ public class SearchBoardController {
 	private BoardService service;
 	
 	
-	// listPage()는 SearchCriteria를 @ModelAttribute로 사용하고 있기 때문에 list.jsp에 자동으로 전달됨
+	// QnA 게시판 전체 목록
 	@RequestMapping(value ="/list", method = RequestMethod.GET)
 	public void listPage(@ModelAttribute("cri") SearchCriteria cri, Model model){
 		
@@ -45,6 +45,7 @@ public class SearchBoardController {
 		model.addAttribute("pageMaker", pageMaker);
 	}
 	
+	// 공지사항 게시판 전체 목록
 	@RequestMapping(value ="/nlist", method = RequestMethod.GET)
 	public void nlistPage(@ModelAttribute("cri") SearchCriteria cri, Model model){
 		
@@ -60,11 +61,13 @@ public class SearchBoardController {
 		model.addAttribute("pageMaker", pageMaker);
 	}
 	
+	// QnA 게시판 글 등록
 	@RequestMapping(value = "/qnaregister", method = RequestMethod.GET)
 	public void qnaRegistGET(){
 		logger.info("GET방식으로 등록.............");	
 	}
 	
+	// QnA 게시판 글 등록 POST
 	@RequestMapping(value = "/qnaregister", method = RequestMethod.POST)
 	public String qnaRegistPOST(Article article, RedirectAttributes rttr) {
 		logger.info("POST방식으로 등록............");
@@ -76,12 +79,13 @@ public class SearchBoardController {
 		return "redirect:/board/list";
 	}
 	
-	
+	// 공지사항 게시판 글 등록 
 	@RequestMapping(value = "/noticeregister", method = RequestMethod.GET)
 	public void NoticeRegistGET(){
 		logger.info("GET방식으로 등록.............");	
 	}
 	
+	// 공지사항 게시판 글 등록 POST
 	@RequestMapping(value = "/noticeregister", method = RequestMethod.POST)
 	public String NoticeRegistPOST(Article article, RedirectAttributes rttr) {
 		logger.info("POST방식으로 등록............");
@@ -102,6 +106,7 @@ public class SearchBoardController {
 		model.addAttribute("list", service.listCriteria(cri));
 	}
 	
+	// 게시판 페이징 처리
 	@RequestMapping(value = "/listPage", method = RequestMethod.GET)
 	public void listPage(@ModelAttribute("cri")Criteria cri, Model model){
 		
@@ -116,16 +121,18 @@ public class SearchBoardController {
 		model.addAttribute("pageMaker", pageMaker);
 	}
 	
+	// 게시판 상세보기 페이지
 	@RequestMapping(value="/readpage", method = RequestMethod.GET)
 	public void read(@RequestParam("aid") int aid, @ModelAttribute("cri") SearchCriteria cri, Model model){
 		model.addAttribute(service.read(aid));
 	}
 	
+	// QnA 글 수정 페이지
 	@RequestMapping(value ="/qnamodifypage", method = RequestMethod.GET)
 	public void qnaModifyPagingGET(@RequestParam("aid") int aid, @ModelAttribute("cri") SearchCriteria cri, Model model){
 		model.addAttribute(service.read(aid));
 	}
-	
+	// QnA 글 수정 페이지 POST
 	@RequestMapping(value ="/qnamodifypage", method = RequestMethod.POST)
 	public String qnaModifyPagingPOST(Article article, SearchCriteria cri, RedirectAttributes rttr){
 		
@@ -144,12 +151,12 @@ public class SearchBoardController {
 		return "redirect:/board/list";
 		
 	}
-	
+	// 공지사항 글 수정 페이지 
 	@RequestMapping(value ="/noticemodifypage", method = RequestMethod.GET)
 	public void noticeModifyPagingGET(@RequestParam("aid") int aid, @ModelAttribute("cri") SearchCriteria cri, Model model){
 		model.addAttribute(service.read(aid));
 	}
-	
+	// 공지사항 글 수정 페이지 POST
 	@RequestMapping(value ="/noticemodifypage", method = RequestMethod.POST)
 	public String noticeModifyPagingPOST(Article article, SearchCriteria cri, RedirectAttributes rttr){
 		
@@ -169,6 +176,7 @@ public class SearchBoardController {
 		
 	}
 	
+	// QnA 글 삭제 페이지 POST
 	@RequestMapping(value="/qnaRemovePage", method = RequestMethod.POST)
 	public String qnaRemove(@RequestParam("aid") int aid , SearchCriteria cri, RedirectAttributes rttr){
 		
@@ -184,6 +192,7 @@ public class SearchBoardController {
 		return "redirect:/board/list";
 	}
 	
+	// 공지사항 글 삭제 페이지 POST
 	@RequestMapping(value="/noticeRemovePage", method = RequestMethod.POST)
 	public String noticeRemove(@RequestParam("aid") int aid , SearchCriteria cri, RedirectAttributes rttr){
 		

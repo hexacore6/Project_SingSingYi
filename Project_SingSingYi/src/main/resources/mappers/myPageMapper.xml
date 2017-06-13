@@ -5,7 +5,7 @@
 	
 	<!-- 나의 공유글 목록 조회 -->
 	<select id = "readMySharing" resultType="com.hexacore.ssy.sharing.domain.Sharing">
-		select shid, id, rrid, shcontent, likecnt, commentcnt, eximgfilename, shregdate
+		select shid, id, shcontent, likecnt, commentcnt, eximgfilename, shregdate
 		from sharings 
 		where id = #{id}
 		ORDER BY shregdate DESC

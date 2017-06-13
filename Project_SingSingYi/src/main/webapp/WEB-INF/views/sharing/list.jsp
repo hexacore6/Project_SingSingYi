@@ -533,7 +533,7 @@ $(document).ready(function(){
 		function upLike(shid, likecnt, id, index) {
 			var likecnt = likecnt;
 			var one = 1;
-			$.ajax({
+ 			$.ajax({
 				type : 'post',
 				url : '/sharing/like',
 				headers : {
@@ -555,6 +555,7 @@ $(document).ready(function(){
 						var x =  document.getElementById("likeCnt" + index);
 						$(likeCnt).empty();
 						$(likeCnt).text(parseInt(likecnt));
+						
 					}
 					else{
 						//DB상에 좋아요 기록이 없을 경우
@@ -563,9 +564,10 @@ $(document).ready(function(){
 						var x =  document.getElementById("likeCnt" + index);
 						$(likeCnt).empty();
 						$(likeCnt).text(parseInt(likecnt) + parseInt(one));
+						iframeDocument.postMessage('2000:'+id,'*');
 					}
 				}
-			});
+			}); 
 		}
 	
 		function addComment() {

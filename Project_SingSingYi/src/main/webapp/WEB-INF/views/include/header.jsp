@@ -18,7 +18,7 @@
                             <div id='jsonp'></div> -->
 						</div>
              
-                       <iframe src="http://192.168.0.63:3000/client" id="ifm"style="width: 200px;height: 200px; margin-left: 250px;"></iframe>
+                       <iframe src="" id="ifm"style="width: 200px;height: 200px; margin-left: 250px;"></iframe>
 					
           
           </div>
@@ -71,7 +71,6 @@
 </section>
 <script>
 /*알람갯수  */
-var iframeDocument =null;
 window.onload = function () {
 	var allcookies = document.cookie;
 	

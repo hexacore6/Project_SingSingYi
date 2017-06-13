@@ -3,6 +3,7 @@ package com.hexacore.ssy;
 import java.util.List;
 
 import java.util.Locale;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -29,19 +30,68 @@ public class GameController {
 	@Inject
 	private SongService service;
 	
+	
+	// 종현이 게임 시작 페이지
 	@RequestMapping(value = "/gameStart", method = RequestMethod.GET)
 	public void gameStartGET(Locale locale, Model model) {
 		
 	}
 	
+	// 종현이 게임 본 페이지 
 	@RequestMapping(value = "/jhgame", method = RequestMethod.GET)
 	public void jhgameGET(Song song, Model model){
 		
 		logger.info("Welcome 종현이게임!");
 	}
 	
+	// 종현이 게임 본 페이지 POST
 	@RequestMapping(value = "/jhgame", method = RequestMethod.POST)
 		public ResponseEntity<List<Song>> jhgamePOST(Model model){
+		logger.info("클라이언트: 게임결과페이지 입장1");
+			ResponseEntity<List<Song>> entity = null;
+			
+			try{
+				entity = new ResponseEntity<List<Song>>(
+						service.randomSong(), HttpStatus.OK);
+						model.addAttribute("countSong", service.countSong());
+						
+			} catch (Exception e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			return entity;
+	}
+	
+	// 종현이 게임 결과 페이지
+	@RequestMapping(value = "/gameResult", method = RequestMethod.POST)
+	public void gameResultPOST(Model model, @RequestParam("correct") int correct ) {
+			logger.info("클라이언트: 게임결과페이지 입장3");
+			logger.info(correct);
+			model.addAttribute("correct", correct);
+			model.addAttribute("countSong", service.countSong());
+			
+		}
+	
+	
+	//---------------------------------------------------------------------------
+	
+	// 절대음감 게임 시작 페이지
+	@RequestMapping(value = "/ppgameStart", method = RequestMethod.GET)
+	public void ppgameStart(Locale locale, Model model) {
+		
+	}
+	
+		
+	// 절대음감 게임 본 페이지 
+	@RequestMapping(value = "/ppgame", method = RequestMethod.GET)
+	public void ppgame(Song song, Model model){
+		
+		logger.info("Welcome 종현이게임!");
+	}
+		
+	// 절대음감 게임 본 페이지 POST
+	@RequestMapping(value = "/ppgame", method = RequestMethod.POST)
+		public ResponseEntity<List<Song>> ppgamePOST(Model model){
 		logger.info("클라이언트: 게임결과페이지 입장1");
 			ResponseEntity<List<Song>> entity = null;
 			try{
@@ -55,15 +105,17 @@ public class GameController {
 			}
 			return entity;
 	}
-	
-	@RequestMapping(value = "/gameResult", method = RequestMethod.POST)
-	public void gameResultPOST(Model model, @RequestParam("correct") int correct ) {
+		
+	// 절대음감 게임 결과 페이지
+	@RequestMapping(value = "/ppgameResult", method = RequestMethod.POST)
+	public void ppgameResultPOST(Model model, @RequestParam("correct") int correct ) {
 			logger.info("클라이언트: 게임결과페이지 입장3");
 			logger.info(correct);
 			model.addAttribute("correct", correct);
 			model.addAttribute("countSong", service.countSong());
 			
 		}
+		
 	
 	
 	

@@ -93,11 +93,10 @@ listAll,
 <!-- Modernizr JS -->
 <script src="../resources/js/modernizr-2.6.2.min.js"></script>
 <!-- Theme style -->
-    <link href="../resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-    <!-- AdminLTE Skins. Choose a skin from the css/skins 
-         folder instead of downloading all of them to reduce the load. -->
-    <link href="../resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	
+<link href="../resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+<!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+<link href="../resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+<script src="../../resources/js/sweetalert.min.js"></script>
 </head>
 
 <body>

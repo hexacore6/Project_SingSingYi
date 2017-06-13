@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FilePermission;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.AccessControlContext;
 import java.security.AccessController;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
@@ -56,6 +58,9 @@ public class SharingController {
 	
 	@Resource(name = "uploadPath")
 	private String uploadPath;
+	
+	@Resource(name= "recordPath")
+	private String recordPath;
 	
 	@Inject
 	private SharingService sharingService;
@@ -367,6 +372,33 @@ public class SharingController {
 		
 		return entity;
 	}
+	
+	// mp3 파일 불러오기
+		@RequestMapping(value="/displayRecord")
+		public void displayRecord(String fileName, HttpServletResponse response) throws Exception {
+			
+			response.setContentType("audio/mpeg");
+			InputStream in = null;
+			OutputStream out = null;
+
+			try {
+				in = new FileInputStream(recordPath + fileName);
+				logger.info(recordPath + fileName);
+				 out = response.getOutputStream();
+				 
+				 byte[] buffer = new byte[1024];
+			     int count = 0;
+			     while( (count = in.read(buffer)) != -1){
+			    	 out.write(buffer, 0, count);
+			     }
+				 
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				 if(out != null) out.close();
+		         if(in != null) in.close();
+			}
+		}
 	
 	
 }

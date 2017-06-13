@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
+import com.hexacore.ssy.sharing.domain.RecordRepository;
 import com.hexacore.ssy.sharing.domain.Sharing;
 
 
@@ -55,5 +56,16 @@ public interface SharingDAO {
 	public void fallLikeCnt(int shid);
 	public void deleteLikeHistory(int shid);
 	public void addAttach(String eximgfilename);
+	
+	//유저이름을 통한 검색처리
 	public List<Sharing> searchById(String id);
+	
+	//노래이름을 통한 검색처리
+	public List<Sharing> searchByTitle(String recordfilename);
+	
+	//내용을 통한 검색처리
+	public List<Sharing> searchByContent(String shcontent);
+	
+	//공유글 내에서 녹음저장소 조회
+	public List<RecordRepository> getRecord(String id);
 }

@@ -70,4 +70,17 @@ public class SongController {
 		
 		//return "redirect:/song/main";
 	}
+	
+	@RequestMapping(value="/save", method=RequestMethod.POST)
+	public ResponseEntity<Boolean> removeFavorite(String song, HttpSession httpSession){
+		ResponseEntity<Boolean> entity = null;
+		System.out.println("수신 데잍터 :" + song);
+		
+		
+		entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		
+		return entity;
+		
+		//return "redirect:/song/main";
+	}
 }

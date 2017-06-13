@@ -44,7 +44,7 @@
 	
 	
 	<select id="read" resultType="com.hexacore.ssy.sharing.domain.Sharing">
-		SELECT shid, rrid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
 		FROM sharings
 		WHERE shid = #{shid}
 	</select>
@@ -121,10 +121,32 @@
 	</select>
 	
 	<select id="searchById" resultType="com.hexacore.ssy.sharing.domain.Sharing">
-		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename, recordfilename
 		FROM sharings
-		WHERE id like '%' || #{id} || '%'
+		WHERE id like CONCAT('%', #{id}, '%')
 		ORDER BY shregdate desc
+	</select>
+	
+	<select id="searchByTitle" resultType="com.hexacore.ssy.sharing.domain.Sharing">
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename, recordfilename
+		FROM sharings
+		WHERE recordfilename like CONCAT('%', #{recordfilename}, '%')
+		ORDER BY shregdate desc
+	</select>
+	
+	<select id="searchByContent" resultType="com.hexacore.ssy.sharing.domain.Sharing">
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename, recordfilename
+		FROM sharings
+		WHERE shcontent like CONCAT('%', #{shcontent}, '%')
+		ORDER BY shregdate desc
+	</select>
+	
+	<!-- 공유글  내에서 녹음 저장소 조회 -->
+	<select id = "getRecord" resultType="com.hexacore.ssy.sharing.domain.RecordRepository">
+		SELECT rrid, id, recordfilename, recordregdate
+		FROM RecordRepository 
+		WHERE id = #{id}
+		ORDER BY recordregdate desc limit 5;
 	</select>
 	
 	

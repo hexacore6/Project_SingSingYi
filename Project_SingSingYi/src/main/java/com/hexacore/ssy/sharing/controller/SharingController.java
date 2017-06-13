@@ -6,8 +6,10 @@ import java.io.FileInputStream;
 import java.io.FilePermission;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.AccessControlContext;
 import java.security.AccessController;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
@@ -36,8 +39,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hexacore.ssy.common.Criteria;
+import com.hexacore.ssy.common.PageMaker;
 import com.hexacore.ssy.member.domain.Member;
+import com.hexacore.ssy.sharing.domain.RecordRepository;
 import com.hexacore.ssy.sharing.domain.Comment;
+import com.hexacore.ssy.sharing.domain.Encoding;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
 import com.hexacore.ssy.sharing.domain.Sharing;
 import com.hexacore.ssy.sharing.service.SharingService;
@@ -55,6 +62,9 @@ public class SharingController {
 	
 	@Resource(name = "uploadPath")
 	private String uploadPath;
+	
+	@Resource(name= "recordPath")
+	private String recordPath;
 	
 	@Inject
 	private SharingService sharingService;
@@ -84,7 +94,7 @@ public class SharingController {
 	}
 	
 	private String uploadFile(String originalName, byte[] fileData, int shid, String loginId) throws IOException{
-		String savedName = loginId + "@" + shid + "@" + originalName;
+		String savedName = loginId + "-" + shid + "-" + originalName;
 		File target = new File(uploadPath, savedName);
 		FileCopyUtils.copy(fileData, target);
 		return savedName;
@@ -117,10 +127,11 @@ public class SharingController {
 		for (int i = 0; i < list.size(); i++) {
 			name = list.get(i).getRecordfilename();
 			if(name != null){
-				array = name.split("@");
+				array = name.split("-");
 				list.get(i).setRecordfilename(array[2]);
 			}
 		}
+		
 		model.addAttribute("list", list);
 	}
 	
@@ -245,16 +256,44 @@ public class SharingController {
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public void search(@RequestParam("keyword") String keyword, @RequestParam("type") String type, Model model)
 			throws IOException {
+		List<Sharing> list = null;
+		String name = null;
+		String[] array = null;
 		switch (type) {
 		case "user":
-			model.addAttribute("list", sharingService.searchById(keyword));
+			list = sharingService.searchById(keyword);
+			for (int i = 0; i < list.size(); i++) {
+				name = list.get(i).getRecordfilename();
+				if(name != null){
+					array = name.split("@");
+					list.get(i).setRecordfilename(array[2]);
+				}
+			}
+			model.addAttribute("list", list);
 			break;
 		case "title":
-			System.out.println("it is title");
+			list = sharingService.searchByTitle(keyword);
+			System.out.println(keyword + "입력한 노래 제목");
+			for (int i = 0; i < list.size(); i++) {
+				name = list.get(i).getRecordfilename();
+				if(name != null){
+					array = name.split("@");
+					list.get(i).setRecordfilename(array[2]);
+				}
+			}
+			model.addAttribute("list", list);
 			break;
-		case "singer":
-			System.out.println("it is singer");
-			break;	
+		case "content":
+			list = sharingService.searchByContent(keyword);
+			for (int i = 0; i < list.size(); i++) {
+				name = list.get(i).getRecordfilename();
+				if(name != null){
+					array = name.split("@");
+					list.get(i).setRecordfilename(array[2]);
+				}
+			}
+			model.addAttribute("list", list);
+			break;
 		}
 		
 	}
@@ -264,9 +303,12 @@ public class SharingController {
 	public String search(HttpServletRequest request, HttpSession httpSession, Model model,
 			@RequestParam String searchType, @RequestParam String keywordInput)
 			throws IOException {
+		Encoding enc = new Encoding();
 		String type = searchType;
 		String keyword = keywordInput;
-		return "redirect:/sharing/search?type=" + type + "&keyword=" + keyword;
+		System.out.println(keyword + "인코딩전쿼리");
+		System.out.println(Encoding.encodingKeyword(keyword) + "인코딩후쿼리");
+		return "redirect:/sharing/search?type=" + type + "&keyword=" + Encoding.encodingKeyword(keyword);
 
 	}
 	
@@ -334,6 +376,57 @@ public class SharingController {
 		
 		return entity;
 	}
+	
+	// 나의 녹음저장소 조회
+	@RequestMapping(value = "/record", method = RequestMethod.POST)
+	public ResponseEntity<List<RecordRepository>> getRecord(@RequestBody RecordRepository recordRepository, Model model) {
+		ResponseEntity<List<RecordRepository>> entity = null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		//String date = null;
+				
+		try {
+			System.out.println(recordRepository.getId() + "아이디출력");
+			List<RecordRepository> list = sharingService.getRecord(recordRepository.getId());
+			for (int i = 0; i < list.size(); i++) {
+				//date = format.format(list.get(i).getRecordregdate());
+				//System.out.println(date + "스트링으로 변환");
+				//list.get(i).setRecordregdate(date);
+				System.out.println(list.get(i).getRecordregdate() + "출력");
+			}
+			entity = new ResponseEntity<List<RecordRepository>>(sharingService.getRecord(recordRepository.getId()), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	// mp3 파일 불러오기
+		@RequestMapping(value="/displayRecord")
+		public void displayRecord(String fileName, HttpServletResponse response) throws Exception {
+			
+			response.setContentType("audio/mpeg");
+			InputStream in = null;
+			OutputStream out = null;
+
+			try {
+				in = new FileInputStream(recordPath + fileName);
+				logger.info(recordPath + fileName);
+				 out = response.getOutputStream();
+				 
+				 byte[] buffer = new byte[1024];
+			     int count = 0;
+			     while( (count = in.read(buffer)) != -1){
+			    	 out.write(buffer, 0, count);
+			     }
+				 
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				 if(out != null) out.close();
+		         if(in != null) in.close();
+			}
+		}
 	
 	
 }

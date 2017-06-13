@@ -1,8 +1,5 @@
 package com.hexacore.ssy;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hexacore.ssy.sharing.dao.SharingDAO;
 import com.hexacore.ssy.sharing.domain.Comment;
+import com.hexacore.ssy.sharing.domain.RecordRepository;
 import com.hexacore.ssy.sharing.domain.Sharing;
 import com.hexacore.ssy.sharing.service.SharingService;
 
@@ -26,9 +24,10 @@ public class SharingDaoTest {
 	Logger logger = Logger.getLogger(SharingDaoTest.class);
 
 	@Inject
-	private SharingDAO dao;
+	//private SharingDao dao;
+	private SharingService service;
 	
-	//@Test
+/*	//@Test
 	public void testCreate() throws Exception {
 		
 		Sharing sharing = new Sharing();
@@ -133,12 +132,6 @@ public class SharingDaoTest {
 	}
 	
 	//@Test
-	public void testSearhcById(){
-		String id = "ost";
-		logger.info(dao.searchById(id));
-	}
-	
-	@Test
 	public void testGetSongTitle(){
 		
 		List<Sharing> list = dao.listAll("kosta111");
@@ -153,5 +146,30 @@ public class SharingDaoTest {
 		}
 	}
 	
+	//@Test
+	public void testSearhcById(){
+		String id = "113";
+		dao.searchById(id);
+	}
+	
+	//@Test
+	public void testSearhcByTitle() {
+		String recordfilename = "사랑";
+		dao.searchByTitle(recordfilename);
+	}
+	
+	//@Test
+	public void testSearhcByContent() {
+		String shcontent = "4";
+		dao.searchByContent(shcontent);
+	}*/
+	
+	@Test
+	public void testGetRecord(){
+		List<RecordRepository> list = service.getRecord("kosta111");
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i).getRecordfilename() + "출력");
+		}
+	}
 
 }

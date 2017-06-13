@@ -195,8 +195,8 @@ public class MypageDAOImpl implements MypageDAO{
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		
 		paramMap.put("id", coinHistory.getId());
-		paramMap.put("ctype", coinHistory.getChtype());
-		paramMap.put("content", coinHistory.getChcontent());
+		paramMap.put("chtype", coinHistory.getChtype());
+		paramMap.put("chcontent", coinHistory.getChcontent());
 		session.insert(namespace+".coinListAdd", paramMap);
 		
 		

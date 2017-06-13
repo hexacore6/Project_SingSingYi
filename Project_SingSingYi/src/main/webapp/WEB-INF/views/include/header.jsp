@@ -17,7 +17,7 @@
                             <a class="btn btn-primary" href="/member/logout">로그아웃</a>
                             <a class="btn btn-primary" href="/game/gameStart">게임</a>
 						</div> -->
-                      <iframe src="http://192.168.0.63:3000/client" style="width: 200px;height: 200px; margin-left: 250px;"></iframe>
+                      <iframe src="http://192.168.0.63:3000/client" id="ifm"style="width: 200px;height: 200px; margin-left: 250px;"></iframe>
 					</div>
 				</div>
 			</div>
@@ -66,4 +66,48 @@
 		</div>
 	</div>
 </section>
+<script>
+/*알람갯수  */
+window.onload = function () {
+	var allcookies = document.cookie;
+	
+    cookiearray  = allcookies.split(';');
+
+    // Now take key value pair out of this array
+    var loginCookie= new Array;
+    for(var i=0; i<cookiearray.length; i++){
+       
+        loginCookie = cookiearray[i].split('=');
+			
+    }
+    /*아이디 표시 */
+    var iframeObj = $("#ifm").get(0);
+    var iframeDocument = iframeObj.contentWindow || iframeObj.contentDocument;
+    iframeDocument.$("#userId").html(loginCookie[1]);
+ 
+    $.ajax({
+        type: 'get'
+        , url: 'http://localhost:3000/first?id=' + loginCookie[1]
+        , dataType: 'json'
+        , success: function (data) {
+            if (data.length != 0) {
+                $("#button").attr("id", 'button2');
+                console.log("ajax통신성공")
+            }
+        }
+    });
+    /*코인갯수  */
+    $.ajax({
+        type: 'get'
+        , url: 'http://localhost:3000/coincnt?id=' + loginCookie[1]
+        , dataType: 'json'
+        , success: function (data) {
+            data.forEach(function(elt, i) {
+            	$('#coin').html("x"+elt.coincnt);
+            	console.log("ajax통신성공")
+            });
+    	}
+    });
+}
+</script>
 <!--해더END-->

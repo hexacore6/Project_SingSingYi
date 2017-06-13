@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -172,9 +172,9 @@
 
   <!-- 상세조회 -->
   <!-- read modal -->
-  <div class="modal" id="readModal" data-backdrop="static">
+  <div class="modal" id="readModal" data-backdrop="static" >
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content" style="background-color: black;;">
 
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">

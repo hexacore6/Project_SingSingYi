@@ -155,7 +155,7 @@
 	<!-- 코인 내역 등록 -->
 	<insert id="coinListAdd">
 	insert into coinhistory (id, chtype, chcontent)
-	values ('#{id}', '#{chtype}', '#{chcontent}')
+	values (#{id}, #{chtype}, #{chcontent})
 	</insert>
 	
 	<!-- 나의 코인내역 조회 페이징처리2 -->
@@ -195,4 +195,5 @@
 	where rrid > 0 AND id=#{id}
 	]]>
 	</select>
+	
 </mapper>

@@ -1,8 +1,9 @@
 package com.hexacore.ssy.song.dao;
 
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -37,7 +38,18 @@ public class SongDAOImpl implements SongDAO {
 	public List<Song> songsList() {
 		return sqlSession.selectList(namespace + ".songsList");
 	}
+
+	@Override
+	public void addFavorite(String id, int sid) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("id", id);
+		paramMap.put("sid", sid);
+		sqlSession.insert(namespace+".addFavorite", paramMap);
+	}
 	
+	public void removeFavorite(int fid){
+		sqlSession.delete(namespace+".removeFavorite", fid);
+	}
 }
 
 

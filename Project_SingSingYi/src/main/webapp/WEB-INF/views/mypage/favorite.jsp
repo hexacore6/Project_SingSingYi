@@ -1,20 +1,23 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html>
 <head>
-<title>노래방</title>
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="../../../resources/css/main.css?ver=1">
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="../../../resources/css/bootstrap3-wysihtml5.min.css?ver=2">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+    <title>노래방</title>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../resources/css/main.css?ver=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../resources/css/bootstrap3-wysihtml5.min.css?ver=2">\
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sweetalert.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/jquery.min.js?ver=1"></script>
 </head>
 
 <body>
@@ -44,12 +47,13 @@
                   </tr>
                   <%-- <c:forEach items="myFavorite" var="favorite"> --%>
                   <c:forEach items="${list}" var="favorite" varStatus="stat">
-                    <tr>
-                      <td>${((pageMaker.cri.page-1)*10)+(stat.index)}</td>
+                    <tr id="trFavorite${favorite.fid}">
+                      <td>${((pageMaker.cri.page-1)*10)+(stat.count)}</td>
                       <td style="width: 20px">${favorite.stitle}</td>
                       <td>${favorite.singer}</td>
                       <td style="width: 5px">
-                        <button class="btn badge bg-red">삭제</button>
+                        <button class="btn badge bg-red" 
+                        onclick="removeFavorite(${favorite.fid})">삭제</button>
                       </td>
                     </tr>
                   </c:forEach>
@@ -82,6 +86,53 @@
   </div>
   </section>
   <!--내용끝-->
+  
+  <!-- 애창곡 삭제 ajax 처리 -->
+  <script type="text/javascript">
+  function removeFavorite(fid){
+	  swal({
+		  title: "애창곡을 삭제하시겠습니까?",
+		  text: "",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonColor: "#DD6B55",
+		  confirmButtonText: "삭제",
+		  cancelButtonText: "취소",
+		  closeOnConfirm: false
+		},
+		function(){	
+          $.ajax({
+            type : 'post',
+            url : '/song/removeFavorite',
+            headers : {
+              "Content-type" : "application/json",
+              "X-HTTP-method-Override" : "POST"
+            },
+            dataType : 'text',
+            data : JSON.stringify({
+              fid : fid
+            }),
+            success : function(result){
+          	  $("#trFavorite"+fid).remove();
+          	  swal("애창곡 삭제 완료!", "", "success");
+            }   
+    	});
+	});
+  }
+  </script>
+  
+  <!-- jQuery -->
+  <script src="../resources/js/jquery.easing.1.3.js"></script>
+  <script src="../resources/js/bootstrap.min.js"></script>
+  <script src="../resources/js/jquery.waypoints.min.js"></script>
+  <script src="../resources/js/salvattore.min.js"></script>
+  <!-- Main JS -->
+  <script src="../resources/js/jquery.magnific-popup.min.js"></script>
+  <script src="../resources/js/main.js"></script>
+  <script src="../resources/dist/js/app.min.js" type="text/javascript"></script>
+  <script src="../resources/dist/js/demo.js" type="text/javascript"></script>
+  
+  <!-- footer -->
   <jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 

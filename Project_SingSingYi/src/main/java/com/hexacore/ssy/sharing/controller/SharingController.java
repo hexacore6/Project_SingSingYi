@@ -61,10 +61,14 @@ public class SharingController {
 	
 	//공유글 등록 처리
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(HttpServletRequest request, HttpSession httpSession, Sharing sharing, MultipartFile file, Model model) throws IOException {
+	public String register(HttpServletRequest request, HttpSession httpSession, Sharing sharing, MultipartFile file, MultipartFile mp3File, Model model) throws IOException {
 		Member member = (Member)httpSession.getAttribute("login");
 		String loginId = member.getId();
-		System.out.println(loginId + "로그인 아이디 알려주세요");
+		System.out.println(mp3File.getOriginalFilename() + "mp3file showing");
+		if(mp3File.getOriginalFilename() == ""){
+			System.out.println("no mp3");
+		}
+		//System.out.println(loginId + "로그인 아이디 알려주세요");
 		sharing.setEximgfilename(file.getOriginalFilename());
 		try {
 			String savedName = uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid(), loginId);
@@ -104,10 +108,20 @@ public class SharingController {
 	
 	//공유글 리스트 출력 처리
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void list(HttpServletRequest request, Model model, HttpSession httpSession) {
+	public void list(HttpServletRequest request, HttpSession httpSession, Model model) {
 		Member member = (Member)httpSession.getAttribute("login");
 		String loginId = member.getId();
-		model.addAttribute("list", sharingService.listAll(loginId));
+		List<Sharing> list = sharingService.listAll(loginId);
+		String name = null;
+		String[] array = null;
+		for (int i = 0; i < list.size(); i++) {
+			name = list.get(i).getRecordfilename();
+			if(name != null){
+				array = name.split("@");
+				list.get(i).setRecordfilename(array[2]);
+			}
+		}
+		model.addAttribute("list", list);
 	}
 	
 	//좋아요 업데이트 처리
@@ -227,11 +241,32 @@ public class SharingController {
 		return "redirect:/mypage/sharing";
 	}
 	
-	//검색 입력 처리 
-	@RequestMapping(value = "/searchInput", method = RequestMethod.GET)
-	public String search(Model model) throws IOException {
-
-		return "redirect:/sharing/search";
+	// 검색 결과 처리
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public void search(@RequestParam("keyword") String keyword, @RequestParam("type") String type, Model model)
+			throws IOException {
+		switch (type) {
+		case "user":
+			model.addAttribute("list", sharingService.searchById(keyword));
+			break;
+		case "title":
+			System.out.println("it is title");
+			break;
+		case "singer":
+			System.out.println("it is singer");
+			break;	
+		}
+		
+	}
+	
+	// 검색 입력 처리
+	@RequestMapping(value = "/searchInput", method = RequestMethod.POST)
+	public String search(HttpServletRequest request, HttpSession httpSession, Model model,
+			@RequestParam String searchType, @RequestParam String keywordInput)
+			throws IOException {
+		String type = searchType;
+		String keyword = keywordInput;
+		return "redirect:/sharing/search?type=" + type + "&keyword=" + keyword;
 
 	}
 	
@@ -258,47 +293,45 @@ public class SharingController {
 
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
-		
-		/*File dir = new File(uploadPath);
-		File[] fileList = dir.listFiles();
-		String originName[] = fileName.split("/");
-		for (int i = 0; i < fileList.length; i++) {
-			File file = fileList[i];
-			System.out.println(file.getName() + "폴더안에 파일 이름 보여주세요");
-			System.out.println(originName[1] + "db안에 파일 이름");
-			if(file.getName() == originName[1]){
-				System.out.println(fileName + "폴더안에 있는 파일이름");
-			}
-			else{
-				System.out.println("폴더에 이미지가 없어요");
+		String originName[] = fileName.split("@");
+		//System.out.println(originName.length + "파일길이");
+		if(originName.length == 3){
+			//logger.info("File NAME : " + fileName);
+
+			try {
+				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+				MediaType mType = MediaUtils.getMediaType(formatName);
+
+				HttpHeaders headers = new HttpHeaders();
+				in = new FileInputStream(uploadPath + fileName);
+				logger.info(uploadPath + fileName);
+				if (mType != null) {
+					headers.setContentType(mType);
+				} else {
+					fileName = fileName.substring(fileName.indexOf("_") + 1);
+					headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+					headers.add("Content-Disposition",
+							"attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
+				}
+				entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			} catch (Exception e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+			} finally {
+				in.close();
 			}
 		}
-		*/
-		logger.info("File NAME : " + fileName);
-
-		try {
-			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-			MediaType mType = MediaUtils.getMediaType(formatName);
-
+		else{
+			MediaType mType = MediaType.IMAGE_PNG;
 			HttpHeaders headers = new HttpHeaders();
-			in = new FileInputStream(uploadPath + fileName);
-			System.out.println("이미지 파일 들어왔니 : " + in.toString());
+			in = new FileInputStream(uploadPath + "/haedlogo.png");
 			logger.info(uploadPath + fileName);
 			if (mType != null) {
 				headers.setContentType(mType);
-			} else {
-				fileName = fileName.substring(fileName.indexOf("_") + 1);
-				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-				headers.add("Content-Disposition",
-						"attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
-			}
+			} 
 			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
-		} finally {
-			in.close();
 		}
+		
 		return entity;
 	}
 	

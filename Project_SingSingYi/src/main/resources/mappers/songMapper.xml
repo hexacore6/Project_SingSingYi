@@ -37,4 +37,16 @@
 		from songs
 	</select>
 	
+	
+	<!-- 애창곡 담기 -->
+	<insert id = "addFavorite">
+		insert into favorites (id, sid) 
+		values (#{id}, #{sid})
+	</insert>
+	
+	<!-- 애창곡 삭제하기 -->
+	<delete id="removeFavorite">
+		delete from favorites
+		where fid = #{fid}
+	</delete>
 </mapper>

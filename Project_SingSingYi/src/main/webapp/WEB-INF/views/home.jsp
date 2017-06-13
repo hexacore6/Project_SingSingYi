@@ -40,10 +40,13 @@
 </script>
 
 <style>
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+body {
+	font-family: 'Jeju Gothic', serif;
+}
 
 /* Style for our header texts */
 h1 {
-	font-family: arial, helvetica;
 	color: #fff;
 	margin: 0;
 	margin-bottom: 10px;
@@ -55,7 +58,13 @@ h1 {
 }
 
 #section0 {
+	background-image: url(/resources/img/section0.jpg);
+}
+#section1 {
 	background-image: url(/resources/img/section1.jpg);
+}
+#section2 {
+	background-image: url(/resources/img/section2.jpg);
 }
 
 button {
@@ -71,8 +80,9 @@ button {
 	transition: 800ms ease all;
 	outline: none;
 	margin-bottom: 10px;
-	border-radius: 10px;
+	border-radius: 3px;
 	opacity: 0.7;
+	font-family: 'Jeju Gothic', serif;
 }
 
 button:hover {

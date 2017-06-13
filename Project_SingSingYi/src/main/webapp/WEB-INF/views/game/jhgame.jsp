@@ -24,7 +24,7 @@
         var correct = 0;
             $.ajax({
                 type: 'post',
-                url: 'http://192.168.0.72/game/jhgame', 
+                url: '/game/jhgame', 
                 headers : {
 						"Content-Type" : "application/json",
 					},

@@ -127,7 +127,7 @@ h1 {
 }
 
 .section {
-	background-image: url(/resources/img/section0.jpg);
+	background-image: url(/resources/img/regist.jpg);
 }
 
 button {

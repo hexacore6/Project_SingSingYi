@@ -64,10 +64,13 @@
 </script>
 
 <style>
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+body {
+	font-family: 'Jeju Gothic', serif;
+}
 /* Style for our header texts
 		* --------------------------------------- */
 h1 {
-	font-family: arial, helvetica;
 	color: #fff;
 	margin: 0;
 	margin-bottom: 10px;
@@ -92,6 +95,7 @@ button {
 	outline: none;
 	margin-bottom: 10px;
 	border-radius: 3px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 button:hover {

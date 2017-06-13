@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.AccessControlContext;
 import java.security.AccessController;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,7 +39,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hexacore.ssy.common.Criteria;
+import com.hexacore.ssy.common.PageMaker;
 import com.hexacore.ssy.member.domain.Member;
+import com.hexacore.ssy.sharing.domain.RecordRepository;
 import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.Encoding;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
@@ -370,6 +374,30 @@ public class SharingController {
 			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
 		}
 		
+		return entity;
+	}
+	
+	// 나의 녹음저장소 조회
+	@RequestMapping(value = "/record", method = RequestMethod.POST)
+	public ResponseEntity<List<RecordRepository>> getRecord(@RequestBody RecordRepository recordRepository, Model model) {
+		ResponseEntity<List<RecordRepository>> entity = null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		//String date = null;
+				
+		try {
+			System.out.println(recordRepository.getId() + "아이디출력");
+			List<RecordRepository> list = sharingService.getRecord(recordRepository.getId());
+			for (int i = 0; i < list.size(); i++) {
+				//date = format.format(list.get(i).getRecordregdate());
+				//System.out.println(date + "스트링으로 변환");
+				//list.get(i).setRecordregdate(date);
+				System.out.println(list.get(i).getRecordregdate() + "출력");
+			}
+			entity = new ResponseEntity<List<RecordRepository>>(sharingService.getRecord(recordRepository.getId()), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		return entity;
 	}
 	

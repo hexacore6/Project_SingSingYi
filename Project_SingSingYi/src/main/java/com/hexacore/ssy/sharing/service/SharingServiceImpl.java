@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.hexacore.ssy.sharing.dao.SharingDAO;
 import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
+import com.hexacore.ssy.sharing.domain.RecordRepository;
 import com.hexacore.ssy.sharing.domain.Sharing;
 
 @Service
@@ -118,6 +119,11 @@ public class SharingServiceImpl implements SharingService {
 	@Override
 	public List<Sharing> searchByContent(String shcontent) {
 		return sharingDao.searchByContent(shcontent);
+	}
+
+	@Override
+	public List<RecordRepository> getRecord(String id) {
+		return sharingDao.getRecord(id);
 	}
 	
 

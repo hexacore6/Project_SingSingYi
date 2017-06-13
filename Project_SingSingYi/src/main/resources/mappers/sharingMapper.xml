@@ -141,6 +141,14 @@
 		ORDER BY shregdate desc
 	</select>
 	
+	<!-- 공유글  내에서 녹음 저장소 조회 -->
+	<select id = "getRecord" resultType="com.hexacore.ssy.sharing.domain.RecordRepository">
+		SELECT rrid, id, recordfilename, recordregdate
+		FROM RecordRepository 
+		WHERE id = #{id}
+		ORDER BY recordregdate desc limit 5;
+	</select>
+	
 	
 	
 	

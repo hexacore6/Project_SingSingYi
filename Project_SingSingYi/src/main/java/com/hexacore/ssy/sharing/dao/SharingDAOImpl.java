@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
+import com.hexacore.ssy.sharing.domain.RecordRepository;
 import com.hexacore.ssy.sharing.domain.Sharing;
 
 
@@ -143,6 +144,11 @@ public class SharingDAOImpl implements SharingDAO {
 		String name = session.selectOne(namespace + ".getRecordFileName", shid);
 		String[] array = name.split("@");
 		return array[2];
+	}
+
+	@Override
+	public List<RecordRepository> getRecord(String id) {
+		return session.selectList(namespace + ".getRecord", id);
 	}
 
 	

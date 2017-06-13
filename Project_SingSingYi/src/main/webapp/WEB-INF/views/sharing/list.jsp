@@ -1,7 +1,3 @@
-<!-- sharing 테이블 변경 rrid 제거 recordfilename 추가
-listAll, 
- -->
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -35,14 +31,14 @@ listAll,
 <style type="text/css">
 #mp3Drop{
 	width: 100%;
-	height: 100px;
+	height: 140px;
 	background-color: #d6d6c2;;
 	
 }
 #imageDrop{
 	width: 100%;
 	height: 25px;
-	background-color: #d6d6c2;;
+	background-color: #d6d6c2;
 	
 }
 
@@ -270,7 +266,7 @@ $(document).ready(function(){
 									</div>
 									<div class="modal-footer">
 										<div class="pull-left">
-											<i class="fa fa-microphone" id="uploadMp3"></i> 
+											<i class="fa fa-microphone" id="uploadMp3" onclick="getRecord('${login.id}')"></i> 
 											<i class="fa fa-camera" id="uploadImage"></i>
 										</div>
 
@@ -279,7 +275,16 @@ $(document).ready(function(){
 										</button>
 										<!-- MP3 업로드 공간 -->
 										<div id="mp3Drop" hidden>
-											<input type="file" name="mp3File">
+											<table class="table table-striped">
+												<tbody id="appendRecord">
+													<tr>
+														<th style="text-align: center;">곡명</th>
+														<th style="text-align: center;">녹음된 날짜</th>
+														<th style="width: 10px; text-align: center;">선택</th>
+													</tr>
+												</tbody>
+											</table>
+											
 											
 										</div>
 										<!-- 이미지 업로드 공간 -->
@@ -535,6 +540,39 @@ $(document).ready(function(){
 		swal("Good job!", "You clicked the button!", "success")
 	}
 	
+	function getRecord(id) {
+		console.log(id);
+		$.ajax({
+			type : 'post',
+			url : '/sharing/record',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				id : id,
+			}),
+			success : function(result) {
+				///222
+				var str = "";
+				var array = JSON.parse(result);
+				$(array).each(function() {
+									str += "<tr>"
+										+ "<td style=\"text-align: center;\">" + this.recordfilename + "</td>"
+										+ "<td style=\"text-align: center;\">" 
+										+ this.recordregdate
+										+ "</td>"
+										+ "<td style=\"text-align: center;\">"
+										+ "<button type=\"button\">선택</button>"
+										+ "</td>"
+										+ "</tr>";
+								});
+				
+				$("#appendRecord").html(str); 
+			}
+		});
+	}
 	
 
 	function upLike(shid, likecnt, id, index) {

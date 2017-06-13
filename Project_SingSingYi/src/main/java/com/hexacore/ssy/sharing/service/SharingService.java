@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
+import com.hexacore.ssy.sharing.domain.RecordRepository;
 import com.hexacore.ssy.sharing.domain.Sharing;
 
 
@@ -29,4 +30,5 @@ public interface SharingService {
 	public List<Sharing> searchByTitle(String recordfilename);
 	public List<Sharing> searchByContent(String shcontent);
 	public String getRecordFileName(int shid);
+	public List<RecordRepository> getRecord(String id);
 }

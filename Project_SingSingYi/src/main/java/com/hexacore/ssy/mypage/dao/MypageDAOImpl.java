@@ -124,7 +124,7 @@ public class MypageDAOImpl implements MypageDAO{
 	public void deleteMyRecord(int rrid) {
 		session.delete(namespace+".deleteMyRecord", rrid);
 	}
-
+	
 	// 코인 충전
 	@Override
 	public void addCoin(Member member, String id) {
@@ -227,6 +227,8 @@ public class MypageDAOImpl implements MypageDAO{
 		
 		return session.selectOne(namespace+".countRecordPaging", paramMap);
 	}
+
+
 	
 
 }

@@ -280,6 +280,7 @@ $(document).ready(function(){
 										<!-- MP3 업로드 공간 -->
 										<div id="mp3Drop" hidden>
 											<input type="file" name="mp3File">
+											
 										</div>
 										<!-- 이미지 업로드 공간 -->
 										<div id="imageDrop" hidden>

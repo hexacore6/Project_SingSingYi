@@ -18,7 +18,7 @@
                             <div id='jsonp'></div> -->
 						</div>
              
-                       <iframe src="" id="ifm"style="width: 200px;height: 200px; margin-left: 250px;"></iframe>
+                       <iframe src="http://192.168.0.63:3000/client" id="ifm"style="width: 200px;height: 200px; margin-left: 250px;"></iframe>
 					
           
           </div>
@@ -85,7 +85,35 @@ window.onload = function () {
      
     var iframeObj = $("#ifm").get(0);
     var iframeDocument = iframeObj.contentWindow || iframeObj.contentDocument;
-    iframeDocument.postMessage('1000:'+loginCookie[1],'http://192.168.0.63:3000/client')
+    
+    $.ajax({
+        type : "GET",
+        url : "http://127.0.0.1:3000/first",
+        data : "id="+loginCookie[1],
+        dataType : "jsonp",
+        success : function(json) {
+            iframeDocument.postMessage('1000:'+loginCookie[1],'http://192.168.0.63:3000/client')
+            iframeDocument.postMessage('4000:'+json.length,'http://192.168.0.63:3000/client')
+        },
+        error : function(e) {
+                alert("error1");
+        }
+	});
+    
+    $.ajax({
+        type : "GET",
+        url : "http://127.0.0.1:3000/coincnt",
+        data : "id="+loginCookie[1],
+        dataType : "jsonp",
+        success : function(data) {
+              iframeDocument.postMessage('5000:'+data[0].coincnt,'http://192.168.0.63:3000/client')  
+        },
+        error : function(e) {
+                alert("error2");
+        }
+	});
+
+    
 }
 
 

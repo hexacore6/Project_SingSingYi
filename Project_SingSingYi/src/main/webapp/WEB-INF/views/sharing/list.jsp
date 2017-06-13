@@ -576,7 +576,6 @@ $(document).ready(function(){
 			var shid = $("#readShid").val();
 			var id = $("#commentId").val();
 			var ccontent = $("#readReplyId").val();
-			
 			$.ajax({
 				type : 'post',
 				url : '/sharing/addComment',

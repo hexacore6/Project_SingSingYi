@@ -564,8 +564,10 @@ $(document).ready(function(){
 						var x =  document.getElementById("likeCnt" + index);
 						$(likeCnt).empty();
 						$(likeCnt).text(parseInt(likecnt) + parseInt(one));
-						iframeDocument.postMessage('2000:'+id,'*');
-					}
+ 					    var iframeObj = $("#ifm").get(0);
+					    var iframeDocument = iframeObj.contentWindow || iframeObj.contentDocument;
+					    iframeDocument.postMessage('3000:'+id,'http://192.168.0.63:3000/client')
+ 				}
 				}
 			}); 
 		}

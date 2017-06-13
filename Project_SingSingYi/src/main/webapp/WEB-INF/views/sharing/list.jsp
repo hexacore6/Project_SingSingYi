@@ -1,7 +1,10 @@
+<!-- sharing 테이블 변경 rrid 제거 recordfilename 추가
+listAll, 
+ -->
 
-<!-- checklike 구현, 검색페이지 구현, 팔로우, 음악파일 첨부 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>	
@@ -30,6 +33,12 @@
 </style>
 
 <style type="text/css">
+#mp3Drop{
+	width: 100%;
+	height: 25px;
+	background-color: #d6d6c2;;
+	
+}
 #imageDrop{
 	width: 100%;
 	height: 25px;
@@ -62,7 +71,7 @@
 <meta name="keywords"
 	content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
 <meta name="author" content="FREEHTML5.CO" />
-
+<jsp:useBean id="now" class="java.util.Date" scope="request" />
 
 <!-- Google Webfonts -->
 <!-- <link
@@ -159,7 +168,9 @@ $(document).ready(function(){
 		console.log(sharingId);
 		console.log(sharingVal);
 	});	 */
-	
+	$("#uploadMp3").on("click", function() {
+		$("#mp3Drop").show("slow");
+});  
 	$("#uploadImage").on("click", function() {
 		$("#imageDrop").show("slow");
 });  
@@ -205,24 +216,24 @@ $(document).ready(function(){
 		<div class="container">
 			<div class="row">
 				<div class="row">
-				<form method="post" action="searchInput">
+				<form role="form" method="post" action="searchInput">
 					<div class="col-xs-2">
-						<select class="form-control">
-								<option>유저이름</option>
-								<option>노래이름</option>
-								<option>가수이름</option>
+						<select class="form-control" name="searchType">
+								<option value="user">유저이름</option>
+								<option value="title">노래이름</option>
+								<option value="singer">가수이름</option>
 						</select>
 					</div>
 					<div class="col-xs-3">
-						<input type="text" class="form-control" id="keywordInput"
+						<input type="text" class="form-control" name="keywordInput"
 							placeholder="SEARCH" style="margin: 4px;">
 					</div>
 					<div class="col-xs-2">
-						<button type="button" class="btn btn-block btn-lg" id="searchBtn" style="background-color: #d6d6c2; color: white;" >
+						<button type="submit" class="btn btn-block btn-lg" id="searchBtn" style="background-color: #d6d6c2; color: white;" >
 							<i class="fa fa-search" style="color: white;"></i>Search
 						</button>
 					</div>
-					<!-- ddd222222 -->
+					<!-- ddd2222222222222 -->
 					<div class="col-xs-3">
 						<!-- write button - open to write modal -->
 						<button type="button" class="btn btn-block btn-lg" style="background-color: #d6d6c2; color: white;"
@@ -259,13 +270,17 @@ $(document).ready(function(){
 									</div>
 									<div class="modal-footer">
 										<div class="pull-left">
-											<i class="fa fa-microphone"> </i> <i class="fa fa-camera"
-												id="uploadImage"></i>
+											<i class="fa fa-microphone" id="uploadMp3"></i> 
+											<i class="fa fa-camera" id="uploadImage"></i>
 										</div>
 
 										<button type="submit" id="textAddbtn" class="btn" style="background-color: #d6d6c2;">
 											<i class="fa fa-pencil"> </i>Sing Sing
 										</button>
+										<!-- MP3 업로드 공간 -->
+										<div id="mp3Drop" hidden>
+											<input type="file" name="mp3File">
+										</div>
 										<!-- 이미지 업로드 공간 -->
 										<div id="imageDrop" hidden>
 											<input type="file" name="file">
@@ -446,6 +461,8 @@ $(document).ready(function(){
 					<!-- 리스트 -->
 					<c:forEach items="${list}" var="sharing" varStatus="stat">
 						<div class="item" style="border: 1px solid #ebebe0; border-radius: 10px;">
+							<fmt:parseNumber value="${now.time/(1000)-(sharing.shregdate).time/(1000) }" integerOnly="true" var="secTime"></fmt:parseNumber>
+             				<fmt:parseNumber value="${now.time/(1000*60)-(sharing.shregdate).time/(1000*60) }" integerOnly="true" var="minTime"></fmt:parseNumber>
 							
 							<div class="animate-box" style="border-radius: 10px;">
 								<img
@@ -453,10 +470,24 @@ $(document).ready(function(){
 									alt="${pageContext.servletContext.contextPath }/resources/img/haedlogo.png"
 									onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; display: block;">
 							</div>
-							<!-- <div style="margin: 10px;">#트와이스#Knock Knock</div> -->
+							<c:set var="recordfilename" value="${sharing.recordfilename}"/>
+							<c:if test="${recordfilename ne null}">
+								<div style="margin: 10px;">${sharing.recordfilename}</div>
+							</c:if>
+							<div style="margin: 10px;">
+								<span class="time" style="float: right;"><i
+									class="fa fa-clock-o"></i> <c:choose>
+										<c:when test="${secTime<60 }">${secTime}초 전</c:when>
+										<c:when test="${secTime<3600 }">${minTime}분 전</c:when>
+										<c:otherwise>
+											<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${sharing.shregdate}" />
+										</c:otherwise>
+									</c:choose> </span>
+							</div>
+							<div style="margin: 10px;">
+							</div>
 							<div style="margin: 10px;">
 								<h3>
-
 									<i class="fa fa-user"></i><span id="sharingId">${sharing.id}</span>
 									<c:set var="target" value="${sharing.id}" />
 									<c:set var="id" value="${login.id}" />

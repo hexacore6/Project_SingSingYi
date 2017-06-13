@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -15,8 +15,14 @@
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+<script src="../../../resources/js/CranixMusicPlayer.js?ver=3"></script>
 </head>
-
+    <script>
+    var cmp = new CranixMusicPlayer("cmp");
+    cmp.addMusic("그냥 걸었어","임종환 - 그냥 걸었어.mp3");
+    cmp.addMusic("그냥 걸었어2","임종환 - 그냥 걸었어.mp3");
+    cmp.addMusic("그냥 걸었어3","임종환 - 그냥 걸었어.mp3");
+    </script>
 <body>
     <jsp:include page="../include/header.jsp"></jsp:include>
     <section id="content" class='container'>
@@ -30,8 +36,18 @@
             <div class="box">
               <div class="box-header">
                 <h3 class="box-title">녹음 저장소</h3>
+                
+                
+                <!-- <script>
+          		cmp.writePlayer();
+          		</script>  -->
+              
               </div>
-              <!-- /.box-header -->
+              <!-- /.box-header C:/record/upload/123.mp3-->
+              <c:forEach items="${list}" var="record" varStatus="stat">  
+              <audio controls autoplay name="media">
+                <source src="displayRecord?fileName=/${record.recordfilename }" type="audio/mpeg">
+              </audio>
               <div class="box-body no-padding">
                 <table class="table table-striped">
                   <tbody>
@@ -42,7 +58,7 @@
                       <th style="width: 5px; text-align: center;">재생</th>
                       <th style="width: 5px; text-align: center;">삭제</th>
                     </tr>
-                    <c:forEach items="${list}" var="record" varStatus="stat">
+                    
                       <tr>
                         <td style="text-align: center">${((pageMaker.cri.page-1)*10)+(stat.index)}</td>
                         <td style="width: 20px; text-align: center;">${record.recordfilename }</td>
@@ -54,10 +70,11 @@
                           <button class="btn badge bg-red">삭제</button>
                         </td>
                       </tr>
-                    </c:forEach>
+                    
                   </tbody>
                 </table>
               </div>
+              </c:forEach>
               <!-- /.box-body -->
               <div class="box-footer clearfix text-center">
                 <ul class="pagination  pagination-sm no-margin   ">
@@ -83,6 +100,8 @@
       </div>
     </div>
     </section>
+    
+
     <!--내용끝-->
     <jsp:include page="../include/footer.jsp"></jsp:include>
 </body>

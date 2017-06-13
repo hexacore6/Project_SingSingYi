@@ -8,6 +8,17 @@
 		VALUES (#{id}, #{shcontent}, #{eximgfilename})
 	</insert>
 	
+	<insert id="createWithMp3">
+		INSERT INTO sharings (id, shcontent, eximgfilename)
+		VALUES (#{id}, #{shcontent}, #{eximgfilename})
+	</insert>
+	
+	<select id="getRecordFileName" resultType="String">
+		SELECT recordfilename
+		FROM sharings
+		WHERE shid = #{shid}
+	</select>
+	
 	<insert id="comment">
 		INSERT INTO comments (shid, id, ccontent)
 		VALUES (#{shid}, #{id}, #{ccontent})
@@ -33,14 +44,14 @@
 	
 	
 	<select id="read" resultType="com.hexacore.ssy.sharing.domain.Sharing">
-		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
+		SELECT shid, rrid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
 		FROM sharings
 		WHERE shid = #{shid}
 	</select>
 	
 	<select id="listAll" resultType="com.hexacore.ssy.sharing.domain.Sharing">
 	<![CDATA[
-		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
+		SELECT shid, id, shcontent, likecnt, commentcnt, eximgfilename, shregdate, recordfilename
 		FROM sharings 
 		WHERE id in (SELECT target FROM followlist WHERE sender = #{id}) OR id = #{id}
 		ORDER BY shregdate desc
@@ -107,6 +118,13 @@
 		SELECT shid, id
 		FROM likehistory
 		WHERE shid = #{shid}
+	</select>
+	
+	<select id="searchById" resultType="com.hexacore.ssy.sharing.domain.Sharing">
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
+		FROM sharings
+		WHERE id like '%' || #{id} || '%'
+		ORDER BY shregdate desc
 	</select>
 	
 	

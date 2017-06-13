@@ -25,4 +25,6 @@ public interface SharingService {
 	public void fallLikeCnt(int shid);
 	public void deleteLikeHistory(int shid);
 	public int getShid();
+	public List<Sharing> searchById(String id);
+	public String getRecordFileName(int shid);
 }

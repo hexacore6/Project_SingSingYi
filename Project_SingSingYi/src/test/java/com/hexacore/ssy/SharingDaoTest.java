@@ -28,7 +28,7 @@ public class SharingDaoTest {
 	@Inject
 	private SharingDAO dao;
 	
-	@Test
+	//@Test
 	public void testCreate() throws Exception {
 		
 		Sharing sharing = new Sharing();
@@ -47,7 +47,11 @@ public class SharingDaoTest {
 	
 	//@Test
 	public void testListAll(){
-		logger.info("2" + dao.listAll("kosta111"));
+		List<Sharing> list = dao.listAll("kosta111");
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i).getShid() + "공유글의 번호");
+		}
+		//logger.info(dao.listAll("kosta111"));
 	}
 	
 	//@Test
@@ -127,7 +131,27 @@ public class SharingDaoTest {
 	public void testCheckLike(){
 		System.out.println(dao.checkLike(6) + "db 아이디");
 	}
-
+	
+	//@Test
+	public void testSearhcById(){
+		String id = "ost";
+		logger.info(dao.searchById(id));
+	}
+	
+	@Test
+	public void testGetSongTitle(){
+		
+		List<Sharing> list = dao.listAll("kosta111");
+		String name = null;
+		String[] array = null;
+		for (int i = 0; i < list.size(); i++) {
+			name = list.get(i).getRecordfilename();
+			if(name != null){
+				array = name.split("@");
+				System.out.println(array[2]);
+			}
+		}
+	}
 	
 
 }

@@ -3,9 +3,11 @@ package com.hexacore.ssy.mypage.controller;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
@@ -170,7 +172,7 @@ public class MypageController {
 		return "redirect:/mypage/myRecord";
 	}
 	
-	
+	// 이미지 파일 불러오기
 	@ResponseBody
 	@RequestMapping(value="/displayFile")
 	public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
@@ -199,6 +201,7 @@ public class MypageController {
 			}
 
 			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			System.out.println(entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
@@ -209,6 +212,8 @@ public class MypageController {
 		return entity;
 	}
 	
+	/*
+	// mp3 파일 불러오기
 	@ResponseBody
 	@RequestMapping(value="/displayRecord")
 	public ResponseEntity<byte[]> displayRecord(String fileName) throws Exception {
@@ -232,7 +237,7 @@ public class MypageController {
 				headers.setContentType(mType);
 			} else {
 				fileName = fileName.substring(fileName.indexOf("_") + 1);
-				headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+				headers.setContentType(MediaType.parseMediaType("audio/mpeg"));
 				headers.add("Content-Disposition",
 						"attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
 
@@ -249,7 +254,35 @@ public class MypageController {
 
 		return entity;
 	}
+	*/
 	
+	// mp3 파일 불러오기
+	@RequestMapping(value="/displayRecord")
+	public void displayRecord(String fileName, HttpServletResponse response) throws Exception {
+		
+		response.setContentType("audio/mpeg");
+		InputStream in = null;
+		OutputStream out = null;
+
+		try {
+			in = new FileInputStream(recordPath + fileName);
+			logger.info(recordPath + fileName);
+			 out = response.getOutputStream();
+			 
+			 byte[] buffer = new byte[1024];
+		     int count = 0;
+		     while( (count = in.read(buffer)) != -1){
+		    	 out.write(buffer, 0, count);
+		     }
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			 if(out != null) out.close();
+	         if(in != null) in.close();
+		}
+	}
+		
 	// 나의 정보 수정 (비밀번호 수정)
 	@RequestMapping(value="/modify", method=RequestMethod.GET)
 	public void modifyGET(Model model, HttpSession httpSession){

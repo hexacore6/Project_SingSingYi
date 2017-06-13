@@ -15,14 +15,7 @@
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
-<script src="../../../resources/js/CranixMusicPlayer.js?ver=3"></script>
 </head>
-    <script>
-    var cmp = new CranixMusicPlayer("cmp");
-    cmp.addMusic("그냥 걸었어","임종환 - 그냥 걸었어.mp3");
-    cmp.addMusic("그냥 걸었어2","임종환 - 그냥 걸었어.mp3");
-    cmp.addMusic("그냥 걸었어3","임종환 - 그냥 걸었어.mp3");
-    </script>
 <body>
     <jsp:include page="../include/header.jsp"></jsp:include>
     <section id="content" class='container'>
@@ -37,7 +30,6 @@
               <div class="box-header">
                 <h3 class="box-title">녹음 저장소</h3>
                 
-                
                 <!-- <script>
           		cmp.writePlayer();
           		</script>  -->
@@ -45,9 +37,12 @@
               </div>
               <!-- /.box-header C:/record/upload/123.mp3-->
               <c:forEach items="${list}" var="record" varStatus="stat">  
+              
               <audio controls autoplay name="media">
                 <source src="displayRecord?fileName=/${record.recordfilename }" type="audio/mpeg">
+                <!-- <source src="/resources/mp3/123.mp3" type="audio/mpeg"> -->
               </audio>
+              
               <div class="box-body no-padding">
                 <table class="table table-striped">
                   <tbody>

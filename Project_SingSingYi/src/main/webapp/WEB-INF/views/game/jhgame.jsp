@@ -21,7 +21,7 @@
         // Global variable to track current file name.
         var list = new Array();
         var count = 0;
-        var correct =0
+        var correct = 0;
             $.ajax({
                 type: 'post',
                 url: 'http://192.168.0.72/game/jhgame', 

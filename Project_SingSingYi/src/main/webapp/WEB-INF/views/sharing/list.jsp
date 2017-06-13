@@ -540,6 +540,7 @@ $(document).ready(function(){
 		swal("Good job!", "You clicked the button!", "success")
 	}
 	
+<<<<<<< HEAD
 	function getRecord(id) {
 		console.log(id);
 		$.ajax({
@@ -574,6 +575,66 @@ $(document).ready(function(){
 		});
 	}
 	
+=======
+		function addComment() {
+			var shid = $("#readShid").val();
+			var id = $("#commentId").val();
+			var ccontent = $("#readReplyId").val();
+			$.ajax({
+				type : 'post',
+				url : '/sharing/addComment',
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				dataType : 'text',
+				data : JSON.stringify({
+					shid : shid,
+					id : id,
+					ccontent : ccontent                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+				}), 
+				success : function(result) {
+					var str = "";
+					var comment = JSON.parse(result);
+					str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
+						+ "<div class=\"pull-left\">"
+						+ "<i class=\"fa fa-user\">" + comment.id +"</i>"
+						+ "</div>"
+						+ "<div class=\"box-body\">"
+						+ "<h3>"
+						+ "<p style=\"text-align : left;\">" + comment.ccontent +"</p>"
+						+ "</h3>"
+						+ "</div>"
+						+ "</div>";
+					$("#comments").append(str);
+					$("#readReplyId").val("");
+				}
+			});
+		}
+		function showReadModal(shid) {
+			$.ajax({
+				type : 'post',
+				url : '/sharing/read',
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				dataType : 'text',
+				data : JSON.stringify({
+					shid : shid,
+				}), 
+				success : function(result) {
+					$("#readModal").modal('show');
+					var array = JSON.parse(result);
+					$("#readImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);
+					$("#readId").append(array.id);
+					$("#readShid").attr("value", array.shid);
+					$("#readReplyId").attr("placeholder", "댓글을 입력하세요!");
+					$("#readShcontent").append(array.shcontent);
+					$("#readLikecnt").append(array.likecnt);
+					$("#readCommentcnt").append(array.commentcnt);
+					
+>>>>>>> branch 'master' of https://github.com/hexacore6/Project_SingSingYi.git
 
 	function upLike(shid, likecnt, id, index) {
 		var likecnt = likecnt;

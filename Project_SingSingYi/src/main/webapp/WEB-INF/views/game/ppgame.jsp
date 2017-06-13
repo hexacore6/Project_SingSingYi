@@ -5,7 +5,7 @@
 <html>
   
   <head>
-    <title>절대음감게임2</title>
+    <title>절대음감게임</title>
     
     <!-- 합쳐지고 최소화된 최신 CSS -->
     <script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.2.0.min.js"></script>
@@ -17,6 +17,10 @@
 
     <!-- Uncomment the following meta tag if you have issues rendering this page on an intranet site. -->    
     <!--  <meta http-equiv="X-UA-Compatible" content="IE=9"/> -->  
+    <style type="text/css">
+    hr{height:1px; background-color:#ccc; color:#ccc; border:none; }
+    </style>
+    
     <script type="text/javascript">
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var requestId = 0;
@@ -45,9 +49,11 @@
     var lyricsCnt = 0; // 가사 인덱스
     var random = 0;
     var noteVText = "";
-
     
     
+    var correct = 0;
+    var note;
+    var count =1;
   //마이크 정보를 얻어오기 위해서 사용하는 함수  
     function getUserMedia(dictionary, callback) {
         try {
@@ -102,8 +108,62 @@
     	    playing = true;
     	    updatePitch();
     	    document.getElementById("play").textContent = "소리 ㄱ";
+    	    $("#play").attr("onclick","none");
+    	   
+    	    
+    	    musicName();
+    	    noteVText = divideNote(random);
+      		calNote(divideNote(random));
+      		 $("#answerCheck").html("<font color=orange style= 'font-size:30px;'> 3초이상 소리를 내세요 ! </font>");
     	    
     	}
+    
+    function musicName(){
+		 
+ 		// 문제 낼 때 계이름 랜덤으로 내기	
+       	var randomValue = Math.random();
+   		var key = (randomValue * 7) +1;
+   		
+       	switch (parseInt(key)) {
+   		case 1:
+   			$("#musicNote").html("도");
+   			random= 262;
+   			break;
+   			
+   		case 2:
+   			$("#musicNote").html("레");
+   			random= 294;
+   			break;
+   			
+           case 3:
+           	$("#musicNote").html("미");
+           	random= 330;
+           	break;
+           	
+           case 4:
+           	$("#musicNote").html("파");
+           	random= 349;
+           	break;
+           	
+           case 5:
+           	$("#musicNote").html("솔");
+           	random= 392;
+           	break;
+           	
+           case 6:
+           	$("#musicNote").html("라");
+           	random= 440;
+           	break;
+           	
+           case 7:
+           	$("#musicNote").html("시");
+           	random= 494;
+           	break;
+           	
+   		default:
+   			break;
+   		}
+ 	 }
 
     
     //음정을 추출하는 함수  
@@ -229,70 +289,70 @@
     function divideNote(ac){
      // C : 도 , D : 레, E : 미, F : 파, G : 솔, A : 라, B : 시 
      //2옥타브
-     if(ac>=65 && ac<69) return "C2"; 
-     else if(ac>=69 && ac<73) return "C#2";
-     else if(ac>=73 && ac<78) return "D2";
-     else if(ac>=78 && ac<82) return "D#2";
-     else if(ac>=82 && ac<87) return "E2";
-     else if(ac>=87 && ac<92) return "F2";
-     else if(ac>=92 && ac<98) return "F#2";
-     else if(ac>=98 && ac<104) return "G2";
-     else if(ac>=104 && ac<110) return "G#2";
-     else if(ac>=110 && ac<117) return "A2";
-     else if(ac>=117 && ac<123) return "A#2";
-     else if(ac>=123 && ac<131) return "B2";
+     if(ac>=65 && ac<69) return "도"; 
+     else if(ac>=69 && ac<73) return "도";//#
+     else if(ac>=73 && ac<78) return "레";
+     else if(ac>=78 && ac<82) return "레";//#
+     else if(ac>=82 && ac<87) return "미";
+     else if(ac>=87 && ac<92) return "파";
+     else if(ac>=92 && ac<98) return "파";//#
+     else if(ac>=98 && ac<104) return "솔";
+     else if(ac>=104 && ac<110) return "솔";//#
+     else if(ac>=110 && ac<117) return "라";
+     else if(ac>=117 && ac<123) return "라";//#
+     else if(ac>=123 && ac<131) return "시";
      //3옥타브
-     else if(ac>=131 && ac<139) return "C3";
-     else if(ac>=139 && ac<147) return "C#3";
-     else if(ac>=147 && ac<156) return "D3";
-     else if(ac>=156 && ac<165) return "D#3";
-     else if(ac>=165 && ac<175) return "E3";
-     else if(ac>=175 && ac<185) return "F3";
-     else if(ac>=185 && ac<196) return "F#3";
-     else if(ac>=196 && ac<208) return "G3";
-     else if(ac>=208 && ac<220) return "G#3";
-     else if(ac>=220 && ac<233) return "A3";
-     else if(ac>=233 && ac<247) return "A#3";
-     else if(ac>=247 && ac<262) return "B3";
+     else if(ac>=131 && ac<139) return "도";
+     else if(ac>=139 && ac<147) return "도";
+     else if(ac>=147 && ac<156) return "레";
+     else if(ac>=156 && ac<165) return "레";
+     else if(ac>=165 && ac<175) return "미";
+     else if(ac>=175 && ac<185) return "파";
+     else if(ac>=185 && ac<196) return "파";
+     else if(ac>=196 && ac<208) return "솔";
+     else if(ac>=208 && ac<220) return "솔";
+     else if(ac>=220 && ac<233) return "라";
+     else if(ac>=233 && ac<247) return "라";
+     else if(ac>=247 && ac<262) return "시";
      //4옥타브
-     else if(ac>=262 && ac<277) return "C4";
-     else if(ac>=277 && ac<294) return "C#4";
-     else if(ac>=294 && ac<311) return "D4";
-     else if(ac>=311 && ac<330) return "D#4";
-     else if(ac>=330 && ac<349) return "E4";
-     else if(ac>=349 && ac<370) return "F4";
-     else if(ac>=370 && ac<392) return "F#4";
-     else if(ac>=392 && ac<415) return "G4";
-     else if(ac>=415 && ac<440) return "G#4";
-     else if(ac>=440 && ac<466) return "A4";
-     else if(ac>=466 && ac<494) return "A#4";
-     else if(ac>=494 && ac<523) return "B4";
+     else if(ac>=262 && ac<277) return "도";
+     else if(ac>=277 && ac<294) return "도";
+     else if(ac>=294 && ac<311) return "레";
+     else if(ac>=311 && ac<330) return "레";
+     else if(ac>=330 && ac<349) return "미";
+     else if(ac>=349 && ac<370) return "파";
+     else if(ac>=370 && ac<392) return "파";
+     else if(ac>=392 && ac<415) return "솔";
+     else if(ac>=415 && ac<440) return "솔";
+     else if(ac>=440 && ac<466) return "라";
+     else if(ac>=466 && ac<494) return "라";
+     else if(ac>=494 && ac<523) return "시";
      //5옥타브
-     else if(ac>=523 && ac<554) return "C5";
-     else if(ac>=554 && ac<587) return "C#5";
-     else if(ac>=587 && ac<622) return "D5";
-     else if(ac>=622 && ac<659) return "D#5";
-     else if(ac>=659 && ac<698) return "E5";
-     else if(ac>=698 && ac<740) return "F5";
-     else if(ac>=740 && ac<784) return "F#5";
-     else if(ac>=784 && ac<831) return "G5";
-     else if(ac>=831 && ac<880) return "G#5";
-     else if(ac>=880 && ac<932) return "A5";
-     else if(ac>=932 && ac<988) return "A#5";
-     else if(ac>=988 && ac<1047) return "B5";
+     else if(ac>=523 && ac<554) return "도";
+     else if(ac>=554 && ac<587) return "도";
+     else if(ac>=587 && ac<622) return "레";
+     else if(ac>=622 && ac<659) return "레";
+     else if(ac>=659 && ac<698) return "미";
+     else if(ac>=698 && ac<740) return "파";
+     else if(ac>=740 && ac<784) return "파";
+     else if(ac>=784 && ac<831) return "솔";
+     else if(ac>=831 && ac<880) return "솔";
+     else if(ac>=880 && ac<932) return "라";
+     else if(ac>=932 && ac<988) return "라";
+     else if(ac>=988 && ac<1047) return "시";
      //6옥타브
-     else if(ac>=1047 && ac<1109) return "C6";
-     else if(ac>=1109 && ac<1175) return "C#6";
-     else if(ac>=1175 && ac<1245) return "D6";
-     else if(ac>=1245 && ac<1319) return "D#6";
-     else if(ac>=1319 && ac<1397) return "E6";
-     else if(ac>=1397 && ac<1480) return "F6";
-     else if(ac>=1480 && ac<1568) return "F#6";
-     else if(ac>=1568 && ac<1661) return "G6";
-     else if(ac>=1661 && ac<1760) return "G#6";
-     else if(ac>=1760 && ac<1865) return "A6";
-     else if(ac>=1865 && ac<1976) return "A#6";
-     else if(ac>=1976 && ac<2093) return "B6";
+     else if(ac>=1047 && ac<1109) return "도";
+     else if(ac>=1109 && ac<1175) return "도";
+     else if(ac>=1175 && ac<1245) return "레";
+     else if(ac>=1245 && ac<1319) return "레";
+     else if(ac>=1319 && ac<1397) return "미";
+     else if(ac>=1397 && ac<1480) return "파";
+     else if(ac>=1480 && ac<1568) return "파";
+     else if(ac>=1568 && ac<1661) return "솔";
+     else if(ac>=1661 && ac<1760) return "솔";
+     else if(ac>=1760 && ac<1865) return "라";
+     else if(ac>=1865 && ac<1976) return "라";
+     else if(ac>=1976 && ac<2093) return "시";
     }
   
   
@@ -341,6 +401,30 @@
 	}
   	
   	
+	 function check(){
+	        if ($('#musicNote').html() == $('#userNote').html()) {
+	          $("#answerCheck").html("<font color=green style= 'font-size:30px;'> 정확한 음정입니다! It's good! </font>");
+	          console.log(correct);
+	          if(correct >= count){
+	        	  correct = count;
+	        	  return;
+	          }
+	          correct++;
+	          $('#correct').html("<font style= 'font-size:20px;'>맞춘 개수 :"+correct+"</font>");
+	          $("#play").attr("onclick","none");
+	          document.getElementById("play").textContent = "다음문제";
+	          if(correct == 2){
+	        	  document.getElementById("play").textContent = "결과보기";
+	          }
+	          clearTimeout(note);
+	        } else{
+	          $("#answerCheck").html("<font color=red style= 'font-size:30px; margin-bottom:50px;'> 음정이 정확하지 않습니다.</font>");
+	          setTimeout("check()", 300);
+	          //$("#play").attr("onclick","none");
+	          //document.getElementById("play").textContent = "다음문제";
+	        }
+	      }
+  	
 	function calNote(noteVText){// 현재 음 계산하는 아이.
 		
 		   console.log("noteVText : " + noteVText);
@@ -352,19 +436,17 @@
 		   else{
 		      noteCorrect = false;
 		   }
-		   noteCheck();
-		   	  //if( (noteAc !== undefined) && (noteVText !== undefined))
-		   		 // console.log("note : " + noteAc);
-		        setTimeout("calNote('"+noteVText+"')", 1000);
-		}
-	
-	function noteCheck(){   
-		   if(noteCorrect == 1){
-		      document.getElementById('light').src="/resources/img/greenlight.png";
-		   }
-		   else if(noteCorrect == 0){
-		      document.getElementById('light').src="/resources/img/redlight.png";
-		   }
+	   	 	 //if( (noteAc !== undefined) && (noteVText !== undefined))
+	   		 // console.log("note : " + noteAc);
+	   	 	if((noteAc !== undefined) && (noteVText !== undefined)){
+	   	 		check();
+	   	 	} 
+	   	
+		   note = setTimeout("calNote('"+noteVText+"')", 1000);
+		   
+		   $("#userNote").html(noteAc);
+		   updatePitch();
+		   
 		}
 
     </script>
@@ -389,24 +471,22 @@
     
     <h1 style="margin: 30px;" id='quizNum'> 1번 문제 !</h1>
     <span id="musicNote" style="font-size: 50px;"></span>
-    <br>
-    <input type="hidden" name="correct" id="correctinput" value=""> 
-
-    <div>
-    <button class="btn btn-primary" id="play" onclick="singAsong()"
-    style="width: 20%; height:100px; margin: 50px; font-size: 50px;">준비</button>
+    <div style="width: 500px; padding-left: 50px; padding-right: 20px;">
+    <hr> 
     </div>
-    
-     <div class="signalbar">
-     <img src="/resources/img/blacklight.png" id="light" style="width:15%; height: 20%;"> </div>
-     </div>
-     
-     
+    <br>
+    <span id="userNote" style="font-size: 50px;"></span>
+    <input type="hidden" name="correct" id="correctinput" value=""> 
     <br>
     <span id="correct"><font style= 'font-size:20px;'>맞춘 개수 : 0</font></span>
     <br>
     <span id="answerCheck" style="margin: 30px;"></span>
     </center>
+    
+    <div>
+    <button class="btn btn-primary" id="play" onclick="singAsong()"
+    style="width: 20%; height:100px; margin: 50px; font-size: 50px;">준비</button>
+    </div>  
     
  
 
@@ -417,76 +497,27 @@
   	 audioContext = new AudioContext();
  	 init();
      
-      $("#insert").click(function(event){
-    	check(count);
-
-      })
-      function check(data){
-        if ($('#answer').val() == list[data].stitle) {
-          $("#answerCheck").html("<font color=green style= 'font-size:30px;'> 딩동댕! 정답입니다.</font>");
-          correct+=1;
-          $('#correct').html("<font style= 'font-size:20px;'>맞춘 개수 :"+correct+"</font>");
-          document.getElementById("insert").style.visibility = "hidden";   
-  		  
-  		  
-        } else if($('#answer').val() == "") {
-          alert("정답을 입력해주세요.");
-        } else{
-          $("#answerCheck").html("<font color=red style= 'font-size:30px; margin-bottom:50px;'> 땡! 틀렸습니다.</font>");
-          document.getElementById("insert").style.visibility = "hidden";   
-          
-        }
-      }
-      
-
-     	// 문제 낼 때 계이름 랜덤으로 내기	
-      	var randomValue = Math.random();
-  		var key = (randomValue * 7) +1;
-  		
-      	switch (parseInt(key)) {
-  		case 1:
-  			$("#musicNote").html("도");
-  			random= 262;
-  			break;
-  			
-  		case 2:
-  			$("#musicNote").html("레");
-  			random= 294;
-  			break;
-  			
-          case 3:
-          	$("#musicNote").html("미");
-          	random= 330;
-          	break;
-          	
-          case 4:
-          	$("#musicNote").html("파");
-          	random= 349;
-          	break;
-          	
-          case 5:
-          	$("#musicNote").html("솔");
-          	random= 392;
-          	break;
-          	
-          case 6:
-          	$("#musicNote").html("라");
-          	random= 440;
-          	break;
-          	
-          case 7:
-          	$("#musicNote").html("시");
-          	random= 494;
-          	break;
-          	
-  		default:
-  			break;
-  		}
-      	
       	
       	$("#play").on("click", function() {
-      		noteVText = divideNote(random);
-      		calNote(divideNote(random));
+      		
+      	 	  if(document.getElementById("play").innerHTML == "다음문제"){
+      	 		count++;
+      			$("#quizNum").html((count)+"번 문제 ! ");// 몇번째 문제
+      			document.getElementById("play").textContent = "준비";
+      			$("#answerCheck").html("");             // 정답체크 문장 비우기
+      			playing = false;
+      			$("#play").attr("onclick","singAsong()");
+      			$("#musicNote").html(" ");
+      			$("#userNote").html(" ");
+  	            clearTimeout(note);
+      		 }else if(document.getElementById("play").innerHTML == "결과보기"){
+      			$("#musicNote").html(" ");
+      			$("#userNote").html(" ");
+      			self.location = "/game/ppgameResult"
+      			}
+      			
+
+
 		});
   }); //END ready
 

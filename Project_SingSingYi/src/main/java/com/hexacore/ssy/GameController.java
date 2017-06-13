@@ -47,7 +47,7 @@ public class GameController {
 	// 종현이 게임 본 페이지 POST
 	@RequestMapping(value = "/jhgame", method = RequestMethod.POST)
 		public ResponseEntity<List<Song>> jhgamePOST(Model model){
-		logger.info("클라이언트: 게임결과페이지 입장1");
+		logger.info("클라이언트: 종현이 게임 입장!");
 			ResponseEntity<List<Song>> entity = null;
 			
 			try{
@@ -65,7 +65,7 @@ public class GameController {
 	// 종현이 게임 결과 페이지
 	@RequestMapping(value = "/gameResult", method = RequestMethod.POST)
 	public void gameResultPOST(Model model, @RequestParam("correct") int correct ) {
-			logger.info("클라이언트: 게임결과페이지 입장3");
+			logger.info("클라이언트: 종현이 게임 결과 !");
 			logger.info(correct);
 			model.addAttribute("correct", correct);
 			model.addAttribute("countSong", service.countSong());
@@ -92,7 +92,7 @@ public class GameController {
 	// 절대음감 게임 본 페이지 POST
 	@RequestMapping(value = "/ppgame", method = RequestMethod.POST)
 		public ResponseEntity<List<Song>> ppgamePOST(Model model){
-		logger.info("클라이언트: 게임결과페이지 입장1");
+		logger.info("클라이언트: 절대음감 게임 페이지  입장 !");
 			ResponseEntity<List<Song>> entity = null;
 			try{
 				entity = new ResponseEntity<List<Song>>(
@@ -107,12 +107,10 @@ public class GameController {
 	}
 		
 	// 절대음감 게임 결과 페이지
-	@RequestMapping(value = "/ppgameResult", method = RequestMethod.POST)
-	public void ppgameResultPOST(Model model, @RequestParam("correct") int correct ) {
-			logger.info("클라이언트: 게임결과페이지 입장3");
-			logger.info(correct);
-			model.addAttribute("correct", correct);
-			model.addAttribute("countSong", service.countSong());
+	@RequestMapping(value = "/ppgameResult", method = RequestMethod.GET)
+	public void ppgameResultPOST(Model model) {
+			logger.info("클라이언트: 절대음감 게임 결과 !!");
+
 			
 		}
 		

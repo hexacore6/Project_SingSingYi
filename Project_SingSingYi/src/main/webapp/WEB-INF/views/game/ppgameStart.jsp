@@ -18,7 +18,7 @@
   $(document).ready(
       function() {
         $('#gameStart').on("click", function(evt) {
-          self.location = "perfectpitchgame";
+          self.location = "ppgame";
         })
       })
 </script>

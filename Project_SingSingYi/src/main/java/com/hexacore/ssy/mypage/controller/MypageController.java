@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -31,6 +32,7 @@ import com.hexacore.ssy.common.Criteria;
 import com.hexacore.ssy.common.PageMaker;
 import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
+import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.mypage.service.MypageService;
 import com.hexacore.ssy.sharing.domain.Sharing;
 import com.hexacore.ssy.sharing.service.SharingService;
@@ -150,26 +152,31 @@ public class MypageController {
 	@RequestMapping(value="record", method=RequestMethod.GET)
 	public void readMyRecord(Criteria cri, Model model, HttpSession httpSession){
 		Member member = (Member)httpSession.getAttribute("login");
-		
 		String id = member.getId();
-		model.addAttribute("id", id);
-		model.addAttribute("list", service.readMyRecord(cri, id));
+		List<RecordRepository> list = service.readMyRecord(cri, id);
+		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		
 		pageMaker.setTotalCount(service.countRecordPaging(cri, id));
 		
+		model.addAttribute("id", id);
+		model.addAttribute("list", list);
 		model.addAttribute("pageMaker", pageMaker);
 	}
 
 	// 나의 녹음저장소 삭제
-	@RequestMapping(value="/removerecord", method=RequestMethod.GET)
-	public String removeMyRecord(@RequestParam("rrid") int rrid, RedirectAttributes rttr){
+	@RequestMapping(value="/removeRecord", method=RequestMethod.POST)
+	public ResponseEntity<Boolean> removeMyRecord(@RequestBody RecordRepository recordRepository, RedirectAttributes rttr){
+		ResponseEntity<Boolean> entity = null;
+		
+		int rrid = recordRepository.getRrid();
+		
 		service.deleteMyRecord(rrid);
 		
-		rttr.addFlashAttribute("msg", "SUCCESS");
+		entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		
-		return "redirect:/mypage/myRecord";
+		return entity;
 	}
 	
 	// 이미지 파일 불러오기

@@ -88,7 +88,7 @@ window.onload = function () {
     
     $.ajax({
         type : "GET",
-        url : "http://127.0.0.1:3000/first",
+        url : "http://192.168.0.63:3000/first",
         data : "id="+loginCookie[1],
         dataType : "jsonp",
         success : function(json) {
@@ -102,7 +102,7 @@ window.onload = function () {
     
     $.ajax({
         type : "GET",
-        url : "http://127.0.0.1:3000/coincnt",
+        url : "http://192.168.0.63:3000/coincnt",
         data : "id="+loginCookie[1],
         dataType : "jsonp",
         success : function(data) {

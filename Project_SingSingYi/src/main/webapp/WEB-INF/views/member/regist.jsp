@@ -34,7 +34,6 @@
 	$(document).ready(function() {
 		$('#fullpage').fullpage({
 			sectionsColor : [ '#1bbc9b', '#4BBFC3', '#7BAABE' ],
-
 		});
 		/* 
 		// run the currently selected effect
@@ -114,7 +113,7 @@
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 body {
-	font-family: 'Jeju Gothic', serif;
+	font-family: 'Jeju Gothic', Arial;
 }
 /* Style for our header texts
 		* --------------------------------------- */
@@ -126,7 +125,7 @@ h1 {
 	padding: 0;
 }
 
-.section {
+#section0 {
 	background-image: url(/resources/img/regist.jpg);
 }
 
@@ -268,7 +267,7 @@ select#question {
 </head>
 <body>
 	<div id="fullpage" >
-		<div class="section">
+		<div class="section" id="section0">
 			<div class="start">
 				<div class="panel-heading">
 					<div class="panel-title text-center">

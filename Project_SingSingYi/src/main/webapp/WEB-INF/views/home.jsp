@@ -27,7 +27,6 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#fullpage').fullpage({
-			sectionsColor : [ '#1bbc9b', '#4BBFC3', '#7BAABE' ],
 			navigation : true,
 			navigationPosition : 'left'
 		});
@@ -42,7 +41,7 @@
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 body {
-	font-family: 'Jeju Gothic', serif;
+	font-family: 'Jeju Gothic', Arial;
 }
 
 /* Style for our header texts */
@@ -82,7 +81,7 @@ button {
 	margin-bottom: 10px;
 	border-radius: 3px;
 	opacity: 0.7;
-	font-family: 'Jeju Gothic', serif;
+	font-family: 'Jeju Gothic', Arial;
 }
 
 button:hover {

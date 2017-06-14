@@ -51,7 +51,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 	}
 	
-	// 기존 HttpSession에 남아있는 정보가 있는 경우 정보를 삭제
+	// 기존 HttpSession에 남아있는 정보가 있는 경우 메인으로 이동
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		HttpSession httpSession = request.getSession();
@@ -60,7 +60,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 //			logger.info("clear login data before");
 //			httpSession.removeAttribute(LOGIN);
 			
-			// 로그인한 상태에서 home, login, (regist) 페이지로 이동할 때
+			// 기존 HttpSession에 남아있는 정보가 있을 때(로그인한 상태) home, login, regist 페이지로 이동할 때
 			logger.info("is logined");
 			response.sendRedirect("/song/main");
 			return true;

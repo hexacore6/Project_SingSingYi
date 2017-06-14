@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../resources/css/main.css?ver=1">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../../resources/css/bootstrap3-wysihtml5.min.css?ver=2">\
+    <link rel="stylesheet" href="../../../resources/css/bootstrap3-wysihtml5.min.css?ver=2">
     <link rel="stylesheet" type="text/css" href="../../resources/css/sweetalert.css">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>

@@ -14,6 +14,18 @@
 		VALUES (#{id}, #{password}, #{pwquestion}, #{pwanswer})
 	</insert>
 	
+	<select id="searchPw" resultType="String">
+		SELECT	id
+		FROM	members
+		WHERE	id = #{id} and pwquestion = #{pwquestion} and pwanswer = #{pwanswer}
+	</select>
+	
+	<update id="resetPw">
+		UPDATE	members
+		SET		password = #{password}
+		WHERE	id = #{id}
+	</update>
+	
 	<select id="confirm" resultType="String">
 		SELECT	id
 		FROM	members

@@ -60,8 +60,14 @@
 		setTimeout(function() {
 			$(".start").show();
 		}, 500);
-		
 	});
+</script>
+
+<script>
+var result = '${message}';
+if (result == 'fail') {
+	alert("로그인 실패");
+}
 </script>
 
 <style>
@@ -183,6 +189,9 @@ input {
 					<button type="submit" id="button">로그인</button>
 				</form>
 				
+				<div class="login-register">
+					<a style="font-size: 15px" href="/member/search">비밀번호 찾기</a>
+				</div>
 				<!-- 
 				<div class="toggler">
 					<div id="effect">
@@ -219,5 +228,7 @@ input {
 			}
 		});
 	</script> -->
+	
+	
 </body>
 </html>

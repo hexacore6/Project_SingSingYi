@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.hexacore.ssy.member.domain.Member;
@@ -30,7 +31,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		ModelMap modelMap = modelAndView.getModelMap();
 		Member member = (Member)modelMap.get("member");
-		
+		/*
+		String msg = (String)modelMap.get("msg");
+		if(msg != null) {
+			logger.info("로그인 실패!");
+			response.sendRedirect("/member/login");
+		}
+		*/
 		if(member != null) {
 			logger.info("new login success");
 			httpSession.setAttribute(LOGIN, member);

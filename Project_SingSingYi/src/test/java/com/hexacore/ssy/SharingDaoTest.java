@@ -1,7 +1,5 @@
 package com.hexacore.ssy;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -11,10 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hexacore.ssy.sharing.dao.SharingDAO;
-import com.hexacore.ssy.sharing.domain.Comment;
-import com.hexacore.ssy.sharing.domain.RecordRepository;
 import com.hexacore.ssy.sharing.domain.Sharing;
-import com.hexacore.ssy.sharing.service.SharingService;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,20 +19,20 @@ public class SharingDaoTest {
 	Logger logger = Logger.getLogger(SharingDaoTest.class);
 
 	@Inject
-	//private SharingDao dao;
-	private SharingService service;
+	private SharingDAO dao;
+	//private SharingService service;
 	
-/*	//@Test
+	//@Test
 	public void testCreate() throws Exception {
 		
 		Sharing sharing = new Sharing();
 		sharing.setId("kosta111");
 		sharing.setShcontent("test");
-		sharing.setEximgfilename("test.jpg");
+		//sharing.setEximgfilename("test.jpg");
 		dao.create(sharing);
 		//service.regist(sharing);
 	}
-	
+	/*
 	//@Test
 	public void testRead() {
 		//logger.info("2" + dao.read(2));
@@ -164,12 +159,17 @@ public class SharingDaoTest {
 		dao.searchByContent(shcontent);
 	}*/
 	
-	@Test
+	/*@Test
 	public void testGetRecord(){
 		List<RecordRepository> list = service.getRecord("kosta111");
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println(list.get(i).getRecordfilename() + "출력");
 		}
+	}*/
+	
+	@Test
+	public void testGetLikeCnt(){
+		System.out.println(dao.getLikeCnt(110));
 	}
 
 }

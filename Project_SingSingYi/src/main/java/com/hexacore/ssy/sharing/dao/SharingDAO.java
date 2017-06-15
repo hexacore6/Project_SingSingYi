@@ -32,10 +32,10 @@ public interface SharingDAO {
 	public int getShid();
 	
 	//좋아요기록 남기기
-	public void likeHistory(Sharing sharing);
+	public void likeHistory(LikeHistory likeHistory);
 	
 	//좋아요기록 체크하기
-	public LikeHistory checkLike(int shid);
+	public LikeHistory checkLike(LikeHistory likeHistory);
 	
 	//공유글 상세조회
 	public Sharing read(int shid);
@@ -53,8 +53,9 @@ public interface SharingDAO {
 	public void deleteComment(int shid);
 	public void updateCommentCnt(int shid);
 	public void updateLikeCnt(int shid);
+	public int getLikeCnt(int shid);
 	public void fallLikeCnt(int shid);
-	public void deleteLikeHistory(int shid);
+	public void deleteLikeHistory(LikeHistory likeHistory);
 	public void addAttach(String eximgfilename);
 	
 	//유저이름을 통한 검색처리

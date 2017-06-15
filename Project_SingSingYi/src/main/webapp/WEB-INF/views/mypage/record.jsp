@@ -17,6 +17,58 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
   <script src="../../resources/js/sweetalert.min.js"></script>
+  <script type="text/javascript">
+  var oAudio = null;
+  var oAudio2 = null;
+  var currentFile = "";
+  function playAudio(index) {
+      if (window.HTMLAudioElement) {
+          try {
+               oAudio = document.getElementById('audio'+index);
+               oAudio2 = document.getElementById('audio2'+index);
+               oAudio.volume = 0.5
+               oAudio2.volume = 0.5
+              var btn = document.getElementById('play'+index); 
+              /* var audioURL = document.getElementById('audiofile'); */ 
+
+              //Skip loading if current file hasn't changed.
+/*               if (audioURL.value !== currentFile) {
+                   oAudio.src = audioURL.value; 
+                   currentFile = audioURL.value;                        
+              } */
+
+              // Tests the paused attribute and set state. 
+              if (oAudio.paused) {
+                  oAudio.play();
+                  oAudio2.play();
+                  btn.textContent = "Pause";
+              }
+              else {
+                  oAudio.pause();
+                  oAudio2.pause();
+                  btn.textContent = "Play";
+              }
+          }
+          catch (e) {
+              // Fail silently but show in F12 developer tools console
+               if(window.console && console.error("Error:" + e));
+          }
+      }
+  }
+  function pvolume() {
+      oAudio.volume = Math.min(oAudio.volume + 0.1, 1);
+      oAudio2.volume = Math.min(oAudio2.volume + 0.1, 1);
+} 
+function mvolume() {
+    if(oAudio.volume > 0.1){
+      oAudio.volume = Math.min(oAudio.volume - 0.1, 1);
+      oAudio2.volume = Math.min(oAudio2.volume - 0.1, 1);
+    }else{ 
+		return;
+    }
+} 
+
+  </script>
 </head>
 <body>
     <jsp:include page="../include/header.jsp"></jsp:include>
@@ -51,15 +103,22 @@
                       <th style="width: 10px; text-align: center;">녹음된 날짜</th>
                       <th style="width: 5px; text-align: center;">재생</th>
                       <th style="width: 5px; text-align: center;">삭제</th>
-                    </tr>
+                                   </tr>
                       <c:forEach items="${list}" var="record" varStatus="stat">  
                       <tr id="trRecord${record.rrid}">
                         <td style="text-align: center">${((pageMaker.cri.page-1)*10)+(stat.index)}</td>
                         <td style="width: 20px; text-align: center;">${record.recordfilename}</td>
                         <td style="width: 5px; text-align: center;"><span class="badge bg-black"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${record.recordregdate}" /></span></td>
                         <td style="width: 200px; text-align: center;">
-                          <audio controls name="media">
-                            <source src="displayRecord?fileName=/${record.recordfilename }" type="audio/mpeg">
+                        <button id="play${stat.index}" onclick="playAudio(${stat.index});">play</button>
+                        <button id="pvolume${stat.index}" onclick="pvolume(${stat.index});">+</button>
+                        <button id="mvolume${stat.index}" onclick="mvolume(${stat.index});">-</button>
+                          <audio controls name="media" id="audio${stat.index}" hidden="hidden">
+                            <source src="displayRecord?fileName=/woong1_4_오래된 노래.mp3" type="audio/mpeg">
+                            <!-- <source src="/resources/mp3/123.mp3" type="audio/mpeg"> -->
+                          </audio>
+                          <audio controls name="media2" id="audio2${stat.index}" hidden="hidden">
+                            <source src="displayRecord?fileName=/woong1_3_그대여.mp3" type="audio/mpeg">
                             <!-- <source src="/resources/mp3/123.mp3" type="audio/mpeg"> -->
                           </audio>
                         </td>

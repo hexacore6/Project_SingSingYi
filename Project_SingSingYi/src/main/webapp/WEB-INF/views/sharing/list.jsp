@@ -563,7 +563,6 @@ $(document).ready(function(){
 					iframeDocument.postMessage('2000:' + id, '*');
             	}
 				else{
-					
                 return;
                 
             	}

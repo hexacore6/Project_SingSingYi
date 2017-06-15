@@ -195,6 +195,10 @@ public class SharingController {
 	public ResponseEntity<List<Comment>> listComment(@RequestBody Sharing sharing, Model model) {
 		ResponseEntity<List<Comment>> entity = null;
 		try {
+			List<Comment> list = sharingService.listComment(sharing.getShid());
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println(list.get(i).getCregdate() + "댓글날짜");
+			}
 			model.addAttribute("listComment", sharingService.listComment(sharing.getShid()));
 			entity = new ResponseEntity<List<Comment>>(sharingService.listComment(sharing.getShid()), HttpStatus.OK);
 		} catch (Exception e) {
@@ -293,8 +297,8 @@ public class SharingController {
 			list = sharingService.searchById(keyword);
 			for (int i = 0; i < list.size(); i++) {
 				name = list.get(i).getRecordfilename();
-				if(name != null){
-					array = name.split("@");
+				if(!name.equals("")){
+					array = name.split("-");
 					list.get(i).setRecordfilename(array[2]);
 				}
 			}
@@ -305,8 +309,8 @@ public class SharingController {
 			System.out.println(keyword + "입력한 노래 제목");
 			for (int i = 0; i < list.size(); i++) {
 				name = list.get(i).getRecordfilename();
-				if(name != null){
-					array = name.split("@");
+				if(!name.equals("")){
+					array = name.split("-");
 					list.get(i).setRecordfilename(array[2]);
 				}
 			}
@@ -316,8 +320,8 @@ public class SharingController {
 			list = sharingService.searchByContent(keyword);
 			for (int i = 0; i < list.size(); i++) {
 				name = list.get(i).getRecordfilename();
-				if(name != null){
-					array = name.split("@");
+				if(!name.equals("")){
+					array = name.split("-");
 					list.get(i).setRecordfilename(array[2]);
 				}
 			}
@@ -419,7 +423,7 @@ public class SharingController {
 			for (int i = 0; i < list.size(); i++) {
 				//date = format.format(list.get(i).getRecordregdate());
 				//System.out.println(date + "스트링으로 변환");
-				//list.get(i).setRecordregdate(date);
+				//list.get(i).setRecordregdate(format(recordRepository.getRecordregdate()));
 				System.out.println(list.get(i).getRecordregdate() + "출력");
 			}
 			entity = new ResponseEntity<List<RecordRepository>>(sharingService.getRecord(recordRepository.getId()), HttpStatus.OK);

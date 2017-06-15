@@ -306,7 +306,7 @@ $(document).ready(function(){
 											</div>
 										</div>
 									</div>
-									<div id="comments" style="background-color: #d6d6c2; margin: 2px;">
+									<div id="comments" style="background-color: #f5f5f0; margin: 2px;">
 									
 									</div>
 								</div>
@@ -341,7 +341,7 @@ $(document).ready(function(){
 										</div>
 										<div class="row">
 											<h3>
-												<i class="fa fa-user"></i> <span id="updateId"></span>
+												<i class="fa fa-user"></i> <span id="updateId" style="font-weight: bold"></span>
 											</h3>
 										</div>
 										<textarea class="form-control" name="shcontent" id="updateShcontent"
@@ -352,11 +352,11 @@ $(document).ready(function(){
 
 									<div class="modal-footer">
 										<div class="btn-group">
-											<button type="submit" id="updateBtn" class="btn" style="background-color: #d6d6c2; color: black;">
-												<i class="fa fa-pencil" style="color: black;"> </i>UPDATE
+											<button type="submit" id="updateBtn" class="btn" style="background-color: #d9534f; color: black;">
+												<i class="fa fa-pencil" style="color: black;"> </i><span style="font-weight: bold">UPDATE</span>
 											</button>
 											<button type="button" class="btn btn-default"
-												data-dismiss="modal" aria-label="Close">CANCEL
+												data-dismiss="modal" aria-label="Close"><span style="font-weight: bold">CANCEL</span>
 											</button>
 										</div>
 									</div>
@@ -389,13 +389,14 @@ $(document).ready(function(){
 									</div>
 
 									<div class="modal-footer">
-											<button type="submit" id="deleteBtn" class="btn btn-primary">
-												<i class="fa fa-pencil"> </i>DELETE
+										<div class="btn-group">
+											<button type="submit" id="deleteBtn" class="btn btn-primary" style="background-color: #d9534f;">
+												<i class="fa fa-trash"> </i>DELETE
 											</button>
 											<button type="button" class="btn btn-default"
-												data-dismiss="modal" aria-label="Close">
-												<i class="fa fa-trash"> </i>CANCEL
+												data-dismiss="modal" aria-label="Close">CANCEL
 											</button>
+										</div>
 									</div>
 								</form>
 							</div>
@@ -557,24 +558,16 @@ $(document).ready(function(){
 			success : function(result) {
 				var sharing = JSON.parse(result);
 				var likeCnt = "#likeCnt" + index;
-				//$(likeCnt).empty();
 				$(likeCnt).text((parseInt(sharing.likecnt)));
-				/*console.log(like);
-				 if (like == false) {
-					//DB상에 좋아요 기록이 있을 경우
-					var likeCnt = "#likeCnt" + index;
-					console.log(likeCnt);
-					//$(likeCnt).empty();
-					$(likeCnt).text(parseInt(likecnt));
-
-				} else {
-					//DB상에 좋아요 기록이 없을 경우
-					console.log(likeCnt);
-					var likeCnt = "#likeCnt" + index;
-					//$(likeCnt).empty();
-					$(likeCnt).text(parseInt(likecnt) + parseInt(one));
-					//iframeDocument.postMessage('2000:' + id, '*');
-				} */
+				if(sharing.likecnt > likecnt){
+					iframeDocument.postMessage('2000:' + id, '*');
+            	}
+				else{
+					
+                return;
+                
+            	}
+				
 			}
 		});
 	}
@@ -602,7 +595,9 @@ $(document).ready(function(){
 						str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
 								+ "<div class=\"pull-left\">"
 								+ "<i class=\"fa fa-user\">"
+								+ "<span style=\"font-weight: bold\">"
 								+ comment.id
+								+ "</span>"
 								+ "</i>"
 								+ "</div>"
 								+ "<div class=\"box-body\">"
@@ -666,8 +661,15 @@ $(document).ready(function(){
 											str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
 													+ "<div class=\"pull-left\">"
 													+ "<i class=\"fa fa-user\">"
+													+ "<span style=\"font-weight: bold\">"
 													+ this.id
+													+ "<span>"
 													+ "</i>"
+													+ "</div>"
+													+ "<div style=\"float: right;\">"
+													+ "<span style=\"font-weight: bold\">"
+													+ this.cregdate
+													+ "<span>"
 													+ "</div>"
 													+ "<div class=\"box-body\">"
 													+ "<h3>"

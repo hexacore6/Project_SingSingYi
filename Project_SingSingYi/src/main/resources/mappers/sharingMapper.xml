@@ -60,7 +60,7 @@
 	
 	<select id="listComment" resultType="com.hexacore.ssy.sharing.domain.Comment">
 	<![CDATA[
-		SELECT id, ccontent
+		SELECT id, ccontent, cregdate
 		FROM comments 
 		WHERE shid = #{shid}
 		ORDER BY cregdate asc

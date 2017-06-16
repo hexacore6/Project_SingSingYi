@@ -77,6 +77,11 @@ public class SharingDAOImpl implements SharingDAO {
 	public void deleteComment(int shid) {
 		session.delete(namespace + ".deleteComment", shid);
 	}
+	
+	@Override
+	public void deleteAllLikeHistory(int shid) {
+		session.delete(namespace + ".deleteAllLikeHistory", shid);
+	}
 
 	@Override
 	public void updateCommentCnt(int shid) {
@@ -155,6 +160,8 @@ public class SharingDAOImpl implements SharingDAO {
 	public List<RecordRepository> getRecord(String id) {
 		return session.selectList(namespace + ".getRecord", id);
 	}
+
+	
 
 	
 

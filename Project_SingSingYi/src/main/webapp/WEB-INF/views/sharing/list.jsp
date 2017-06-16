@@ -30,6 +30,12 @@
 </style>
 
 <style type="text/css">
+#noDataDrop{
+	width: 100%;
+	height: 25px;
+	background-color: #d6d6c2;;
+	
+}
 #mp3Drop{
 	width: 100%;
 	height: 140px;
@@ -124,7 +130,15 @@ $(document).ready(function(){
 		}
 		else{
 			//이미지파일이 없는 경우
-			$("#mp3Drop").show("slow");	
+			///sssss
+			var data = document.getElementById("dataCheck").value;
+			console.log(data);
+			if($("#dataCheck").val() == "noData"){
+				$("#noDataDrop").show("slow");	
+			}
+			else{
+				$("#mp3Drop").show("slow");	
+			}
 		}
 	});
 
@@ -209,12 +223,15 @@ $(document).ready(function(){
 											<i class="fa fa-camera" id="uploadImage"></i>
 										</div>
 
-										<button type="submit" id="textAddbtn" class="btn" style="background-color: #d6d6c2;" onclick="writeAlert()">
+										<button type="submit" id="textAddbtn" class="btn" style="background-color: #d6d6c2;">
 											<i class="fa fa-pencil"> </i>Sing Sing
 										</button>
 										<!-- MP3 업로드 공간 -->
+										<div id="imageDrop" hidden>
+										</div>
 										<div id="mp3Drop" hidden>
 											<input type="text" name="recordfilename" id="selected" hidden>
+											<input type="text" id="dataCheck" hidden>
 											<table class="table table-striped">
 												<tbody id="appendRecord">
 													<tr>
@@ -385,7 +402,6 @@ $(document).ready(function(){
 									</div>
 									<div class="modal-body">
 										<p>해당 글을 삭제하시겠습니까?</p>
-
 									</div>
 
 									<div class="modal-footer">
@@ -416,11 +432,14 @@ $(document).ready(function(){
 							
 							<div class="animate-box" style="border-radius: 10px;">
 							<c:set var="eximgfilename" value="${sharing.eximgfilename}"/>
+							<c:set var="emptyString" value="NoImageType"/>
 							<c:if test="${eximgfilename ne null}">
-								<img
+								<c:if test="${eximgfilename ne emptyString}">
+									<img
 									src="displayFile?fileName=/${sharing.eximgfilename}"
 									alt=""
 									onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; display: block;">
+								</c:if>
 							</c:if>
 							</div>
 							<c:set var="recordfilename" value="${sharing.recordfilename}"/>
@@ -522,19 +541,31 @@ $(document).ready(function(){
 			success : function(result) {
 				var str = "";
 				var array = JSON.parse(result);
-				$(array).each(function() {
-									str += "<tr>"
-										+ "<td style=\"text-align: center;\">" + this.recordfilename + "</td>"
-										+ "<td style=\"text-align: center;\">" 
-										+ this.recordregdate
-										+ "</td>"
-										+ "<td style=\"text-align: center;\">"
-										+ "<button type=\"button\" onclick=\"selectRecord('"+ this.recordfilename +"')\">선택</button>"
-										+ "</td>"
-										+ "</tr>";
-								});
-				
-				$("#appendRecord").html(str); 
+				console.log(array.length+ "녹음저장소 길이");
+				if(array.length == 0){
+					var noData = "noData";
+					str += "<span style=\"text-align: center; float: left;\">"
+					    + "<strong>녹음파일이 존재하지 않습니다.</strong>"
+						+ "</span>";
+					$("#appendRecord").html(str);
+					$("#dataCheck").attr("value", noData);
+					
+				}
+				else{
+					$(array).each(function() {
+						
+						str += "<tr>"
+							+ "<td style=\"text-align: center;\">" + this.recordfilename + "</td>"
+							+ "<td style=\"text-align: center;\">" 
+							+ this.recordregdate
+							+ "</td>"
+							+ "<td style=\"text-align: center;\">"
+							+ "<button type=\"button\" onclick=\"selectRecord('"+ this.recordfilename +"')\">선택</button>"
+							+ "</td>"
+							+ "</tr>";
+					});
+					$("#appendRecord").html(str); 
+				}
 			}
 		});
 	}

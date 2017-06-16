@@ -82,7 +82,7 @@
 	<!-- 내 애창곡 조회 (등록한 노래번호 조회) 페이징 처리 -->
 	<select id ="favoriteCriteria" resultType="hashMap">
 		<![CDATA[
-		select fid, stitle, singer
+		select fid, stitle, singer, sfilename
 		from favorites natural join songs 
 		where fid > 0 AND id=#{id}
 		order by fid

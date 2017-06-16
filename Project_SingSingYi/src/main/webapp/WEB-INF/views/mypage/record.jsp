@@ -98,7 +98,7 @@ function mvolume() {
                 <table class="table table-striped">
                   <tbody>
                     <tr>
-                      <th style="width: 5px; text-align: center;">번호</th>
+                      <th style="width: 5px; text-align: center;">번호 </th>
                       <th style="width: 50px; text-align: center;">곡명</th>
                       <th style="width: 10px; text-align: center;">녹음된 날짜</th>
                       <th style="width: 5px; text-align: center;">재생</th>
@@ -114,11 +114,12 @@ function mvolume() {
                         <button id="pvolume${stat.index}" onclick="pvolume(${stat.index});">+</button>
                         <button id="mvolume${stat.index}" onclick="mvolume(${stat.index});">-</button>
                           <audio controls name="media" id="audio${stat.index}" hidden="hidden">
-                            <source src="displayRecord?fileName=/woong1_4_오래된 노래.mp3" type="audio/mpeg">
+                            <source src="../../../resources/music/${recordfilename}" type="audio/mpeg">
                             <!-- <source src="/resources/mp3/123.mp3" type="audio/mpeg"> -->
                           </audio>
+                          <c:if test=""></c:if>
                           <audio controls name="media2" id="audio2${stat.index}" hidden="hidden">
-                            <source src="displayRecord?fileName=/woong1_3_그대여.mp3" type="audio/mpeg">
+                            <source src="../../../resources/record/${record.recordfilename}" type="audio/mpeg">
                             <!-- <source src="/resources/mp3/123.mp3" type="audio/mpeg"> -->
                           </audio>
                         </td>

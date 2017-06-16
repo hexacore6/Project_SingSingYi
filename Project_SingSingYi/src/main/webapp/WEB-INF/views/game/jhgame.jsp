@@ -21,10 +21,10 @@
         // Global variable to track current file name.
         var list = new Array();
         var count = 0;
-        var correct =0
+        var correct = 0;
             $.ajax({
                 type: 'post',
-                url: 'http://192.168.0.72/game/jhgame', 
+                url: '/game/jhgame', 
                 headers : {
 						"Content-Type" : "application/json",
 					},
@@ -159,7 +159,7 @@
     style="width: 20%; height:100px; margin: 50px; font-size: 50px;"><b>재생</b></button>
     
     <form role="form" method="post" action="/game/gameResult">
-    
+    <input type="hidden" name="id" value="${login.id}">
     <input type="hidden" name="correct" id="correctinput" value=""> 
     <button type="submit" class="btn btn-warning" id="resultBtn" onclick="send();"
     style="width: 20%; height:100px; margin: 50px; font-size: 50px; display: none;"><b>결과 보기</b></button>

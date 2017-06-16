@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.hexacore.ssy.member.domain.Member;
@@ -30,7 +31,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		ModelMap modelMap = modelAndView.getModelMap();
 		Member member = (Member)modelMap.get("member");
-		
+		/*
+		String msg = (String)modelMap.get("msg");
+		if(msg != null) {
+			logger.info("로그인 실패!");
+			response.sendRedirect("/member/login");
+		}
+		*/
 		if(member != null) {
 			logger.info("new login success");
 			httpSession.setAttribute(LOGIN, member);
@@ -51,7 +58,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 	}
 	
-	// 기존 HttpSession에 남아있는 정보가 있는 경우 정보를 삭제
+	// 기존 HttpSession에 남아있는 정보가 있는 경우 메인으로 이동
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		HttpSession httpSession = request.getSession();
@@ -60,7 +67,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 //			logger.info("clear login data before");
 //			httpSession.removeAttribute(LOGIN);
 			
-			// 로그인한 상태에서 home, login, (regist) 페이지로 이동할 때
+			// 기존 HttpSession에 남아있는 정보가 있을 때(로그인한 상태) home, login, regist 페이지로 이동할 때
 			logger.info("is logined");
 			response.sendRedirect("/song/main");
 			return true;

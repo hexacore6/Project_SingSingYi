@@ -28,21 +28,25 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/member/loginPost" />
-			<mapping path="/" />
+			<mapping path="/member/regist" />
 			<mapping path="/member/login" />
+			<mapping path="/"/>
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 		
 		<interceptor>
-			<mapping path="/song/main" />
+			<mapping path="/song/*" />
+			<mapping path="/game/*" />
+			<mapping path="/sharing/*" />
+			<mapping path="/mypage/*" />
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 		
-		<interceptor>
+		<!-- <interceptor>
 			<mapping path="/mypage/*" />
 			<exclude-mapping path="/mypage/sharing"/>
 			<beans:ref bean="mypageInterceptor"/>
-		</interceptor>
+		</interceptor> -->
 	</interceptors>
 	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

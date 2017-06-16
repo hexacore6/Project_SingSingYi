@@ -172,7 +172,11 @@
 				sid : sid
 			}), 
     	success : function(result){
-    		swal("애창곡 담기 완료!", "", "success");
+    		if (result === 'true') {
+    			swal("애창곡 담기 완료!", "", "success");
+    		} else {
+    			swal("이미 담은 곡입니다!", "", "error");
+    		}
     	}
     });
     }

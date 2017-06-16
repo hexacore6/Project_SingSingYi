@@ -27,8 +27,28 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	
 	@Override
+	public String searchPw(Member member) {
+		return sqlSession.selectOne(namespace + ".searchPw", member);
+	}
+	
+	@Override
+	public void resetPw(Member member) {
+		sqlSession.update(namespace + ".resetPw", member);
+	}
+	
+	@Override
 	public String confirm(String id) {
 		return sqlSession.selectOne(namespace + ".confirm", id);
+	}
+
+	@Override
+	public void addGameCoin(String id) {
+		sqlSession.update(namespace +".addGameCoin", id);
+	}
+
+	@Override
+	public void coinListAdd(String id) {
+		sqlSession.insert(namespace +".coinListAdd", id);
 	}
 	
 }

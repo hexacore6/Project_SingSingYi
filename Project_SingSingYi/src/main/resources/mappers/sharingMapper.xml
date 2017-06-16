@@ -4,8 +4,8 @@
 <mapper namespace="com.hexacore.ssy.mapper.SharingMapper">
 
 	<insert id="create">
-		INSERT INTO sharings (id, shcontent, eximgfilename)
-		VALUES (#{id}, #{shcontent}, #{eximgfilename})
+		INSERT INTO sharings (id, shcontent, eximgfilename, recordfilename)
+		VALUES (#{id}, #{shcontent}, #{eximgfilename}, #{recordfilename})
 	</insert>
 	
 	<insert id="createWithMp3">
@@ -44,7 +44,7 @@
 	
 	
 	<select id="read" resultType="com.hexacore.ssy.sharing.domain.Sharing">
-		SELECT shid, rrid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
 		FROM sharings
 		WHERE shid = #{shid}
 	</select>
@@ -60,7 +60,7 @@
 	
 	<select id="listComment" resultType="com.hexacore.ssy.sharing.domain.Comment">
 	<![CDATA[
-		SELECT id, ccontent
+		SELECT id, ccontent, cregdate
 		FROM comments 
 		WHERE shid = #{shid}
 		ORDER BY cregdate asc
@@ -87,9 +87,16 @@
 		WHERE shid = #{shid}
 	</update>
 	
+	<select id="getLikeCnt" resultType="Integer">
+		SELECT likecnt
+		FROM sharings
+		WHERE shid = #{shid}
+	</select>
+	
+	
 	<delete id="deleteLikeHistory">
 		DELETE FROM likehistory
-		WHERE shid = #{shid}
+		WHERE shid = #{shid} and id = #{id}
 	</delete>
 	
 	<update id="fallLikeCnt">
@@ -117,14 +124,36 @@
 	<select id="checkLike" resultType="com.hexacore.ssy.sharing.domain.LikeHistory">
 		SELECT shid, id
 		FROM likehistory
-		WHERE shid = #{shid}
+		WHERE shid = #{shid} and id = #{id}
 	</select>
 	
 	<select id="searchById" resultType="com.hexacore.ssy.sharing.domain.Sharing">
-		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename, recordfilename
 		FROM sharings
-		WHERE id like '%' || #{id} || '%'
+		WHERE id like CONCAT('%', #{id}, '%')
 		ORDER BY shregdate desc
+	</select>
+	
+	<select id="searchByTitle" resultType="com.hexacore.ssy.sharing.domain.Sharing">
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename, recordfilename
+		FROM sharings
+		WHERE recordfilename like CONCAT('%', #{recordfilename}, '%')
+		ORDER BY shregdate desc
+	</select>
+	
+	<select id="searchByContent" resultType="com.hexacore.ssy.sharing.domain.Sharing">
+		SELECT shid, id, shcontent, likecnt, commentcnt, shregdate, eximgfilename, recordfilename
+		FROM sharings
+		WHERE shcontent like CONCAT('%', #{shcontent}, '%')
+		ORDER BY shregdate desc
+	</select>
+	
+	<!-- 공유글  내에서 녹음 저장소 조회 -->
+	<select id = "getRecord" resultType="com.hexacore.ssy.sharing.domain.RecordRepository">
+		SELECT rrid, id, recordfilename, recordregdate
+		FROM RecordRepository 
+		WHERE id = #{id}
+		ORDER BY recordregdate desc limit 5;
 	</select>
 	
 	

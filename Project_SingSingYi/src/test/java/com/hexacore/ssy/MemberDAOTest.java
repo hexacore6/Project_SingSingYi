@@ -45,9 +45,20 @@ public class MemberDAOTest {
 	}
 	
 	/** 아이디 중복 확인 테스트 */
-	@Test
+	//@Test
 	public void confirmTest() {
 		logger.info("아이디 중복? : " + dao.confirm("asdf"));
 	}
 	
+	//@Test
+	public void addCoin(){
+		String id = "kdj5317";
+		dao.addGameCoin(id);
+	}
+	
+	@Test
+	public void addCoinList(){
+		String id = "kdj5317";
+		dao.coinListAdd(id);
+	}
 }

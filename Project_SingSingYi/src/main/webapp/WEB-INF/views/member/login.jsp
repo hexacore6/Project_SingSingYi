@@ -63,11 +63,21 @@
 	});
 </script>
 
+<script>
+var result = '${message}';
+if (result == 'fail') {
+	alert("로그인 실패");
+}
+</script>
+
 <style>
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+body {
+	font-family: 'Jeju Gothic', Arial;
+}
 /* Style for our header texts
 		* --------------------------------------- */
 h1 {
-	font-family: arial, helvetica;
 	color: #fff;
 	margin: 0;
 	margin-bottom: 10px;
@@ -92,6 +102,7 @@ button {
 	outline: none;
 	margin-bottom: 10px;
 	border-radius: 3px;
+	font-family: 'Jeju Gothic', Arial;
 }
 
 button:hover {
@@ -170,14 +181,17 @@ input {
 				<h1>씽씽이</h1>
 				<form action="/member/loginPost" method="post">
 					<div>
-						<input type="text" name="id" placeholder="아이디"></input>
+						<input type="text" name="id" id="id" placeholder="아이디"></input>
 					</div>
 					<div>
-						<input type="password" name="password" placeholder="비밀번호"></input>
+						<input type="password" name="password" id="password" placeholder="비밀번호"></input>
 					</div>
 					<button type="submit" id="button">로그인</button>
 				</form>
 				
+				<div class="login-register">
+					<a style="font-size: 15px" href="/member/search">비밀번호 찾기</a>
+				</div>
 				<!-- 
 				<div class="toggler">
 					<div id="effect">
@@ -190,6 +204,31 @@ input {
 		</div>
 		
 	</div>
-
+	
+	<!-- <script>
+		var id = $("#id").val();
+		var password = $("#password").val();
+	
+		$.ajax({
+			type : 'post',
+			url : '/member/loginPost',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				id : id,
+				password : password
+			}),
+			success : function(result) {
+				$("#deleteModal").modal('show');
+				var array = JSON.parse(result);
+				$("#deleteShid").attr("value", array.shid);
+			}
+		});
+	</script> -->
+	
+	
 </body>
 </html>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
+import com.hexacore.ssy.sharing.domain.RecordRepository;
 import com.hexacore.ssy.sharing.domain.Sharing;
 
 
@@ -88,6 +89,11 @@ public class SharingDAOImpl implements SharingDAO {
 		session.update(namespace + ".updateLikeCnt", shid);
 		
 	}
+	
+	@Override
+	public int getLikeCnt(int shid) {
+		return session.selectOne(namespace + ".getLikeCnt", shid);
+	}
 
 	@Override
 	public void fallLikeCnt(int shid) {
@@ -96,20 +102,20 @@ public class SharingDAOImpl implements SharingDAO {
 	}
 
 	@Override
-	public void deleteLikeHistory(int shid) {
-		session.delete(namespace + ".deleteLikeHistory", shid);
+	public void deleteLikeHistory(LikeHistory likeHistory) {
+		session.delete(namespace + ".deleteLikeHistory", likeHistory);
 		
 	}
 
 	@Override
-	public void likeHistory(Sharing sharing) {
-		session.insert(namespace + ".likeHistory", sharing);
+	public void likeHistory(LikeHistory likeHistory) {
+		session.insert(namespace + ".likeHistory", likeHistory);
 	}
 	
 
 	@Override
-	public LikeHistory checkLike(int shid) {
-		return session.selectOne(namespace + ".checkLike", shid);
+	public LikeHistory checkLike(LikeHistory likeHistory) {
+		return session.selectOne(namespace + ".checkLike", likeHistory);
 	}
 
 	@Override
@@ -127,6 +133,16 @@ public class SharingDAOImpl implements SharingDAO {
 	public List<Sharing> searchById(String id){
 		return session.selectList(namespace + ".searchById", id);
 	}
+	
+	@Override
+	public List<Sharing> searchByTitle(String recordfilename) {
+		return session.selectList(namespace + ".searchByTitle", recordfilename);
+	}
+
+	@Override
+	public List<Sharing> searchByContent(String shcontent) {
+		return session.selectList(namespace + ".searchByContent", shcontent);
+	}
 
 	@Override
 	public String getRecordFileName(int shid) {
@@ -134,6 +150,15 @@ public class SharingDAOImpl implements SharingDAO {
 		String[] array = name.split("@");
 		return array[2];
 	}
+
+	@Override
+	public List<RecordRepository> getRecord(String id) {
+		return session.selectList(namespace + ".getRecord", id);
+	}
+
+	
+
+	
 
 	
 	

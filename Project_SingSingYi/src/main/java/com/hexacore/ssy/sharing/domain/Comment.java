@@ -7,13 +7,13 @@ public class Comment {
 	private int shid;
 	private String id;
 	private String ccontent;
-	private Date cregdate;
+	private String cregdate;
 	
 	public Comment(){
 		
 	}
 	
-	public Comment(int cid, int shid, String id, String ccontent, Date cregdate) {
+	public Comment(int cid, int shid, String id, String ccontent, String cregdate) {
 		super();
 		this.cid = cid;
 		this.shid = shid;
@@ -54,11 +54,11 @@ public class Comment {
 		this.ccontent = ccontent;
 	}
 
-	public Date getCregdate() {
+	public String getCregdate() {
 		return cregdate;
 	}
 
-	public void setCregdate(Date cregdate) {
+	public void setCregdate(String cregdate) {
 		this.cregdate = cregdate;
 	}
 

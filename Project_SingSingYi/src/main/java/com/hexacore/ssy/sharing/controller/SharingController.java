@@ -77,27 +77,24 @@ public class SharingController {
 		Member member = (Member)httpSession.getAttribute("login");
 		String loginId = member.getId();
 		String value = null;
-		/*System.out.println(mp3File.getOriginalFilename() + "mp3file showing");
-		if(mp3File.getOriginalFilename() == ""){
-			System.out.println("no mp3");
-		}*/
-		//System.out.println(loginId + "로그인 아이디 알려주세요");
-		//System.out.println("공유글보여주세요/");
-		//logger.info("보여주세요");
-		//System.out.println(sharing.toString());
-		//System.out.println(file.getOriginalFilename() + "이미지출력");
-		//System.out.println(sharing.getShcontent() + "내용출력");
-		System.out.println(sharing.getRecordfilename() + "녹음파일출력");
-		//sharing.setEximgfilename(file.getOriginalFilename());
+		
 		try {
 			//이미지 파일을 첨부한 경우
 			if(!file.getOriginalFilename().equals("")){
-				System.out.println("이미지 파일을 첨부한 경우");
-				String savedName = uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid(), loginId);
-				sharing.setEximgfilename(savedName);
-				sharingService.regist(sharing);
-				uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid(), loginId);
-				System.out.println("성공");
+				String formatName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+				MediaType mType = MediaUtils.getMediaType(formatName);
+				if (mType != null) {
+					String savedName = uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid(), loginId);
+					sharing.setEximgfilename(savedName);
+					sharingService.regist(sharing);
+					uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid(), loginId);
+					System.out.println("성공");
+				}
+				else{
+					sharing.setEximgfilename("NoImageType");
+					sharingService.regist(sharing);
+				}
+				
 			} 
 			//이미지파일을 첨부하지 않는경우
 			else{
@@ -114,7 +111,7 @@ public class SharingController {
 	}
 	
 	private String uploadFile(String originalName, byte[] fileData, int shid, String loginId) throws IOException{
-		String savedName = loginId + "-" + shid + "-" + originalName;
+		String savedName = loginId + "_" + shid + "_" + originalName;
 		File target = new File(uploadPath, savedName);
 		FileCopyUtils.copy(fileData, target);
 		return savedName;
@@ -149,7 +146,7 @@ public class SharingController {
 			System.out.println(name + "녹음파일보여주세요");
 			System.out.println(name instanceof String);
 			if(!name.equals("")){
-				array = name.split("-");
+				array = name.split("_");
 				list.get(i).setRecordfilename(array[2]);
 			}
 		}
@@ -226,10 +223,11 @@ public class SharingController {
 	
 	//공유글 수정하기 처리
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(Sharing sharing, MultipartFile file, Model model) throws IOException {
+	public String update(Sharing sharing, Model model) throws IOException {
 		
 		
 		try {
+			System.out.println("수정하기");
 			sharingService.modify(sharing);
 			System.out.println("성공");
 		} catch (Exception e) {
@@ -245,6 +243,7 @@ public class SharingController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(Sharing sharing, Model model) {
 		try {
+			sharingService.removeAllLikeHistory(sharing.getShid());
 			sharingService.removeComment(sharing.getShid());
 			sharingService.removeSharing(sharing.getShid());
 		} catch (Exception e) {
@@ -301,7 +300,7 @@ public class SharingController {
 			for (int i = 0; i < list.size(); i++) {
 				name = list.get(i).getRecordfilename();
 				if(!name.equals("")){
-					array = name.split("-");
+					array = name.split("_");
 					list.get(i).setRecordfilename(array[2]);
 				}
 			}
@@ -313,7 +312,7 @@ public class SharingController {
 			for (int i = 0; i < list.size(); i++) {
 				name = list.get(i).getRecordfilename();
 				if(!name.equals("")){
-					array = name.split("-");
+					array = name.split("_");
 					list.get(i).setRecordfilename(array[2]);
 				}
 			}
@@ -324,7 +323,7 @@ public class SharingController {
 			for (int i = 0; i < list.size(); i++) {
 				name = list.get(i).getRecordfilename();
 				if(!name.equals("")){
-					array = name.split("-");
+					array = name.split("_");
 					list.get(i).setRecordfilename(array[2]);
 				}
 			}
@@ -371,7 +370,7 @@ public class SharingController {
 
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
-		String originName[] = fileName.split("-");
+		String originName[] = fileName.split("_");
 		System.out.println(originName.length + "파일길이");
 		if(originName.length == 3){
 			logger.info("File NAME : " + fileName);
@@ -400,6 +399,8 @@ public class SharingController {
 			}
 		}
 		else{
+			//이미지파일이 아닌 경우
+			
 			MediaType mType = MediaType.IMAGE_PNG;
 			HttpHeaders headers = new HttpHeaders();
 			in = new FileInputStream(uploadPath + "/haedlogo.png");
@@ -407,6 +408,7 @@ public class SharingController {
 			if (mType != null) {
 				headers.setContentType(mType);
 			} 
+			
 			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
 		}
 		

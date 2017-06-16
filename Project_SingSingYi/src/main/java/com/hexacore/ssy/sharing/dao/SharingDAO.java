@@ -49,8 +49,12 @@ public interface SharingDAO {
 	//공유글 삭제하기
 	public void deleteSharing(int shid);
 	
-	//댓글 삭제하기
+	//댓글 삭제하기(글 삭제전 선작업)
 	public void deleteComment(int shid);
+	
+	//해당 글 좋아요기록 모두 삭제하기 (글 삭제전 선작업)
+	public void deleteAllLikeHistory(int shid);
+	
 	public void updateCommentCnt(int shid);
 	public void updateLikeCnt(int shid);
 	public int getLikeCnt(int shid);

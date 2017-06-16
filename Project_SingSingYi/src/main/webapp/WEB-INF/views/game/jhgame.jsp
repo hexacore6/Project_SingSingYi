@@ -69,7 +69,7 @@
                         document.getElementById("insert").style.visibility = "visible";
                         clearTimeout(unmmute);
                         document.getElementById("play").disabled = true;
-                        mmute = setTimeout("mute()", 10000);
+                        mmute = setTimeout("mute()", 7000);
                         
                         
                     }
@@ -158,8 +158,8 @@
     <button class="btn btn-danger" id="play" onclick="playAudio();"
     style="width: 20%; height:100px; margin: 50px; font-size: 50px;"><b>재생</b></button>
     
-    <form role="form" method="post" action="/game/gameResult">
-    
+    <form role="form" method="post" action="/game/jhresult">
+    <input type="hidden" name="id" value="${login.id}">
     <input type="hidden" name="correct" id="correctinput" value=""> 
     <button type="submit" class="btn btn-warning" id="resultBtn" onclick="send();"
     style="width: 20%; height:100px; margin: 50px; font-size: 50px; display: none;"><b>결과 보기</b></button>

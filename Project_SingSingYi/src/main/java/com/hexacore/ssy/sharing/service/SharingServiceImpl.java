@@ -65,6 +65,11 @@ public class SharingServiceImpl implements SharingService {
 	public void removeComment(int shid) {
 		sharingDao.deleteComment(shid);
 	}
+	
+	@Override
+	public void removeAllLikeHistory(int shid) {
+		sharingDao.deleteAllLikeHistory(shid);
+	}
 
 	@Override
 	public void updateCommentCnt(int shid) {
@@ -130,8 +135,4 @@ public class SharingServiceImpl implements SharingService {
 	public List<RecordRepository> getRecord(String id) {
 		return sharingDao.getRecord(id);
 	}
-
-	
-	
-
 }

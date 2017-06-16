@@ -467,7 +467,7 @@
     </audio>
     
     
-    <form role="form" method="post" action="/game/ppgameResult">
+    <form role="form" method="post" action="/game/ppresult">
     <center>
     <h1 style="margin: 30px;" id='quizNum'> 1번 문제 !</h1>
     <span id="musicNote" style="font-size: 50px;"></span>

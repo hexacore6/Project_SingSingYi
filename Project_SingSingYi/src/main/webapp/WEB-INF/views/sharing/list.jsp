@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!-- 버튼 안먹히기 기능 하기 -->
 <!DOCTYPE html>
 <html>
 <head>	
@@ -115,92 +116,29 @@ $(document).ready(function(){
 		$("#updateCommentcnt").empty();
 		self.location.href='/sharing/list';
 	});
-	
-	/* $("#searchBtn").on("click", function(event) {
-		console.log($("select option:selected").val() + "select");
-		self.location = "search?" + "searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput'));			
-	}); */
-	
-	/* var image = "<img src=\"displayFile?fileName=/${sharing.eximgfilename}\">"
-	$("#albumImage").append(image); */
-	/* $("#textAddbtn").on("click", function() {
-		
-		var shcontent = $("#newContentText").val();
-		var eximgfilename = $("#imageName").val();
-		$("#imageForm").submit();
-		console.log(shcontent);
-		console.log(eximgfilename);
-		$.ajax({
-			type : 'post',
-			url : '/sharing/register/',
-			headers : {
-				"Content-Type" : "application/json",
-				"X-HTTP-Method-Override" : "POST"
-			},
-			dataType : 'text',
-			data : JSON.stringify({
-				id : "kosta111",
-				rrid : 1,
-				shcontent : shcontent,
-				eximgfilename : eximgfilename
-			}),
-			success : function(result) {
-				if(result == 'SUCCESS'){
-					$('#myModal').modal('hide');
-					alert("등록되었습니다.");
-					
-				}
-			}
-		});
-	}); */
-	
-	
-	
-	
-	
-	/* $("#albumImage").on("click", function() {
-		var sharingId = $("#sharingId").text();
-		var sharingVal = $("#sharingVal").val();
-		console.log(sharingId);
-		console.log(sharingVal);
-	});	 */
+
 	$("#uploadMp3").on("click", function() {
-		$("#mp3Drop").show("slow");
-});  
+		if($("#imageFile").val() != ""){
+			//이미지파일이 있는 경우
+			swal("No!", "하나의 공유글에는 녹음파일 혹은 이미지파일 중 하나의 파일만 첨부하실 수 있습니다.", "warning")
+		}
+		else{
+			//이미지파일이 없는 경우
+			$("#mp3Drop").show("slow");	
+		}
+	});
+
 	$("#uploadImage").on("click", function() {
-		$("#imageDrop").show("slow");
-});  
-	$("#uploadReplyImage").on("click", function() {
-		$("#replyImageDrop").show("slow");
-}); 
-	
-	
-	
-	/* function checkImageType(fileName) {
-		var pattern = /jpg|gif|png|jpeg/i;
-		return fileName.match(pattern);
-	}
-	function getOriginalName(fileName) {
-		if(checkImageType(fileName)){
-			return;
+		if($("#selected").val() != ""){
+			//녹음파일이 있는 경우
+			swal("No!", "하나의 공유글에는 녹음파일 혹은 이미지파일 중 하나의 파일만 첨부하실 수 있습니다.", "warning")
 		}
-		
-		var idx = fileName.indexOf("_") + 1;
-		return fileName.substr(idx);
-		
-	}
-	
-	function getImageLink(fileName) {
-		if(!checkImageType(fileName)){
-			return;
+		else{
+			//녹음파일이 없는 경우
+			$("#imageDrop").show("slow");	
 		}
-		
-		var front = fileName.substr(0,12);
-		var end = fileName.substr(14);
-		
-		return front + end;
-	} */
-	
+	});
+
 });
 </script>
 
@@ -220,19 +158,20 @@ $(document).ready(function(){
 								<option value="content">내용</option>
 						</select>
 					</div>
+					<!-- #d9534f -->
 					<div class="col-xs-3">
 						<input type="text" class="form-control" name="keywordInput"
-							placeholder="SEARCH" style="margin: 4px;">
+							placeholder="SEARCH" style="margin: 4px;" >
 					</div>
 					<div class="col-xs-2">
-						<button type="submit" class="btn btn-block btn-lg" id="searchBtn" style="background-color: #d6d6c2; color: white;" >
+						<button type="submit" class="btn btn-block btn-lg" id="searchBtn" style="background-color: #d9534f; color: white;" >
 							<i class="fa fa-search" style="color: white;"></i>Search
 						</button>
 					</div>
 					<!-- ddd2222222222222 -->
 					<div class="col-xs-3">
 						<!-- write button - open to write modal -->
-						<button type="button" class="btn btn-block btn-lg" style="background-color: #d6d6c2; color: white;"
+						<button type="button" class="btn btn-block btn-lg" style="background-color: #d9534f; color: white;"
 							data-toggle="modal" data-target="#myModal" data-backdrop="static">
 							<i class="fa fa-pencil" style="color: white;"></i>Sing Sing
 						</button>
@@ -275,6 +214,7 @@ $(document).ready(function(){
 										</button>
 										<!-- MP3 업로드 공간 -->
 										<div id="mp3Drop" hidden>
+											<input type="text" name="recordfilename" id="selected" hidden>
 											<table class="table table-striped">
 												<tbody id="appendRecord">
 													<tr>
@@ -289,7 +229,7 @@ $(document).ready(function(){
 										</div>
 										<!-- 이미지 업로드 공간 -->
 										<div id="imageDrop" hidden>
-											<input type="file" name="file">
+											<input type="file" name="file" id="imageFile">
 										</div>
 									</div>
 								</form>
@@ -316,7 +256,8 @@ $(document).ready(function(){
 
 								<div class="modal-body">
 										<div class="animate-box">
-											<img id="readImage" src="" style="margin-left: auto; margin-right: auto; display: block; width: 100%">
+										
+											<img id="readImage" src=""  alt="" style="margin-left: auto; margin-right: auto; display: block; width: 100%">
 											<!-- <img alt="그림이 없습니다." align="center" style="width: 100%;"
 											src="../resources/images/twice-4th-mini-album-signal.jpg"> -->
 										</div>
@@ -328,15 +269,15 @@ $(document).ready(function(){
 									<div class="row">
 										<div class="btn-group">
 											<h3>
-												<button class="btn" type="button" style="background-color: #d6d6c2;">
-													<i class="fa fa-heart"><span id="readLikecnt">${sharing.likecnt}</span></i>
+												<button class="btn" type="button" style="background-color: #d9534f;">
+													<h4><i class="fa fa-heart"><span style="font-weight: bold" id="readLikecnt">${sharing.likecnt}</span></i></h4>
 												</button>
-												<button class="btn" type="button" style="background-color: #d6d6c2;">
-													<i class="fa fa-comment"><span id="readCommentcnt">${sharing.commentcnt}</span></i>
+												<button class="btn" type="button" style="background-color: #d9534f;">
+													<h4><i class="fa fa-comment"><span style="font-weight: bold" id="readCommentcnt">${sharing.commentcnt}</span></i></h4>
 												</button>
-												<button class="btn" type="button" style="background-color: #d6d6c2;">
+												<!-- <button class="btn" type="button" style="background-color: #d9534f;">
 													<i class="fa fa-share"></i>
-												</button>
+												</button> -->
 											</h3>
 										</div>
 									</div>
@@ -347,7 +288,7 @@ $(document).ready(function(){
 
 								<div class="modal-footer">
 									<div class="box-header with-border"
-										style="background-color: #d6d6c2; margin: 2px;">
+										style="background-color: #f5f5f0; margin: 2px;">
 										<div class="row">
 												<div class="pull-left">
 													<input class="form-control input-lg" type="text"
@@ -357,13 +298,15 @@ $(document).ready(function(){
 												</div>
 												<div class="row">
 												<button type="button" id="commentAddbtn"
-													class="btn btn-primary" onclick="addComment()">
-													<i class="fa fa-pencil"> </i>댓글입력
+													class="btn" onclick="addComment()" style="background-color: #d9534f;">
+													<h3>
+													<i style="color: black;" class="fa fa-pencil"> </i><strong><span style="color: black;">댓글입력</span></strong>
+													</h3>
 												</button>
 											</div>
 										</div>
 									</div>
-									<div id="comments" style="background-color: #d6d6c2; margin: 2px;">
+									<div id="comments" style="background-color: #f5f5f0; margin: 2px;">
 									
 									</div>
 								</div>
@@ -398,7 +341,7 @@ $(document).ready(function(){
 										</div>
 										<div class="row">
 											<h3>
-												<i class="fa fa-user"></i> <span id="updateId"></span>
+												<i class="fa fa-user"></i> <span id="updateId" style="font-weight: bold"></span>
 											</h3>
 										</div>
 										<textarea class="form-control" name="shcontent" id="updateShcontent"
@@ -409,11 +352,11 @@ $(document).ready(function(){
 
 									<div class="modal-footer">
 										<div class="btn-group">
-											<button type="submit" id="updateBtn" class="btn" style="background-color: #d6d6c2; color: black;">
-												<i class="fa fa-pencil" style="color: black;"> </i>UPDATE
+											<button type="submit" id="updateBtn" class="btn" style="background-color: #d9534f; color: black;">
+												<i class="fa fa-pencil" style="color: black;"> </i><span style="font-weight: bold">UPDATE</span>
 											</button>
 											<button type="button" class="btn btn-default"
-												data-dismiss="modal" aria-label="Close">CANCEL
+												data-dismiss="modal" aria-label="Close"><span style="font-weight: bold">CANCEL</span>
 											</button>
 										</div>
 									</div>
@@ -446,13 +389,14 @@ $(document).ready(function(){
 									</div>
 
 									<div class="modal-footer">
-											<button type="submit" id="deleteBtn" class="btn btn-primary">
-												<i class="fa fa-pencil"> </i>DELETE
+										<div class="btn-group">
+											<button type="submit" id="deleteBtn" class="btn btn-primary" style="background-color: #d9534f;">
+												<i class="fa fa-trash"> </i>DELETE
 											</button>
 											<button type="button" class="btn btn-default"
-												data-dismiss="modal" aria-label="Close">
-												<i class="fa fa-trash"> </i>CANCEL
+												data-dismiss="modal" aria-label="Close">CANCEL
 											</button>
+										</div>
 									</div>
 								</form>
 							</div>
@@ -471,14 +415,17 @@ $(document).ready(function(){
              				<fmt:parseNumber value="${now.time/(1000*60)-(sharing.shregdate).time/(1000*60) }" integerOnly="true" var="minTime"></fmt:parseNumber>
 							
 							<div class="animate-box" style="border-radius: 10px;">
+							<c:set var="eximgfilename" value="${sharing.eximgfilename}"/>
+							<c:if test="${eximgfilename ne null}">
 								<img
 									src="displayFile?fileName=/${sharing.eximgfilename}"
-									alt="${pageContext.servletContext.contextPath }/resources/img/haedlogo.png"
+									alt=""
 									onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; display: block;">
+							</c:if>
 							</div>
 							<c:set var="recordfilename" value="${sharing.recordfilename}"/>
 							<c:if test="${recordfilename ne null}">
-								<div style="margin: 10px;">${sharing.recordfilename}</div>
+								<div style="margin: 10px;"><h3><strong><span style="color : #d9534f">${sharing.recordfilename}</span></strong></h3></div>
 							</c:if>
 							<div style="margin: 10px;">
 								<span class="time" style="float: right;"><i
@@ -490,11 +437,12 @@ $(document).ready(function(){
 										</c:otherwise>
 									</c:choose> </span>
 							</div>
-							<div style="margin: 10px;">
+							<div class="row" style="margin: 10px;">
+							<span> </span>
 							</div>
 							<div style="margin: 10px;">
 								<h3>
-									<i class="fa fa-user"></i><span id="sharingId">${sharing.id}</span>
+									<i class="fa fa-user"></i><strong><span id="sharingId">${sharing.id}</span></strong>
 									<c:set var="target" value="${sharing.id}" />
 									<c:set var="id" value="${login.id}" />
 									<c:if test="${target eq id}">
@@ -519,9 +467,9 @@ $(document).ready(function(){
 							
 							<div class="btn-group">
 							<h3>
-								<button class="btn" style="background-color: #d6d6c2;" type="button" onclick="upLike('${sharing.shid}', '${sharing.likecnt}', '${sharing.id}', '${stat.index}')"><i class="fa fa-heart" id="likeIcon"><span id="likeCnt${stat.index}">${sharing.likecnt}</span></i></button>
-								<button class="btn" style="background-color: #d6d6c2;" type="button" onclick="showReadModal('${sharing.shid}')"><i class="fa fa-comment"><span>${sharing.commentcnt}</span></i></button>
-								<button class="btn" style="background-color: #d6d6c2;" type="button"><i class="fa fa-share"></i></button>
+								<button class="btn" style="background-color: #d9534f;" type="button" onclick="upLike('${sharing.shid}', '${sharing.likecnt}', '${login.id}', '${stat.index}')"><h4><strong><i class="fa fa-heart" id="likeIcon"><span style="font-weight: bold" id="likeCnt${stat.index}">${sharing.likecnt}</span></i></strong></h4></button>
+								<button class="btn" style="background-color: #d9534f;" type="button" onclick="showReadModal('${sharing.shid}')"><h4></strong><i class="fa fa-comment"><span style="font-weight: bold">${sharing.commentcnt}</span></i></strong></h4></button>
+								<!-- <button class="btn" style="background-color: #d9534f;" type="button"><i class="fa fa-share"></i></button> -->
 								<input type="hidden" id="buttonNum" value="${stat.index}">
 							</h3>
 							</div>				 
@@ -538,9 +486,26 @@ $(document).ready(function(){
 <script type="text/javascript">
 	function writeAlert() {
 		swal("Good job!", "You clicked the button!", "success")
-	}
+	};
 	
-<<<<<<< HEAD
+	function selectRecord(recordfilename) {
+		console.log(recordfilename);
+		swal({
+			  title: "해당 녹음파일을 첨부하시겠습니까?",
+			  text: "녹음파일은 오직 하나만 첨부하실 수 있습니다.",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#DD6B55",
+			  confirmButtonText: "YES!",
+			  closeOnConfirm: false
+			},
+			function(){
+			  	swal("녹음파일 첨부완료!", "선택하신 녹음파일이 첨부되었습니다.", "success");
+			  	$("#selected").attr("value", recordfilename);
+			  	$("#mp3Drop").hide("slow");
+			});
+	}
+
 	function getRecord(id) {
 		console.log(id);
 		$.ajax({
@@ -555,7 +520,6 @@ $(document).ready(function(){
 				id : id,
 			}),
 			success : function(result) {
-				///222
 				var str = "";
 				var array = JSON.parse(result);
 				$(array).each(function() {
@@ -565,7 +529,7 @@ $(document).ready(function(){
 										+ this.recordregdate
 										+ "</td>"
 										+ "<td style=\"text-align: center;\">"
-										+ "<button type=\"button\">선택</button>"
+										+ "<button type=\"button\" onclick=\"selectRecord('"+ this.recordfilename +"')\">선택</button>"
 										+ "</td>"
 										+ "</tr>";
 								});
@@ -574,67 +538,7 @@ $(document).ready(function(){
 			}
 		});
 	}
-	
-=======
-		function addComment() {
-			var shid = $("#readShid").val();
-			var id = $("#commentId").val();
-			var ccontent = $("#readReplyId").val();
-			$.ajax({
-				type : 'post',
-				url : '/sharing/addComment',
-				headers : {
-					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "POST"
-				},
-				dataType : 'text',
-				data : JSON.stringify({
-					shid : shid,
-					id : id,
-					ccontent : ccontent                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
-				}), 
-				success : function(result) {
-					var str = "";
-					var comment = JSON.parse(result);
-					str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
-						+ "<div class=\"pull-left\">"
-						+ "<i class=\"fa fa-user\">" + comment.id +"</i>"
-						+ "</div>"
-						+ "<div class=\"box-body\">"
-						+ "<h3>"
-						+ "<p style=\"text-align : left;\">" + comment.ccontent +"</p>"
-						+ "</h3>"
-						+ "</div>"
-						+ "</div>";
-					$("#comments").append(str);
-					$("#readReplyId").val("");
-				}
-			});
-		}
-		function showReadModal(shid) {
-			$.ajax({
-				type : 'post',
-				url : '/sharing/read',
-				headers : {
-					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "POST"
-				},
-				dataType : 'text',
-				data : JSON.stringify({
-					shid : shid,
-				}), 
-				success : function(result) {
-					$("#readModal").modal('show');
-					var array = JSON.parse(result);
-					$("#readImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);
-					$("#readId").append(array.id);
-					$("#readShid").attr("value", array.shid);
-					$("#readReplyId").attr("placeholder", "댓글을 입력하세요!");
-					$("#readShcontent").append(array.shcontent);
-					$("#readLikecnt").append(array.likecnt);
-					$("#readCommentcnt").append(array.commentcnt);
-					
->>>>>>> branch 'master' of https://github.com/hexacore6/Project_SingSingYi.git
+
 
 	function upLike(shid, likecnt, id, index) {
 		var likecnt = likecnt;
@@ -652,25 +556,17 @@ $(document).ready(function(){
 				id : id
 			}),
 			success : function(result) {
-				var like = JSON.parse(result);
-				console.log(like);
-				if (like == false) {
-					//DB상에 좋아요 기록이 있을 경우
-					var likeCnt = "#likeCnt" + index;
-					console.log(likeCnt);
-					var x = document.getElementById("likeCnt" + index);
-					$(likeCnt).empty();
-					$(likeCnt).text(parseInt(likecnt));
-
-				} else {
-					//DB상에 좋아요 기록이 없을 경우
-					console.log(likeCnt);
-					var likeCnt = "#likeCnt" + index;
-					var x = document.getElementById("likeCnt" + index);
-					$(likeCnt).empty();
-					$(likeCnt).text(parseInt(likecnt) + parseInt(one));
+				var sharing = JSON.parse(result);
+				var likeCnt = "#likeCnt" + index;
+				$(likeCnt).text((parseInt(sharing.likecnt)));
+				if(sharing.likecnt > likecnt){
 					iframeDocument.postMessage('2000:' + id, '*');
-				}
+            	}
+				else{
+                return;
+                
+            	}
+				
 			}
 		});
 	}
@@ -698,7 +594,9 @@ $(document).ready(function(){
 						str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
 								+ "<div class=\"pull-left\">"
 								+ "<i class=\"fa fa-user\">"
+								+ "<span style=\"font-weight: bold\">"
 								+ comment.id
+								+ "</span>"
 								+ "</i>"
 								+ "</div>"
 								+ "<div class=\"box-body\">"
@@ -728,7 +626,12 @@ $(document).ready(function(){
 			success : function(result) {
 				$("#readModal").modal('show');
 				var array = JSON.parse(result);
-				$("#readImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);
+				if(array.eximgfilename == null){
+					$("#readImage").attr("hidden", "hidden");	
+				}
+				else{
+					$("#readImage").attr("src", "displayFile?fileName=/" + array.eximgfilename);	
+				}
 				$("#readId").append(array.id);
 				$("#readShid").attr("value", array.shid);
 				$("#readReplyId").attr("placeholder", "댓글을 입력하세요!");
@@ -757,8 +660,15 @@ $(document).ready(function(){
 											str += "<div class=\"box-header with-border\" style=\"margin : 10px;\">"
 													+ "<div class=\"pull-left\">"
 													+ "<i class=\"fa fa-user\">"
+													+ "<span style=\"font-weight: bold\">"
 													+ this.id
+													+ "<span>"
 													+ "</i>"
+													+ "</div>"
+													+ "<div style=\"float: right;\">"
+													+ "<span style=\"font-weight: bold\">"
+													+ this.cregdate
+													+ "<span>"
 													+ "</div>"
 													+ "<div class=\"box-body\">"
 													+ "<h3>"
@@ -791,8 +701,14 @@ $(document).ready(function(){
 				$("#updateModal").modal('show');
 				var array = JSON.parse(result);
 				$("#updateShid").attr("value", array.shid);
-				$("#updateImage").attr("src",
-						"displayFile?fileName=/" + array.eximgfilename);
+				if(array.eximgfilename == null){
+					$("#updateImage").attr("hidden", "hidden");
+				}
+				else{
+					$("#updateImage").attr("src",
+							"displayFile?fileName=/" + array.eximgfilename);	
+				}
+				
 				$("#updateId").append(array.id);
 				$("#updateShcontent").val(array.shcontent);
 				$("#updateLikecnt").append(array.likecnt);

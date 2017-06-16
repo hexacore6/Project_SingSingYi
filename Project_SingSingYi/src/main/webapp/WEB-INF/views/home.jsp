@@ -37,6 +37,16 @@
 		}, 500);
 	});
 </script>
+<script>
+var msg = "${msg}";
+if(msg == "fail") {
+	alert('로그인 정보가 일치하지 않습니다!');
+} else if (msg == "SUCCESS") {
+	alert('회원가입이 완료되었습니다!');
+} else if (msg == "emptyId") {
+	alert('비밀번호를 다시 찾아주세요');
+}
+</script>
 
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
@@ -143,9 +153,8 @@ button:hover:before, button:hover:after {
 		</div>
 		<div class="section" id="section1">
 			<div class="intro">
-				<h1>More Simple yet</h1>
-				<p>Sections won't contain anchor links. It's more simple to
-					configure but a bit more restrictive.</p>
+				<h1>씽씽이는 그냥 노래방이 아닙니다</h1>
+				<p>한 번 불러보세요</p>
 			</div>
 		</div>
 		<div class="section" id="section2">

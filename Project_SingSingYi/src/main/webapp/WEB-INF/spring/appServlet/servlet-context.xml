@@ -28,8 +28,9 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/member/loginPost" />
-			<mapping path="/member/login" />
 			<mapping path="/member/regist" />
+			<mapping path="/member/login" />
+			<mapping path="/"/>
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 		

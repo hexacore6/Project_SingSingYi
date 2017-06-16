@@ -4,8 +4,8 @@
 <mapper namespace="com.hexacore.ssy.mapper.SharingMapper">
 
 	<insert id="create">
-		INSERT INTO sharings (id, shcontent, eximgfilename)
-		VALUES (#{id}, #{shcontent}, #{eximgfilename})
+		INSERT INTO sharings (id, shcontent, eximgfilename, recordfilename)
+		VALUES (#{id}, #{shcontent}, #{eximgfilename}, #{recordfilename})
 	</insert>
 	
 	<insert id="createWithMp3">
@@ -60,7 +60,7 @@
 	
 	<select id="listComment" resultType="com.hexacore.ssy.sharing.domain.Comment">
 	<![CDATA[
-		SELECT id, ccontent
+		SELECT id, ccontent, cregdate
 		FROM comments 
 		WHERE shid = #{shid}
 		ORDER BY cregdate asc
@@ -87,9 +87,16 @@
 		WHERE shid = #{shid}
 	</update>
 	
+	<select id="getLikeCnt" resultType="Integer">
+		SELECT likecnt
+		FROM sharings
+		WHERE shid = #{shid}
+	</select>
+	
+	
 	<delete id="deleteLikeHistory">
 		DELETE FROM likehistory
-		WHERE shid = #{shid}
+		WHERE shid = #{shid} and id = #{id}
 	</delete>
 	
 	<update id="fallLikeCnt">
@@ -117,7 +124,7 @@
 	<select id="checkLike" resultType="com.hexacore.ssy.sharing.domain.LikeHistory">
 		SELECT shid, id
 		FROM likehistory
-		WHERE shid = #{shid}
+		WHERE shid = #{shid} and id = #{id}
 	</select>
 	
 	<select id="searchById" resultType="com.hexacore.ssy.sharing.domain.Sharing">

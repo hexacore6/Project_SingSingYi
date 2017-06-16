@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,12 +32,10 @@ public class SongController {
 		
 	}
 	
-	@RequestMapping(value="/sing2", method=RequestMethod.GET)
+	@RequestMapping(value="/recordTest", method=RequestMethod.GET)
 	public void readSongData2(){
 		
 	}
-	
-	@Transactional
 	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public void songMain(Model model) {
 		model.addAttribute("bests", songService.bestSongs());

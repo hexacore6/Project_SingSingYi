@@ -153,14 +153,14 @@ button:hover:before, button:hover:after {
 		</div>
 		<div class="section" id="section1">
 			<div class="intro">
-				<h1>씽씽이는 그냥 노래방이 아닙니다</h1>
+				<h1>그냥 노래방이 아닙니다</h1>
 				<p>한 번 불러보세요</p>
 			</div>
 		</div>
 		<div class="section" id="section2">
 			<div class="intro">
-				<h1>URL without /#</h1>
-				<p>But back button won't work!</p>
+				<h1>회원가입 시 코인 무려 5개 지급!</h1>
+				<p>개꿀~</p>
 			</div>
 		</div>
 	</div>

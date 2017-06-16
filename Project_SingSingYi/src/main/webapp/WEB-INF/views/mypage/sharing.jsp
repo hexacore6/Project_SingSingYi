@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<script src="../resources/js/jquery.min.js"></script>
+<script src="../../resources/js/jquery.min.js"></script>
 <style>
 .reverse {
 	background: Black;
@@ -55,16 +55,18 @@
 <!--   <link href="../resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" /> -->
 <!-- AdminLTE Skins. Choose a skin from the css/skins 
          folder instead of downloading all of them to reduce the load. -->
-<link href="../resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+<link href="../../resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="../../../resources/css/main.css?ver=2">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../../../resources/css/bootstrap3-wysihtml5.min.css?ver=2">
+<link rel="stylesheet" type="text/css" href="../../resources/css/sweetalert.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+<script src="../../resources/js/sweetalert.min.js"></script>
 
 </head>
 <script type="text/javascript">
@@ -98,16 +100,21 @@
     <section id="content" class='container'>
     <div class="row">
       <%@include file="side.jsp"%>
-      <div class="col-lg-6">
+      <div class="col-lg-9">
         <!--content-->
         <section class="content-header"> <c:choose>
           <c:when test="${login.id==id }">
-            <h1 style="float: left;">나의 글</h1>
+            <h1 style="float: left; margin-left: 50px;">나의 공유글</h1>
+          </c:when>
+          <c:when test="${following=='following' }">
+            <h1 style="float: left; margin-left: 50px;">${id } 공유글</h1><button id="unfollow" class="btn badge bg-red" onclick="removeFollow('${login.id}', '${id }')" style="float: right; font-size: 30px; margin-top: 20px; "><img id="remove" src="/resources/img/remove.png" width="50px" height="50px"> 언팔로우</button>
           </c:when>
           <c:otherwise>
-            <h1>${id }님의글</h1>
+            <h1 style="float: left; margin-left: 50px;">${id } 공유글</h1><button id="follow" class="btn badge bg-blue" onclick="addFollow('${login.id}', '${id }')" style="float: right; font-size: 30px; margin-top: 20px; "><img id="add" src="/resources/img/add.png" width="50px" height="50px"> 팔로우</button>
           </c:otherwise>
-        </c:choose> </section>
+        </c:choose> 
+        
+        </section>
         <div class="row" style="margin-top: 70px;">
           <div class="col-md-12">
             <!-- The time line -->
@@ -145,7 +152,7 @@
                 <div style="margin: 30px;">
                   <h3>
 
-                    <span id="sharingId" style="float: left;"><i class="fa fa-user" style="margin-right: 10px;"></i>${sharing.id}</span>
+                    <span id="sharingId" style="float: left;"><i class="fa fa-user" style="margin-right: 10px;"></i><a onclick="otherMypage();">${sharing.id}</a></span>
                     <c:set var="target" value="${sharing.id}" />
                     <c:set var="id" value="${login.id }" />
                     <c:if test="${target eq id}">
@@ -240,7 +247,7 @@
   <div class="modal" id="updateModal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form role="form" action="../sharing/myUpdate" method="post" enctype="multipart/form-data">
+        <form role="form" action="../../sharing/myUpdate" method="post" enctype="multipart/form-data">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="updateCloseButton">
               <span aria-hidden="true">&times;</span>
@@ -284,7 +291,7 @@
   <div class="modal" id="deleteModal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form role="form" action="../sharing/myDelete" method="post" enctype="multipart/form-data">
+        <form role="form" action="../../sharing/myDelete" method="post" enctype="multipart/form-data">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="updateCloseButton">
               <span aria-hidden="true">&times;</span>
@@ -350,6 +357,7 @@
 			}
 		});
 	}
+	
 	function showReadModal(shid) {
 		$.ajax({
 			type : 'post',
@@ -456,7 +464,68 @@
 		});
 
 	}
-		</script>
+	
+	
+	function addFollow(sender, target) {
+		$.ajax({
+			type : 'post',
+			url : '/mypage/addFollow',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				sender : sender,
+				target : target
+			}), 
+			success : function(result) {
+    	    		if (result === 'true') {
+    	    			swal("팔로우 완료!", "", "success");
+    					$("#follow").attr("id", "unfollow")
+    					$("#unfollow").attr("class","btn badge bg-red")
+    					$("#unfollow").attr("onclick", "removeFollow('"+sender+"','"+target+"')");
+    					$("#add").attr("id", "remove")
+    					$("#remove").attr("src", "/resources/img/remove.png")
+    					$("#unfollow").html("<img id='remove' src='/resources/img/remove.png' width='50px' height='50px'> 언팔로우") 
+    	    		} else {
+    	    			swal("이미 팔로우 한 유저입니다!", "", "error");
+    	    		}
+			}
+		});
+	}
+	
+   	function removeFollow(sender, target) {
+		$.ajax({
+			type : 'post',
+			url : '/mypage/removeFollow',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				sender : sender,
+				target : target
+			}), 
+			success : function(result) {
+				swal("팔로우 삭제완료!", "", "success");
+				
+				$("#remove").attr("src", "/resources/img/remove.png")
+				$("#unfollow").html("언팔로우 -") 
+				$("#unfollow").attr("id", "follow")
+				$("#follow").attr("class","btn badge bg-blue")
+				$("#follow").attr("onclick","addFollow('"+sender+"','"+target+"')");
+				
+				$("#follow").html("<img id='add' src='/resources/img/add.png' width='50px' height='50px'> 팔로우") 
+			}
+		});
+	}  
+	</script>
+    
+    
+    
+
   <jsp:include page="../include/footer.jsp"></jsp:include>
 
 </body>

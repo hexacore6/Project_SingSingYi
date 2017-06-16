@@ -12,6 +12,7 @@ import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.dao.MypageDAO;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
 import com.hexacore.ssy.mypage.domain.Favorite;
+import com.hexacore.ssy.mypage.domain.FollowList;
 import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.mypage.domain.Song;
 import com.hexacore.ssy.sharing.domain.Sharing;
@@ -146,5 +147,25 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int countRecordPaging(Criteria cri, String id) {
 		return dao.countRecordPaging(cri, id);
+	}
+	
+	
+	// 팔로우 추가
+	@Override
+	public void addFollow(String sender, String target) {
+		dao.addFollow(sender, target);
+		
+	}
+	
+	/// 팔로우 삭제
+	@Override
+	public void removeFollow(String sender, String target) {
+		dao.removeFollow(sender, target);
+	}
+	
+	// 팔로우 체크
+	@Override
+	public FollowList checkFollow(String sender, String target) {
+		return dao.checkFollow(sender, target);
 	}
 }

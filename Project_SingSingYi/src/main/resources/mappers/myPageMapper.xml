@@ -9,7 +9,6 @@
 		from sharings 
 		where id = #{id}
 		ORDER BY shregdate DESC
-		limit 3
 	</select>
 	
 	<!-- 나의 공유글 삭제 -->
@@ -194,5 +193,24 @@
 	from RecordRepository
 	where rrid > 0 AND id=#{id}
 	]]>
+	</select>
+	
+	<!-- 팔로우 추가 -->
+	<insert id="addFollow">
+	insert into followlist(sender, target)
+	values (#{sender}, #{target});
+	</insert>
+	
+	<!-- 팔로우 삭제 -->
+	<delete id="removeFollow">
+	delete from followlist
+	where sender=#{sender} and target = #{target};
+	</delete>
+	
+	<!-- 팔로우 체크 -->
+	<select id="checkFollow" resultType="com.hexacore.ssy.mypage.domain.FollowList">
+	 select flid 
+	 from followlist
+	 where sender=#{sender} and target=#{target}
 	</select>
 </mapper>

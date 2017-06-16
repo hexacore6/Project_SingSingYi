@@ -7,6 +7,7 @@ import com.hexacore.ssy.common.Criteria;
 import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
 import com.hexacore.ssy.mypage.domain.Favorite;
+import com.hexacore.ssy.mypage.domain.FollowList;
 import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.mypage.domain.Song;
 import com.hexacore.ssy.sharing.domain.Sharing;
@@ -78,4 +79,13 @@ public interface MypageDAO {
 		
 	// 녹음저장소 테이블 행의 수 계산
 	public int countRecordPaging(Criteria cri, String id);
+	
+	// 팔로우 추가
+	public void addFollow(String sender, String target);
+	
+	// 팔로우 삭제
+	public void removeFollow(String sender, String target);
+	
+	// 팔로우 확인
+	public FollowList checkFollow(String sender, String target);
 }

@@ -191,4 +191,22 @@ public class MyPageDAOTest {
 		
 		dao.coinListAdd(coinHistory);
 	}
+	
+	// 팔로우 추가
+	//@Test
+	public void addFollow(){
+		dao.addFollow("woong1", "woong2");
+	}
+	
+	// 팔로우 삭제
+	//@Test
+	public void removeFollow(){
+		dao.removeFollow("woong1", "woong2");
+	}
+	
+	// 팔로우 체크
+	@Test
+	public void checkFollw(){
+		System.out.println(dao.checkFollow("woong1", "woong2"));
+	}
 }

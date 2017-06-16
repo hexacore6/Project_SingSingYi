@@ -1,13 +1,17 @@
 package com.hexacore.ssy.sharing.controller;
 
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilePermission;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.AccessControlContext;
 import java.security.AccessController;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,6 +19,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
@@ -36,8 +41,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hexacore.ssy.common.Criteria;
+import com.hexacore.ssy.common.PageMaker;
 import com.hexacore.ssy.member.domain.Member;
+import com.hexacore.ssy.sharing.domain.RecordRepository;
 import com.hexacore.ssy.sharing.domain.Comment;
+import com.hexacore.ssy.sharing.domain.Encoding;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
 import com.hexacore.ssy.sharing.domain.Sharing;
 import com.hexacore.ssy.sharing.service.SharingService;
@@ -56,26 +65,47 @@ public class SharingController {
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 	
+	@Resource(name= "recordPath")
+	private String recordPath;
+	
 	@Inject
 	private SharingService sharingService;
 	
 	//공유글 등록 처리
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(HttpServletRequest request, HttpSession httpSession, Sharing sharing, MultipartFile file, MultipartFile mp3File, Model model) throws IOException {
+	public String register(HttpServletRequest request, HttpSession httpSession, Sharing sharing, MultipartFile file, Model model) throws IOException {
 		Member member = (Member)httpSession.getAttribute("login");
 		String loginId = member.getId();
-		System.out.println(mp3File.getOriginalFilename() + "mp3file showing");
+		String value = null;
+		/*System.out.println(mp3File.getOriginalFilename() + "mp3file showing");
 		if(mp3File.getOriginalFilename() == ""){
 			System.out.println("no mp3");
-		}
+		}*/
 		//System.out.println(loginId + "로그인 아이디 알려주세요");
-		sharing.setEximgfilename(file.getOriginalFilename());
+		//System.out.println("공유글보여주세요/");
+		//logger.info("보여주세요");
+		//System.out.println(sharing.toString());
+		//System.out.println(file.getOriginalFilename() + "이미지출력");
+		//System.out.println(sharing.getShcontent() + "내용출력");
+		System.out.println(sharing.getRecordfilename() + "녹음파일출력");
+		//sharing.setEximgfilename(file.getOriginalFilename());
 		try {
-			String savedName = uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid(), loginId);
-			sharing.setEximgfilename(savedName);
-			sharingService.regist(sharing);
-			uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid(), loginId);
-			System.out.println("성공");
+			//이미지 파일을 첨부한 경우
+			if(!file.getOriginalFilename().equals("")){
+				System.out.println("이미지 파일을 첨부한 경우");
+				String savedName = uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid(), loginId);
+				sharing.setEximgfilename(savedName);
+				sharingService.regist(sharing);
+				uploadFile(file.getOriginalFilename(), file.getBytes(), sharingService.getShid(), loginId);
+				System.out.println("성공");
+			} 
+			//이미지파일을 첨부하지 않는경우
+			else{
+				System.out.println(sharing.getRecordfilename() instanceof String);
+				sharingService.regist(sharing);
+				
+			}
+			
 		} catch (Exception e) {
 			System.out.println("실패");
 			e.printStackTrace();
@@ -84,7 +114,7 @@ public class SharingController {
 	}
 	
 	private String uploadFile(String originalName, byte[] fileData, int shid, String loginId) throws IOException{
-		String savedName = loginId + "@" + shid + "@" + originalName;
+		String savedName = loginId + "-" + shid + "-" + originalName;
 		File target = new File(uploadPath, savedName);
 		FileCopyUtils.copy(fileData, target);
 		return savedName;
@@ -116,36 +146,46 @@ public class SharingController {
 		String[] array = null;
 		for (int i = 0; i < list.size(); i++) {
 			name = list.get(i).getRecordfilename();
-			if(name != null){
-				array = name.split("@");
+			System.out.println(name + "녹음파일보여주세요");
+			System.out.println(name instanceof String);
+			if(!name.equals("")){
+				array = name.split("-");
 				list.get(i).setRecordfilename(array[2]);
 			}
 		}
+		
 		model.addAttribute("list", list);
 	}
 	
 	//좋아요 업데이트 처리
 	@Transactional
 	@RequestMapping(value = "/like", method = RequestMethod.POST)
-	public ResponseEntity<Boolean> updateLike(Model model, @RequestBody Sharing sharing) {
-		ResponseEntity<Boolean> entity = null;
+	public ResponseEntity<Sharing> updateLike(@RequestBody Sharing sharing) {
+		ResponseEntity<Sharing> entity = null;
 		LikeHistory likeHistory = new LikeHistory();
-		likeHistory = null;
-		if(sharingService.checkLike(sharing.getShid()) == null){
+		
+		likeHistory.setId(sharing.getId());
+		likeHistory.setShid(sharing.getShid());
+		//System.out.println(likeHistory.getId() + "좋아요기록테이블 아이디");
+		//System.out.println(likeHistory.getShid() + "좋아요기록테이블 공유글번호");
+		if(sharingService.checkLike(likeHistory) == null){
 			//DB상에 좋아요 기록이 없을 경우
 			try {
+				
 				sharingService.updateLikeCnt(sharing.getShid());
-				sharingService.likeHistory(sharing);
-				entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
+				sharingService.likeHistory(likeHistory);
+				sharing.setLikecnt(sharingService.getLikeCnt(sharing.getShid()));
+				entity = new ResponseEntity<Sharing>(sharing, HttpStatus.OK);
 			} catch (Exception e) {
-				e.printStackTrace();
+				e.printStackTrace(); 	
 				entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 		} else{
 			//DB상에 좋아요 기록이 있을 경우
-			sharingService.deleteLikeHistory(sharing.getShid());
+			sharingService.deleteLikeHistory(likeHistory);
 			sharingService.fallLikeCnt(sharing.getShid());
-			entity = new ResponseEntity<Boolean>(false, HttpStatus.OK);;
+			sharing.setLikecnt(sharingService.getLikeCnt(sharing.getShid()));
+			entity = new ResponseEntity<Sharing>(sharing, HttpStatus.OK);;
 		}
 		return entity;
 	}
@@ -155,6 +195,10 @@ public class SharingController {
 	public ResponseEntity<List<Comment>> listComment(@RequestBody Sharing sharing, Model model) {
 		ResponseEntity<List<Comment>> entity = null;
 		try {
+			List<Comment> list = sharingService.listComment(sharing.getShid());
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println(list.get(i).getCregdate() + "댓글날짜");
+			}
 			model.addAttribute("listComment", sharingService.listComment(sharing.getShid()));
 			entity = new ResponseEntity<List<Comment>>(sharingService.listComment(sharing.getShid()), HttpStatus.OK);
 		} catch (Exception e) {
@@ -245,16 +289,44 @@ public class SharingController {
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public void search(@RequestParam("keyword") String keyword, @RequestParam("type") String type, Model model)
 			throws IOException {
+		List<Sharing> list = null;
+		String name = null;
+		String[] array = null;
 		switch (type) {
 		case "user":
-			model.addAttribute("list", sharingService.searchById(keyword));
+			list = sharingService.searchById(keyword);
+			for (int i = 0; i < list.size(); i++) {
+				name = list.get(i).getRecordfilename();
+				if(!name.equals("")){
+					array = name.split("-");
+					list.get(i).setRecordfilename(array[2]);
+				}
+			}
+			model.addAttribute("list", list);
 			break;
 		case "title":
-			System.out.println("it is title");
+			list = sharingService.searchByTitle(keyword);
+			System.out.println(keyword + "입력한 노래 제목");
+			for (int i = 0; i < list.size(); i++) {
+				name = list.get(i).getRecordfilename();
+				if(!name.equals("")){
+					array = name.split("-");
+					list.get(i).setRecordfilename(array[2]);
+				}
+			}
+			model.addAttribute("list", list);
 			break;
-		case "singer":
-			System.out.println("it is singer");
-			break;	
+		case "content":
+			list = sharingService.searchByContent(keyword);
+			for (int i = 0; i < list.size(); i++) {
+				name = list.get(i).getRecordfilename();
+				if(!name.equals("")){
+					array = name.split("-");
+					list.get(i).setRecordfilename(array[2]);
+				}
+			}
+			model.addAttribute("list", list);
+			break;
 		}
 		
 	}
@@ -264,9 +336,12 @@ public class SharingController {
 	public String search(HttpServletRequest request, HttpSession httpSession, Model model,
 			@RequestParam String searchType, @RequestParam String keywordInput)
 			throws IOException {
+		Encoding enc = new Encoding();
 		String type = searchType;
 		String keyword = keywordInput;
-		return "redirect:/sharing/search?type=" + type + "&keyword=" + keyword;
+		System.out.println(keyword + "인코딩전쿼리");
+		System.out.println(Encoding.encodingKeyword(keyword) + "인코딩후쿼리");
+		return "redirect:/sharing/search?type=" + type + "&keyword=" + Encoding.encodingKeyword(keyword);
 
 	}
 	
@@ -293,10 +368,10 @@ public class SharingController {
 
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
-		String originName[] = fileName.split("@");
-		//System.out.println(originName.length + "파일길이");
+		String originName[] = fileName.split("-");
+		System.out.println(originName.length + "파일길이");
 		if(originName.length == 3){
-			//logger.info("File NAME : " + fileName);
+			logger.info("File NAME : " + fileName);
 
 			try {
 				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
@@ -334,6 +409,57 @@ public class SharingController {
 		
 		return entity;
 	}
+	
+	// 나의 녹음저장소 조회
+	@RequestMapping(value = "/record", method = RequestMethod.POST)
+	public ResponseEntity<List<RecordRepository>> getRecord(@RequestBody RecordRepository recordRepository, Model model) {
+		ResponseEntity<List<RecordRepository>> entity = null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		//String date = null;
+				
+		try {
+			System.out.println(recordRepository.getId() + "아이디출력");
+			List<RecordRepository> list = sharingService.getRecord(recordRepository.getId());
+			for (int i = 0; i < list.size(); i++) {
+				//date = format.format(list.get(i).getRecordregdate());
+				//System.out.println(date + "스트링으로 변환");
+				//list.get(i).setRecordregdate(format(recordRepository.getRecordregdate()));
+				System.out.println(list.get(i).getRecordregdate() + "출력");
+			}
+			entity = new ResponseEntity<List<RecordRepository>>(sharingService.getRecord(recordRepository.getId()), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	// mp3 파일 불러오기
+		@RequestMapping(value="/displayRecord")
+		public void displayRecord(String fileName, HttpServletResponse response) throws Exception {
+			
+			response.setContentType("audio/mpeg");
+			InputStream in = null;
+			OutputStream out = null;
+
+			try {
+				in = new FileInputStream(recordPath + fileName);
+				logger.info(recordPath + fileName);
+				 out = response.getOutputStream();
+				 
+				 byte[] buffer = new byte[1024];
+			     int count = 0;
+			     while( (count = in.read(buffer)) != -1){
+			    	 out.write(buffer, 0, count);
+			     }
+				 
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				 if(out != null) out.close();
+		         if(in != null) in.close();
+			}
+		}
 	
 	
 }

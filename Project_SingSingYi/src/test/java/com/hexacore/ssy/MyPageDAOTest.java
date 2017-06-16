@@ -80,8 +80,9 @@ public class MyPageDAOTest {
 		dao.readMyInformation("Woong");
 	}
 	
-	// 내 애창곡 조회 (등록한 노래번호 조회)
-	//@Test
+	
+	//내 애창곡 조회 (등록한 노래번호 조회)
+	@Test
 	public void readMyFavorite(){
 		dao.readMyFavorite("woong1");
 	}
@@ -180,7 +181,7 @@ public class MyPageDAOTest {
 		dao.countCoinPaging(cri, id);
 	}
 	
-	@Test
+	//@Test
 	public void testAddCoinList(){
 		CoinHistory coinHistory = new CoinHistory();
 		coinHistory.setId("kosta111");

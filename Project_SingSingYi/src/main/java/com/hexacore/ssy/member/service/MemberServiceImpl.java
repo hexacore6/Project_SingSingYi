@@ -26,6 +26,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public String searchPw(Member member) {
+		return memberDao.searchPw(member);
+	}
+	
+	@Override
+	public void resetPw(Member member) {
+		memberDao.resetPw(member);
+	}
+	
+	@Override
 	public boolean confirm(String id) {
 		if(memberDao.confirm(id) == null) {
 			return false;

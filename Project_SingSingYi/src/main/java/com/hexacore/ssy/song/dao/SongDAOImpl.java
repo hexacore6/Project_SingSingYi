@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.hexacore.ssy.mypage.domain.Favorite;
 import com.hexacore.ssy.song.domain.Song;
 @Repository
 public class SongDAOImpl implements SongDAO {
@@ -50,6 +51,16 @@ public class SongDAOImpl implements SongDAO {
 	public void removeFavorite(int fid){
 		sqlSession.delete(namespace+".removeFavorite", fid);
 	}
+	
+	@Override
+	public Favorite checkFavorite(String id, int sid) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("id", id);
+		paramMap.put("sid", sid);
+		return sqlSession.selectOne(namespace+".checkFavorite", paramMap);
+	}	
 }
 
 

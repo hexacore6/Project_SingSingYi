@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.hexacore.ssy.sharing.dao.SharingDAO;
 import com.hexacore.ssy.sharing.domain.Comment;
 import com.hexacore.ssy.sharing.domain.LikeHistory;
+import com.hexacore.ssy.sharing.domain.RecordRepository;
 import com.hexacore.ssy.sharing.domain.Sharing;
 
 @Service
@@ -74,6 +75,11 @@ public class SharingServiceImpl implements SharingService {
 	public void updateLikeCnt(int shid) {
 		sharingDao.updateLikeCnt(shid);
 	}
+	
+	@Override
+	public int getLikeCnt(int shid) {
+		return sharingDao.getLikeCnt(shid);
+	}
 
 	@Override
 	public void fallLikeCnt(int shid) {
@@ -81,18 +87,18 @@ public class SharingServiceImpl implements SharingService {
 	}
 
 	@Override
-	public void deleteLikeHistory(int shid) {
-		sharingDao.deleteLikeHistory(shid);
+	public void deleteLikeHistory(LikeHistory likeHistory) {
+		sharingDao.deleteLikeHistory(likeHistory);
 	}
 
 	@Override
-	public void likeHistory(Sharing sharing) {
-		sharingDao.likeHistory(sharing);
+	public void likeHistory(LikeHistory likeHistory) {
+		sharingDao.likeHistory(likeHistory);
 	}
 
 	@Override
-	public LikeHistory checkLike(int shid) {
-		return sharingDao.checkLike(shid);
+	public LikeHistory checkLike(LikeHistory likeHistory) {
+		return sharingDao.checkLike(likeHistory);
 	}
 
 	@Override
@@ -109,6 +115,23 @@ public class SharingServiceImpl implements SharingService {
 	public String getRecordFileName(int shid) {
 		return sharingDao.getRecordFileName(shid);
 	}
+
+	@Override
+	public List<Sharing> searchByTitle(String recordfilename) {
+		return sharingDao.searchByTitle(recordfilename);
+	}
+
+	@Override
+	public List<Sharing> searchByContent(String shcontent) {
+		return sharingDao.searchByContent(shcontent);
+	}
+
+	@Override
+	public List<RecordRepository> getRecord(String id) {
+		return sharingDao.getRecord(id);
+	}
+
+	
 	
 
 }

@@ -6,13 +6,13 @@ public class RecordRepository {
 	private int rrid;
 	private String id;
 	private String recordfilename;
-	private Date recordregdate;
+	private String recordregdate;
 	
 	public RecordRepository(){
 		
 	}
 
-	public RecordRepository(int rrid, String id, String recordfilename, Date recordregdate) {
+	public RecordRepository(int rrid, String id, String recordfilename, String recordregdate) {
 		super();
 		this.rrid = rrid;
 		this.id = id;
@@ -44,11 +44,11 @@ public class RecordRepository {
 		this.recordfilename = recordfilename;
 	}
 
-	public Date getRecordregdate() {
+	public String getRecordregdate() {
 		return recordregdate;
 	}
 
-	public void setRecordregdate(Date recordregdate) {
+	public void setRecordregdate(String recordregdate) {
 		this.recordregdate = recordregdate;
 	}
 

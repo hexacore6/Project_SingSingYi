@@ -11,6 +11,12 @@ public interface MemberDAO {
 	/** 회원가입 */
 	public void regist(Member member);
 	
+	/** 비밀번호 찾기 */
+	public String searchPw(Member member);
+	
+	/** 비밀번호 재설정 */
+	public void resetPw(Member member);
+	
 	/** 아이디 중복 확인 */
 	public String confirm(String id);
 	

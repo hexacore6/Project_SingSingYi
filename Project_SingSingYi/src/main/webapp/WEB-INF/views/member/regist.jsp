@@ -34,7 +34,6 @@
 	$(document).ready(function() {
 		$('#fullpage').fullpage({
 			sectionsColor : [ '#1bbc9b', '#4BBFC3', '#7BAABE' ],
-
 		});
 		/* 
 		// run the currently selected effect
@@ -114,7 +113,7 @@
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 body {
-	font-family: 'Jeju Gothic', serif;
+	font-family: 'Jeju Gothic', Arial;
 }
 /* Style for our header texts
 		* --------------------------------------- */
@@ -126,8 +125,8 @@ h1 {
 	padding: 0;
 }
 
-.section {
-	background-image: url(/resources/img/section0.jpg);
+#section0 {
+	background-image: url(/resources/img/regist.jpg);
 }
 
 button {
@@ -259,7 +258,7 @@ select.birth {
 	width: 80px;
 }
 
-select#question {
+select#pwquestion {
 	margin-top: 10px;
 	padding-top: 3px;
 	width: 300px;
@@ -268,7 +267,7 @@ select#question {
 </head>
 <body>
 	<div id="fullpage" >
-		<div class="section">
+		<div class="section" id="section0">
 			<div class="start">
 				<div class="panel-heading">
 					<div class="panel-title text-center">
@@ -421,12 +420,12 @@ select#question {
 								질문/답변</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
-									<select name="pwquestion" id="question">
+									<select name="pwquestion" id="pwquestion">
 										<option value='가장 좋아하는 노래는?'>가장 좋아하는 노래는?</option>
 										<option value='보물1호는?'>보물1호는?</option>
 										<option value='가장 기억에 남는 장소는?'>가장 기억에 남는 장소는?</option>
 									</select> <input type="text" class="form-control" name="pwanswer"
-										id="pwanser" placeholder="답변을 입력해 주세요" required />
+										id="pwanwser" placeholder="답변을 입력해 주세요" required />
 								</div>
 							</div>
 						</div>

@@ -49,4 +49,11 @@
 		delete from favorites
 		where fid = #{fid}
 	</delete>
+	
+	<!-- 애창곡 중복 체크 -->
+	<select id="checkFavorite" resultType="com.hexacore.ssy.mypage.domain.Favorite">
+	 select fid 
+	 from favorites 
+	 where id=#{id} and sid=#{sid}
+	</select>
 </mapper>

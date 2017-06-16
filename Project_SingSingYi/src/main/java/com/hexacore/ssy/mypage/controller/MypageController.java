@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -120,8 +120,19 @@ public class MypageController {
 		Member member = (Member)httpSession.getAttribute("login");
 		
 		String id = member.getId();
-		model.addAttribute("list", service.favoriteCriteria(cri, id));
+		List<HashMap<String, Object>> list = service.favoriteCriteria(cri, id);
+		
+
+		String sfilename = null;
+		
+		for (HashMap<String, Object> hashMap : list) {
+			sfilename =  (String) hashMap.get("sfilename");
+		}
+		
+		model.addAttribute("sfilename", sfilename);
+		model.addAttribute("list", list);
 		model.addAttribute("id", id);
+		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		
@@ -129,6 +140,7 @@ public class MypageController {
 		
 		model.addAttribute("pageMaker", pageMaker);
 	}
+	
 	
 	// 나의 애창곡 삭제
 	public String deleteFavorite(@RequestParam("fid") int fid){
@@ -151,18 +163,30 @@ public class MypageController {
 		model.addAttribute("myRankArea", service.readMyRankArea(rank));
 	}
 	
+	
 	// 나의 녹음저장소 조회
 	@RequestMapping(value="/record", method=RequestMethod.GET)
 	public void readMyRecord(Criteria cri, Model model, HttpSession httpSession){
 		Member member = (Member)httpSession.getAttribute("login");
 		String id = member.getId();
+		String recordfilename = null;
+		String filename = null;
+		String[] array = null;
 		List<RecordRepository> list = service.readMyRecord(cri, id);
+		for (RecordRepository recordRepository : list) {
+			recordfilename = recordRepository.getRecordfilename();
+			if (recordfilename != null){
+				array = recordfilename.split("_");
+				recordfilename = array[2];
+			}
+		}
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		
 		pageMaker.setTotalCount(service.countRecordPaging(cri, id));
 		
+		model.addAttribute("recordfilename", recordfilename);
 		model.addAttribute("id", id);
 		model.addAttribute("list", list);
 		model.addAttribute("pageMaker", pageMaker);

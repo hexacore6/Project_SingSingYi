@@ -397,7 +397,7 @@
 	function send(){		      
     	  console.log('클라이언트 요청');
 
-			$("#correctinput").attr("value",correct)
+			
 	}
   	
   	
@@ -415,6 +415,7 @@
 	          document.getElementById("play").textContent = "다음문제";
 	          if(correct == 2){
 	        	  document.getElementById("play").textContent = "결과보기";
+	        	  document.getElementById("play").className = "btn btn-warning";
 	          }
 	          clearTimeout(note);
 	        } else{
@@ -465,10 +466,9 @@
     <audio id="myaudio">
     </audio>
     
+    
+    <form role="form" method="post" action="/game/ppgameResult">
     <center>
-    
-
-    
     <h1 style="margin: 30px;" id='quizNum'> 1번 문제 !</h1>
     <span id="musicNote" style="font-size: 50px;"></span>
     <div style="width: 500px; padding-left: 50px; padding-right: 20px;">
@@ -476,12 +476,17 @@
     </div>
     <br>
     <span id="userNote" style="font-size: 50px;"></span>
+    
+    
+    
     <input type="hidden" name="correct" id="correctinput" value=""> 
     <br>
     <span id="correct"><font style= 'font-size:20px;'>맞춘 개수 : 0</font></span>
     <br>
     <span id="answerCheck" style="margin: 30px;"></span>
     </center>
+    
+    </form>
     
     <div>
     <button class="btn btn-primary" id="play" onclick="singAsong()"
@@ -513,7 +518,9 @@
       		 }else if(document.getElementById("play").innerHTML == "결과보기"){
       			$("#musicNote").html(" ");
       			$("#userNote").html(" ");
-      			self.location = "/game/ppgameResult"
+      			//self.location = "/game/ppgameResult"
+      			$("#correctinput").attr("value",correct)
+      			formObj.submit();
       			}
       			
 

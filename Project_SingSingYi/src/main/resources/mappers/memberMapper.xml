@@ -32,4 +32,17 @@
 		WHERE	id = #{id}
 	</select>
 	
+	<!-- 게임 성공 후 코인 1개 추가 -->
+	<update id="addGameCoin">
+		UPDATE members
+		SET coincnt = coincnt + 1
+		WHERE id = #{id}	
+	</update>
+	
+	<!-- 게임 성공 후 코인 1개 추가  내역 등록 -->
+	<insert id="coinListAdd">
+	insert into coinhistory (id, chtype, chcontent)
+	values (#{id}, '지급', '미니게임 성공으로  코인 1개 지급')
+	</insert>
+	
 </mapper>

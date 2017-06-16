@@ -45,4 +45,10 @@ public class MemberServiceTest {
 		service.regist(member);
 	}
 	
+	@Test
+	public void addCoin(){
+		String id = "kdj5317";
+		service.addGameCoin(id);
+	}
+	
 }

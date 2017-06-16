@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +32,10 @@ public class SongController {
 		
 	}
 	
-	@Transactional
+	@RequestMapping(value="/recordTest", method=RequestMethod.GET)
+	public void readSongData2(){
+		
+	}
 	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public void songMain(Model model) {
 		model.addAttribute("bests", songService.bestSongs());
@@ -41,28 +43,26 @@ public class SongController {
 	}
 	
 	@RequestMapping(value="/addFavorite", method=RequestMethod.POST)
-	public ResponseEntity<Boolean> addFavorite(@RequestBody Favorite favorite, HttpSession httpSession){
+	public ResponseEntity<Boolean> addFavorite(@RequestBody Song song, HttpSession httpSession){
 		ResponseEntity<Boolean> entity = null;
 		
 		
 		Member member = (Member)httpSession.getAttribute("login");
-		int sid = favorite.getSid();
+		int sid = song.getSid();
 		String id = member.getId();
-		Favorite checkFavorite = songService.checkFavorite(id, sid);
-		if(checkFavorite != null){
-			entity = new ResponseEntity<Boolean>(false, HttpStatus.OK);
-		} else {
-			songService.addFavorite(id, sid);
-			entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
-		}
+		
+		songService.addFavorite(id, sid);
+		entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		
 		return entity;
 		
+		//return "redirect:/song/main";
 	}
 	
 	@RequestMapping(value="/removeFavorite", method=RequestMethod.POST)
 	public ResponseEntity<Boolean> removeFavorite(@RequestBody Favorite favorite, HttpSession httpSession){
 		ResponseEntity<Boolean> entity = null;
-		
+
 		int fid = favorite.getFid();
 		
 		songService.removeFavorite(fid);
@@ -85,4 +85,5 @@ public class SongController {
 		
 		//return "redirect:/song/main";
 	}
+	
 }

@@ -1,24 +1,24 @@
 package com.hexacore.ssy;
 
+
 import java.util.List;
 
 import java.util.Locale;
-import java.util.Random;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.hexacore.ssy.member.domain.Member;
+import com.hexacore.ssy.member.service.MemberService;
 import com.hexacore.ssy.song.domain.Song;
 import com.hexacore.ssy.song.service.SongService;
 
@@ -29,9 +29,11 @@ public class GameController {
 	Logger logger = Logger.getLogger(GameController.class);
 	@Inject
 	private SongService service;
+	@Inject
+	private MemberService memberservice;
 	
 	
-	// 종현이 게임 시작 페이지
+	// 미니 게임 시작 페이지
 	@RequestMapping(value = "/gameStart", method = RequestMethod.GET)
 	public void gameStartGET(Locale locale, Model model) {
 		
@@ -64,22 +66,25 @@ public class GameController {
 	
 	// 종현이 게임 결과 페이지
 	@RequestMapping(value = "/gameResult", method = RequestMethod.POST)
-	public void gameResultPOST(Model model, @RequestParam("correct") int correct ) {
-			logger.info("클라이언트: 종현이 게임 결과 !");
-			logger.info(correct);
+	public void gameResultPOST(Model model, @RequestParam("correct") int correct, HttpSession httpSession) {
+		Member member = (Member)httpSession.getAttribute("login");
+		
+		String id = member.getId();		
+		
+		logger.info("클라이언트: 종현이 게임 결과 !");
+			logger.info("종현이게임 맞춘 개수 :>>>>>>>>>>>>>>>>>>>>>"+correct);
 			model.addAttribute("correct", correct);
 			model.addAttribute("countSong", service.countSong());
+			
+			if(correct == 3){
+				memberservice.addGameCoin(id);
+			}
 			
 		}
 	
 	
-	//---------------------------------------------------------------------------
 	
-	// 절대음감 게임 시작 페이지
-	@RequestMapping(value = "/ppgameStart", method = RequestMethod.GET)
-	public void ppgameStart(Locale locale, Model model) {
-		
-	}
+	//---------------------------------------------------------------------------
 	
 		
 	// 절대음감 게임 본 페이지 
@@ -107,11 +112,18 @@ public class GameController {
 	}
 		
 	// 절대음감 게임 결과 페이지
-	@RequestMapping(value = "/ppgameResult", method = RequestMethod.GET)
-	public void ppgameResultPOST(Model model) {
+	@RequestMapping(value = "/ppgameResult", method = RequestMethod.POST)
+	public void ppgameResultPOST(Model model,@RequestParam("correct") int correct, HttpSession httpSession) {
+		
+		Member member = (Member)httpSession.getAttribute("login");
+		String id = member.getId();		
 			logger.info("클라이언트: 절대음감 게임 결과 !!");
-
+			model.addAttribute("countSong", service.countSong());
 			
+			if(correct == 2){
+				memberservice.addGameCoin(id);
+			}
+
 		}
 		
 	

@@ -40,5 +40,15 @@ public class MemberDAOImpl implements MemberDAO {
 	public String confirm(String id) {
 		return sqlSession.selectOne(namespace + ".confirm", id);
 	}
+
+	@Override
+	public void addGameCoin(String id) {
+		sqlSession.update(namespace +".addGameCoin", id);
+	}
+
+	@Override
+	public void coinListAdd(String id) {
+		sqlSession.insert(namespace +".coinListAdd", id);
+	}
 	
 }

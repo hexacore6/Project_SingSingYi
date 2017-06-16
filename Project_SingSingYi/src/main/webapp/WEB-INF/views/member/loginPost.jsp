@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>씽씽이</title>
 <link rel="stylesheet" type="text/css" href="/resources/css/sweetalert.css">
 <script src="/resources/js/sweetalert.min.js"></script>
 </head>

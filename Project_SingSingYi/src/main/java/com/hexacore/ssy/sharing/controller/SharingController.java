@@ -111,7 +111,7 @@ public class SharingController {
 	}
 	
 	private String uploadFile(String originalName, byte[] fileData, int shid, String loginId) throws IOException{
-		String savedName = loginId + "-" + shid + "-" + originalName;
+		String savedName = loginId + "_" + shid + "_" + originalName;
 		File target = new File(uploadPath, savedName);
 		FileCopyUtils.copy(fileData, target);
 		return savedName;
@@ -146,7 +146,7 @@ public class SharingController {
 			System.out.println(name + "녹음파일보여주세요");
 			System.out.println(name instanceof String);
 			if(!name.equals("")){
-				array = name.split("-");
+				array = name.split("_");
 				list.get(i).setRecordfilename(array[2]);
 			}
 		}
@@ -297,7 +297,7 @@ public class SharingController {
 			for (int i = 0; i < list.size(); i++) {
 				name = list.get(i).getRecordfilename();
 				if(!name.equals("")){
-					array = name.split("-");
+					array = name.split("_");
 					list.get(i).setRecordfilename(array[2]);
 				}
 			}
@@ -309,7 +309,7 @@ public class SharingController {
 			for (int i = 0; i < list.size(); i++) {
 				name = list.get(i).getRecordfilename();
 				if(!name.equals("")){
-					array = name.split("-");
+					array = name.split("_");
 					list.get(i).setRecordfilename(array[2]);
 				}
 			}
@@ -320,7 +320,7 @@ public class SharingController {
 			for (int i = 0; i < list.size(); i++) {
 				name = list.get(i).getRecordfilename();
 				if(!name.equals("")){
-					array = name.split("-");
+					array = name.split("_");
 					list.get(i).setRecordfilename(array[2]);
 				}
 			}
@@ -367,7 +367,7 @@ public class SharingController {
 
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
-		String originName[] = fileName.split("-");
+		String originName[] = fileName.split("_");
 		System.out.println(originName.length + "파일길이");
 		if(originName.length == 3){
 			logger.info("File NAME : " + fileName);

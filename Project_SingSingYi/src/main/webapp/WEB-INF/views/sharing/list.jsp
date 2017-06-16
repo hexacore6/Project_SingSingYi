@@ -63,8 +63,57 @@
 </style>
 
 <script type="text/javascript">
+  var oAudio = null;
+  var oAudio2 = null;
+  var currentFile = "";
+  function playAudio(index) {
+      if (window.HTMLAudioElement) {
+          try {
+               oAudio = document.getElementById('audio'+index);
+               oAudio2 = document.getElementById('audio2'+index);
+               oAudio.volume = 0.5
+               oAudio2.volume = 0.5
+              var btn = document.getElementById('play'+index); 
+              /* var audioURL = document.getElementById('audiofile'); */ 
 
-</script>
+              //Skip loading if current file hasn't changed.
+/*               if (audioURL.value !== currentFile) {
+                   oAudio.src = audioURL.value; 
+                   currentFile = audioURL.value;                        
+              } */
+
+              // Tests the paused attribute and set state. 
+              if (oAudio.paused) {
+                  oAudio.play();
+                  oAudio2.play();
+                  btn.textContent = "Pause";
+              }
+              else {
+                  oAudio.pause();
+                  oAudio2.pause();
+                  btn.textContent = "Play";
+              }
+          }
+          catch (e) {
+              // Fail silently but show in F12 developer tools console
+               if(window.console && console.error("Error:" + e));
+          }
+      }
+  }
+  function pvolume() {
+      oAudio.volume = Math.min(oAudio.volume + 0.1, 1);
+      oAudio2.volume = Math.min(oAudio2.volume + 0.1, 1);
+} 
+function mvolume() {
+    if(oAudio.volume > 0.1){
+      oAudio.volume = Math.min(oAudio.volume - 0.1, 1);
+      oAudio2.volume = Math.min(oAudio2.volume - 0.1, 1);
+    }else{ 
+		return;
+    }
+} 
+
+  </script>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -430,21 +479,33 @@ $(document).ready(function(){
 							<fmt:parseNumber value="${now.time/(1000)-(sharing.shregdate).time/(1000) }" integerOnly="true" var="secTime"></fmt:parseNumber>
              				<fmt:parseNumber value="${now.time/(1000*60)-(sharing.shregdate).time/(1000*60) }" integerOnly="true" var="minTime"></fmt:parseNumber>
 							
+							<!-- 이미지 파일 출력 -->
 							<div class="animate-box" style="border-radius: 10px;">
-							<c:set var="eximgfilename" value="${sharing.eximgfilename}"/>
-							<c:set var="emptyString" value="NoImageType"/>
-							<c:if test="${eximgfilename ne null}">
-								<c:if test="${eximgfilename ne emptyString}">
-									<img
-									src="displayFile?fileName=/${sharing.eximgfilename}"
-									alt=""
-									onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; display: block;">
+								<c:set var="eximgfilename" value="${sharing.eximgfilename}"/>
+								<c:set var="emptyString" value="NoImageType"/>
+								<c:if test="${eximgfilename ne null}">
+									<c:if test="${eximgfilename ne emptyString}">
+										<img src="displayFile?fileName=/${sharing.eximgfilename}"
+										alt="" onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; display: block;">
+									</c:if>
 								</c:if>
-							</c:if>
 							</div>
+							
+							<!-- 녹음파일 출력 -->
 							<c:set var="recordfilename" value="${sharing.recordfilename}"/>
 							<c:if test="${recordfilename ne null}">
 								<div style="margin: 10px;"><h3><strong><span style="color : #d9534f">${sharing.recordfilename}</span></strong></h3></div>
+								<button id="play" onclick="playAudio(${stat.index});">play</button>
+                        		<button id="pvolume${stat.index}" onclick="pvolume(${stat.index});">+</button>
+                        		<button id="mvolume${stat.index}" onclick="mvolume(${stat.index});">-</button>
+                         		<audio controls name="media" id="audio${stat.index}" hidden="hidden">
+                            		<source src="../../../resources/music/woong1_5_오래된 노래.mp3" type="audio/mpeg">
+                         		 </audio>
+                         	<c:if test=""></c:if>
+                         		<audio controls name="media2" id="audio2${stat.index}" hidden="hidden">
+                            		<source src="../../../resources/record/woong1_5_오래된 노래.mp3" type="audio/mpeg">
+                          		</audio>
+								
 							</c:if>
 							<div style="margin: 10px;">
 								<span class="time" style="float: right;"><i

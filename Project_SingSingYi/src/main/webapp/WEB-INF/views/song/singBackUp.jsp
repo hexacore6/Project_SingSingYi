@@ -94,7 +94,7 @@
 	outline: none;
 }
 
-#playbutton, #recordbutton {
+#playbutton {
 	width: 100px;
 	height: 100px;
 	background-image: url("/resources/img/play.png");
@@ -142,16 +142,8 @@
      <div class="col-lg-5"></div>
      <div class="col-lg-1">
       <div class="music-controller">
-
        <button class="btn btn-primary" id="playbutton"
         onclick="singAsong()"></button>
-
-       <div class="experiment recordrtc">
-        <button class="btn btn-primary" id="recordbutton"
-         onclick="recordControl()"></button>
-        <!-- Stop recording 후 보여지는 비디오 태그 -->
-        <video hidden=true></video>
-       </div>
 
       </div>
      </div>
@@ -217,186 +209,7 @@
  <!--내용끝-->
  <%@include file="../include/footer.jsp"%>
 
-
- <script>
-            (function() {
-                var params = {},
-                    r = /([^&=]+)=?([^&]*)/g;
-
-                function d(s) {
-                    return decodeURIComponent(s.replace(/\+/g, ' '));
-                }
-
-                var match, search = window.location.search;
-                while (match = r.exec(search.substring(1))) {
-                    params[d(match[1])] = d(match[2]);
-
-                    if(d(match[2]) === 'true' || d(match[2]) === 'false') {
-                        params[d(match[1])] = d(match[2]) === 'true' ? true : false;
-                    }
-                }
-                window.params = params;
-            })();
-        </script>
-
-
- <script>
-        var recordAudio = new Audio();
-        function record(){
-            var recordingDIV = document.querySelector('.recordrtc');
-            var recordingPlayer = recordingDIV.querySelector('video');
-
-            recordingDIV.querySelector('button').onclick = function() {
-                var button = this;
-
-                if(button.innerHTML === 'p') {
-                    button.disabled = true;
-                    button.disableStateWaiting = true;
-                    setTimeout(function() {
-                        button.disabled = false;
-                        button.disableStateWaiting = false;
-                    }, 2 * 1000);
-
-                    button.innerHTML = 't';
-
-                    function stopStream() {
-                        if(button.stream && button.stream.stop) {
-                            button.stream.stop();
-                            button.stream = null;
-                            
-                        }
-                    }
-                    
-                  
-
-                    if(button.recordRTC) {
-                        button.recordRTC.stopRecording(function(url) {
-                            button.recordingEndedCallback(url);
-                            stopStream();
-                        });
-                    }
-                    return;
-                }
-
-                button.disabled = true;
-
-                var commonConfig = {
-                    onMediaCaptured: function(stream) {
-                        button.stream = stream;
-                        if(button.mediaCapturedCallback) {
-                            button.mediaCapturedCallback();
-                        }
-
-                        button.innerHTML = 'p';
-                        button.disabled = false;
-                    },
-                    onMediaStopped: function() {
-                        button.innerHTML = 't';
-
-                        if(!button.disableStateWaiting) {
-                            button.disabled = false;
-                        }
-                    },
-                    
-                    onMediaCapturingFailed: function(error) {
-                        if(error.name === 'PermissionDeniedError' && !!navigator.mozGetUserMedia) {
-                            InstallTrigger.install({
-                                'Foo': {
-                                    URL: 'https://addons.mozilla.org/en-US/firefox/addon/enable-screen-capturing/',
-                                    toString: function () {
-                                        return this.URL;
-                                    }
-                                }
-                            });
-                        }
-                        commonConfig.onMediaStopped();
-                    }
-                    
-                };
-                
-                    captureAudio(commonConfig);
-                    
-                    button.mediaCapturedCallback = function() {
-                    
-                        button.recordRTC = RecordRTC(button.stream, {
-                            type: 'audio',
-                            bufferSize: typeof params.bufferSize == 'undefined' ? 0 : parseInt(params.bufferSize),
-                            sampleRate: typeof params.sampleRate == 'undefined' ? 44100 : parseInt(params.sampleRate),
-                            leftChannel: params.leftChannel || false,
-                            disableLogs: params.disableLogs || false,
-                            recorderType: webrtcDetectedBrowser === 'edge' ? StereoAudioRecorder : null
-                        });
-                        
-                        button.recordingEndedCallback = function(url) {
-                        	
-                        	recordAudio.src = url;
-                        	recordAudio.controls = true;
-                            recordingPlayer.parentNode.appendChild(document.createElement('hr'));
-                            recordingPlayer.parentNode.appendChild(recordAudio);
-                            
-                            if(recordAudio.paused) recordAudio.play();
-
-                            recordAudio.onended = function() {
-                            	recordAudio.pause();	
-                            		
-                            	playingMelody = false;
-                            	recordAudio.src = URL.createObjectURL(button.recordRTC.blob);
-            
-                                      if(!recordRTC) return alert('No recording found.');
-                                      this.disabled = true;
-
-                                      var button = this;
-                                      uploadToServer(recordRTC, function(progress, fileURL) {
-                                          if(progress === 'ended') {
-                                              button.disabled = false;
-                                              button.innerHTML = 'Click to download from server';
-                                              button.onclick = function() {
-                                                  window.open(fileURL);
-                                              };
-                                              return;
-                                          }
-                                          button.innerHTML = progress;
-                                      });
-                            	
-                            };
-                            
-                        };
-                        button.recordRTC.startRecording();
-                        
-                    };
-
-               
-            };
-
-            function captureAudio(config) {
-                captureUserMedia({audio: true}, function(audioStream) {
-                    recordingPlayer.srcObject = audioStream;
-                    recordingPlayer.play();
-
-                    config.onMediaCaptured(audioStream);
-
-                    audioStream.onended = function() {
-                        config.onMediaStopped();
-                    };
-                }, function(error) {
-                    config.onMediaCapturingFailed(error);
-                });
-            }
-
-            function captureUserMedia(mediaConstraints, successCallback, errorCallback) {
-                navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
-            }
-            
-            
-        }
-        function recordControl(){
-        	record();
-        }
-        </script>
-
- </article>
-
-
+ 
  <script> 
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
 		var requestId = 0;
@@ -430,12 +243,13 @@
 		var lyricsCnt = 0; // 가사 인덱스
 		
 		//녹음 관련 변수들
+		 
 		  
+		 // this.context = stream.context;
 		  var recordBuffers = [];
 		  var recording = false;
 		
-		  var playingMelody = false;
-		  
+
 		//마이크 정보를 얻어오기 위해서 사용하는 함수  
 		function getUserMedia(dictionary, callback) {
 			try {
@@ -493,6 +307,18 @@
 			analyser.getFloatTimeDomainData(buf);
 			var ac = autoCorrelate(buf, audioContext.sampleRate); // 자기 상관 함수
 			noteAc = divideNote(ac);
+			//console.log(noteAc);
+
+			//내 음과 맞는지 체크
+			/*
+			var singNote = new Array();
+			singNote[0] = "F4";
+			singNote[1] = "C#4";
+			singNote[2] = "D4";
+			singNote[3] = "D#4";
+			if(noteAc == singNote[0])
+			  console.log("good!");
+			 */
 
 			if (!window.requestAnimationFrame)
 				window.requestAnimationFrame = window.webkitRequestAnimationFrame;
@@ -753,31 +579,151 @@
 						window.clearTimeout(id);
 					};
 		})();
-	
-		var melodyAudio;
-		function singAsong() { // 플레이 버튼을 누르면 이 함수 실행
-			
-			
-			if(playingMelody == false){
-				melodyAudio = new Audio('/resources/music/iloved.mp3');
-				melodyAudio.play();
-   			readFile("/resources/notes/songTest.txt");
-   			readFile("/resources/lyrics/iloved.txt");
-   			readFile("/resources/lyrics/ilovedTime.txt");
-   
-   			playing = true;
-   			playingMelody = true;
-   			
-   			updatePitch();
-   			//record();
-   			//echo();
-   			
-   			
-   			setTimeout("calLyrics()", (lyricsTimeTxtArr[0] * 1000));
+
+		function myFunction() {
+			var totalT = 0;
+			for (var i = 0; i <= 3; i++) {
+				totalT += sheetTime[i] * 1000;
+				//console.log(totalT);
+				setTimeout("timerfun(" + i + ")", totalT);
 			}
-			else if(playingMelody == true){
-				melodyAudio.pause();
+		}
+		function timerfun(i) {
+			console.log(i);
+
+			if (i == 0) {
+				document.getElementById('myImage').src = "./resources/images/1.png";
+			} else if (i == 1) {
+				document.getElementById('myImage').src = "./resources/images/2.png";
+			} else if (i == 2) {
+				document.getElementById('myImage').src = "./resources/images/3.png";
+			} else {
+				document.getElementById('myImage').src = "./resources/images/4.png";
 			}
+		}
+
+		function RecordAudio(stream, cfg) {
+			 var config = cfg || {};
+			 var bufferLen = config.bufferLen || 4096;
+			  var numChannels = config.numChannels || 2;
+			  
+			  node = (audioContext.createScriptProcessor ||
+			    audioContext.createJavaScriptNode).call(audioContext,
+			    bufferLen, numChannels, numChannels);
+
+			  mediaStreamSource.connect(node);
+			  node.connect(audioContext.destination);
+
+			  node.onaudioprocess = function(e) {
+			    if (!recording) return;
+			    for (var i = 0; i < numChannels; i++) {
+			      if (!recordBuffers[i]) recordBuffers[i] = [];
+			      recordBuffers[i].push.apply(recordBuffers[i], e.inputBuffer.getChannelData(i));
+			    }
+			  }
+			}
+		
+			 function recordGetData() {
+				    var tmp = recordBuffers;
+				    recordBuffers = [];
+				    return tmp; // returns an array of array containing data from various channels
+				  };
+			
+			 
+				  function recordStart() {
+				    recording = true;
+				  };
+
+				  function recordStop() {
+				    recording = false;
+				  
+					//var fileObject = new XMLHttpRequest();
+
+					
+					
+					var xmlhttp;
+					var recordedData;
+					if (window.XMLHttpRequest) {
+						xmlhttp = new XMLHttpRequest();
+					} else {
+						// code for older browsers
+						xmlhttp = new ActiveXObject("Scripting.FileSystemObject");
+					}
+					
+					
+					xmlhttp.onreadystatechange = function() {
+							//console.log('here');
+								recordedData = recordGetData();
+					};
+					
+					xmlhttp.open("POST", "/song/save", true);
+					
+					//console.log("5초 후yes!");
+					//console.log(recordedData);
+					//var textVoice = JSON.stringify(recordedData);
+					//console.log(recordedData.toString());
+					//xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+					//xmlhttp.send("song=" +textVoice);
+					
+		
+					
+		/*
+					  var firstFile = '/resources/music/iloved.mp3';
+					  var secondFile = '/resources/music/dayday.mp3';
+
+					  var socket = io.connect('http://localhost');
+					  socket.emit('mergeFiles', { firstFile: firstFile, secondFile: secondFile });
+					 */
+					  /*
+				    var txtFile = "/resources/record/test.txt";
+				    var test = [];
+				    var file = new File(test,txtFile);
+				    var str = "My string of text";
+
+				    file.open("w"); // open file with write access
+				    file.writeln("First line of text");
+				    file.writeln("Second line of text " + str);
+				    console.log(str);
+				    file.write(str);
+				    file.close();
+				    */
+					//console.log("data : " + recordedData);
+			 };
+			
+		function singAsong() {
+			var audio = new Audio('/resources/music/iloved.mp3');
+			audio.play();
+			readFile("/resources/notes/songTest.txt");
+			readFile("/resources/lyrics/iloved.txt");
+			readFile("/resources/lyrics/ilovedTime.txt");
+
+			playing = true;
+			updatePitch();
+			
+			//노래 합치기
+			var ctx = new AudioContext();
+			ctx.destination.channelCount = 1;
+			ctx.destination.channelCountMode = 'explicit';
+
+			var inputNode;
+			var splitter = ctx.createChannelSplitter(1);
+			var merger = ctx.createChannelMerger(1);
+
+			splitter.connect(merger, 0, 0);
+
+			merger.connect(ctx.destination);
+
+			navigator.webkitGetUserMedia({ audio: true }, function (stream) {
+			  
+			  inputNode = ctx.createMediaStreamSource(stream);
+			  // below doesn't do anything on StreamSource node.
+			  inputNode.channelCount = 1;
+			  inputNode.channelCountMode = 'explicit';
+			  inputNode.connect(splitter);
+			  
+			}, function () {});
+			
+			setTimeout("calLyrics()", (lyricsTimeTxtArr[0] * 1000));
 		}
 
 		function parsingMIDI(songText) { // midi to txt 파싱하는 함수
@@ -809,6 +755,7 @@
 		}
 
 		function readFile(filename) {
+			// var fileName = "/resources/notes/songTest.txt";
 			var fileObject = new XMLHttpRequest();
 
 			var xmlhttp;
@@ -824,6 +771,7 @@
 				if (this.readyState == 4 && this.status == 200) {
 					if (filename.indexOf("/notes/") != -1) {// midi to txt 파일 일때
 						songText = this.responseText;
+						//console.log("1 : "+songText);
 
 						parsingMIDI(songText);
 
@@ -831,9 +779,13 @@
 					} else if (filename.indexOf("Time.txt") != -1) {// 가사 시간 data txt일때
 						lyricsTimeText = this.responseText;
 						parsingLyricsTimeText(lyricsTimeText);
+						//console.log("Time");
+						//console.log(lyricsTimeTxtArr);
 					} else {// 가사 data txt일때
 						lyricsText = this.responseText;
 						parsingLyricsText(lyricsText);
+						//console.log("no");
+						//console.log(lyricsTxtArr);
 					}
 				}
 			};
@@ -844,15 +796,19 @@
 		}
 
 		function calNote() {// 현재 음 계산하는 아이.
+			//console.log(intervalV);
 			if (stateArr[checkCnt] == 'On')
 				noteV += Number(intervalArr[checkCnt]);
 			else
 				noteV -= Number(intervalArr[checkCnt]);
+			//console.log(noteV);
+			//checkCnt++;
 			noteVText = divideNote(noteV)
 
 			console.log("noteVText : " + noteVText);
 			console.log("noteAc : " + noteAc);
 			if (noteAc == noteVText) {
+				//console.log("very good!");
 				noteCorrect = true;
 			} else {
 				noteCorrect = false;
@@ -869,6 +825,19 @@
 			}
 		}
 
+		function loadimages() {
+			light01 = new Image;
+			light01.src = "./resources/img/greenlight.png";
+
+			light02 = new Image;
+			light02.src = "./resources/img/redlight.png";
+
+			pictures = new Array(2);
+			pictures[0] = light01;
+			pictures[1] = light02;
+
+		}
+
 		function noteCheck() {
 			if (noteCorrect) {
 				document.getElementById('light').src = "/resources/img/greenlight.png";
@@ -878,13 +847,17 @@
 		}
 
 		function calLyrics() { //시간에 맞는 가사 보여주는 함수
+			//console.log(lyricsTxtArr);
+			//console.log(lyricsTimeTxtArr);
 			if (lyricsCnt == 0) {
+				//console.log(lyricsTimeTxtArr[lyricsCnt]);
 				document.getElementById('songText').innerHTML = lyricsTxtArr[lyricsCnt];
 
 				setTimeout("calLyrics()",
 						(lyricsTimeTxtArr[lyricsCnt++] * 1000));
 
 			} else if (lyricsCnt != 0) {
+			//	console.log((lyricsTimeTxtArr[lyricsCnt] - lyricsTimeTxtArr[lyricsCnt - 1]));
 				document.getElementById('songText').innerHTML = lyricsTxtArr[lyricsCnt - 1];
 
 				setTimeout(
@@ -894,6 +867,73 @@
 			}
 
 		}
+
+		/* 
+		 //현재 어떤 음정인지 체크하는 함수(현재 사용X)
+		 function noteFromPitch( frequency ) {
+		 var noteNum = 12 * (Math.log( frequency / 440 )/Math.log(2) );
+		 return Math.round( noteNum ) + 69;
+		 }
+
+		 //음정에서 주파수을 구하는 함수(현재 사용X)  
+		 function frequencyFromNoteNumber( note ) {
+		 return 440 * Math.pow(2,(note-69)/12);
+		 }
+
+		 //지금은 사용안하는 함수(현재 사용X)
+		 function centsOffFromPitch( frequency, note ) {
+		 return Math.floor( 1200 * Math.log( frequency / frequencyFromNoteNumber( note ))/Math.log(2) );
+		 }
+		 */
+	</script>
+ -->
+ <!-- <script src="/socket.io/socket.io.js"></script> -->
+ <script>
+		/*
+		 function mergeBuffers(recBuffers, recLength){
+
+		 var result = new Float32Array(recLength*2);
+		 var offset = 0;
+		 for (var i = 0; i < recBuffers.length; i++){
+		 result.set(recBuffers[0], offset);
+		 offset += recBuffers[0].length;
+		 }
+		 return result;
+		 }
+		 var audioTracks = '/resources/music/iloved.mp3';
+		 var recBuffersL = [];
+		 for (var i=0;i<audioTracks.length; i++)
+		 {
+		 recBuffersL[i] = audioTracks[i].currentBuffer.getChannelData(0);
+
+		 }
+
+		 var recBuffersR = [];
+		 for (var i=0;i<audioTracks.length; i++)
+		 {
+		 recBuffersR[i] = audioTracks[i].currentBuffer.getChannelData(1);
+
+		 }
+
+
+		 var buffers = [];
+		 buffers.push( mergeBuffers(recBuffersL, recBuffersL.length) );
+		 buffers.push( mergeBuffers(recBuffersR, recBuffersR.length) );
+		 */
+	</script>
+
+ <script src="//cdn.WebRTC-Experiment.com/RecordRTC.js">
+		/*
+		 var recordRTC = RecordRTC(mediaStream);
+		 recordRTC.startRecording();
+		 setTimeout("stopRecord()",(10000));
+		 
+		 function stopRecord(){
+		 recordRTC.stopRecording(function(audioURL) {
+		 mediaElement.src = audioURL;
+		 });
+		 }
+		 */
 	</script>
 
 </body>

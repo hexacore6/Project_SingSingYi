@@ -94,7 +94,7 @@
 	outline: none;
 }
 
-#playbutton, #recordbutton {
+#playbutton {
 	width: 100px;
 	height: 100px;
 	background-image: url("/resources/img/play.png");
@@ -142,17 +142,12 @@
      <div class="col-lg-5"></div>
      <div class="col-lg-1">
       <div class="music-controller">
-
+      <section class="experiment recordrtc">
        <button class="btn btn-primary" id="playbutton"
         onclick="singAsong()"></button>
-
-       <div class="experiment recordrtc">
-        <button class="btn btn-primary" id="recordbutton"
-         onclick="recordControl()"></button>
-        <!-- Stop recording 후 보여지는 비디오 태그 -->
-        <video hidden=true></video>
-       </div>
-
+         <!-- Stop recording 후 보여지는 비디오 태그 -->
+            <video hidden=true></video>
+      </section>
       </div>
      </div>
      <div class="col-lg-6"></div>
@@ -218,7 +213,7 @@
  <%@include file="../include/footer.jsp"%>
 
 
- <script>
+        <script>
             (function() {
                 var params = {},
                     r = /([^&=]+)=?([^&]*)/g;
@@ -238,9 +233,9 @@
                 window.params = params;
             })();
         </script>
-
-
- <script>
+      
+       
+        <script>
         var recordAudio = new Audio();
         function record(){
             var recordingDIV = document.querySelector('.recordrtc');
@@ -266,8 +261,6 @@
                             
                         }
                     }
-                    
-                  
 
                     if(button.recordRTC) {
                         button.recordRTC.stopRecording(function(url) {
@@ -314,9 +307,12 @@
                     
                 };
                 
+
+                
                     captureAudio(commonConfig);
                     
                     button.mediaCapturedCallback = function() {
+                    	 
                     
                         button.recordRTC = RecordRTC(button.stream, {
                             type: 'audio',
@@ -338,26 +334,9 @@
 
                             recordAudio.onended = function() {
                             	recordAudio.pause();	
-                            		
+                            	melodyAudio.pause();	
                             	playingMelody = false;
                             	recordAudio.src = URL.createObjectURL(button.recordRTC.blob);
-            
-                                      if(!recordRTC) return alert('No recording found.');
-                                      this.disabled = true;
-
-                                      var button = this;
-                                      uploadToServer(recordRTC, function(progress, fileURL) {
-                                          if(progress === 'ended') {
-                                              button.disabled = false;
-                                              button.innerHTML = 'Click to download from server';
-                                              button.onclick = function() {
-                                                  window.open(fileURL);
-                                              };
-                                              return;
-                                          }
-                                          button.innerHTML = progress;
-                                      });
-                            	
                             };
                             
                         };
@@ -386,17 +365,12 @@
             function captureUserMedia(mediaConstraints, successCallback, errorCallback) {
                 navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
             }
-            
-            
-        }
-        function recordControl(){
-        	record();
         }
         </script>
-
- </article>
-
-
+       
+    </article>
+     
+ 
  <script> 
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
 		var requestId = 0;
@@ -753,7 +727,33 @@
 						window.clearTimeout(id);
 					};
 		})();
-	
+			
+		function echo(){
+			//에코
+			/*
+			var ctx = new AudioContext();
+			ctx.destination.channelCount = 1;
+			ctx.destination.channelCountMode = 'explicit';
+
+			var inputNode;
+			var splitter = ctx.createChannelSplitter(1);
+			var merger = ctx.createChannelMerger(1);
+
+			splitter.connect(merger, 0, 0);
+
+			merger.connect(ctx.destination);
+
+			navigator.webkitGetUserMedia({ audio: true }, function (stream) {
+			  
+			  inputNode = ctx.createMediaStreamSource(stream);
+			  // below doesn't do anything on StreamSource node.
+			  inputNode.channelCount = 1;
+			  inputNode.channelCountMode = 'explicit';
+			  inputNode.connect(splitter);
+			  
+			}, function () {});
+			*/
+		}
 		var melodyAudio;
 		function singAsong() { // 플레이 버튼을 누르면 이 함수 실행
 			
@@ -769,14 +769,15 @@
    			playingMelody = true;
    			
    			updatePitch();
-   			//record();
+   			record();
    			//echo();
    			
    			
    			setTimeout("calLyrics()", (lyricsTimeTxtArr[0] * 1000));
 			}
 			else if(playingMelody == true){
-				melodyAudio.pause();
+				System.out.println("hello");
+				
 			}
 		}
 

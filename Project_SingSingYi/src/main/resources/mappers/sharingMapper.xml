@@ -121,6 +121,11 @@
 		WHERE shid = #{shid}
 	</delete>
 	
+	<delete id="deleteAllLikeHistory">
+		DELETE FROM likehistory
+		WHERE shid = #{shid}
+	</delete>
+	
 	<select id="checkLike" resultType="com.hexacore.ssy.sharing.domain.LikeHistory">
 		SELECT shid, id
 		FROM likehistory

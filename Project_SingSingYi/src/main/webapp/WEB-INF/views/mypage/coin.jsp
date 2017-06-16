@@ -46,16 +46,14 @@
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th style="width: 70px; text-align: center; font-size: 20px;">번호</th>
                     <th style="text-align: center; font-size: 20px;">종류</th>
                     <th style="text-align: center; font-size: 20px;">지급 및 소모 내용</th>
-                    <th style="width: 50px; text-align: center; font-size: 20px;">지급 및 소모 날짜</th>
+                    <th style="text-align: center; font-size: 20px;">지급 및 소모 날짜</th>
                   </tr>
                 </thead>
                 <c:forEach items="${list}" var="historyCoin" varStatus="stat">
                   <tbody>
                     <tr>
-                      <th style="width: 10px; text-align: center; font-size: 18px;">${((pageMaker.cri.page-1)*10)+(stat.index)}</th>
                       <th style="text-align: center; font-size: 18px;">${historyCoin.chtype }</th>
                       <th style="text-align: center; font-size: 18px;">${historyCoin.chcontent }</th>
                       <th style="width: 400px; text-align: center; font-size: 18px;"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${historyCoin.chdate }" /></th>
@@ -67,15 +65,14 @@
             <!-- /.box-body -->
               
               <!-- 페이징 번호 div -->
-<%--          <div class="box-footer clearfix text-center">
+          <div class="box-footer clearfix text-center">
               <ul class="pagination  pagination-sm no-margin   ">
                 <c:if test="${pageMaker.prev }">
                   <li><a href="myCoin${pageMaker.makeQuery(pageMaker.startPage-1 )}">&laquo;</a></li>
                 </c:if>
 
-                <c:set value="woong1" var="id"></c:set>
                 <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                  <li <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>><a href="myCoin${pageMaker.makeQuery(idx,id)}">${idx }</a></li>
+                  <li <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>><a href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
                 </c:forEach>
 
 
@@ -84,7 +81,7 @@
                 </c:if>
               </ul>
 
-            </div> --%>
+            </div>
           </div>
         </div>
       </div>

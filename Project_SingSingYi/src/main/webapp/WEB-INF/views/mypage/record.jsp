@@ -78,8 +78,7 @@ function mvolume() {
       <div class="col-lg-9" style="margin-top: 50px;">
         <!--content-->
         <div class="row">
-          <div class="col-lg-1"></div>
-          <div class="col-lg-10">
+          <div class="col-lg-12">
             <div class="box">
               <div class="box-header">
                 <h3 class="box-title">녹음 저장소</h3>
@@ -95,24 +94,23 @@ function mvolume() {
 
               
               <div class="box-body no-padding">
-                <table class="table table-striped">
+                <table class="table table-striped" >
                   <tbody>
                     <tr>
-                      <th style="width: 5px; text-align: center;">번호 </th>
-                      <th style="width: 50px; text-align: center;">곡명</th>
-                      <th style="width: 10px; text-align: center;">녹음된 날짜</th>
-                      <th style="width: 5px; text-align: center;">재생</th>
-                      <th style="width: 5px; text-align: center;">삭제</th>
+                      <th style="width: 40%; text-align: center; font-size: 20px;">녹음파일명</th>
+                      <th style="width: 5%; text-align: center; font-size: 20px;">녹음된 날짜</th>
+                      <th style="width: 20%; text-align: center; font-size: 20px;">재생</th>
+                      <th style="width: 5%; text-align: center; font-size: 20px;">삭제</th>
                                    </tr>
                       <c:forEach items="${list}" var="record" varStatus="stat">  
                       <tr id="trRecord${record.rrid}">
-                        <td style="text-align: center">${((pageMaker.cri.page-1)*10)+(stat.index)}</td>
-                        <td style="width: 20px; text-align: center;">${record.recordfilename}</td>
-                        <td style="width: 5px; text-align: center;"><span class="badge bg-black"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${record.recordregdate}" /></span></td>
-                        <td style="width: 200px; text-align: center;">
-                        <button id="play${stat.index}" onclick="playAudio(${stat.index});">play</button>
-                        <button id="pvolume${stat.index}" onclick="pvolume(${stat.index});">+</button>
-                        <button id="mvolume${stat.index}" onclick="mvolume(${stat.index});">-</button>
+                        <%-- <td style="text-align: center">${((pageMaker.cri.page-1)*10)+(stat.index)}</td> --%>
+                        <td style="text-align: center; font-size: 20px;">${record.recordfilename}</td>
+                        <td style="text-align: center;"><span class="badge bg-black" style="font-size: 20px;"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${record.recordregdate}" /></span></td>
+                        <td style="text-align: center; font-size: 20px;">
+                        <button id="play${stat.index}" onclick="playAudio(${stat.index});" style="font-size: 20px;">play</button>
+                        <button id="pvolume${stat.index}" onclick="pvolume(${stat.index});" style="font-size: 20px;">+</button>
+                        <button id="mvolume${stat.index}" onclick="mvolume(${stat.index});" style="font-size: 20px;">-</button>
                           <audio controls name="media" id="audio${stat.index}" hidden="hidden">
                             <source src="../../../resources/music/${recordfilename}" type="audio/mpeg">
                             <!-- <source src="/resources/mp3/123.mp3" type="audio/mpeg"> -->
@@ -123,8 +121,8 @@ function mvolume() {
                             <!-- <source src="/resources/mp3/123.mp3" type="audio/mpeg"> -->
                           </audio>
                         </td>
-                        <td style="width: 5px; text-align: center;">
-                          <button class="btn badge bg-red" onclick="removeRecord(${record.rrid})">삭제</button>
+                        <td style="width: 5px; text-align: center; ">
+                          <button class="btn badge bg-red" onclick="removeRecord(${record.rrid})" style="font-size: 20px;">삭제</button>
                         </td>
                       </tr>
                       </c:forEach>
@@ -139,9 +137,8 @@ function mvolume() {
                     <li><a href="myRecord${pageMaker.makeQuery(pageMaker.startPage-1 )}">&laquo;</a></li>
                   </c:if>
 
-                  <c:set value="woong1" var="id"></c:set>
                   <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                    <li <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>><a href="myRecord${pageMaker.makeQuery(idx,id)}">${idx }</a></li>
+                    <li <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>><a href="record${pageMaker.makeQuery(idx)}">${idx }</a></li>
                   </c:forEach>
 
 
@@ -152,7 +149,6 @@ function mvolume() {
               </div>
             </div>
           </div>
-          <div class="col-lg-1"></div>
         </div>
       </div>
     </div>

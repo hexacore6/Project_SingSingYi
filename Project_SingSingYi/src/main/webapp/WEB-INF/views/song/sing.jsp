@@ -130,10 +130,10 @@
     <!--왼쪽-->
     <div class="music">
      <!--곡명-->
-     <img src="/resources/img/ak.jpg">
+     <!-- <img src="/resources/img/ak.jpg"> -->
     </div>
     <div class="lyrics">
-     <h1 id="songText">가사 준비중.. .</h1>
+     <h1 id="songText" style="margin-top: 30px;">가사 준비중.. .</h1>
     </div>
     <div class="row">
      <div class="col-lg-5"></div>
@@ -975,6 +975,10 @@ var audioTracks = '/resources/music/iloved.mp3';
 	buffers.push( mergeBuffers(recBuffersL, recBuffersL.length) );
 	buffers.push( mergeBuffers(recBuffersR, recBuffersR.length) );
 */
+
+
+
+
 </script>
 
  <script src="//cdn.WebRTC-Experiment.com/RecordRTC.js">

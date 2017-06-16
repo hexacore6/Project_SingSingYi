@@ -32,6 +32,11 @@ public class SongController {
 		
 	}
 	
+	@RequestMapping(value="/sing2", method=RequestMethod.GET)
+	public void readSongData2(){
+		
+	}
+	
 	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public void songMain(Model model) {
 		model.addAttribute("bests", songService.bestSongs());

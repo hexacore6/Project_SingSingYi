@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>종현이게임 스타트</title>
+<title>종현이게임 스타트1</title>
 
     <!-- 합쳐지고 최소화된 최신 CSS -->
     <script src="<%=application.getContextPath()%>/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -19,7 +19,10 @@
       function() {
         $('#gameStart').on("click", function(evt) {
           self.location = "jhgame"
-        })
+        });
+         $('#ppgameStart').on("click", function(evt) {
+          self.location = "ppgame"
+        });
       })
 </script>
     
@@ -27,9 +30,11 @@
 <body>
      <!-- header -->
       <%@ include file="../include/header.jsp"%>
+      
       <center>
-      <p style="width: 20%; height:100px; margin: 100px; font-size: 50px;">종현이 게임</p>
-      <button id='gameStart' class="btn btn-primary" style="width: 20%; height:100px; font-size: 50px; margin-bottom: 20px;"><b>START</b></button>
+      <p style="width: 30%; height:100px; margin: 70px; font-size: 50px;"></p>
+      <button id='gameStart' class="btn btn-primary" style="width: 20%; height:100px; font-size: 30px; margin-bottom: 20px;"><b>종현이 게임 <br>START</b></button>
+      <button id='ppgameStart' class="btn btn-danger" style="width: 20%; height:100px; font-size: 30px; margin-bottom: 20px;"><b>절대음감 게임 <br>START</b></button>
       </center>
 </body>
 </html>

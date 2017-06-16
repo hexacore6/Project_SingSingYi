@@ -3,6 +3,7 @@ package com.hexacore.ssy.member.service;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hexacore.ssy.dto.LoginDTO;
 import com.hexacore.ssy.member.dao.MemberDAO;
@@ -30,6 +31,13 @@ public class MemberServiceImpl implements MemberService {
 			return false;
 		}
 		return true;
+	}
+	
+	@Transactional
+	@Override
+	public void addGameCoin(String id) {
+		memberDao.addGameCoin(id);  //코인 1개 추가
+		memberDao.coinListAdd(id);//코인 추가내역 추가
 	}
 
 }

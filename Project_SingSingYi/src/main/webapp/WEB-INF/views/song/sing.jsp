@@ -759,11 +759,11 @@
    
    
    if(playingMelody == false){
-    melodyAudio = new Audio('/resources/music/iloved.mp3');
+    melodyAudio = new Audio("/resources/music/${songFile.musicalnote1}");
     melodyAudio.play();
-      readFile("/resources/notes/songTest.txt");
-      readFile("/resources/lyrics/iloved.txt");
-      readFile("/resources/lyrics/ilovedTime.txt");
+      readFile("/resources/notes/${songFile.musicalnote2}");
+      readFile("/resources/lyrics/${songFile.musicalnote3}");
+      readFile("/resources/lyrics/${songFile.musicalnote4}");
    
       playing = true;
       playingMelody = true;

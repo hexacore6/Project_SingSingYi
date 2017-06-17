@@ -28,7 +28,19 @@ public class SongController {
 	private SongService songService;
 	
 	@RequestMapping(value="/sing", method=RequestMethod.GET)
-	public void readSongData(@RequestParam("sid") int sid){
+	public void readSongData(Model model, @RequestParam("sid") int sid){
+		songService.updatePlayCnt(sid);
+		
+		model.addAttribute("sid", sid);
+		model.addAttribute("songFile", songService.readSong(sid));
+	}
+	
+	@RequestMapping(value="/sing", method=RequestMethod.POST)
+	public void readSongDataPOST(Model model, @RequestParam("sid") int sid){
+		songService.updatePlayCnt(sid);
+		
+		model.addAttribute("sid", sid);
+		model.addAttribute("songFile", songService.readSong(sid));
 		
 	}
 	

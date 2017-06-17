@@ -58,4 +58,19 @@ public class SongServicelmpl implements SongService  {
 	public Favorite checkFavorite(String id, int sid) {
 		return songDao.checkFavorite(id, sid);
 	}
+	
+	/** 노래 부르기 횟수 증가 */
+	@Override
+	public void updatePlayCnt(int sid) {
+		songDao.updatePlayCnt(sid);
+	}
+	
+	/** 노래 한 곡 가져오기 */
+	@Override
+	public Song readSong(int sid) {
+		return songDao.readSong(sid);
+	}
+	
+	
+	
 }

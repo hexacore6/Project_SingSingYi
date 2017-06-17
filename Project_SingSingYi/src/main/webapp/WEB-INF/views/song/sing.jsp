@@ -232,31 +232,34 @@
      <!--곡명-->
      
     </div>
+     
     <div class="lyrics">
      <h1 id="songText1">가사 준비중</h1>
      <h1 id="songText2">  ...</h1>
     </div>
+   
     <div class="row">
      <div class="col-lg-5"></div>
      <div class="col-lg-1">
      
      <div class="page"><!-- level controller -->
-<!-- 
-      <button class="easy-btn">EASY</button>
-      <button class="hard-btn">HARD</button>
- --
-     </div>
-      <div class="music-controller">
+<!-- 플레이버튼 바로 아래에! -->
+      <button class="easy-btn" onclick="clickEasy()">EASY</button>
+      <button class="hard-btn" onclick="clickHard()">HARD</button>
 
+     </div>
+     
+      <div class="music-controller">
        <button class="btn btn-primary" id="playbutton"
         onclick="singAsong()"></button>
-
+<!-- 플레이버튼 오른쪽에! -->
        <div class="experiment recordrtc">
         <button class="btn btn-primary" id="recordbutton"
          onclick="record()"></button>
         <!-- Stop recording 후 보여지는 비디오 태그 -->
         <video hidden=true></video>
        </div>
+       <!-- 플레이버튼 아래에! -->
        <div style="text-align: center;">
                 <button id="save-to-disk">Save To Disk</button>
                 <button id="open-new-tab">Open New Tab</button>
@@ -328,7 +331,7 @@
  <%@include file="../include/footer.jsp"%>
 <script>
 //움직이는 인형 start
-/*
+
 {
 	class Robot {
 		constructor(color, light, size, x, y, struct) {
@@ -760,7 +763,7 @@
 
 	run();
 }
-*/
+
 
 //움직이는 인형 stop
 
@@ -768,32 +771,40 @@
 </script>
 <script>
 //level-controller
-$('.easy-btn').on('click', function(event) {
+//$('.easy-btn').on('click', function(event) {
+	function clickEasy(){
+	/*
   $(this).toggleClass('start-fun');
   var $page = $('.page');
   $page.toggleClass('color-bg-start')
     .toggleClass('bg-animate-color');
-
+  */
+  level = false;
+  console.log("EASY!!");
   //change text when when button is clicked
-
+/*
   $(this).hasClass('start-fun') ?
     $(this).text('stop the fun') :
     $(this).text('start the fun');
-
-});
-$('.hard-btn').on('click', function(event) {
+*/
+};
+//$('.hard-btn').on('click', function(event) {
+	function clickHard(){
+	/*
 	  $(this).toggleClass('start-fun');
 	  var $page = $('.page');
 	  $page.toggleClass('color-bg-start')
 	    .toggleClass('bg-animate-color');
-
+	  */
+ 		level = true;
 	  //change text when when button is clicked
-
+		console.log("HARD");
+	  /*
 	  $(this).hasClass('start-fun') ?
 	    $(this).text('stop the fun') :
 	    $(this).text('start the fun');
-
-	});
+*/
+	};
 
 </script>
  <script>
@@ -1082,7 +1093,7 @@ $('.hard-btn').on('click', function(event) {
 
 
 
- <script> 
+ <script type="text/javascript"> 
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   var level = false;// false : easy,  true : hard
   var recordPlaying = false;
@@ -1113,7 +1124,11 @@ $('.hard-btn').on('click', function(event) {
   var lyricsTxtArr = [], lyricsTimeTxtArr = [];
   var checkCnt = 0;
   var noteAc = "";
-  var tick = 0.0016622340425532;
+  var tick =0.0016622340425532;// 나만 안되는 연애 : 0.0023320895522388;
+  // tick = MPQN/1000000/PPQN
+  //			= MSPM/BPM/1000000/PPQN
+  //			= 60000000/BPM/1000000/PPQN
+  // 나만 안되는 연애 : 67bpm, 사랑했나봐 : 94bpm
   var lyricsCnt = 0; // 가사 인덱스
   
   //녹음 관련 변수들
@@ -1283,129 +1298,129 @@ $('.hard-btn').on('click', function(event) {
    // C : 도 , D : 레, E : 미, F : 파, G : 솔, A : 라, B : 시 
    //2옥타브
    if (ac >= 65 && ac < 69)
-    return "C2";
+    return "C02";
    else if (ac >= 69 && ac < 73)
     return "C#2";
    else if (ac >= 73 && ac < 78)
-    return "D2";
+    return "D02";
    else if (ac >= 78 && ac < 82)
     return "D#2";
    else if (ac >= 82 && ac < 87)
-    return "E2";
+    return "E02";
    else if (ac >= 87 && ac < 92)
-    return "F2";
+    return "F02";
    else if (ac >= 92 && ac < 98)
     return "F#2";
    else if (ac >= 98 && ac < 104)
-    return "G2";
+    return "G02";
    else if (ac >= 104 && ac < 110)
     return "G#2";
    else if (ac >= 110 && ac < 117)
-    return "A2";
+    return "A02";
    else if (ac >= 117 && ac < 123)
     return "A#2";
    else if (ac >= 123 && ac < 131)
-    return "B2";
+    return "B02";
    //3옥타브
    else if (ac >= 131 && ac < 139)
-    return "C3";
+    return "C03";
    else if (ac >= 139 && ac < 147)
     return "C#3";
    else if (ac >= 147 && ac < 156)
-    return "D3";
+    return "D03";
    else if (ac >= 156 && ac < 165)
     return "D#3";
    else if (ac >= 165 && ac < 175)
-    return "E3";
+    return "E03";
    else if (ac >= 175 && ac < 185)
-    return "F3";
+    return "F03";
    else if (ac >= 185 && ac < 196)
     return "F#3";
    else if (ac >= 196 && ac < 208)
-    return "G3";
+    return "G03";
    else if (ac >= 208 && ac < 220)
     return "G#3";
    else if (ac >= 220 && ac < 233)
-    return "A3";
+    return "A03";
    else if (ac >= 233 && ac < 247)
     return "A#3";
    else if (ac >= 247 && ac < 262)
-    return "B3";
+    return "B03";
    //4옥타브
    else if (ac >= 262 && ac < 277)
-    return "C4";
+    return "C04";
    else if (ac >= 277 && ac < 294)
     return "C#4";
    else if (ac >= 294 && ac < 311)
-    return "D4";
+    return "D04";
    else if (ac >= 311 && ac < 330)
     return "D#4";
    else if (ac >= 330 && ac < 349)
-    return "E4";
+    return "E04";
    else if (ac >= 349 && ac < 370)
-    return "F4";
+    return "F04";
    else if (ac >= 370 && ac < 392)
     return "F#4";
    else if (ac >= 392 && ac < 415)
-    return "G4";
+    return "G04";
    else if (ac >= 415 && ac < 440)
     return "G#4";
    else if (ac >= 440 && ac < 466)
-    return "A4";
+    return "A04";
    else if (ac >= 466 && ac < 494)
     return "A#4";
    else if (ac >= 494 && ac < 523)
-    return "B4";
+    return "B04";
    //5옥타브
    else if (ac >= 523 && ac < 554)
-    return "C5";
+    return "C05";
    else if (ac >= 554 && ac < 587)
     return "C#5";
    else if (ac >= 587 && ac < 622)
-    return "D5";
+    return "D05";
    else if (ac >= 622 && ac < 659)
     return "D#5";
    else if (ac >= 659 && ac < 698)
-    return "E5";
+    return "E05";
    else if (ac >= 698 && ac < 740)
-    return "F5";
+    return "F05";
    else if (ac >= 740 && ac < 784)
     return "F#5";
    else if (ac >= 784 && ac < 831)
-    return "G5";
+    return "G05";
    else if (ac >= 831 && ac < 880)
     return "G#5";
    else if (ac >= 880 && ac < 932)
-    return "A5";
+    return "A05";
    else if (ac >= 932 && ac < 988)
     return "A#5";
    else if (ac >= 988 && ac < 1047)
-    return "B5";
+    return "B05";
    //6옥타브
    else if (ac >= 1047 && ac < 1109)
-    return "C6";
+    return "C06";
    else if (ac >= 1109 && ac < 1175)
     return "C#6";
    else if (ac >= 1175 && ac < 1245)
-    return "D6";
+    return "D06";
    else if (ac >= 1245 && ac < 1319)
     return "D#6";
    else if (ac >= 1319 && ac < 1397)
-    return "E6";
+    return "E06";
    else if (ac >= 1397 && ac < 1480)
-    return "F6";
+    return "F06";
    else if (ac >= 1480 && ac < 1568)
     return "F#6";
    else if (ac >= 1568 && ac < 1661)
-    return "G6";
+    return "G06";
    else if (ac >= 1661 && ac < 1760)
     return "G#6";
    else if (ac >= 1760 && ac < 1865)
-    return "A6";
+    return "A06";
    else if (ac >= 1865 && ac < 1976)
     return "A#6";
    else if (ac >= 1976 && ac < 2093)
-    return "B6";
+    return "B06";
   }
 
   //마이크 입력을 받기 위해, plaing true로 바꾸고 마이크 입력을 받는 updatePitch를 실행함.
@@ -1446,7 +1461,7 @@ $('.hard-btn').on('click', function(event) {
    
    
    if(playingMelody == false){
-    melodyAudio = new Audio('/resources/music/iloved.mp3');
+    melodyAudio = new Audio('/resources/music/iloved.mp3'  );
     melodyAudio.play();
       readFile("/resources/notes/iloved.txt");
       readFile("/resources/lyrics/iloved.txt");
@@ -1529,20 +1544,34 @@ $('.hard-btn').on('click', function(event) {
    xmlhttp.send();
 
   }
-
+	var noteTotal = 1;
   function calNote() {// 현재 음 계산하는 아이.
    if (stateArr[checkCnt] == 'On')
     noteV += Number(intervalArr[checkCnt]);
    else
     noteV -= Number(intervalArr[checkCnt]);
    noteVText = divideNote(noteV)
-
+		console.log(noteTotal++);
    console.log("noteVText : " + noteVText);
    console.log("noteAc : " + noteAc);
-   if (noteAc == noteVText) {
-    noteCorrect = true;
-   } else {
-    noteCorrect = false;
+   var str1 = ''+noteAc
+   var str2 = ''+noteVText;
+   if(level == true){ // level hard일 때   
+      if ((str1.substring(0, 1) == str2.substring(0, 1)) 
+    		  && (str1.substring(2, 1) == str2.substring(2, 1))) {
+    	  console.log("!!!!!!!!!!!!!!!!!!!!!!1very good!!!!!!!!!!!!!!!!!!!!");
+       noteCorrect = true;
+      } else {
+       noteCorrect = false;
+      }
+   }
+   else if(level == false){ //level easy일 때
+   	 	if(str1.substring(0, 1) == str2.substring(0, 1)){//알파벳만 맞을 경우
+   		   console.log("!!!!!!!!!!!!!!!!!!!!!!1very good!!!!!!!!!!!!!!!!!!!!!!1");
+   		   noteCorrect = true;
+   	   } else {
+   		   noteCorrect = false;
+   	   }
    }
    noteCheck();
    if (checkCnt < intervalArr.length) {

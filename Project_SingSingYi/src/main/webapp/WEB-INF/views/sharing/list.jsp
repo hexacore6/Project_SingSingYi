@@ -60,6 +60,16 @@
 	height: 100px;
 	background-color: gray;
 }
+button{
+  border: none;
+  background-color: #fff;
+}
+#buttonimg{
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+}
 </style>
 
 <script type="text/javascript">
@@ -495,9 +505,9 @@ $(document).ready(function(){
 							<c:set var="recordfilename" value="${sharing.recordfilename}"/>
 							<c:if test="${recordfilename ne null}">
 								<div style="margin: 10px;"><h3><strong><span style="color : #d9534f">${sharing.recordfilename}</span></strong></h3></div>
-								<button id="play" onclick="playAudio(${stat.index});">play</button>
-                        		<button id="pvolume${stat.index}" onclick="pvolume(${stat.index});">+</button>
-                        		<button id="mvolume${stat.index}" onclick="mvolume(${stat.index});">-</button>
+								<button id="play" onclick="playAudio(${stat.index});"><img id="buttonimg"src="../../../resources/img/play.png"></button>
+                        		<button id="pvolume${stat.index}" onclick="pvolume(${stat.index});"><img id="buttonimg" src="../../../resources/img/plus.png" ></button>
+                        		<button id="mvolume${stat.index}" onclick="mvolume(${stat.index});"><img id="buttonimg" src="../../../resources/img/remove.png"></button>
                          		<audio controls name="media" id="audio${stat.index}" hidden="hidden">
                             		<source src="../../../resources/music/woong1_5_오래된 노래.mp3" type="audio/mpeg">
                          		 </audio>

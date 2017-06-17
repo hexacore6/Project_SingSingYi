@@ -244,7 +244,7 @@
 <!-- 
       <button class="easy-btn">EASY</button>
       <button class="hard-btn">HARD</button>
- --
+ -->
      </div>
       <div class="music-controller">
 
@@ -1539,6 +1539,7 @@ $('.hard-btn').on('click', function(event) {
 
    console.log("noteVText : " + noteVText);
    console.log("noteAc : " + noteAc);
+  
    if (noteAc == noteVText) {
     noteCorrect = true;
    } else {
@@ -1566,7 +1567,7 @@ $('.hard-btn').on('click', function(event) {
 
   function calLyrics() { //시간에 맞는 가사 보여주는 함수
 	  console.log("length : " + lyricsTimeTxtArr.length);
-  
+  	console.log(lyricsTxtArr[lyricsCnt]);
 	  if(lyricsTimeTxtArr.length > lyricsCnt){
   
         if (lyricsCnt == 0) {

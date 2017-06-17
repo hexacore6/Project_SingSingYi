@@ -136,7 +136,8 @@
      <img src="/resources/img/ak.jpg">
     </div>
     <div class="lyrics">
-     <h1 id="songText">가사 준비중.. .</h1>
+     <h1 id="songText1">가사 준비중</h1>
+     <h1 id="songText2">  ...</h1>
     </div>
     <div class="row">
      <div class="col-lg-5"></div>
@@ -148,11 +149,16 @@
 
        <div class="experiment recordrtc">
         <button class="btn btn-primary" id="recordbutton"
-         onclick="recordControl()"></button>
+         onclick="record()"></button>
         <!-- Stop recording 후 보여지는 비디오 태그 -->
         <video hidden=true></video>
        </div>
-
+       <div style="text-align: center;">
+                <button id="save-to-disk">Save To Disk</button>
+                <button id="open-new-tab">Open New Tab</button>
+                <button id="upload-to-server">Upload To Server</button>
+            </div>
+       
       </div>
      </div>
      <div class="col-lg-6"></div>
@@ -242,14 +248,19 @@
 
  <script>
         var recordAudio = new Audio();
+        
+        //1 t
         function record(){
             var recordingDIV = document.querySelector('.recordrtc');
             var recordingPlayer = recordingDIV.querySelector('video');
-
-            recordingDIV.querySelector('button').onclick = function() {
+						//2 t
+            //recordingDIV.querySelector('button').onclick = function() {
+							console.log("start");
                 var button = this;
 
-                if(button.innerHTML === 'p') {
+                // 3 t
+                //if(button.innerHTML === 'p') {
+                if(recordPlaying == false) {
                     button.disabled = true;
                     button.disableStateWaiting = true;
                     setTimeout(function() {
@@ -257,7 +268,8 @@
                         button.disableStateWaiting = false;
                     }, 2 * 1000);
 
-                    button.innerHTML = 't';
+                    recordPlaying = true;
+                    //button.innerHTML = 't';
 
                     function stopStream() {
                         if(button.stream && button.stream.stop) {
@@ -277,22 +289,24 @@
                     }
                     return;
                 }
+                //3 p
 
                 button.disabled = true;
-
+								// 4 t
                 var commonConfig = {
                     onMediaCaptured: function(stream) {
                         button.stream = stream;
                         if(button.mediaCapturedCallback) {
                             button.mediaCapturedCallback();
                         }
-
-                        button.innerHTML = 'p';
+                        recordPlaying = false;
+                        //button.innerHTML = 'p';
                         button.disabled = false;
                     },
                     onMediaStopped: function() {
-                        button.innerHTML = 't';
-
+                       // button.innerHTML = 't';
+												recordPlaying = true;
+												
                         if(!button.disableStateWaiting) {
                             button.disabled = false;
                         }
@@ -313,9 +327,11 @@
                     }
                     
                 };
+								//4 p
                 
                     captureAudio(commonConfig);
                     
+								//5 t
                     button.mediaCapturedCallback = function() {
                     
                         button.recordRTC = RecordRTC(button.stream, {
@@ -340,7 +356,7 @@
                              recordAudio.pause(); 
                               
                              playingMelody = false;
-                             recordAudio.src = URL.createObjectURL(button.recordRTC.blob);
+                             //recordAudio.src = URL.createObjectURL(button.recordRTC.blob);
             
                                       if(!recordRTC) return alert('No recording found.');
                                       this.disabled = true;
@@ -349,7 +365,7 @@
                                       uploadToServer(recordRTC, function(progress, fileURL) {
                                           if(progress === 'ended') {
                                               button.disabled = false;
-                                              button.innerHTML = 'Click to download from server';
+                                              //button.innerHTML = 'Click to download from server';
                                               button.onclick = function() {
                                                   window.open(fileURL);
                                               };
@@ -364,10 +380,11 @@
                         button.recordRTC.startRecording();
                         
                     };
+                    //5 p
 
                
-            };
-
+            //};
+//2 p
             function captureAudio(config) {
                 captureUserMedia({audio: true}, function(audioStream) {
                     recordingPlayer.srcObject = audioStream;
@@ -387,18 +404,116 @@
                 navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
             }
             
+            // 서버 저장 시작
+            function saveToDiskOrOpenNewTab(recordRTC) {
+            	/*
+            
+                recordingDIV.querySelector('#save-to-disk').parentNode.style.display = 'block';
+                recordingDIV.querySelector('#save-to-disk').onclick = function() {
+                    if(!recordRTC) return alert('No recording found.');
+
+                    recordRTC.save();
+                };
+*/
+                //recordingDIV.querySelector('#upload-to-server').disabled = false;
+                //recordingDIV.querySelector('#upload-to-server').onclick = function() {
+                    //if(!recordRTC) return alert('No recording found.');
+                    this.disabled = true;
+
+                    var button = this;
+                    uploadToServer(recordRTC, function(progress, fileURL) {
+                        if(progress === 'ended') {
+                            button.disabled = false;
+                            button.onclick = function() {
+                                window.open(fileURL);
+                            };
+                            return;
+                        }
+                        button.innerHTML = progress;
+                    });
+                //};
+            }
+
+            //recordingDIV.querySelector('#upload-to-server').disabled = false;
+            recordingDIV.querySelector('#upload-to-server').onclick = function() {
+                if(!recordRTC) return alert('No recording found.');
+                this.disabled = true;
+
+                var button = this;
+                uploadToServer(recordRTC, function(progress, fileURL) {
+                    if(progress === 'ended') {
+                        button.disabled = false;
+                        button.innerHTML = 'Click to download from server';
+                        button.onclick = function() {
+                            window.open(fileURL);
+                        };
+                        return;
+                    }
+                    button.innerHTML = progress;
+                });
+            };
+            
+            var listOfFilesUploaded = [];
+
+            function uploadToServer(recordRTC, callback) {
+                var blob = recordRTC instanceof Blob ? recordRTC : recordRTC.blob;
+                console.log("output : " + blob);
+                var fileType = blob.type.split('/')[0] || 'audio';
+                var fileName = (Math.random() * 1000).toString().replace('.', '');
+
+                fileName += '.' + (!!navigator.mozGetUserMedia ? 'ogg' : 'wav');
+
+                // create FormData
+                var formData = new FormData();
+                formData.append(fileType + '-filename', fileName);
+                formData.append(fileType + '-blob', blob);
+
+                callback('Uploading ' + fileType + ' recording to server.');
+								
+                console.dir("formData : " + formData);
+                
+                makeXMLHttpRequest('https://webrtcweb.com/RecordRTC/', formData, function(progress) {
+                    if (progress !== 'upload-ended') {
+                        callback(progress);
+                        return;
+                    }
+
+                    var initialURL = 'https://webrtcweb.com/RecordRTC/uploads/';
+
+                    callback('ended', initialURL + fileName);
+                    // to make sure we can delete as soon as visitor leaves
+                    listOfFilesUploaded.push(initialURL + fileName);
+                });
+            }
+            function saveToDiskOrOpenNewTab(recordRTC) {
+                recordingDIV.querySelector('#save-to-disk').parentNode.style.display = 'block';
+                recordingDIV.querySelector('#save-to-disk').onclick = function() {
+                    if(!recordRTC) return alert('No recording found.');
+
+                    recordRTC.save();
+                };
+
+                recordingDIV.querySelector('#open-new-tab').onclick = function() {
+                    if(!recordRTC) return alert('No recording found.');
+
+                    window.open(recordRTC.toURL());
+                };
+
+            }
+            //서버 끝
             
         }
-        function recordControl(){
-         record();
-        }
+        // 1 p
+        
         </script>
 
- </article>
+
 
 
  <script> 
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  
+  var recordPlaying = false;
   var requestId = 0;
   var elm;
   var playing = false;
@@ -759,11 +874,11 @@
    
    
    if(playingMelody == false){
-    melodyAudio = new Audio('/resources/music/iloved.mp3');
+    melodyAudio = new Audio('/resources/music/loveExceptMe.mp3');
     melodyAudio.play();
-      readFile("/resources/notes/songTest.txt");
-      readFile("/resources/lyrics/iloved.txt");
-      readFile("/resources/lyrics/ilovedTime.txt");
+      readFile("/resources/notes/loveExceptMe.txt");
+      readFile("/resources/lyrics/loveExceptMe.txt");
+      readFile("/resources/lyrics/loveExceptMeTime.txt");
    
       playing = true;
       playingMelody = true;
@@ -879,18 +994,41 @@
 
   function calLyrics() { //시간에 맞는 가사 보여주는 함수
    if (lyricsCnt == 0) {
-    document.getElementById('songText').innerHTML = lyricsTxtArr[lyricsCnt];
-
+	  console.log(lyricsTimeTxtArr[lyricsCnt-1] * 1000);
+		console.log(   lyricsTxtArr[0]  );
+    document.getElementById('songText1').innerHTML = "이제 곧 노래가 시작됩니다. 준비해주세요."
+    document.getElementById('songText2').innerHTML = lyricsTxtArr[0];
+    document.getElementById('songText2').style.color = 'red';
+    lyricsCnt++;
+    console.log(lyricsTimeTxtArr[lyricsCnt-1] * 1000	);
     setTimeout("calLyrics()",
-      (lyricsTimeTxtArr[lyricsCnt++] * 1000));
+      (lyricsTimeTxtArr[lyricsCnt-1] * 1000));
+    
 
    } else if (lyricsCnt != 0) {
-    document.getElementById('songText').innerHTML = lyricsTxtArr[lyricsCnt - 1];
-
+	   if(lyricsCnt%2==1){
+  	   document.getElementById('songText1').innerHTML = lyricsTxtArr[lyricsCnt];
+  	 	document.getElementById('songText1').style.color = 'black';
+  	   document.getElementById('songText2').style.color = 'red';
+	   }
+	   else{
+		   document.getElementById('songText2').innerHTML = lyricsTxtArr[lyricsCnt];
+		   document.getElementById('songText2').style.color = 'black';
+	  	   document.getElementById('songText1').style.color = 'red';
+	  	    //document.getElementById('songText2').innerHTML = lyricsTxtArr[lyricsCnt-1];
+	   }
+	   lyricsCnt++;
+	    setTimeout(
+	      "calLyrics()",
+	      ((lyricsTimeTxtArr[lyricsCnt] - lyricsTimeTxtArr[lyricsCnt - 1]) * 1000));
+/*  
+    document.getElementById('songText1').innerHTML = lyricsTxtArr[lyricsCnt-1];
+    document.getElementById('songText2').innerHTML = lyricsTxtArr[lyricsCnt];
+    lyricsCnt++;
     setTimeout(
       "calLyrics()",
       ((lyricsTimeTxtArr[lyricsCnt] - lyricsTimeTxtArr[lyricsCnt - 1]) * 1000));
-    lyricsCnt++;
+    */
    }
 
   }

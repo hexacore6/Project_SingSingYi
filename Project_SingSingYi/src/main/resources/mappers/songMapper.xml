@@ -24,17 +24,24 @@
 	]]>
 	</select>
 	
+	<select id="readSong" resultType="com.hexacore.ssy.song.domain.Song">
+	select musicalnote1, musicalnote2, musicalnote3, musicalnote4
+	from songs
+	where sid = #{sid}
+	</select>
+	
 	<!-- BEST 3 가져오기 -->
 	<select id="bestSongs" resultType="com.hexacore.ssy.song.domain.Song">
-		select stitle, simgfilename, singer, playcnt
+		select sid, stitle, simgfilename, singer, playcnt
 		from songs
 		order by playcnt desc limit 3
 	</select>
 	
 	<!-- 전체 노래 목록 가져오기 -->
 	<select id="songsList" resultType="com.hexacore.ssy.song.domain.Song">
-		select sid, stitle, singer, playcnt
+		select sid, simgfilename, stitle, singer, playcnt
 		from songs
+		order by playcnt desc, sid asc
 	</select>
 	
 	
@@ -56,4 +63,11 @@
 	 from favorites 
 	 where id=#{id} and sid=#{sid}
 	</select>
+	
+	<!-- 노래 부른 횟수 증가 -->
+	<update id="updatePlayCnt">
+		update songs
+		set playcnt = playcnt + 1
+		where sid = #{sid}
+	</update>
 </mapper>

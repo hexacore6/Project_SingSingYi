@@ -17,7 +17,87 @@
   <style type="text/css">
     #content{
       height: 1500px;
+    }   
+    
+    /* add default color for animation start  */
+    /* toggle this class */
+    
+    .color-bg-start {
+      background-color: salmon;
     }
+    
+    
+    /* toggle class bg-animate-color */
+    
+    .bg-animate-color {
+      animation: random-bg .5s linear infinite;
+    }
+    
+    
+    /* add animation to bg color  */
+    
+    @keyframes random-bg {
+      from {
+        filter: hue-rotate(0);
+      }
+      to {
+        filter: hue-rotate(360deg);
+      }
+    }
+    
+    .fun-btn {
+      /* change bg color to get different hues    */
+      background-color: salmon;
+      color: white;
+      padding: 0.3em 0.5em;
+      border: none;
+      transition: all .3s ease;
+      border-radius: 5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      outline: none;
+      align-self: center;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .fun-btn:hover {
+      animation: random-bg .5s linear infinite, grow 1300ms ease infinite;
+    }
+    
+    .start-fun {
+      background-color: #fff !important;
+      /* change color of button text when fun is started   */
+      color: salmon !important;
+    }
+    
+    /* pulsating effect on button */
+    @keyframes grow {
+      0% {
+        transform: scale(1);
+      }
+      14% {
+        transform: scale(1.3);
+      }
+      28% {
+        transform: scale(1);
+      }
+      42% {
+        transform: scale(1.3);
+      }
+      70% {
+        transform: scale(1);
+      }
+    }
+    
+    .boxs:hover{
+      border:3px solid #ffc0cb;
+    }
+    
+    .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+      vertical-align: middle;
+    }
+
   </style>
 </head>
 
@@ -33,11 +113,27 @@
             <!--차트 순위-->
             <div class="box">
                 <div class="box box-header"><h2 class="btn btn-danger" style="font-size: 40px;">BEST 3</h2></div>
-            <c:forEach items="${bests }" var="best">
+            <c:forEach items="${bests }" var="best" varStatus="stat">
             <div class="col-lg-4">
-                <div class="thumbnail"> <img src="${pageContext.servletContext.contextPath }/resources/img/${best.simgfilename}" alt="..." style="height:340px">
+                <div class="thumbnail boxs">
+                <a href="/song/sing?sid=${best.sid }">
+                <img src="${pageContext.servletContext.contextPath }/resources/img/${best.simgfilename}" alt="..." style="height:340px">
+                </a>
+                
+                
+                
                     <div class="caption">
-                        <h3>${best.stitle }</h3>
+                        <c:if test="${stat.index + 1 == 1}">
+                        <img src="${pageContext.servletContext.contextPath }/resources/img/gold.png" alt="..." style="height:100px; width: 100px;">
+                        </c:if>
+                        <c:if test="${stat.index + 1 == 2}">
+                        <img src="${pageContext.servletContext.contextPath }/resources/img/silver.png" alt="..." style="height:100px; width: 100px;">
+                        </c:if>
+                        <c:if test="${stat.index + 1 == 3}">
+                        <img src="${pageContext.servletContext.contextPath }/resources/img/bronze.png" alt="..." style="height:100px; width: 100px;">
+                        </c:if>
+                        
+                        <h3><b>${best.stitle }</b></h3>
                         <p>${best.singer }</p>
                         <p>부른 횟수 : ${best.playcnt }회</p>
                         <!--<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>-->
@@ -45,34 +141,7 @@
                 </div>
             </div>
             </c:forEach>
-            <%-- <div class="col-lg-4">
-                <div class="thumbnail"> <img src="${pageContext.servletContext.contextPath }/resources/img/1.jpg" alt="...">
-                    <div class="caption">
-                        <h3>맞지?</h3>
-                        <p>키이이이이썸~</p>
-                        <p>부른 횟수 : 10회</p>
-                        <!--<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>-->
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="thumbnail"> <img src="${pageContext.servletContext.contextPath }/resources/img/1.jpg" alt="...">
-                    <div class="caption">
-                        <h3>맞지?</h3>
-                        <p>키이이이이썸~</p>
-                        <!--<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>-->
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="thumbnail"> <img src="${pageContext.servletContext.contextPath }/resources/img/1.jpg" alt="...">
-                    <div class="caption">
-                        <h3>맞지?</h3>
-                        <p>키이이이이썸~</p>
-                        <!--<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>-->
-                    </div>
-                </div>
-            </div> --%>
+           
         </div>
             <!--차트순위끝-->
             <div class="col-xs-12">
@@ -84,68 +153,35 @@
                         <table class="table table-hover">
                             <tbody>
                                 <tr>
-                                    <th style="width: 100px;text-align: center; font-size: 18px;">번호</th>
+                                    <th style="width: 100px;text-align: center; font-size: 18px;">순위</th>
+                                    <th style="width: 100px;text-align: center; font-size: 18px;"></th>
                                     <th style="width: 100px;text-align: center; font-size: 18px;">곡명</th>
                                     <th style="width: 100px;text-align: center; font-size: 18px;">가수</th>
                                     <th style="width: 100px;text-align: center; font-size: 18px;">부른 횟수</th>
-                                    <th style="width: 100px;text-align: center; font-size: 18px;">애창곡담기/즉시부르기</th>
+                                    <th style="width: 100px;text-align: center; font-size: 18px;">즉시부르기</th>
+                                    <th style="width: 100px;text-align: center; font-size: 18px;">애창곡담기</th>
                                 </tr>
                                 <c:forEach items="${songs }" var="song" varStatus="stat">
                                 <tr>
-                                    <td style="width: 100px;text-align: center; font-size: 15px;">${song.sid }</td>
-                                    <td style="width: 100px;text-align: center; font-size: 15px;">${song.stitle }</td>
+                                    <td style="width: 100px;text-align: center; font-size: 15px;">${stat.index + 1}</td>
+                                    <td style="width: 100px;text-align: center; font-size: 15px;">
+                                    <img src="${pageContext.servletContext.contextPath }/resources/img/${song.simgfilename}" 
+                                    style="height: 50px; width: 50px; margin-right: 5px;"></td>
+                                    <td style="width: 100px;text-align: center; font-size: 15px;"><b style="margin-top: 10px;">${song.stitle }</b></td>
                                     <td style="width: 100px;text-align: center; font-size: 15px;">${song.singer }</td>
                                     <td style="width: 100px;text-align: center; font-size: 15px;">${song.playcnt }</td>
                                     <td style="width: 100px;text-align: center; font-size: 15px;">
-                                        <button class="btn btn-primary" onclick="addFavorite(${song.sid})" >담기</button>
-                                        <button class="btn btn-primary" id="" onclick="location.href='/song/sing?sid=${song.sid}'">즉시부르기</button>
+                                    <form role="form" method="post" action="/song/sing">
+                                        <input type="hidden" name="sid" value="${song.sid}">
+                                        <button class="fun-btn">즉시부르기</button>
+                                    </form>
+                                    </td>
+                                    <td style="width: 100px;text-align: center; font-size: 15px;">
+                                        <button class="fun-btn" onclick="addFavorite(${song.sid})" >담기</button>
                                     </td>
                                 </tr>
                                 </c:forEach>
-                                <!-- <tr>
-                                    <td style="width: 100px;text-align: center; font-size: 15px;">183</td>
-                                    <td style="width: 100px;text-align: center; font-size: 15px;">맞지?</td>
-                                    <td style="width: 100px;text-align: center; font-size: 15px;">씨쓰타</td>
-                                    <td style="width: 100px;text-align: center; font-size: 15px;">123</td>
-                                    <td style="width: 100px;text-align: center; font-size: 15px;">
-                                        <button class="btn btn-primary" id="">담기</button>
-                                        <button class="btn btn-primary" id="">즉시부르기</button>
-                                    </td>
-                                </tr> -->
-                                <!--뿌릴쏘스 예제-->
-                                <!-- <tr>
-                                    <td>219</td>
-                                    <td>Alexander Pierce</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="label label-warning">Pending</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                    <td>
-                                        <button class="btn btn-primary" id="">담기</button>
-                                        <button class="btn btn-primary" id="">즉시부르기</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>657</td>
-                                    <td>Bob Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="label label-primary">Approved</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                    <td>
-                                        <button class="btn btn-primary" id="">담기</button>
-                                        <button class="btn btn-primary" id="">즉시부르기</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>175</td>
-                                    <td>Mike Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="label label-danger">Denied</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                    <td>
-                                        <button class="btn btn-primary" id="">담기</button>
-                                        <button class="btn btn-primary" id="">즉시부르기</button>
-                                    </td>
-                                </tr> -->
+                                
                             </tbody>
                         </table>
                     </div>
@@ -180,6 +216,13 @@
     	}
     });
     }
+    
+    $('.fun-btn').on('click', function(event) {
+    	  $(this).toggleClass('start-fun');
+    	  var $page = $('.page');
+    	  $page.toggleClass('color-bg-start')
+    	    .toggleClass('bg-animate-color');
+    	});
   </script>    
     
       <!-- jQuery -->
@@ -192,7 +235,7 @@
   <script src="../resources/js/jquery.magnific-popup.min.js"></script>
   <script src="../resources/js/main.js"></script>
   <script src="../resources/dist/js/app.min.js" type="text/javascript"></script>
-    <script src="../resources/dist/js/demo.js" type="text/javascript"></script>
+  <script src="../resources/dist/js/demo.js" type="text/javascript"></script>
     
     <!-- footer -->
     <%@include file="../include/footer.jsp"%>

@@ -19,7 +19,23 @@
      <!-- header -->
       <%@ include file="../include/header.jsp"%>
       <center>
-      <h1 style="margin-top: 50px;">${login.id}님 문제를 모두 맞추었습니다. 코인 한개 충전 !</h1><br>
+      <h1 style="margin-top: 50px;">${login.id}님은 3개중 <font color="red">${correct }</font>개를  맞추었습니다.</h1><br>
+      <c:if test="${correct == 3}">
+      <h1>문제를 모두 맞추었으므로 보너스 코인 1개 충전!</h1><br>      
+      </c:if>
+      
+     <div>
+     <button class="btn btn-primary" id="start"
+     style="width: 20%; height:100px; margin: 50px; font-size: 50px;">돌아가기</button>
+     </div>  
       </center>
+       
+    <script>
+    $(document).ready(function(){
+        $("#start").on("click", function() {
+         self.location = "start"
+        	});
+    });
+  </script>
 </body>
 </html>

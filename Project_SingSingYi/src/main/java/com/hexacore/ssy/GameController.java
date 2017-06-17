@@ -34,7 +34,7 @@ public class GameController {
 	
 	
 	// 미니 게임 시작 페이지
-	@RequestMapping(value = "/gameStart", method = RequestMethod.GET)
+	@RequestMapping(value = "/start", method = RequestMethod.GET)
 	public void gameStartGET(Locale locale, Model model) {
 		
 	}
@@ -65,7 +65,7 @@ public class GameController {
 	}
 	
 	// 종현이 게임 결과 페이지
-	@RequestMapping(value = "/gameResult", method = RequestMethod.POST)
+	@RequestMapping(value = "/jhresult", method = RequestMethod.POST)
 	public void gameResultPOST(Model model, @RequestParam("correct") int correct, HttpSession httpSession) {
 		Member member = (Member)httpSession.getAttribute("login");
 		
@@ -112,7 +112,7 @@ public class GameController {
 	}
 		
 	// 절대음감 게임 결과 페이지
-	@RequestMapping(value = "/ppgameResult", method = RequestMethod.POST)
+	@RequestMapping(value = "/ppresult", method = RequestMethod.POST)
 	public void ppgameResultPOST(Model model,@RequestParam("correct") int correct, HttpSession httpSession) {
 		
 		Member member = (Member)httpSession.getAttribute("login");

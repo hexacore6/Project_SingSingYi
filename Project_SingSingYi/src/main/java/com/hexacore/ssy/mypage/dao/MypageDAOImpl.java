@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,7 @@ import com.hexacore.ssy.common.Criteria;
 import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
 import com.hexacore.ssy.mypage.domain.Favorite;
+import com.hexacore.ssy.mypage.domain.FollowList;
 import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.mypage.domain.Song;
 import com.hexacore.ssy.sharing.domain.Sharing;
@@ -227,5 +229,42 @@ public class MypageDAOImpl implements MypageDAO{
 		paramMap.put("id", id);
 		
 		return session.selectOne(namespace+".countRecordPaging", paramMap);
+	}
+	
+	// 팔로우 추가
+	@Override
+	public void addFollow(String sender, String target) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("sender", sender);
+		paramMap.put("target", target);
+		
+		session.insert(namespace+".addFollow", paramMap);
+	}
+    
+	// 팔로우 삭제
+	@Override
+	public void removeFollow(String sender, String target) {
+
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("sender", sender);
+		paramMap.put("target", target);
+		
+		session.delete(namespace+".removeFollow", paramMap);
+		
+	}
+	
+	// 팔로우 체크
+	@Override
+	public FollowList checkFollow(String sender, String target) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("sender", sender);
+		paramMap.put("target", target);
+		
+		return session.selectOne(namespace+".checkFollow", paramMap);
 	}
 }

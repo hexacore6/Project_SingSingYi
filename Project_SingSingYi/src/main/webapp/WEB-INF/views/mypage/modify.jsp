@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>oose.dtd">
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -16,17 +16,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
 </head>
-<script type="text/javascript">
-function modify_click() {
-	var pw = document.getelementbyid("password").value;
-	if(pw=login.password){
-	alert("비밀번호가 같습니다.");
-	}
-	else{
-		alert("비밀번호 변경 완료");
-	}
-}
-</script>
+
 <body>
   <jsp:include page="../include/header.jsp"></jsp:include>
     <section id="content " class='container'>
@@ -40,7 +30,7 @@ function modify_click() {
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-          <form class="form-horizontal"  action="myModify" method="post">
+          <form class="form-horizontal"  action="modify" method="post">
             <div class="box-body" style="border: none;text-align: center; content: center;">
               <div class="form-group" style="margin-top: 50px; margin-left: 8px;">
                 <label>아이디</label> <center><input type="text" id="id" name="id" class="form-control" value="${login.id }"  readonly="readonly" style="width: 300px;"></center>
@@ -53,9 +43,8 @@ function modify_click() {
                                     <input type="text" id="cPassword" name="cPassword" class="form-control" placeholder="Enter ..." style="width:300px;"> </div> -->
             </div>
             <!-- /.box-body -->
-            <div class="box-footer" style="margin-top: 50px; border: none; width: 1000px;">
-              <button type="reset" class="btn btn-default"style="margin-left: 270px;">취소</button>
-              <button type="submit" class="btn btn-info"  onclick="modify_click();" style="margin-left: 200px;">변경</button>
+            <div class="box-footer" style="margin-right: 180px; border: none; ">
+              <button type="submit" class="btn btn-info"  style="margin-left: 200px; margin-top: 30px; margin-bottom: 30px;">변경</button>
             </div>
             <!-- /.box-footer -->
           </form>
@@ -65,6 +54,18 @@ function modify_click() {
     </section>
     <!--내용끝-->
     <jsp:include page="../include/footer.jsp"></jsp:include>
+    <script type="text/javascript">
+    function modify() {
+      var pw = document.getelementbyid("password").value;
+      if(pw=password){
+      alert("비밀번호가 같습니다.");
+      
+      }
+      else{
+        alert("비밀번호 변경 완료");
+      }
+    }
+	</script>
 </body>
 
 </html>

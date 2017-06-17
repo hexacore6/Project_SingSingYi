@@ -61,6 +61,18 @@ public class SongDAOImpl implements SongDAO {
 		paramMap.put("sid", sid);
 		return sqlSession.selectOne(namespace+".checkFavorite", paramMap);
 	}	
+	
+	@Override
+	public void updatePlayCnt(int sid) {
+		sqlSession.update(namespace+".updatePlayCnt", sid);
+	}
+
+	@Override
+	public Song readSong(int sid) {
+		return sqlSession.selectOne(namespace+".readSong", sid);
+	}
+	
+	
 }
 
 

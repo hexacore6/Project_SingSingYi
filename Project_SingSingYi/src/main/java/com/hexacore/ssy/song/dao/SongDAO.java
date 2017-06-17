@@ -26,4 +26,10 @@ public interface SongDAO {
 	/** 애창곡 담기 중복 체크 */
 	public Favorite checkFavorite(String id, int sid);
 	
+	/** 노래 부른 횟수 증가 */
+	public void updatePlayCnt(int sid);
+	
+	/** 노래 한 곡 가져오기 */
+	public Song readSong(int sid);
+	
 }

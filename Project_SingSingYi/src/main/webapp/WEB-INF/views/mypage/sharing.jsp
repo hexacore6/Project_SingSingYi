@@ -48,6 +48,58 @@
 	background-color: gray;
 }
 </style>
+<script type="text/javascript">
+  var oAudio = null;
+  var oAudio2 = null;
+  var currentFile = "";
+  function playAudio(index) {
+      if (window.HTMLAudioElement) {
+          try {
+               oAudio = document.getElementById('audio'+index);
+               oAudio2 = document.getElementById('audio2'+index);
+               oAudio.volume = 0.5
+               oAudio2.volume = 0.5
+              var btn = document.getElementById('play'+index); 
+              /* var audioURL = document.getElementById('audiofile'); */ 
+
+              //Skip loading if current file hasn't changed.
+/*               if (audioURL.value !== currentFile) {
+                   oAudio.src = audioURL.value; 
+                   currentFile = audioURL.value;                        
+              } */
+
+              // Tests the paused attribute and set state. 
+              if (oAudio.paused) {
+                  oAudio.play();
+                  oAudio2.play();
+                  btn.textContent = "Pause";
+              }
+              else {
+                  oAudio.pause();
+                  oAudio2.pause();
+                  btn.textContent = "Play";
+              }
+          }
+          catch (e) {
+              // Fail silently but show in F12 developer tools console
+               if(window.console && console.error("Error:" + e));
+          }
+      }
+  }
+  function pvolume() {
+      oAudio.volume = Math.min(oAudio.volume + 0.1, 1);
+      oAudio2.volume = Math.min(oAudio2.volume + 0.1, 1);
+} 
+function mvolume() {
+    if(oAudio.volume > 0.1){
+      oAudio.volume = Math.min(oAudio.volume - 0.1, 1);
+      oAudio2.volume = Math.min(oAudio2.volume - 0.1, 1);
+    }else{ 
+    return;
+    }
+} 
+
+  </script>
 <title>노래방</title>
 
 
@@ -117,11 +169,6 @@
         </section>
         <div class="row" style="margin-top: 70px;">
           <div class="col-md-12">
-            <!-- The time line -->
-            <!-- timeline time label -->
-
-            <!-- /.timeline-label -->
-            <!-- timeline item -->
             <c:forEach items="${list}" var="sharing">
 
               <fmt:parseNumber value="${now.time/(1000)-(sharing.shregdate).time/(1000) }" integerOnly="true" var="secTime"></fmt:parseNumber>
@@ -130,12 +177,29 @@
               <div class="item" style="margin-left: 50px; margin-top: 100px; width: 500px; overflow: hidden; background-color: white-space:;">
                 <div class="animate-box" style="width: 500px;">
 
+                <!-- 녹음파일 출력 -->
+                  <div style="margin: 10px;"><h3><strong><span style="color : #d9534f">${sharing.recordfilename}</span></strong></h3></div>
+                    <div style="margin-bottom: 100px;">
+                      <button id="play" onclick="playAudio(${stat.index});">play</button>                             
+                      <button id="pvolume${stat.index}" onclick="pvolume(${stat.index});">+</button>
+                      <button id="mvolume${stat.index}" onclick="mvolume(${stat.index});">-</button>
+                    </div>
+                    <audio controls name="media" id="audio${stat.index}" hidden="hidden">
+                      <source src="../../../resources/music/woong1_5_오래된 노래.mp3" type="audio/mpeg">
+                    </audio>
+                    <audio controls name="media2" id="audio2${stat.index}" hidden="hidden">
+                      <source src="../../../resources/record/woong1_5_오래된 노래.mp3" type="audio/mpeg">
+                    </audio>
+                  
+
                   <img src="displayFile?fileName=/${sharing.eximgfilename}" 
                   alt="${pageContext.servletContext.contextPath }/resources/img/LOGOsingsing7.png" 
                   onclick="showReadModal('${sharing.shid}')" style="width: 500px; height: auto; margin-left: auto; margin-right: auto; display: block;">
                   <!-- data-toggle="modal"
                   data-target="#myModal2" -->
                 </div>
+                
+                
                 <div style="margin: 10px;">
                   <span class="time" style="float: right;"><i class="fa fa-clock-o"></i> <c:choose>
                       <c:when test="${secTime<60 }">
@@ -152,7 +216,7 @@
                 <div style="margin: 30px;">
                   <h3>
 
-                    <span id="sharingId" style="float: left;"><i class="fa fa-user" style="margin-right: 10px;"></i><a onclick="otherMypage();">${sharing.id}</a></span>
+                    <span id="sharingId" style="float: left;"><i class="fa fa-user" style="margin-right: 10px;"></i><a href="/mypage/sharing/${sharing.id}">${sharing.id}</a></span>
                     <c:set var="target" value="${sharing.id}" />
                     <c:set var="id" value="${login.id }" />
                     <c:if test="${target eq id}">
@@ -486,7 +550,7 @@
     					$("#unfollow").attr("class","btn badge bg-red")
     					$("#unfollow").attr("onclick", "removeFollow('"+sender+"','"+target+"')");
     					$("#add").attr("id", "remove")
-    					$("#remove").attr("src", "/resources/img/remove.png")
+    					$("#remove").attr("src", "/resources/img/add.png")
     					$("#unfollow").html("<img id='remove' src='/resources/img/remove.png' width='50px' height='50px'> 언팔로우") 
     	    		} else {
     	    			swal("이미 팔로우 한 유저입니다!", "", "error");

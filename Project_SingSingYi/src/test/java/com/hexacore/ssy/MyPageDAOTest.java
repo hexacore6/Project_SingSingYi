@@ -75,14 +75,15 @@ public class MyPageDAOTest {
 	}
 	
 	// 내 회원정보 조회
-	//@Test
+	@Test
 	public void readMyInformatino(){
-		dao.readMyInformation("Woong");
+		
+		System.out.println(dao.readMyInformation("Woong1"));
 	}
 	
 	
 	//내 애창곡 조회 (등록한 노래번호 조회)
-	@Test
+	//@Test
 	public void readMyFavorite(){
 		dao.readMyFavorite("woong1");
 	}
@@ -205,7 +206,7 @@ public class MyPageDAOTest {
 	}
 	
 	// 팔로우 체크
-	@Test
+	//@Test
 	public void checkFollw(){
 		System.out.println(dao.checkFollow("woong1", "woong2"));
 	}

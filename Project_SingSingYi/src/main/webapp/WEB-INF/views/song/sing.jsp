@@ -874,11 +874,11 @@
    
    
    if(playingMelody == false){
-    melodyAudio = new Audio('/resources/music/loveExceptMe.mp3');
+    melodyAudio = new Audio('/resources/music/${songFile.musicalnote1}');
     melodyAudio.play();
-      readFile("/resources/notes/loveExceptMe.txt");
-      readFile("/resources/lyrics/loveExceptMe.txt");
-      readFile("/resources/lyrics/loveExceptMeTime.txt");
+      readFile("/resources/notes/${songFile.musicalnote2}");
+      readFile("/resources/lyrics/${songFile.musicalnote3}");
+      readFile("/resources/lyrics/${songFile.musicalnote4}");
    
       playing = true;
       playingMelody = true;

@@ -71,6 +71,14 @@ function mvolume() {
   </script>
 </head>
 <body>
+<script type="text/javascript">
+$(document).ready(function(){
+  
+  $("#closeButton").on("click", function() {
+    $("#recordList").empty();
+  });
+});
+</script>
     <jsp:include page="../include/header.jsp"></jsp:include>
     <section id="content" class='container'>
     <div class="row">
@@ -100,6 +108,7 @@ function mvolume() {
                       <th style="width: 40%; text-align: center; font-size: 20px;">녹음파일명</th>
                       <th style="width: 5%; text-align: center; font-size: 20px;">녹음된 날짜</th>
                       <th style="width: 20%; text-align: center; font-size: 20px;">재생</th>
+                      <th style="width: 20%; text-align: center; font-size: 20px;">공유</th>
                       <th style="width: 5%; text-align: center; font-size: 20px;">삭제</th>
                                    </tr>
                       <c:forEach items="${list}" var="record" varStatus="stat">  
@@ -120,6 +129,12 @@ function mvolume() {
                             <source src="../../../resources/record/${record.recordfilename}" type="audio/mpeg">
                             <!-- <source src="/resources/mp3/123.mp3" type="audio/mpeg"> -->
                           </audio>
+                        </td>
+                        <td style="width: 5px; text-align: center; ">
+                          <button type="button" class="btn badge bg-blue" style="font-size: 20px;"
+							 onclick="writeModal('${record.recordfilename}');" data-backdrop="static">
+							<i class="fa fa-pencil" style="color: white;"></i>공유
+						</button>
                         </td>
                         <td style="width: 5px; text-align: center; ">
                           <button class="btn badge bg-red" onclick="removeRecord(${record.rrid})" style="font-size: 20px;">삭제</button>
@@ -155,6 +170,67 @@ function mvolume() {
     </section>
     <!--내용끝-->
     
+          <!-- 글 작성하기 모달 -->
+          <!-- write modal -->
+          <div class="modal" id="myModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form role="form" action="/sharing/register" method="post"
+                  enctype="multipart/form-data">
+                  <div class="modal-header">
+                    <button type="button" class="close" id="closeButton" data-dismiss="modal"
+                      aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">새 글 작성</h4>
+                    <input type="hidden" name="id" value="${login.id}"><!--  <input
+                      type="hidden" name="rrid" value=1> -->
+                  </div>
+                  <div class="modal-body">
+                    <label for="message-text" class="control-label"></label>
+                    <textarea class="form-control" name="shcontent"
+                      placeholder="내용을 써주세요..." autofocus="autofocus" rows="5"
+                      cols="50" style="resize: none;"></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <div class="pull-left" id="recordList" >
+                    
+                    </div>
+                    
+
+                    <button type="submit" id="textAddbtn" class="btn" style="background-color: #d6d6c2;">
+                      <i class="fa fa-pencil"> </i>Sing Sing
+                    </button>
+                    <!-- MP3 업로드 공간 -->
+                    <div id="imageDrop" hidden>
+                    </div>
+                    <div id="mp3Drop" hidden>
+                      <input type="text" name="recordfilename" id="selected" hidden>
+                      <input type="text" id="dataCheck" hidden>
+                      <table class="table table-striped">
+                        <tbody id="appendRecord">
+                          <tr>
+                            <th style="text-align: center;">곡명</th>
+                            <th style="text-align: center;">녹음된 날짜</th>
+                            <th style="width: 10px; text-align: center;">선택</th>
+                          </tr>
+                        </tbody>
+                      </table>
+                      
+                      
+                    </div>
+                    <!-- 이미지 업로드 공간 -->
+                    <div id="imageDrop" hidden>
+                      <input type="file" name="file" id="imageFile">
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+    
   <!-- 녹음저장소 삭제 ajax 처리 -->
   <script type="text/javascript">
   function removeRecord(rrid){
@@ -186,6 +262,14 @@ function mvolume() {
             }   
       });
   });
+  }
+  
+  function writeModal (recordfilename){
+	  swal("녹음파일 선택 완료!", "", "success");
+	  $("#myModal").modal('show');
+	  $("#selected").attr("value", recordfilename);
+	  $("#recordList").html("선택된 녹음파일 이름 : " + recordfilename);
+	  
   }
   </script>
     <jsp:include page="../include/footer.jsp"></jsp:include>

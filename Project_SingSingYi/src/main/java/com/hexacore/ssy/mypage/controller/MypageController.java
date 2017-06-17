@@ -62,20 +62,22 @@ public class MypageController {
 	
 	
 	
-	
 	// 나의 공유글 조회
 	@RequestMapping(value="/sharing/{id}", method=RequestMethod.GET)
 	public String readMySharing(@PathVariable String id, Model model, HttpSession httpSession){
 		Member member = (Member)httpSession.getAttribute("login");
 		String sender = member.getId();
 		String following = "following";
+		Member checkMember = service.readMyInformation(id);
 		if(service.checkFollow(sender, id) != null){
 			model.addAttribute("following", following);
 		}
 		
 		model.addAttribute("list", service.readMySharing(id));
 		model.addAttribute("id", id);
-		
+		if(checkMember == null){ 
+			return "redirect:/mypage/sharing/"+sender; 
+		}
 		return "/mypage/sharing"; 
 
 	}
@@ -336,13 +338,35 @@ public class MypageController {
 		String password = service.readMyInformation(id).getPassword();
 		model.addAttribute("id", id);
 		model.addAttribute("password", password);
+		
+		
 	}
 	
 	
 	// 나의 정보 수정 (비밀번호 수정)
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public void modifyPOST(Member member){
-		service.updateMyInformation(member);
+	public ResponseEntity<Boolean> modifyPOST(@RequestBody Member member, HttpSession httpSession){
+		System.out.println("비번 수정 들어왔니 ?");
+		ResponseEntity<Boolean> entity = null;
+		Member member1 = (Member)httpSession.getAttribute("login");
+		member.setId(member1.getId());
+		
+		String nowPW = member1.getPassword();
+		String nextPW = member.getPassword();
+		System.out.println(nowPW);
+		System.out.println(nextPW);
+		
+		if(nowPW.equals(nextPW)){
+			entity = new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		} else {
+			System.out.println(member);
+			service.updateMyInformation(member);
+			httpSession.setAttribute("login", member);
+			entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
+			
+		}
+		System.out.println(entity);
+		return entity;
 	}
 	
 	// 내 글 상세보기

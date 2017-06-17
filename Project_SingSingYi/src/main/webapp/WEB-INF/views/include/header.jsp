@@ -18,7 +18,7 @@
                             <div id='jsonp'></div> -->
 						</div>
              
-                       <iframe src="http://192.168.0.63:3000/client" id="ifm"style="width: 300px;height: 100px; margin-left: 250px;"></iframe>
+                       <iframe src="http://192.168.0.63:3000/client" id="ifm"style="width: 300px;height: 300px; margin-left: 250px;"></iframe>
 					
           
           </div>

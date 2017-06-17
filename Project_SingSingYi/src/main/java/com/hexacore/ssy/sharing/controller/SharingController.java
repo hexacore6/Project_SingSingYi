@@ -150,7 +150,6 @@ public class SharingController {
 				list.get(i).setRecordfilename(array[2]);
 			}
 		}
-		
 		model.addAttribute("list", list);
 	}
 	
@@ -256,8 +255,9 @@ public class SharingController {
 	
 	//내 글 수정하기 처리
 	@RequestMapping(value = "/myUpdate", method = RequestMethod.POST)
-	public String myUpdate(Sharing sharing, MultipartFile file, Model model) throws IOException {
-		
+	public String myUpdate(Sharing sharing, MultipartFile file, Model model, HttpSession httpSession) throws IOException {
+		Member member = (Member)httpSession.getAttribute("login");
+		String loginId = member.getId();
 		
 		try {
 			sharingService.modify(sharing);
@@ -266,14 +266,17 @@ public class SharingController {
 			System.out.println("실패");
 			e.printStackTrace();
 		}
-		return "redirect:/mypage/sharing";
+		return "redirect:/mypage/sharing/"+loginId;
 
 	}
 	
 	//내 글 삭제하기 처리
 	@Transactional
 	@RequestMapping(value = "/myDelete", method = RequestMethod.POST)
-	public String myDelete(Sharing sharing, Model model) {
+	public String myDelete(Sharing sharing, Model model, HttpSession httpSession) {
+		Member member = (Member)httpSession.getAttribute("login");
+		String loginId = member.getId();
+		
 		try {
 			sharingService.removeComment(sharing.getShid());
 			sharingService.removeSharing(sharing.getShid());
@@ -281,7 +284,7 @@ public class SharingController {
 			System.out.println("삭제 실패");
 			e.printStackTrace();
 		}
-		return "redirect:/mypage/sharing";
+		return "redirect:/mypage/sharing/"+loginId;
 	}
 	
 	// 검색 결과 처리

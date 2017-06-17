@@ -98,15 +98,13 @@ body {
 
 .headerimg #logo {
     margin-left: 150px;
-    background-image: url(/resources/img/haedlogo.png);
+    background-image: url(/resources/img/headerlogo.png);
     background-size: 300px, 300px;
     background-repeat: no-repeat;
     width: 300px;
     height: 300px;
     border: none;
     display: block;
-    
-    
 }
 
 .headerimg h2 {

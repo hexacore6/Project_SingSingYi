@@ -150,18 +150,17 @@ public class MemberController {
 	
 	// 아이디 중복확인
 	@RequestMapping(value="/iddup", method=RequestMethod.POST)
-	public ResponseEntity<Boolean> read(String id, Model model) {
+	public ResponseEntity<String> read(String id, Model model) {
 		System.out.println(id);
 		
-		ResponseEntity<Boolean> entity = null;
+		ResponseEntity<String> entity = null;
 		
 		try {
-//			String id = memberService.confirm(id);
-			if(id == null) {
-				entity = new ResponseEntity<Boolean>(true , HttpStatus.OK);
-			} else {
-				entity = new ResponseEntity<Boolean>(false, HttpStatus.OK);
-			}
+				model.addAttribute("id", memberService.confirm(id));
+				if(memberService.confirm(id) == true){
+				entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+				}
+				
 		} catch (Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);

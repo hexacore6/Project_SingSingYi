@@ -71,9 +71,9 @@
 		}, 500);
 		
 		
-		/* 
+		
 	    $('#id').keyup(function(){
-	        if ( $('#id').val().length >= 6 && $('#id').val().length <= 12) {
+	        if ( $('#id').val().length >= 4 && $('#id').val().length <= 12) {
 	            var id = $(this).val();
 	            // ajax 실행
 	            $.ajax({
@@ -84,10 +84,10 @@
 	                    id: id
 	                },
 	                success : function(result) {
-	                    if (result === "false") {
-	                        $("#idcheck").html("<font color=green> 사용가능한 아이디 입니다.</font>");
+	                    if (result == 'SUCCESS') {
+	                    	$("#idcheck").html("<font color=red> 이미 사용중인 아이디 입니다.</font>");
 	                    } else {
-	                        $("#idcheck").html("<font color=red> 이미 사용중인 아이디 입니다.</font>");
+	                        $("#idcheck").html("<font color=green> 사용가능한 아이디 입니다.</font>");
 	                    }
 	                }
 	            }); // end ajax
@@ -97,6 +97,7 @@
 	    });  // end keyup
 			
 		
+	    /*
 		$('#repassword').keyup(function() {
 			if ($('#password').val() != $('#repassword').val()) {
 				$("#pwdcheck").html("<font color=red> 비밀번호 불일치</font>");
@@ -277,12 +278,15 @@ select#pwquestion {
 				<div class="main-login main-center">
 					<form class="form-horizontal" method="post" action="/member/regist">
 						<div class="form-group">
-							<label class="cols-sm-2 control-label">아이디</label>
+							<label class="cols-sm-2 control-label ">아이디</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<input type="text" class="form-control" name="id" id="id"
 										placeholder="아이디를 입력해 주세요" required />
 								</div>
+                                  <div>
+                                  <span id="idcheck"></span>
+                                  </div>
 							</div>
 						</div>
 

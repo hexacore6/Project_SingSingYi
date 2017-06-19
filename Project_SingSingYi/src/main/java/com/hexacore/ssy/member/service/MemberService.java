@@ -22,4 +22,5 @@ public interface MemberService {
 	
 	/** 게임 조건 성공 시 코인 1개 추가 및 내역 추가 */
 	public void addGameCoin(String id);
+	
 }

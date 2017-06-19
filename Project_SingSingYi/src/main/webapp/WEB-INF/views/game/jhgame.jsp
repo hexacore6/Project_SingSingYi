@@ -33,9 +33,10 @@
                     if (data.length != 0) {
                          list[0] = data[0];
                          console.log(list[0].sfilename)
-                         $("#audiofile").attr("value", list[0].sfilename)
+                         $("#audiofile").attr("value", ".././resources/music/"+list[0].sfilename+".mp3");
                          list[1] = data[1];
                          list[2] = data[2];
+                         
                     }
                 }
             });
@@ -93,10 +94,10 @@
 
                         switch (count) {
             case 1:
-              $("#audiofile").attr("value",list[1].sfilename)
+              $("#audiofile").attr("value",".././resources/music/"+list[1].sfilename+".mp3")
               break;
             case 2:
-              $("#audiofile").attr("value",list[2].sfilename)
+              $("#audiofile").attr("value",".././resources/music/"+list[2].sfilename+".mp3")
               break;
             default:
               $("#audiofile").attr("value","")

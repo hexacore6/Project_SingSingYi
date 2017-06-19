@@ -6,10 +6,10 @@ public class Song {
 	private String sfilename;
 	private String stitle;
 	private String singer;
-	private String musicalnote1;
-	private String musicalnote2;
-	private String musicalnote3;
-	private String musicalnote4;
+	private String mrfilename;
+	private String lyricsfilename;
+	private String lyricstimefilename;
+	private String midifilename;
 	private int playcnt;
 	
 	
@@ -43,29 +43,29 @@ public class Song {
 	public void setSinger(String singer) {
 		this.singer = singer;
 	}
-	public String getMusicalnote1() {
-		return musicalnote1;
+	public String getMrfilename() {
+		return mrfilename;
 	}
-	public void setMusicalnote1(String musicalnote1) {
-		this.musicalnote1 = musicalnote1;
+	public void setMrfilename(String mrfilename) {
+		this.mrfilename = mrfilename;
 	}
-	public String getMusicalnote2() {
-		return musicalnote2;
+	public String getLyricsfilename() {
+		return lyricsfilename;
 	}
-	public void setMusicalnote2(String musicalnote2) {
-		this.musicalnote2 = musicalnote2;
+	public void setLyricsfilename(String lyricsfilename) {
+		this.lyricsfilename = lyricsfilename;
 	}
-	public String getMusicalnote3() {
-		return musicalnote3;
+	public String getLyricstimefilename() {
+		return lyricstimefilename;
 	}
-	public void setMusicalnote3(String musicalnote3) {
-		this.musicalnote3 = musicalnote3;
+	public void setLyricstimefilename(String lyricstimefilename) {
+		this.lyricstimefilename = lyricstimefilename;
 	}
-	public String getMusicalnote4() {
-		return musicalnote4;
+	public String getMidifilename() {
+		return midifilename;
 	}
-	public void setMusicalnote4(String musicalnote4) {
-		this.musicalnote4 = musicalnote4;
+	public void setMidifilename(String midifilename) {
+		this.midifilename = midifilename;
 	}
 	public int getPlaycnt() {
 		return playcnt;
@@ -74,12 +74,17 @@ public class Song {
 		this.playcnt = playcnt;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "Song [sid=" + sid + ", simgfilename=" + simgfilename + ", sfilename=" + sfilename + ", stitle=" + stitle
-				+ ", singer=" + singer + ", musicalnote1=" + musicalnote1 + ", musicalnote2=" + musicalnote2
-				+ ", musicalnote3=" + musicalnote3 + ", musicalnote4=" + musicalnote4 + ", playcnt=" + playcnt + "]";
+				+ ", singer=" + singer + ", mrfilename=" + mrfilename + ", lyricsfilename=" + lyricsfilename
+				+ ", lyricstimefilename=" + lyricstimefilename + ", midifilename=" + midifilename + ", playcnt="
+				+ playcnt + "]";
 	}
+	
+	
+
 	
 	
 }

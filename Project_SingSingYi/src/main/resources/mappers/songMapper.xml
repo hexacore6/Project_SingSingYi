@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="readSong" resultType="com.hexacore.ssy.song.domain.Song">
-	select sfilename, musicalnote1, musicalnote2, musicalnote3, musicalnote4
+	select sfilename, mrfilename, lyricsfilename, lyricstimefilename, midifilename
 	from songs
 	where sid = #{sid}
 	</select>

@@ -178,7 +178,7 @@ $(document).ready(function(){
                           </audio>
                           <c:if test=""></c:if>
                           <audio controls name="media2" id="audio2${stat.index}" hidden="hidden">
-                            <source src="../../../resources/record/${record.recordfilename}" type="audio/mpeg">
+                            <source src="https://webrtcweb.com/RecordRTC/uploads/${record.recordfilename}.wav" type="audio/mpeg">
                             <!-- <source src="/resources/mp3/123.mp3" type="audio/mpeg"> -->
                           </audio>
                         </td>

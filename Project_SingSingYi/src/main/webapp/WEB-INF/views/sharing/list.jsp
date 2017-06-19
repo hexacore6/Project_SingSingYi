@@ -534,7 +534,7 @@ $(document).ready(function(){
 							</div>
 							<div style="margin: 10px;">
 								<h3>
-									<i class="fa fa-user"></i><strong><span id="sharingId">${sharing.id}</span></strong>
+									<i class="fa fa-user"></i><strong><span id="sharingId"><a href="/mypage/sharing/${sharing.id}">${sharing.id}</a></span></strong>
 									<c:set var="target" value="${sharing.id}" />
 									<c:set var="id" value="${login.id}" />
 									<c:if test="${target eq id}">

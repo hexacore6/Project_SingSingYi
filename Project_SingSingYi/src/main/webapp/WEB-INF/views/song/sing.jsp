@@ -292,7 +292,7 @@ audio {
             <!--음악리스트-->
             <div class="box" style="padding: 5px;">
               <div class="box-header">
-                <h3 class="box-title">노래 리스트</h3>
+                <h3 class="box-title" style="color: #e7708d; font-size: 30px;"><b>노래 리스트</b></h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body no-padding">

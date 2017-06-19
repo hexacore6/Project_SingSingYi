@@ -79,7 +79,7 @@ public class SongDAOImpl implements SongDAO {
 	}
 	
 	@Override
-	public int readRecentRecordId() {
+	public Integer readRecentRecordId() {
 		return sqlSession.selectOne(namespace+".readRecentRecordId");
 	}
 	

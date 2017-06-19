@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/resources/css/main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../../resources/css/sweetalert.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="../../resources/js/sweetalert.min.js"></script>
@@ -177,7 +178,7 @@
                                     </form>
                                     </td>
                                     <td style="width: 100px;text-align: center; font-size: 15px;">
-                                        <button class="fun-btn" onclick="addFavorite(${song.sid})" >담기</button>
+                                        <button class="btn fun-btn" onclick="addFavorite(${song.sid})" >담기</button>
                                     </td>
                                 </tr>
                                 </c:forEach>

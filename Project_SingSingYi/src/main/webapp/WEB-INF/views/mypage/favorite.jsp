@@ -4,7 +4,42 @@
 <!DOCTYPE html>
 
 <html>
-<head>
+<head>\
+<style type="text/css">
+table.type10 {
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 1.5;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  margin: 20px 10px;
+}
+
+table.type10 thead th {
+  width: 150px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #fff;
+  background: #e7708d;
+  margin: 20px 10px;
+}
+
+table.type10 tbody th {
+  width: 150px;
+  padding: 10px;
+}
+
+table.type10 td {
+  width: 350px;
+  padding: 10px;
+  vertical-align: top;
+}
+
+table.type10 .even {
+  background: #fdf3f5;
+}
+</style>
     <title>노래방</title>
     <!-- 합쳐지고 최소화된 최신 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -32,30 +67,31 @@
         <div class="col-lg-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">애창곡</h3>
+              <h1 class="box-title" style="text-align: left;">
+                <img width="50px;" height="50px;" src="/resources/img/favorite.png"><strong style="color: #e7708d;"> 애창곡</strong>
+              </h1>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
-              <table class="table table-striped">
-                <tbody>
+              <table class="table table-striped type10">
+                <thead>
                   <tr>
                     <th style="width: 20px; text-align: center; font-size: 20px;">곡명</th>
-                    <th style="width: 50px; text-align: center; font-size: 20px; ">Artist</th>
-                    <th style="width: 5px; text-align: center; font-size: 20px;"><a>삭제</a></th>
+                    <th style="width: 50px; text-align: center; font-size: 20px; ">아티스트</th>
+                    <th style="width: 5px; font-size: 20px;">삭제</th>
                   </tr>
+                  </thead>
                   <%-- <c:forEach items="myFavorite" var="favorite"> --%>
                   <c:forEach items="${list}" var="favorite" varStatus="stat">
-                  <tr id="trFavorite${favorite.fid}">
+                  <tr  class="even" id="trFavorite${favorite.fid}">
                       <%-- <td>${((pageMaker.cri.page-1)*10)+(stat.count)}</td> --%>
-                      <td style="width: 20px; font-size: 20px">${favorite.stitle}</td>
-                      <td style="font-size: 20px">${favorite.singer}</td>
+                      <td style="width: 20px; font-size: 20px; text-align: center;"><b>${favorite.stitle}</b></td>
+                      <td style="font-size: 20px; text-align: center;"><b>${favorite.singer}</b></td>
                       <td style="width: 5px;">
-                        <button class="btn badge bg-red" style="font-size: 20px"
-                        onclick="removeFavorite(${favorite.fid})">삭제</button>
+                        <a onclick="removeFavorite(${favorite.fid})"><img alt="remove" src="/resources/img/delete.png" style="width: 40px; height: 40px;"></a>
                       </td>
                     </tr>
                   </c:forEach>
-                </tbody>
               </table>
             </div>
             <!-- /.box-body -->

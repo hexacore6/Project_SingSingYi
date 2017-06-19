@@ -5,6 +5,41 @@
 
 <html>
 <head>
+<style type="text/css">
+table.type10 {
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	margin: 20px 10px;
+}
+
+table.type10 thead th {
+	width: 150px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #fff;
+	background: #e7708d;
+	margin: 20px 10px;
+}
+
+table.type10 tbody th {
+	width: 150px;
+	padding: 10px;
+}
+
+table.type10 td {
+	width: 350px;
+	padding: 10px;
+	vertical-align: top;
+}
+
+table.type10 .even {
+	background: #fdf3f5;
+}
+</style>
 <title>노래방</title>
 <!-- Theme style -->
 <!--  <link href="../resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" /> -->
@@ -23,7 +58,6 @@
 		$("#coinAddModal").modal('show');
 
 	}
-
 </script>
 
 
@@ -39,11 +73,19 @@
         <div class="col-lg-12">
           <div class="box box-info" style="border: none">
             <div class="box-header with-border">
-              <h4 class="box-title" style="text-align: left;">${myCoin.id } 님의 현재 보유 코인 수  <strong style="color: blue;">${myCoin.coincnt }</strong> 개</h4>
+              <h1 class="box-title" style="text-align: left;">
+                <img width="50px;" height="50px;" src="/resources/img/coin.png"><strong style="color: #e7708d;"> 코인 관리</strong>
+              </h1>
+
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table class="table table-bordered">
+              <h4 style="text-align: right;">
+                나의 보유 코인 <strong style="color: #e7708d;">${myCoin.coincnt }</strong> 개
+                <button class="btn btn-primary pull-right" id='modal' onclick="showCoinModal()" style="background-color: #e7708d; margin-left: 30px; margin-bottom: 10px; border-color: #fdf3f5">코인충전</button>
+              </h4>
+
+              <table class="table table-striped type10">
                 <thead>
                   <tr>
                     <th style="text-align: center; font-size: 20px;">종류</th>
@@ -52,27 +94,34 @@
                   </tr>
                 </thead>
                 <c:forEach items="${list}" var="historyCoin" varStatus="stat">
-                  <tbody>
-                    <tr>
-                      <th style="text-align: center; font-size: 18px;">${historyCoin.chtype }</th>
-                      <th style="text-align: center; font-size: 18px;">${historyCoin.chcontent }</th>
-                      <th style="width: 400px; text-align: center; font-size: 18px;"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${historyCoin.chdate }" /></th>
-                    </tr>
-                  </tbody>
+                  <tr class="even">
+                    <td class="event" style="text-align: center; font-size: 18px;"><b>${historyCoin.chtype }</b></td>
+                    <td class="event" style="text-align: center; font-size: 18px;"><b>${historyCoin.chcontent }</b></td>
+                    <td class="event" style="width: 400px; text-align: center; font-size: 18px;"><b><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${historyCoin.chdate }" /></b></td>
+                  </tr>
                 </c:forEach>
               </table>
+
             </div>
             <!-- /.box-body -->
-              
-              <!-- 페이징 번호 div -->
-          <div class="box-footer clearfix text-center">
-              <ul class="pagination  pagination-sm no-margin   ">
+            <!-- 페이징 번호 div -->
+            <div class="box-footer clearfix text-center">
+              <ul class="pagination  pagination-sm no-margin" style="background-color: #fdf3f5;">
                 <c:if test="${pageMaker.prev }">
                   <li><a href="myCoin${pageMaker.makeQuery(pageMaker.startPage-1 )}">&laquo;</a></li>
                 </c:if>
 
                 <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                  <li <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>><a href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
+                  
+                  <c:choose>
+                    <c:when test="${pageMaker.cri.page==idx}">
+                      <li class="active"><a style="background-color:#e7708d;" href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
+                    </c:when>
+                  <c:otherwise>
+                      <li><a href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
+                  </c:otherwise>
+                  </c:choose>
+                 
                 </c:forEach>
 
 
@@ -80,28 +129,30 @@
                   <li><a href="myCoin${pageMaker.makeQuery(pageMaker.endPage + 1)}">&raquo;</a>
                 </c:if>
               </ul>
-
             </div>
           </div>
         </div>
       </div>
-  <button class="btn btn-primary pull-right" id='modal' onclick="showCoinModal()">코인충전</button>
-  </div>  
+    </div>
   </div>
   </section>
+
   <!--내용끝-->
   <!-- coinAdd modal -->
 
-  <div class="modal" id="coinAddModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
+  <div class="modal" id="coinAddModal" >
+    <div class="modal-dialog" style="background-color: #fdf3f5">
+      <div class="modal-content" style="background: transparent;">
+   
+
+
 
         <div class="modal-header" style="border: none;">
 
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h3 style="text-align: center;">코인충전</h3>
+          <h3 style="text-align: center; color: #e7708d;"><b>코인충전</b></h3>
         </div>
 
         <form class="form-horizontal" action="addcoin" method="post">
@@ -109,10 +160,10 @@
           <div class="modal-body" style="border: none;">
             <div class="row" style="float: left; text-align: center;">
               <ul style="list-style: none;">
-                <li><label style="margin-bottom: 10px;"><input type='radio' id='10Add' name='coincnt' value="10" />&nbsp;&nbsp;1000원 - 10코인</label></li>
-                <li><label style="margin-bottom: 10px;"><input type='radio' id='30Add' name='coincnt' value="30" />&nbsp;&nbsp;3000원 - 30코인</label></li>
-                <li><label style="margin-bottom: 10px;"><input type='radio' id='50Add' name='coincnt' value="50" />&nbsp;&nbsp;5000원 - 50코인</label></li>
-                <li><label style="margin-bottom: 10px;"><input type='radio' id='100Add' name='coincnt' value="100" />&nbsp;&nbsp;10000원 - 100코인</label></li>
+                <li><label style="margin-bottom: 10px;"><input type='radio' id='10Add' name='coincnt' value="10" /><b style="font-size: 20px;">&nbsp;&nbsp;1000원&nbsp; -&nbsp; 10 코인</b></label></li>
+                <li><label style="margin-bottom: 10px;"><input type='radio' id='30Add' name='coincnt' value="30" /><b style="font-size: 20px;">&nbsp;&nbsp;3000원&nbsp; - &nbsp;30 코인</b></label></li>
+                <li><label style="margin-bottom: 10px;"><input type='radio' id='50Add' name='coincnt' value="50" /><b style="font-size: 20px;">&nbsp;&nbsp;5000원&nbsp; - &nbsp;50 코인</b></label></li>
+                <li><label style="margin-bottom: 10px;"><input type='radio' id='100Add' name='coincnt' value="100" /><b style="font-size: 20px;">&nbsp;&nbsp;10000원&nbsp; - &nbsp;100 코인</b></label></li>
               </ul>
             </div>
           </div>
@@ -120,7 +171,7 @@
           <div class="modal-footer" style="border: none;">
 
             <center>
-              <button type="submit" class="btn btn-primary;" id="pluscoin">충전</button>
+              <h4><button type="submit" class="btn btn-primary;" id="pluscoin" style="background-color: #e7708d; color: white;" >충전</button></h4>
             </center>
           </div>
         </form>

@@ -60,6 +60,16 @@
 	height: 100px;
 	background-color: gray;
 }
+button{
+  border: none;
+  background-color: #fff;
+}
+#buttonimg{
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+}
 </style>
 
 <script type="text/javascript">
@@ -276,8 +286,8 @@ $(document).ready(function(){
 											<i class="fa fa-pencil"> </i>Sing Sing
 										</button>
 										<!-- MP3 업로드 공간 -->
-										<div id="imageDrop" hidden>
-										</div>
+										<!-- <div id="imageDrop" hidden>
+										</div> -->
 										<div id="mp3Drop" hidden>
 											<input type="text" name="recordfilename" id="selected" hidden>
 											<input type="text" id="dataCheck" hidden>
@@ -493,18 +503,21 @@ $(document).ready(function(){
 							
 							<!-- 녹음파일 출력 -->
 							<c:set var="recordfilename" value="${sharing.recordfilename}"/>
-							<c:if test="${recordfilename ne null}">
-								<%-- <button id="play" onclick="playAudio(${stat.index});">play</button>
+							<c:set var="emptyValue" value=""/>
+							<c:if test="${recordfilename ne emptyValue}">
+								 <div style="margin: 10px;"><h3><strong><span style="color : #d9534f">${sharing.recordfilename}</span></strong></h3></div>
+								<button id="play" onclick="playAudio(${stat.index});">play</button>
+								
                         		<button id="pvolume${stat.index}" onclick="pvolume(${stat.index});">+</button>
                         		<button id="mvolume${stat.index}" onclick="mvolume(${stat.index});">-</button>
                          		<audio controls name="media" id="audio${stat.index}" hidden="hidden">
                             		<source src="../../../resources/music/woong1_5_오래된 노래.mp3" type="audio/mpeg">
                          		 </audio>
-                         	<c:if test=""></c:if>
+                         	<c:if test=""></c:if> 
                          		<audio controls name="media2" id="audio2${stat.index}" hidden="hidden">
                             		<source src="../../../resources/record/woong1_5_오래된 노래.mp3" type="audio/mpeg">
-                          		</audio> --%>
-								<div style="margin: 10px;"><h3><strong><span style="color : #d9534f">${sharing.recordfilename}</span></strong></h3></div>
+                          		</audio>
+								
 							</c:if>
 							<div style="margin: 10px;">
 								<span class="time" style="float: right;"><i
@@ -521,7 +534,7 @@ $(document).ready(function(){
 							</div>
 							<div style="margin: 10px;">
 								<h3>
-									<a href="/mypage/sharing/${sharing.id}"><i class="fa fa-user"></i><strong><span id="sharingId">${sharing.id}</span></strong></a>
+									<i class="fa fa-user"></i><strong><span id="sharingId">${sharing.id}</span></strong>
 									<c:set var="target" value="${sharing.id}" />
 									<c:set var="id" value="${login.id}" />
 									<c:if test="${target eq id}">

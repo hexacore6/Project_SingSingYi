@@ -139,7 +139,7 @@
 .normal-btn {
    width: 130px;
    height: 120px;
-   background-image: url("/resources/img/easy.png");
+   background-image: url("/resources/img/normal.png");
    background-size: 110px, 2px;
    background-position: center;
    background-repeat: no-repeat;
@@ -208,12 +208,12 @@ audio {
         <!--왼쪽-->
         <div class="music">
           <!--곡명-->
-          <h1 style="text-align: left; color: white;">곡명</h1>
+          <h1 id="title" style="text-align: left; color: white;">곡명</h1>
         </div>
         
         <div class="music">
           <!--곡명-->
-          <h1 style="text-align:right; color: white;" >가수명</h1>
+          <h1 id="singer" style="text-align:right; color: white;" >가수명</h1>
         </div>
         <div class="score">
          <h3 id="score"></h3>
@@ -685,7 +685,8 @@ audio {
   window.onload = function() {
    audioContext = new AudioContext();
    init();
-   
+   document.getElementById('title').innerHTML = '${song.stitle}';
+   document.getElementById('singer').innerHTML = '${song.singer}';
 
   }
 	
@@ -694,8 +695,9 @@ audio {
 	  function clickEasy(){
    level = 0;
    console.log("EASY!!");
-   //document.getElementById("easy-btn").style.backgroundImage = 'url("/resources/img/easy2.png")';
-   
+   document.getElementById("easy-btn").style.backgroundImage = 'url("/resources/img/easy2.png")';
+   document.getElementById("normal-btn").style.backgroundImage = 'url("/resources/img/normal.png")';
+   document.getElementById("hard-btn").style.backgroundImage = 'url("/resources/img/hard.png")';
    //document.getElementById('easy-btn').src = "/resources/img/easy2.png";
    //document.getElementById('hard-btn').src = "/resources/img/hard.png";
   
@@ -705,12 +707,18 @@ audio {
   function clickNormal(){
 	   level = 1;
 	   console.log("NORMAL!!!!!");
+	   document.getElementById("easy-btn").style.backgroundImage = 'url("/resources/img/easy.png")';
+	   document.getElementById("normal-btn").style.backgroundImage = 'url("/resources/img/normal2.png")';
+	   document.getElementById("hard-btn").style.backgroundImage = 'url("/resources/img/hard.png")';
 	};
   
   	function clickHard(){
   		level = 2;
   	  //change text when when button is clicked
   		console.log("HARD");
+  		document.getElementById("easy-btn").style.backgroundImage = 'url("/resources/img/easy.png")';
+  	   document.getElementById("normal-btn").style.backgroundImage = 'url("/resources/img/normal2.png")';
+  	   document.getElementById("hard-btn").style.backgroundImage = 'url("/resources/img/hard.png")';
   		//document.getElementById('easy-btn').src = "/resources/img/easy.png";
   		//document.getElementById('hard-btn').src = "/resources/img/hard2.png";
   	};
@@ -1022,6 +1030,7 @@ audio {
 	    var iframeObj = $("#ifm").get(0);
 	    var iframeDocument = iframeObj.contentWindow || iframeObj.contentDocument;
 	    iframeDocument.postMessage('7000:','https://192.168.0.20:3000/client')
+	    
    
    if(playingMelody == false){
     melodyAudio = new Audio('/resources/music/loveExceptMe.mp3');
@@ -1183,7 +1192,7 @@ audio {
 	  console.log("length : " + lyricsTimeTxtArr.length);
   
 	  if((lyricsTimeTxtArr.length > lyricsCnt)&& (playingMelody)){
-  
+  			console.log("cnt : "+ lyricsCnt);
         if (lyricsCnt == 0) {
          document.getElementById('songText1').innerHTML = "이제 곧 노래가 시작됩니다. 준비해주세요."
          document.getElementById('songText2').innerHTML = lyricsTxtArr[0];
@@ -1201,22 +1210,23 @@ audio {
            	 		document.getElementById('songText1').style.color = 'white';
          		  
          	    document.getElementById('songText2').style.color = 'red';
-         	   	if(lyricsTimeTxtArr.length == lyricsCnt - 1){
-         	   		
-         	   		console.log("one!!!!!!!!!!!");
-         	   		document.getElementById('songText2').innerHTML = "  ";
+         	   	if(lyricsTimeTxtArr.length == lyricsCnt + 1){
+ 
+         	   	document.getElementById('songText1').innerHTML = "  ";
+         	   		//document.getElementById('songText2').innerHTML = "  ";
          	   	}
        	   }
        	   else{
-        		  if(lyricsTimeTxtArr.length != lyricsCnt - 2){
+      
           		   document.getElementById('songText2').innerHTML = lyricsTxtArr[lyricsCnt];
           		   document.getElementById('songText2').style.color = 'white';
-        		  }
+        		  
        	  	   document.getElementById('songText1').style.color = 'red';
-         	  	if(lyricsTimeTxtArr.length == lyricsCnt - 1){
+         	  	if(lyricsTimeTxtArr.length == lyricsCnt + 1){
+
          	  		
-         	  		console.log("two!!!!!!!!!!!");
-       	   			document.getElementById('songText1').innerHTML = "  ";
+         	  		document.getElementById('songText2').innerHTML = "  ";
+       	   			//document.getElementById('songText1').innerHTML = "  ";
          	  	}
        	   }
      	   		lyricsCnt++;
@@ -1231,6 +1241,14 @@ audio {
 		  recordPlaying = false;
 		  record('${song.sfilename}');
 		    calScore();
+		    /*
+		    console.log("last!!!!!!!!!!")
+		    swal({
+		    	  title: "Sweet!",
+		    	  text: "Here's a custom image."//,
+		    	 // imageUrl: "images/thumbs-up.jpg"
+		    	});
+		    */
 	  }
   }
   function calScore(){

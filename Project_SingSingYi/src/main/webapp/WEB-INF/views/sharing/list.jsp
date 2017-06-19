@@ -60,6 +60,16 @@
 	height: 100px;
 	background-color: gray;
 }
+button{
+  border: none;
+  background-color: #fff;
+}
+#buttonimg{
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+}
 </style>
 
 <script type="text/javascript">

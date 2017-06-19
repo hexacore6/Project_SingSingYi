@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +35,7 @@ import com.hexacore.ssy.common.PageMaker;
 import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.domain.CoinHistory;
 import com.hexacore.ssy.mypage.domain.Favorite;
+import com.hexacore.ssy.mypage.domain.FollowList;
 import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.mypage.service.MypageService;
 import com.hexacore.ssy.sharing.domain.Sharing;
@@ -55,17 +57,29 @@ public class MypageController {
 	
 	@Inject
 	MypageService service;
+	@Inject
 	SharingService sharingService;
 	
+	
+	
 	// 나의 공유글 조회
-	@RequestMapping(value="/sharing", method=RequestMethod.GET)
-	public void readMySharing(Model model, HttpSession httpSession){
+	@RequestMapping(value="/sharing/{id}", method=RequestMethod.GET)
+	public String readMySharing(@PathVariable String id, Model model, HttpSession httpSession){
 		Member member = (Member)httpSession.getAttribute("login");
-		
-		String id = member.getId();
+		String sender = member.getId();
+		String following = "following";
+		Member checkMember = service.readMyInformation(id);
+		if(service.checkFollow(sender, id) != null){
+			model.addAttribute("following", following);
+		}
 		
 		model.addAttribute("list", service.readMySharing(id));
 		model.addAttribute("id", id);
+		if(checkMember == null){ 
+			return "redirect:/mypage/sharing/"+sender; 
+		}
+		return "/mypage/sharing"; 
+
 	}
 	
 	// 나의 공유글 삭제
@@ -102,8 +116,6 @@ public class MypageController {
 	@Transactional
 	@RequestMapping(value="/addcoin", method=RequestMethod.POST)
 	public String addCoin(String id, Member member){
-		System.out.println("아이디" + id);
-		System.out.println("멤버" + member);
 		service.addCoin(member, id);
 		CoinHistory coinHistory = new CoinHistory();
 		coinHistory.setId(id);
@@ -235,7 +247,6 @@ public class MypageController {
 			}
 
 			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-			System.out.println(entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
@@ -323,27 +334,49 @@ public class MypageController {
 		Member member = (Member)httpSession.getAttribute("login");
 		
 		String id = member.getId();
+		
+		String password = service.readMyInformation(id).getPassword();
 		model.addAttribute("id", id);
+		model.addAttribute("password", password);
+		
+		
 	}
 	
 	
 	// 나의 정보 수정 (비밀번호 수정)
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public void modifyPOST(Member member){
-		service.updateMyInformation(member);
+	public ResponseEntity<Boolean> modifyPOST(@RequestBody Member member, HttpSession httpSession){
+		System.out.println("비번 수정 들어왔니 ?");
+		ResponseEntity<Boolean> entity = null;
+		Member member1 = (Member)httpSession.getAttribute("login");
+		member.setId(member1.getId());
+		
+		String nowPW = member1.getPassword();
+		String nextPW = member.getPassword();
+		System.out.println(nowPW);
+		System.out.println(nextPW);
+		
+		if(nowPW.equals(nextPW)){
+			entity = new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		} else {
+			System.out.println(member);
+			service.updateMyInformation(member);
+			httpSession.setAttribute("login", member);
+			entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
+			
+		}
+		System.out.println(entity);
+		return entity;
 	}
 	
 	// 내 글 상세보기
 	@RequestMapping(value = "/read", method = RequestMethod.POST)
 	public ResponseEntity<Sharing> read(@RequestBody Sharing sharing, Model model) {
-		System.out.println("에스아이디 : " + sharing.getShid());
-		System.out.println(sharingService.read(sharing.getShid()) + "떠라");
 		ResponseEntity<Sharing> entity = null;
 		//String id = sharingService.read(sharing.getShid()).getId();
 		try {
 			model.addAttribute("read", sharingService.read(sharing.getShid()));
 			model.addAttribute("listComment", sharingService.listComment(sharing.getShid()));
-			System.out.println(sharingService.read(sharing.getShid()) + "결과");
 			entity = new ResponseEntity<Sharing>(sharingService.read(sharing.getShid()), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -356,13 +389,9 @@ public class MypageController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(Sharing sharing, MultipartFile file, Model model) throws IOException {
 		
-		System.out.println(sharing);
-		System.out.println(file);
 		try {
 			sharingService.modify(sharing);
-			System.out.println("성공");
 		} catch (Exception e) {
-			System.out.println("실패");
 			e.printStackTrace();
 		}
 		return "redirect:/mypage/sharing";
@@ -378,15 +407,48 @@ public class MypageController {
 			sharingService.removeComment(sharing.getShid());
 			sharingService.removeSharing(sharing.getShid());
 		} catch (Exception e) {
-			System.out.println("삭제 실패");
 			e.printStackTrace();
 		}
 		return "redirect:/mypage/sharing";
 	}
 	
-	// 애창곡 중복 체크
-	public Favorite checkFavorite(){
+	
+	// 팔로우 추가
+	@RequestMapping(value="/addFollow", method=RequestMethod.POST)
+	public ResponseEntity<Boolean> addFollow(@RequestBody FollowList followList){
+		String sender = followList.getSender();
+		String target = followList.getTarget();
+		ResponseEntity<Boolean> entity = null;
 		
-		return null;
+		FollowList checkFollow = service.checkFollow(sender, target);
+		
+		if(checkFollow != null){
+			
+			entity = new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		} else {
+			service.addFollow(sender, target);
+			entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		}
+		return entity;
+
 	}
+	
+	// 팔로우 제거
+	@RequestMapping(value="/removeFollow", method=RequestMethod.POST)
+	public ResponseEntity<Boolean> removeFollow(@RequestBody FollowList followList){
+		String sender = followList.getSender();
+		String target = followList.getTarget();
+		ResponseEntity<Boolean> entity = null;
+		
+		try {
+			service.removeFollow(sender, target);
+			entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+
 }

@@ -75,14 +75,15 @@ public class MyPageDAOTest {
 	}
 	
 	// 내 회원정보 조회
-	//@Test
+	@Test
 	public void readMyInformatino(){
-		dao.readMyInformation("Woong");
+		
+		System.out.println(dao.readMyInformation("Woong1"));
 	}
 	
 	
 	//내 애창곡 조회 (등록한 노래번호 조회)
-	@Test
+	//@Test
 	public void readMyFavorite(){
 		dao.readMyFavorite("woong1");
 	}
@@ -190,5 +191,23 @@ public class MyPageDAOTest {
 		System.out.println("코인히스토리 : " + coinHistory);
 		
 		dao.coinListAdd(coinHistory);
+	}
+	
+	// 팔로우 추가
+	//@Test
+	public void addFollow(){
+		dao.addFollow("woong1", "woong2");
+	}
+	
+	// 팔로우 삭제
+	//@Test
+	public void removeFollow(){
+		dao.removeFollow("woong1", "woong2");
+	}
+	
+	// 팔로우 체크
+	//@Test
+	public void checkFollw(){
+		System.out.println(dao.checkFollow("woong1", "woong2"));
 	}
 }

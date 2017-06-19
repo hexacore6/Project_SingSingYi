@@ -30,15 +30,15 @@
 			<mapping path="/member/loginPost" />
 			<mapping path="/member/regist" />
 			<mapping path="/member/login" />
-			<mapping path="/"/>
+			<mapping path="/" />
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 		
 		<interceptor>
-			<mapping path="/song/*" />
-			<mapping path="/game/*" />
-			<mapping path="/sharing/*" />
-			<mapping path="/mypage/*" />
+			<mapping path="/song/**" />
+			<mapping path="/game/**" />
+			<mapping path="/sharing/**" />
+			<mapping path="/mypage/**" />
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 		

@@ -24,19 +24,25 @@
 	]]>
 	</select>
 	
+	<select id="readSong" resultType="com.hexacore.ssy.song.domain.Song">
+	select sfilename, mrfilename, lyricsfilename, lyricstimefilename, midifilename
+	from songs
+	where sid = #{sid}
+	</select>
+	
 	<!-- BEST 3 가져오기 -->
 	<select id="bestSongs" resultType="com.hexacore.ssy.song.domain.Song">
-		select stitle, simgfilename, singer, playcnt
+		select sid, stitle, simgfilename, singer, playcnt
 		from songs
 		order by playcnt desc limit 3
 	</select>
 	
 	<!-- 전체 노래 목록 가져오기 -->
 	<select id="songsList" resultType="com.hexacore.ssy.song.domain.Song">
-		select sid, stitle, singer, playcnt
+		select sid, simgfilename, stitle, singer, playcnt
 		from songs
+		order by playcnt desc, sid asc
 	</select>
-	
 	
 	<!-- 애창곡 담기 -->
 	<insert id = "addFavorite">
@@ -56,4 +62,25 @@
 	 from favorites 
 	 where id=#{id} and sid=#{sid}
 	</select>
+	
+	<!-- 노래 부른 횟수 증가 -->
+	<update id="updatePlayCnt">
+		update songs
+		set playcnt = playcnt + 1
+		where sid = #{sid}
+	</update>
+	
+	<!-- 녹음 저장 -->
+	<insert id = "uploadRecord">
+		insert into RecordRepository(id, recordfilename)
+		value (#{id}, #{recordfilename});
+	</insert>
+	
+	<!-- 가장 최근 녹음 파일 번호 가져오기  -->
+	<select id="readRecentRecordId" resultType="int">
+		select rrid
+		from recordrepository
+		order by rrid desc limit 1;
+	</select>
+	
 </mapper>

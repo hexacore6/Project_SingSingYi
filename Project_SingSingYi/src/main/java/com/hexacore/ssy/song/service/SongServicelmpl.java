@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.hexacore.ssy.mypage.domain.Favorite;
+import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.song.dao.SongDAO;
 import com.hexacore.ssy.song.domain.Song;
 
@@ -42,20 +43,37 @@ public class SongServicelmpl implements SongService  {
 		return songDao.songsList();
 	}
 	
-	/** 애창곡 추가 */
 	@Override
 	public void addFavorite(String id, int sid) {
 		songDao.addFavorite(id, sid);		
 	}
 	
-	/** 애창곡 삭제 */
 	public void removeFavorite(int fid) {
 		songDao.removeFavorite(fid);
 	}
 	
-	/** 애창곡 중복 체크 */
 	@Override
 	public Favorite checkFavorite(String id, int sid) {
 		return songDao.checkFavorite(id, sid);
+	}
+	
+	@Override
+	public void updatePlayCnt(int sid) {
+		songDao.updatePlayCnt(sid);
+	}
+	
+	@Override
+	public Song readSong(int sid) {
+		return songDao.readSong(sid);
+	}
+	
+	@Override
+	public void uploadRecord(RecordRepository recordRepository) {
+		songDao.uploadRecord(recordRepository);
+	}
+	
+	@Override
+	public int readRecentRecordId() {
+		return songDao.readRecentRecordId();
 	}
 }

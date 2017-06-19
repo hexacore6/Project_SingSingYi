@@ -17,7 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
     <script src="../../resources/js/sweetalert.min.js"></script>
-    <script src="../../resources/js/jquery.min.js?ver=1"></script>
+    <script src="..`/../resources/js/jquery.min.js?ver=1"></script>
 </head>
 
 <body>
@@ -29,8 +29,7 @@
     <div class="col-lg-9">
       <!--content-->
       <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-10">
+        <div class="col-lg-12">
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">애창곡</h3>
@@ -40,19 +39,18 @@
               <table class="table table-striped">
                 <tbody>
                   <tr>
-                    <th style="width: 5px">번호</th>
-                    <th style="width: 20px">곡명</th>
-                    <th style="width: 50px">Artist</th>
-                    <th style="width: 5px"><a>삭제</a></th>
+                    <th style="width: 20px; text-align: center; font-size: 20px;">곡명</th>
+                    <th style="width: 50px; text-align: center; font-size: 20px; ">Artist</th>
+                    <th style="width: 5px; text-align: center; font-size: 20px;"><a>삭제</a></th>
                   </tr>
                   <%-- <c:forEach items="myFavorite" var="favorite"> --%>
                   <c:forEach items="${list}" var="favorite" varStatus="stat">
-                    <tr id="trFavorite${favorite.fid}">
-                      <td>${((pageMaker.cri.page-1)*10)+(stat.count)}</td>
-                      <td style="width: 20px">${favorite.stitle}</td>
-                      <td>${favorite.singer}</td>
-                      <td style="width: 5px">
-                        <button class="btn badge bg-red" 
+                  <tr id="trFavorite${favorite.fid}">
+                      <%-- <td>${((pageMaker.cri.page-1)*10)+(stat.count)}</td> --%>
+                      <td style="width: 20px; font-size: 20px">${favorite.stitle}</td>
+                      <td style="font-size: 20px">${favorite.singer}</td>
+                      <td style="width: 5px;">
+                        <button class="btn badge bg-red" style="font-size: 20px"
                         onclick="removeFavorite(${favorite.fid})">삭제</button>
                       </td>
                     </tr>
@@ -69,7 +67,7 @@
 
                 <c:set value="woong" var="id"></c:set>
                 <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                  <li <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>><a href="myFavorite${pageMaker.makeQuery(idx,id)}">${idx }</a></li>
+                  <li <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>><a href="favorite${pageMaker.makeQuery(idx,id)}">${idx }</a></li>
                 </c:forEach>
 
 
@@ -80,7 +78,6 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-1"></div>
       </div>
     </div>
   </div>

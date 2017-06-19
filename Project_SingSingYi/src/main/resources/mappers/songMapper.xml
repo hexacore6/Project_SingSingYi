@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="readSong" resultType="com.hexacore.ssy.song.domain.Song">
-	select sfilename, musicalnote1, musicalnote2, musicalnote3, musicalnote4
+	select sfilename, mrfilename, lyricsfilename, lyricstimefilename, midifilename
 	from songs
 	where sid = #{sid}
 	</select>
@@ -77,7 +77,7 @@
 	</insert>
 	
 	<!-- 가장 최근 녹음 파일 번호 가져오기  -->
-	<select id="readRecentRecordId" resultType="int">
+	<select id="readRecentRecordId" resultType="Integer">
 		select rrid
 		from recordrepository
 		order by rrid desc limit 1;

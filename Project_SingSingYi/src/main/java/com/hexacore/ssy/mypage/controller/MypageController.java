@@ -182,14 +182,14 @@ public class MypageController {
 		Member member = (Member)httpSession.getAttribute("login");
 		String id = member.getId();
 		String recordfilename = null;
-		String filename = null;
+		String mrfilename = null;
 		String[] array = null;
 		List<RecordRepository> list = service.readMyRecord(cri, id);
 		for (RecordRepository recordRepository : list) {
 			recordfilename = recordRepository.getRecordfilename();
 			if (recordfilename != null){
 				array = recordfilename.split("_");
-				recordfilename = array[2];
+				mrfilename = array[2];
 			}
 		}
 		
@@ -198,7 +198,7 @@ public class MypageController {
 		
 		pageMaker.setTotalCount(service.countRecordPaging(cri, id));
 		
-		model.addAttribute("recordfilename", recordfilename);
+		model.addAttribute("mrfilename", mrfilename);
 		model.addAttribute("id", id);
 		model.addAttribute("list", list);
 		model.addAttribute("pageMaker", pageMaker);

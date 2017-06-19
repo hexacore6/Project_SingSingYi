@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" ></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 <div class="row">
 	<div class="col-lg-12">
 		<div class='headerimg'>
@@ -18,7 +18,7 @@
                             <div id='jsonp'></div> -->
 						</div>
              
-                       <iframe src="http://192.168.0.63:3000/client" id="ifm"style="width: 300px;height: 300px; margin-left: 250px;"></iframe>
+                       <iframe src="https://192.168.0.20:3000/client" id="ifm"style="width: 300px;height: 300px; margin-left: 250px;"></iframe>
 					
           
           </div>
@@ -51,10 +51,10 @@
 			</div>
 			<div class="col-lg-3">
 
-				<a href="<%=application.getContextPath()%>/board/nlist"
+				<a href="<%=application.getContextPath()%>/game/start"
 					class="menuitem">
 					<p class="text-center">
-						<strong>공지사항</strong>
+						<strong>게임하기</strong>
 					</p>
 				</a>
 			</div>
@@ -88,12 +88,12 @@ window.onload = function () {
     
     $.ajax({
         type : "GET",
-        url : "http://192.168.0.63:3000/first",
+        url : "https://192.168.0.20:3000/first",
         data : "id="+loginCookie[1],
         dataType : "jsonp",
         success : function(json) {
-            iframeDocument.postMessage('1000:'+loginCookie[1],'http://192.168.0.63:3000/client')
-            iframeDocument.postMessage('4000:'+json.length,'http://192.168.0.63:3000/client')
+            iframeDocument.postMessage('1000:'+loginCookie[1],'https://192.168.0.20:3000/client')
+            iframeDocument.postMessage('4000:'+json.length,'https://192.168.0.20:3000/client')
         },
         error : function(e) {
                 alert("error1");
@@ -102,17 +102,16 @@ window.onload = function () {
     
     $.ajax({
         type : "GET",
-        url : "http://192.168.0.63:3000/coincnt",
+        url : "https://192.168.0.20:3000/coincnt",
         data : "id="+loginCookie[1],
         dataType : "jsonp",
         success : function(data) {
-              iframeDocument.postMessage('5000:'+data[0].coincnt,'http://192.168.0.63:3000/client')  
+              iframeDocument.postMessage('5000:'+data[0].coincnt,'https://192.168.0.20:3000/client')  
         },
         error : function(e) {
                 alert("error2");
         }
 	});
-
     
 }
 

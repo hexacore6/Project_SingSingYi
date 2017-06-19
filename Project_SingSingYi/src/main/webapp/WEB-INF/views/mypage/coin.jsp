@@ -114,7 +114,7 @@ table.type10 .even {
                   
                   <c:choose>
                     <c:when test="${pageMaker.cri.page==idx}">
-                      <li class="active"><a style="background-color:#e7708d;" href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
+                      <li class="active" ><a style="background-color:#e7708d; border-color:#e7708d; " href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
                     </c:when>
                   <c:otherwise>
                       <li><a href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>

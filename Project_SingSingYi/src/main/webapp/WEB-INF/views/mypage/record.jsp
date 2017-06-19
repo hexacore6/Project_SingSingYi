@@ -88,6 +88,7 @@ table.type10 .even {
                   oAudio.play();
                   oAudio2.play();
                   btn.textContent = "Pause";
+                  
               }
               else {
                   oAudio.pause();
@@ -156,6 +157,8 @@ $(document).ready(function(){
                     <tr>
                       <th style="width: 20px; text-align: center; font-size: 20px;">곡명</th>
                       <th style="width: 50px; text-align: center; font-size: 20px; ">아티스트</th>
+                      <th style="width: 50px; text-align: center; font-size: 20px; ">재생 / 볼륨조절</th>
+                      <th style="width: 50px; text-align: center; font-size: 20px; ">공유</th>                    
                       <th style="width: 5px; font-size: 20px;">삭제</th>
                     </tr>
                    </thead>
@@ -200,8 +203,17 @@ $(document).ready(function(){
                   </c:if>
 
                   <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                    <li <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>><a href="record${pageMaker.makeQuery(idx)}">${idx }</a></li>
-                  </c:forEach>
+                  
+                  <c:choose>
+                    <c:when test="${pageMaker.cri.page==idx}">
+                      <li class="active" ><a style="background-color:#e7708d; border-color:#e7708d; " href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
+                    </c:when>
+                  <c:otherwise>
+                      <li><a href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
+                  </c:otherwise>
+                  </c:choose>
+                 
+                </c:forEach>
 
 
                   <c:if test="${pageMaker.next && pageMaker.endPage > 0 }">

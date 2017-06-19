@@ -126,7 +126,6 @@ function mvolume() {
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../../../resources/css/bootstrap3-wysihtml5.min.css?ver=2">
 <link rel="stylesheet" type="text/css" href="../../resources/css/sweetalert.css">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
@@ -193,11 +192,10 @@ function mvolume() {
                 <fmt:parseNumber value="${now.time/(1000)-(sharing.shregdate).time/(1000) }" integerOnly="true" var="secTime"></fmt:parseNumber>
                 <fmt:parseNumber value="${now.time/(1000*60)-(sharing.shregdate).time/(1000*60) }" integerOnly="true" var="minTime"></fmt:parseNumber>
                   
-                <div class="item" style="margin-left: 100px; margin-top: 100px; overflow: hidden; background-color: #f5f5f0;">
+                <div class="item" style="margin-left: 100px; margin-top: 100px; overflow: hidden; background-color: #f5f5f0; width: 600px; height: 500px;">
                 
                   <div class="animate-box">
                   <div class="row">
-                    <img src="/resources/img/clip.png" width="100px;" height="100px;" style="margin-top: 30px; margin-bottom: 50px;">
                     <div class="row"></div>
                     </div>
                     <!-- 녹음파일 출력 -->
@@ -228,8 +226,8 @@ function mvolume() {
 							<c:set var="emptyString" value="NoImageType"/>
 							<c:if test="${eximgfilename ne null}">
 							<c:if test="${eximgfilename ne emptyString}">
-								<img src="/mypage/displayFile?fileName=/${sharing.eximgfilename}"
-								alt="" onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; display: block;">
+								<img src="/mypage/displayFile?fileName=/${sharing.eximgfilename}" width="200px;" height="200px;"
+								alt="" onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; margin-top:30px; display: block;">
 							</c:if>
 						</c:if>
 					</div>
@@ -264,10 +262,10 @@ function mvolume() {
                         </div>
                         
                       </c:if>
-                      <div class="row" style="margin-top: 30px;">
+                      <%-- <div class="row" style="margin-top: 30px;">
                      <img src="/resources/img/like.png" width="50px;" height="50px;"><b style="margin-left: 10px; color: #e7708d; font-size: 30px;">${sharing.likecnt}</b>
                         <span style="float: right; margin-right: 90px;"><img src="/resources/img/reply.png" width="50px;" height="50px;"><b style="margin-left: 10px; color: #e7708d; font-size: 30px;">${sharing.commentcnt}</b></span>
-                        </div>
+                        </div> --%>
                   </div>
 
                 </div>
@@ -636,15 +634,15 @@ function mvolume() {
 
   <!-- jQuery -->
   
-  <script src="../resources/js/jquery.easing.1.3.js"></script>
-  <script src="../resources/js/bootstrap.min.js"></script>
-  <script src="../resources/js/jquery.waypoints.min.js"></script>
-  <script src="../resources/js/salvattore.min.js"></script>
+  <script src="/resources/js/jquery.easing.1.3.js"></script>
+  <script src="/resources/js/bootstrap.min.js"></script>
+  <script src="/resources/js/jquery.waypoints.min.js"></script>
+  <script src="/resources/js/salvattore.min.js"></script>
   <!-- Main JS -->
-  <script src="../resources/js/jquery.magnific-popup.min.js"></script>
-  <script src="../resources/js/main.js"></script>
-  <script src="../resources/dist/js/app.min.js" type="text/javascript"></script>
-  <script src="../resources/dist/js/demo.js" type="text/javascript"></script>
+  <script src="/resources/js/jquery.magnific-popup.min.js"></script>
+  <script src="/resources/js/main.js"></script>
+  <script src="/resources/dist/js/app.min.js" type="text/javascript"></script>
+  <script src="/resources/dist/js/demo.js" type="text/javascript"></script>
   
   <jsp:include page="../include/footer.jsp"></jsp:include>
 

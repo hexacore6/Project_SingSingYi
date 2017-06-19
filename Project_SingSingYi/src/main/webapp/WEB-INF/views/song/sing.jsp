@@ -192,6 +192,40 @@ canvas {
    background-color: rgba(0, 0, 0, 0.3);
 }
 
+table.type10 {
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 1.5;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  margin: 20px 10px;
+}
+
+table.type10 thead th {
+  width: 150px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #fff;
+  background: #e7708d;
+  margin: 20px 10px;
+}
+
+table.type10 tbody th {
+  width: 150px;
+  padding: 10px;
+}
+
+table.type10 td {
+  width: 350px;
+  padding: 10px;
+  vertical-align: top;
+}
+
+table.type10 .even {
+  background: #fdf3f5;
+}
+
 audio {
   display: none;
   play: none;

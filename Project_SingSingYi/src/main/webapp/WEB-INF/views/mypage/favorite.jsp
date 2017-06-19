@@ -101,9 +101,17 @@ table.type10 .even {
                   <li><a href="myFavorite${pageMaker.makeQuery(pageMaker.startPage-1 )}">&laquo;</a></li>
                 </c:if>
 
-                <c:set value="woong" var="id"></c:set>
                 <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                  <li <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>><a href="favorite${pageMaker.makeQuery(idx,id)}">${idx }</a></li>
+                  
+                  <c:choose>
+                    <c:when test="${pageMaker.cri.page==idx}">
+                      <li class="active" ><a style="background-color:#e7708d; border-color:#e7708d; " href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
+                    </c:when>
+                  <c:otherwise>
+                      <li><a href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
+                  </c:otherwise>
+                  </c:choose>
+                 
                 </c:forEach>
 
 

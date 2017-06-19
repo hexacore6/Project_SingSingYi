@@ -1,8 +1,12 @@
 package com.hexacore.ssy.song.controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hexacore.ssy.common.Criteria;
+import com.hexacore.ssy.common.PageMaker;
 import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.domain.Favorite;
 import com.hexacore.ssy.mypage.domain.RecordRepository;
+import com.hexacore.ssy.mypage.service.MypageService;
 import com.hexacore.ssy.song.domain.Song;
 import com.hexacore.ssy.song.service.SongService;
 
@@ -27,8 +34,14 @@ public class SongController {
 	@Inject
 	private SongService songService;
 	
+	@Inject
+	private MypageService mypageService;
+	
+	
 	@RequestMapping(value="/sing", method=RequestMethod.GET)
-	public void readSongData(Model model, @RequestParam("sid") int sid){
+	public void readSongData(Criteria cri, Model model, @RequestParam("sid") int sid, HttpSession httpSession){
+		
+		
 		songService.updatePlayCnt(sid);
 		
 		model.addAttribute("sid", sid);
@@ -36,7 +49,33 @@ public class SongController {
 	}
 	
 	@RequestMapping(value="/sing", method=RequestMethod.POST)
-	public void readSongDataPOST(Model model, @RequestParam("sid") int sid){
+	public void readSongDataPOST(Criteria cri, Model model, @RequestParam("sid") int sid, HttpSession httpSession){
+		// 나의 애창곡 조회
+		Member member = (Member)httpSession.getAttribute("login");
+		
+		String id = member.getId();
+		List<HashMap<String, Object>> list = mypageService.favoriteCriteria(cri, id);
+		System.out.println("리스트" + list);
+
+		String sfilename = null;
+		
+		for (HashMap<String, Object> hashMap : list) {
+			sfilename =  (String) hashMap.get("sfilename");
+		}
+		
+		model.addAttribute("sfilename", sfilename);
+		model.addAttribute("list", list);
+		model.addAttribute("id", id);
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		
+		pageMaker.setTotalCount(mypageService.countFavoritePaging(cri, id));
+		
+		model.addAttribute("pageMaker", pageMaker);
+		
+		// 나의 애창곡 조회 End
+		
 		songService.updatePlayCnt(sid);
 		
 		model.addAttribute("sid", sid);
@@ -89,7 +128,6 @@ public class SongController {
 		Member member = (Member)httpSession.getAttribute("login");
 		int sid = song.getSid();
 		String id = member.getId();
-		System.out.println("체크 : " + songService.checkFavorite(id, sid));
 		
 		if(songService.checkFavorite(id, sid)!=null){
 			
@@ -98,7 +136,6 @@ public class SongController {
 			songService.addFavorite(id, sid);
 			entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		}
-		System.out.println("엔티티 : " + entity);
 		return entity;
 		
 		//return "redirect:/song/main";
@@ -129,6 +166,5 @@ public class SongController {
 		return entity;
 		
 		//return "redirect:/song/main";
-	}
-	
+	}	
 }

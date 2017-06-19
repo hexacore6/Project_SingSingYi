@@ -262,47 +262,26 @@ audio {
               </div>
               <!-- /.box-header -->
               <div class="box-body no-padding">
-                <table class="table table-striped">
-                  <tbody>
+                <table class="table table-striped type10">
+                  <thead>
                     <tr>
-                      <th style="width: 5px"></th>
-                      <th>곡명</th>
-                      <th style="width: 50px">Artist</th>
-                      <th style="width: 40px">시간</th>
+                      <th style="width: 30%; text-align: center; font-size: 15px;">곡명</th>
+                      <th style="width: 20%; text-align: center; font-size: 15px; ">아티스트</th>
+                      <th style="width: 30%; text-align: center; font-size: 15px;">즉시부르기</th>
                     </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>맞지?</td>
-                      <td>언니쓰</td>
-                      <td>
-                        <span class="badge bg-red">3:30</span>
+                    </thead>
+                    <c:forEach items="${list}" var="favorite" varStatus="stat">  
+                    <tr class="even">
+                      <td style="width: 15px; font-size: 15px; text-align: center;"><b>${favorite.stitle}</b></td>
+                      <td style="font-size: 10px; text-align: center;"><b>${favorite.singer}</b></td>
+                      <td style="width: 5px; text-align: center;">
+                        <form role="form" method="post" action="/song/sing">
+                         <input type="hidden" name="sid" value="${favorite.sid}">
+                         <button><img src="/resources/img/nowsing.png" style="width: 50px; height: 50px;"> </button>
+                         </form>
                       </td>
                     </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>맞지?</td>
-                      <td>언니쓰</td>
-                      <td>
-                        <span class="badge bg-red">3:30</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>맞지?</td>
-                      <td>언니쓰</td>
-                      <td>
-                        <span class="badge bg-red">3:30</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>맞지?</td>
-                      <td>언니쓰</td>
-                      <td>
-                        <span class="badge bg-red">3:30</span>
-                      </td>
-                    </tr>
-                  </tbody>
+                    </c:forEach>
                 </table>
               </div>
               <!-- /.box-body -->

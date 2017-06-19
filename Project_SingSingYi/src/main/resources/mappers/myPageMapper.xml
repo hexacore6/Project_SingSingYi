@@ -73,7 +73,7 @@
 	
 	<!-- 내 애창곡 조회 (등록한 노래번호 조회) -->
 	<select id ="readMyFavorite" resultType="hashMap">
-		select fid, stitle, singer
+		select fid, stitle, singer, sid
 		from favorites natural join songs 
 		where id = #{id}
 	</select>
@@ -81,7 +81,7 @@
 	<!-- 내 애창곡 조회 (등록한 노래번호 조회) 페이징 처리 -->
 	<select id ="favoriteCriteria" resultType="hashMap">
 		<![CDATA[
-		select fid, stitle, singer, sfilename
+		select fid, stitle, singer, sfilename, sid
 		from favorites natural join songs 
 		where fid > 0 AND id=#{id}
 		order by fid

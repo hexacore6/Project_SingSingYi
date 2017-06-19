@@ -197,10 +197,12 @@ function mvolume() {
                 
                   <div class="animate-box">
                   <div class="row">
-                    <img src="/resources/img/clip.png" width="100px;" height="100px;" style="margin-top: 30px;">
+                    <img src="/resources/img/clip.png" width="100px;" height="100px;" style="margin-top: 30px; margin-bottom: 50px;">
                     <div class="row"></div>
                     </div>
                     <!-- 녹음파일 출력 -->
+                    <c:set var="emptyValue" value=""/>
+                    <c:if test="${sharing.recordfilename} ne emptyValue}">
                     <div class="row" style="margin: 10px; ">               
                       <h3 style="margin-bottom: 30px;">
                       
@@ -218,12 +220,19 @@ function mvolume() {
                     <audio controls name="media2" id="audio2${stat.index}" hidden="hidden">
                       <source src="../../../resources/record/woong1_5_오래된 노래.mp3" type="audio/mpeg">
                     </audio>
+                    </c:if>
 
-
-                    <img src="displayFile?fileName=/${sharing.eximgfilename}" alt="${pageContext.servletContext.contextPath }/resources/img/LOGOsingsing7.png" 
-                    onclick="showReadModal('${sharing.shid}')" style="width: 500px; height: auto; margin-left: auto; margin-right: auto; display: block;">
-                    <!-- data-toggle="modal"
-                  data-target="#myModal2" -->
+                    <!-- 이미지 파일 출력 -->
+					<div class="animate-box" style="border-radius: 10px;">
+							<c:set var="eximgfilename" value="${sharing.eximgfilename}"/>
+							<c:set var="emptyString" value="NoImageType"/>
+							<c:if test="${eximgfilename ne null}">
+							<c:if test="${eximgfilename ne emptyString}">
+								<img src="/mypage/displayFile?fileName=/${sharing.eximgfilename}"
+								alt="" onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; display: block;">
+							</c:if>
+						</c:if>
+					</div>
                   </div>
 
 

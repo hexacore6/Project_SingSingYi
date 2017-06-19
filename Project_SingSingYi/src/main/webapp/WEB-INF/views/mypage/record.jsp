@@ -155,13 +155,14 @@ $(document).ready(function(){
                    <thead>  
                     <tr>
                       <th style="width: 40%; text-align: center; font-size: 20px;">녹음파일명</th>
-                      <th style="width: 5%; text-align: center; font-size: 20px;">녹음된 날짜</th>
-                      <th style="width: 20%; text-align: center; font-size: 20px;">재생</th>
-                      <th style="width: 20%; text-align: center; font-size: 20px;">공유</th>
-                      <th style="width: 5%; text-align: center; font-size: 20px;">삭제</th>
+                      <th style="width: 20%; text-align: center; font-size: 20px;">녹음된 날짜</th>
+                      <th style="width: 15%; text-align: center; font-size: 20px;">재생</th>
+                      <th style="width: 15%; text-align: center; font-size: 20px;">공유</th>
+                      <th style="width: 15%; text-align: center; font-size: 20px;">삭제</th>
                     </tr>
                    </thead>
                     <tbody>
+                      
                       <c:forEach items="${list}" var="record" varStatus="stat">  
                       <tr class="even" id="trRecord${record.rrid}">
                         <%-- <td style="text-align: center">${((pageMaker.cri.page-1)*10)+(stat.index)}</td> --%>

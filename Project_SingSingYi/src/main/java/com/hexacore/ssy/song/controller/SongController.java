@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hexacore.ssy.member.domain.Member;
 import com.hexacore.ssy.mypage.domain.Favorite;
-import com.hexacore.ssy.sharing.domain.Sharing;
+import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.song.domain.Song;
 import com.hexacore.ssy.song.service.SongService;
 
@@ -32,7 +32,7 @@ public class SongController {
 		songService.updatePlayCnt(sid);
 		
 		model.addAttribute("sid", sid);
-		model.addAttribute("songFile", songService.readSong(sid));
+		model.addAttribute("song", songService.readSong(sid));
 	}
 	
 	@RequestMapping(value="/sing", method=RequestMethod.POST)
@@ -40,8 +40,28 @@ public class SongController {
 		songService.updatePlayCnt(sid);
 		
 		model.addAttribute("sid", sid);
-		model.addAttribute("songFile", songService.readSong(sid));
+		model.addAttribute("song", songService.readSong(sid));
+	}
+	
+	@RequestMapping(value="/upload", produces = "application/text; charset=utf8", method=RequestMethod.POST)
+	public ResponseEntity<String> uploadSong(@RequestBody Song song, HttpSession httpSession){
+		ResponseEntity<String> entity = null;
+		logger.info("파일 이름 : " + song.getSfilename());
+		Member member = (Member) httpSession.getAttribute("login");
+		String id = member.getId();
+		int rrid = songService.readRecentRecordId();
 		
+		String fileName = id + "_" + (rrid+1) + "_" + song.getSfilename();
+		
+		RecordRepository recordRepository = new RecordRepository();
+		recordRepository.setId(id);
+		recordRepository.setRecordfilename(fileName);
+		
+		songService.uploadRecord(recordRepository);
+		
+		entity = new ResponseEntity<String>(fileName, HttpStatus.OK);
+		
+		return entity;
 	}
 	
 	@RequestMapping(value="/recordTest", method=RequestMethod.GET)

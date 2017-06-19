@@ -319,6 +319,31 @@ audio {
                 </table>
               </div>
               <!-- /.box-body -->
+                          <div class="box-footer clearfix text-center">
+              <ul class="pagination  pagination-sm no-margin   ">
+                <c:if test="${pageMaker.prev }">
+                  <li><a href="myFavorite${pageMaker.makeQuery(pageMaker.startPage-1 )}">&laquo;</a></li>
+                </c:if>
+
+                <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                  
+                  <c:choose>
+                    <c:when test="${pageMaker.cri.page==idx}">
+                      <li class="active" ><a style="background-color:#e7708d; border-color:#e7708d; " href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
+                    </c:when>
+                  <c:otherwise>
+                      <li><a href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
+                  </c:otherwise>
+                  </c:choose>
+                 
+                </c:forEach>
+
+
+                <c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
+                  <li><a href="myFavorite${pageMaker.makeQuery(pageMaker.endPage + 1)}">&raquo;</a>
+                </c:if>
+              </ul>
+            </div>
             </div>
           </div>
 

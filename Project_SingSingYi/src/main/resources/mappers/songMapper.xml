@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="readSong" resultType="com.hexacore.ssy.song.domain.Song">
-	select musicalnote1, musicalnote2, musicalnote3, musicalnote4
+	select sfilename, musicalnote1, musicalnote2, musicalnote3, musicalnote4
 	from songs
 	where sid = #{sid}
 	</select>
@@ -43,7 +43,6 @@
 		from songs
 		order by playcnt desc, sid asc
 	</select>
-	
 	
 	<!-- 애창곡 담기 -->
 	<insert id = "addFavorite">
@@ -70,4 +69,18 @@
 		set playcnt = playcnt + 1
 		where sid = #{sid}
 	</update>
+	
+	<!-- 녹음 저장 -->
+	<insert id = "uploadRecord">
+		insert into RecordRepository(id, recordfilename)
+		value (#{id}, #{recordfilename});
+	</insert>
+	
+	<!-- 가장 최근 녹음 파일 번호 가져오기  -->
+	<select id="readRecentRecordId" resultType="int">
+		select rrid
+		from recordrepository
+		order by rrid desc limit 1;
+	</select>
+	
 </mapper>

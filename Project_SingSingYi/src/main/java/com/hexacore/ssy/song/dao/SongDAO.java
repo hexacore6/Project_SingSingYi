@@ -3,6 +3,7 @@ package com.hexacore.ssy.song.dao;
 import java.util.List;
 
 import com.hexacore.ssy.mypage.domain.Favorite;
+import com.hexacore.ssy.mypage.domain.RecordRepository;
 import com.hexacore.ssy.song.domain.Song;
 
 public interface SongDAO {
@@ -31,5 +32,11 @@ public interface SongDAO {
 	
 	/** 노래 한 곡 가져오기 */
 	public Song readSong(int sid);
+	
+	/** 녹음 저장 */
+	public void uploadRecord(RecordRepository recordRepository);
+	
+	/** 가장 최근 녹음 파일 번호 가져오기 */
+	public int readRecentRecordId();
 	
 }

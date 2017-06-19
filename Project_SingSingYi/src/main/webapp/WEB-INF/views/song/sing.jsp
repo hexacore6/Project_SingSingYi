@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <!doctype html>
 <html>
 <head>
@@ -15,823 +15,335 @@
 <script src="https://cdn.webrtc-experiment.com/gif-recorder.js"></script>
 <script src="https://cdn.webrtc-experiment.com/getScreenId.js"></script>
 <script src="https://cdn.webrtc-experiment.com/gumadapter.js"></script>
+<script src="/resources/js/jquery.min.js"></script>
 
 <style type="text/css">
 #light {
- width: 300px;
- height: 300px;
+   width: 140px;
+   height: 140px;
 }
 
 .bg-greenary {
- background-color: #c4ff5e;
+   background-color: #c4ff5e;
 }
 
 .btn-primary {
- color: #fff;
- background-color: #c4ff5e;
- border-color: #c4ff5e;
+   color: #fff;
+   background-color: #c4ff5e;
+   border-color: #c4ff5e;
 }
 
 .btn-primary:focus, .btn-primary.focus {
- color: #fff;
- background-color: #c4ff5e;
- border-color: #c4ff5e;
- outline: 0;
+   color: #fff;
+   background-color: #c4ff5e;
+   border-color: #c4ff5e;
+   outline: 0;
 }
 
 .btn-primary:hover {
- color: #fff;
- background-color: #c4ff5e;
- border-color: #c4ff5e;
- outline: 0;
+   color: #fff;
+   background-color: #c4ff5e;
+   border-color: #c4ff5e;
+   outline: 0;
 }
 
 .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary
- {
- color: #fff;
- background-color: #c4ff5e;
- border-color: #c4ff5e;
- outline: 0;
+   {
+   color: #fff;
+   background-color: #c4ff5e;
+   border-color: #c4ff5e;
+   outline: 0;
 }
 
 .btn-primary:active:hover, .btn-primary.active:hover, .open>.dropdown-toggle.btn-primary:hover,
- .btn-primary:active:focus, .btn-primary.active:focus, .open>.dropdown-toggle.btn-primary:focus,
- .btn-primary:active.focus, .btn-primary.active.focus, .open>.dropdown-toggle.btn-primary.focus
- {
- color: #fff;
- background-color: #c4ff5e;
- border-color: #c4ff5e;
- outline: 0;
+   .btn-primary:active:focus, .btn-primary.active:focus, .open>.dropdown-toggle.btn-primary:focus,
+   .btn-primary:active.focus, .btn-primary.active.focus, .open>.dropdown-toggle.btn-primary.focus
+   {
+   color: #fff;
+   background-color: #c4ff5e;
+   border-color: #c4ff5e;
+   outline: 0;
 }
 
 .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary
- {
- background-image: none;
- outline: 0;
+   {
+   background-image: none;
+   outline: 0;
 }
 
 .btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover,
- .btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus,
- .btn-primary.disabled.focus, .btn-primary[disabled].focus, fieldset[disabled] .btn-primary.focus
- {
- background-color: #c4ff5e;
- border-color: #c4ff5e;
- outline: 0;
+   .btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus,
+   .btn-primary.disabled.focus, .btn-primary[disabled].focus, fieldset[disabled] .btn-primary.focus
+   {
+   background-color: #c4ff5e;
+   border-color: #c4ff5e;
+   outline: 0;
 }
 
 .btn-primary .badge {
- color: #337ab7;
- background-color: #fff;
- outline: 0;
+   color: #337ab7;
+   background-color: #fff;
+   outline: 0;
 }
 
 .btn-primary {
- border: 0;
- outline: 0;
+   border: 0;
+   outline: 0;
 }
 
 *:focus {
- outline: none;
+   outline: none;
 }
 
-#playbutton, #recordbutton {
- width: 100px;
- height: 100px;
- background-image: url("/resources/img/play.png");
- background-size: 100px, 2px;
- background-position: center;
- background-repeat: no-repeat;
+#playbutton, #recordbutton, #upload-to-server {
+   width: 110px;
+   height: 100px;
+    border: none;
+}
+
+#playbutton {
+   background-image: url("/resources/img/musicstart.png");
+   background-size: 100px, 2px;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-color: transparent;
+}
+
+#recordbutton {
+   background-image: url("/resources/img/record.png");
+   background-size: 100px, 2px;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-color: transparent;
+}
+
+#upload-to-server {
+   background-image: url("/resources/img/upload.png");
+   background-size: 100px, 2px;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-color: transparent;
+}
+
+.easy-btn {
+   width: 130px;
+   height: 120px;
+   background-image: url("/resources/img/easy.png");
+   background-size: 110px, 2px;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-color: transparent;
+   border: none;
+}
+
+.hard-btn {
+   width: 130px;
+   height: 120px;
+   background-image: url("/resources/img/hard.png");
+   background-size: 110px, 2px;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-color: transparent;
+   border: none;
 }
 
 #button2 {
- background-image: url("img/light done.png");
- width: 10px;
- height: 40px;
- background-size: 24px, 20px;
- background-position: center;
- background-repeat: no-repeat;
+   background-image: url("img/light done.png");
+   width: 10px;
+   height: 40px;
+   background-size: 24px, 20px;
+   background-position: center;
+   background-repeat: no-repeat;
 }
 
 #content {
- height: 1200px;
- <!--
- 마지막
- 체크하는
- 부분
- -->
+   height: 500px;
+   <!--
+   마지막
+   체크하는
+   부분
+   -->
 }
 
 #body, #html {
- position: absolute;
- margin: 0;
- padding: 0;
- width: 100%;
- height: 100%;
- overflow: hidden;
+   position: absolute;
+   margin: 0;
+   padding: 0;
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
 }
 
-#canvas {
- position: absolute;
- width: 100%;
- height: 100%;
- background:#000;
-}
-
-.page {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-}
-
-
-/* add default color for animation start  */
-
-
-/* toggle this class */
-
-.color-bg-start {
-  background-color: salmon;
-}
-
-
-/* toggle class bg-animate-color */
-
-.bg-animate-color {
-  animation: random-bg .5s linear infinite;
-}
-
-
-/* add animation to bg color  */
-
-@keyframes random-bg {
-  from {
-    filter: hue-rotate(0);
-  }
-  to {
-    filter: hue-rotate(360deg);
-  }
-}
-
-.fun-btn {
-  /* change bg color to get different hues    */
-  background-color: salmon;
-  color: white;
-  padding: 2em 3em;
-  border: none;
-  transition: all .3s ease;
-  border-radius: 5px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  outline: none;
-  align-self: center;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.fun-btn:hover {
-  animation: random-bg .5s linear infinite, grow 1300ms ease infinite;
-}
-
-.start-fun {
-  background-color: #fff !important;
-  /* change color of button text when fun is started   */
-  color: salmon !important;
-}
-
-/* pulsating effect on button */
-@keyframes grow {
-  0% {
-    transform: scale(1);
-  }
-  14% {
-    transform: scale(1.3);
-  }
-  28% {
-    transform: scale(1);
-  }
-  42% {
-    transform: scale(1.3);
-  }
-  70% {
-    transform: scale(1);
-  }
+canvas {
+   /* position: absolute; */
+   width: 1000px;
+   height: 800px;
+   background-color: rgba(0, 0, 0, 0.3);
 }
 </style>
 
 </head>
-
 <body onload="init();">
- <%@include file="../include/header.jsp"%>
- <section id="content" class="container">
-  <!--내용시작-->
-  <div class="row">
-   <div class="col-lg-9">
-    <!--왼쪽-->
-    <div class="music">
-     <!--곡명-->
-     
-    </div>
-    <div class="lyrics">
-     <h1 id="songText1">가사 준비중</h1>
-     <h1 id="songText2">  ...</h1>
-    </div>
+  <%@include file="../include/header.jsp"%>
+  <section id="content" class="container">
+    <!--내용시작-->
     <div class="row">
-     <div class="col-lg-5"></div>
-     <div class="col-lg-1">
-     
-     <div class="page"><!-- level controller -->
-<!-- 
-      <button class="easy-btn">EASY</button>
-      <button class="hard-btn">HARD</button>
- --
-     </div>
-      <div class="music-controller">
+      <div class="col-lg-8" id="garaok" style="border-collapse: collapse; border: 2px solid; background-color: black;">
+        <!--왼쪽-->
+        <div class="music">
+          <!--곡명-->
+          <h1 style="text-align: left; color: white;">곡명</h1>
+        </div>
+        
+        <div class="music">
+          <!--곡명-->
+          <h1 style="text-align:right; color: white;" >가수명</h1>
+        </div>
+        <div class="lyrics">
+          <h1 id="songText1" style="color: white;">가사 준비중</h1>
+          <h1 id="songText2" style="color: white;">...</h1>
+        </div>
 
-       <button class="btn btn-primary" id="playbutton"
-        onclick="singAsong()"></button>
+        <div class="col-lg-3">
+          <iframe width="700px" height="500px" src="http://192.168.0.63:3000/robot" style="border: none;"></iframe>
+        </div>
+      </div>
 
-       <div class="experiment recordrtc">
-        <button class="btn btn-primary" id="recordbutton"
-         onclick="record()"></button>
-        <!-- Stop recording 후 보여지는 비디오 태그 -->
-        <video hidden=true></video>
-       </div>
-       <div style="text-align: center;">
-                <button id="save-to-disk">Save To Disk</button>
-                <button id="open-new-tab">Open New Tab</button>
-                <button id="upload-to-server">Upload To Server</button>
+      <!-- 수정본  -->
+      <div class="col-lg-4" style="border: 2px solid;">
+        <div class="music-controller">
+          <div class="page">
+            <button class="easy-btn" onclick="clickEasy();"></button>
+            <button class="hard-btn" onclick="clickHard();"></button>
+          </div>
+          <div class="buttons">
+            <button id="playbutton" onclick="singAsong()"></button>
+            <button id="recordbutton" onclick="record()"></button>
+            <button id="upload-to-server"></button>
+          </div>
+
+          <div class="signalbar" style="padding-top: 50px;">
+            <!--불륨조절-->
+            <img src="/resources/img/nostart.png" id="light">
+          </div>
+
+          <!-- 수정본  -->
+          <div class="musiclist">
+            <!--음악리스트-->
+            <div class="box" style="padding: 5px;">
+              <div class="box-header">
+                <h3 class="box-title">노래 리스트</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body no-padding">
+                <table class="table table-striped">
+                  <tbody>
+                    <tr>
+                      <th style="width: 5px"></th>
+                      <th>곡명</th>
+                      <th style="width: 50px">Artist</th>
+                      <th style="width: 40px">시간</th>
+                    </tr>
+                    <tr>
+                      <td>1.</td>
+                      <td>맞지?</td>
+                      <td>언니쓰</td>
+                      <td>
+                        <span class="badge bg-red">3:30</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>1.</td>
+                      <td>맞지?</td>
+                      <td>언니쓰</td>
+                      <td>
+                        <span class="badge bg-red">3:30</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>1.</td>
+                      <td>맞지?</td>
+                      <td>언니쓰</td>
+                      <td>
+                        <span class="badge bg-red">3:30</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>1.</td>
+                      <td>맞지?</td>
+                      <td>언니쓰</td>
+                      <td>
+                        <span class="badge bg-red">3:30</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.box-body -->
             </div>
-       
+          </div>
+
+
+        </div>
       </div>
-     </div>
-     <div class="col-lg-6"></div>
     </div>
-   </div>
-   <div class="col-lg-3">
-    <div class="musiclist">
-     <!--음악리스트-->
-     <div class="box">
-      <div class="box-header">
-       <h3 class="box-title">노래 리스트</h3>
-      </div>
-      <!-- /.box-header -->
-      <div class="box-body no-padding">
-       <table class="table table-striped">
-        <tbody>
-         <tr>
-          <th style="width: 5px"></th>
-          <th>곡명</th>
-          <th style="width: 50px">Artist</th>
-          <th style="width: 40px">시간</th>
-         </tr>
-         <tr>
-          <td>1.</td>
-          <td>맞지?</td>
-          <td>언니쓰</td>
-          <td><span class="badge bg-red">3:30</span></td>
-         </tr>
-         <tr>
-          <td>1.</td>
-          <td>맞지?</td>
-          <td>언니쓰</td>
-          <td><span class="badge bg-red">3:30</span></td>
-         </tr>
-         <tr>
-          <td>1.</td>
-          <td>맞지?</td>
-          <td>언니쓰</td>
-          <td><span class="badge bg-red">3:30</span></td>
-         </tr>
-         <tr>
-          <td>1.</td>
-          <td>맞지?</td>
-          <td>언니쓰</td>
-          <td><span class="badge bg-red">3:30</span></td>
-         </tr>
-        </tbody>
-       </table>
-      </div>
-      <!-- /.box-body -->
-     </div>
-    </div>
-    <div class="signalbar">
-     <!--불륨조절-->
-     <img src="/resources/img/blacklight.png" id="light">
-    </div>
-
-   </div>
-  </div>
-  <!--/content-->
- </section>
- <!--내용끝-->
- <%@include file="../include/footer.jsp"%>
-<script>
-//움직이는 인형 start
-/*
-{
-	class Robot {
-		constructor(color, light, size, x, y, struct) {
-			this.points = [];
-			this.links = [];
-			this.frame = 0;
-			this.dir = 1;
-			this.size = size;
-			this.color = Math.round(color);
-			this.light = light;
-
-			// ---- points ----
-			let id = 0;
-			for (let p of struct.points) {
-				this.points.push(new Point(id++, size * p[0] + x, size * p[1] + y, p[2]));
-			}
-
-			// ---- links ----
-			for (let l of struct.links) {
-				const p0 = this.points[l[0]];
-				const p1 = this.points[l[1]];
-				const dx = p0.x - p1.x;
-				const dy = p0.y - p1.y;
-				this.links.push(
-					new Link(
-						this,
-						p0,
-						p1,
-						Math.sqrt(dx * dx + dy * dy),
-						l[2] * size / 3,
-						l[3],
-						l[4]
-					)
-				);
-			}
-		}
-
-		update() {
-			// ---- beat ----
-			if (++this.frame % 20 === 0) this.dir = -this.dir;
-
-			// ---- create giants ----
-			if (
-				dancerDrag &&
-				this === dancerDrag &&
-				this.size < 16 &&
-				this.frame > 600
-			) {
-				dancerDrag = null;
-				dancers.push(
-					new Robot(
-						this.color,
-						this.light * 1.25,
-						this.size * 2,
-						pointer.x,
-						pointer.y - 100 * this.size * 2,
-						struct
-					)
-				);
-				dancers.sort(function(d0, d1) {
-					return d0.size - d1.size;
-				});
-			}
-
-			// ---- update links ----
-			for (let link of this.links) {
-				const p0 = link.p0;
-				const p1 = link.p1;
-				let dx = p0.x - p1.x;
-				let dy = p0.y - p1.y;
-				const dist = Math.sqrt(dx * dx + dy * dy);
-
-				if (dist) {
-					const tw = p0.w + p1.w;
-					const r1 = p1.w / tw;
-					const r0 = p0.w / tw;
-					const dz = (link.distance - dist) * link.force;
-					dx = dx / dist * dz;
-					dy = dy / dist * dz;
-					p1.x -= dx * r0;
-					p1.y -= dy * r0;
-					p0.x += dx * r1;
-					p0.y += dy * r1;
-				}
-			}
-
-			// ---- update points ----
-			for (let point of this.points) {
-				// ---- drag ----
-				if (this === dancerDrag && point === pointDrag) {
-					point.x += (pointer.x - point.x) * 0.1;
-					point.y += (pointer.y - point.y) * 0.1;
-				}
-
-				// ---- dance ----
-				if (this !== dancerDrag) {
-					point.fn && point.fn(16 * Math.sqrt(this.size), this.dir);
-				}
-
-				// ---- verlet integration ----
-				point.vx = point.x - point.px;
-				point.vy = point.y - point.py;
-				point.px = point.x;
-				point.py = point.y;
-				point.vx *= 0.995;
-				point.vy *= 0.995;
-				point.x += point.vx;
-				point.y += point.vy + 0.01;
-			}
-
-			for (let link of this.links) {
-				const p1 = link.p1;
-
-				// ---- ground ----
-				if (p1.y > canvas.height * ground - link.size * 0.5) {
-					p1.y = canvas.height * ground - link.size * 0.5;
-					p1.x -= p1.vx;
-					p1.vx = 0;
-					p1.vy = 0;
-				}
-
-				// ---- borders ----
-				if (p1.id === 1 || p1.id === 2) {
-					if (p1.x > canvas.width - link.size) p1.x = canvas.width - link.size;
-					else if (p1.x < link.size) p1.x = link.size;
-				}
-			}
-		}
-
-		draw() {
-			for (let link of this.links) {
-				if (link.size) {
-					let dx = link.p1.x - link.p0.x;
-					let dy = link.p1.y - link.p0.y;
-					let a = Math.atan2(dy, dx);
-					let d = Math.sqrt(dx * dx + dy * dy);
-
-					// ---- shadow ----
-					ctx.save();
-					ctx.translate(link.p0.x + link.size * 0.25, link.p0.y + link.size * 0.25);
-					ctx.rotate(a);
-					ctx.drawImage(
-						link.shadow,
-						-link.size * 0.5,
-						-link.size * 0.5,
-						d + link.size,
-						link.size
-					);
-					ctx.restore();
-
-					// ---- stroke ----
-					ctx.save();
-					ctx.translate(link.p0.x, link.p0.y);
-					ctx.rotate(a);
-					ctx.drawImage(
-						link.image,
-						-link.size * 0.5,
-						-link.size * 0.5,
-						d + link.size,
-						link.size
-					);
-					ctx.restore();
-				}
-			}
-		}
-	}
-
-	class Link {
-		constructor(parent, p0, p1, dist, size, light, force) {
-			// ---- cache strokes ----
-			function stroke(color, axis) {
-				const image = document.createElement("canvas");
-				image.width = dist + size;
-				image.height = size;
-				const ict = image.getContext("2d");
-				ict.beginPath();
-				ict.lineCap = "round";
-				ict.lineWidth = size;
-				ict.strokeStyle = color;
-				ict.moveTo(size * 0.5, size * 0.5);
-				ict.lineTo(size * 0.5 + dist, size * 0.5);
-				ict.stroke();
-				if (axis) {
-					const s = size / 10;
-					ict.fillStyle = "#000";
-					ict.fillRect(size * 0.5 - s, size * 0.5 - s, s * 2, s * 2);
-					ict.fillRect(size * 0.5 - s + dist, size * 0.5 - s, s * 2, s * 2);
-				}
-				return image;
-			}
-
-			this.p0 = p0;
-			this.p1 = p1;
-			this.distance = dist;
-			this.size = size;
-			this.light = light || 1.0;
-			this.force = force || 0.5;
-			this.image = stroke(
-				"hsl(" + parent.color + " ,30%, " + parent.light * this.light + "%)",
-				true
-			);
-			this.shadow = stroke("rgba(0,0,0,0.5)");
-		}
-	}
-
-	class Point {
-		constructor(id, x, y, fn, w) {
-			this.id = id;
-			this.x = x;
-			this.y = y;
-			this.w = w || 0.5;
-			this.fn = fn || null;
-			this.px = x;
-			this.py = y;
-			this.vx = 0;
-			this.vy = 0;
-		}
-	}
-
-	class Canvas {
-		constructor() {
-			this.elem = document.createElement("canvas");
-			this.ctx = this.elem.getContext("2d", { alpha: false });
-			document.body.appendChild(this.elem);
-			this.resize();
-			window.addEventListener("resize", () => this.resize(), false);
-		}
-
-		resize() {
-			this.width = this.elem.width = this.elem.offsetWidth;
-			this.height = this.elem.height = this.elem.offsetHeight;
-			ground = this.height > 500 ? 0.85 : 1.0;
-		}
-	}
-
-	class Pointer {
-		constructor(canvas) {
-			this.x = 0;
-			this.y = 0;
-			this.canvas = canvas;
-
-			window.addEventListener("mousemove", e => this.move(e), false);
-			canvas.elem.addEventListener("touchmove", e => this.move(e), false);
-			window.addEventListener("mousedown", e => this.down(e), false);
-			window.addEventListener("touchstart", e => this.down(e), false);
-			window.addEventListener("mouseup", e => this.up(e), false);
-			window.addEventListener("touchend", e => this.up(e), false);
-		}
-
-		down(e) {
-			this.move(e);
-
-			for (let dancer of dancers) {
-				for (let point of dancer.points) {
-					const dx = pointer.x - point.x;
-					const dy = pointer.y - point.y;
-					const d = Math.sqrt(dx * dx + dy * dy);
-					if (d < 60) {
-						dancerDrag = dancer;
-						pointDrag = point;
-						dancer.frame = 0;
-					}
-				}
-			}
-		}
-
-		up(e) {
-			dancerDrag = null;
-		}
-
-		move(e) {
-			let touchMode = e.targetTouches, pointer;
-			if (touchMode) {
-				e.preventDefault();
-				pointer = touchMode[0];
-			} else pointer = e;
-			this.x = pointer.clientX;
-			this.y = pointer.clientY;
-		}
-	}
-
-	// ---- init ----
-	let ground = 1.0;
-	const canvas = new Canvas();
-	const ctx = canvas.ctx;
-	const pointer = new Pointer(canvas);
-	let dancerDrag = null;
-	let pointDrag = null;
-
-	// ---- main loop ----
-
-	function run() {
-		requestAnimationFrame(run);
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		ctx.fillStyle = "#222";
-		ctx.fillRect(0, 0, canvas.width, canvas.height * 0.15);
-		ctx.fillRect(0, canvas.height * 0.85, canvas.width, canvas.height * 0.15);
-
-		for (let dancer of dancers) {
-			dancer.update();
-			dancer.draw();
-		}
-	}
-
-	// ---- robot structure ----
-
-	const struct = {
-		points: [
-			[
-				0,
-				-4,
-				function(s, d) {
-					this.y -= 0.01 * s;
-				}
-			],
-			[
-				0,
-				-16,
-				function(s, d) {
-					this.y -= 0.02 * s * d;
-				}
-			],
-			[
-				0,
-				12,
-				function(s, d) {
-					this.y += 0.02 * s * d;
-				}
-			],
-			[-12, 0],
-			[12, 0],
-			[
-				-3,
-				34,
-				function(s, d) {
-					if (d > 0) {
-						this.x += 0.01 * s;
-						this.y -= 0.015 * s;
-					} else {
-						this.y += 0.02 * s;
-					}
-				}
-			],
-			[
-				3,
-				34,
-				function(s, d) {
-					if (d > 0) {
-						this.y += 0.02 * s;
-					} else {
-						this.x -= 0.01 * s;
-						this.y -= 0.015 * s;
-					}
-				}
-			],
-			[
-				-28,
-				0,
-				function(s, d) {
-					this.x += this.vx * 0.035;
-					this.y -= 0.001 * s;
-				}
-			],
-			[
-				28,
-				0,
-				function(s, d) {
-					this.x += this.vx * 0.035;
-					this.y -= 0.001 * s;
-				}
-			],
-			[
-				-3,
-				64,
-				function(s, d) {
-					this.y += 0.02 * s;
-					if (d > 0) {
-						this.y -= 0.01 * s;
-					} else {
-						this.y += 0.05 * s;
-					}
-				}
-			],
-			[
-				3,
-				64,
-				function(s, d) {
-					this.y += 0.02 * s;
-					if (d > 0) {
-						this.y += 0.05 * s;
-					} else {
-						this.y -= 0.01 * s;
-					}
-				}
-			],
-			[0, -4.1]
-		],
-
-		links: [
-			[3, 7, 12, 0.5],
-			[1, 3, 24, 0.5],
-			[1, 0, 18, 0.5],
-			[0, 11, 60, 0.8],
-			[5, 9, 16, 0.5],
-			[2, 5, 32, 0.5],
-			[1, 2, 50, 1],
-			[6, 10, 16, 1.5],
-			[2, 6, 32, 1.5],
-			[4, 8, 12, 1.5],
-			[1, 4, 24, 1.5]
-		]
-	};
-
-	// ---- instanciate robots ----
-	const dancers = [];
-
-	for (let i = 0; i < 6; i++) {
-		dancers.push(
-			new Robot(
-				i * 360 / 7,
-				80,
-				4,
-				(i + 2) * canvas.width / 9,
-				canvas.height * ground - 295,
-				struct
-			)
-		);
-	}
-
-	run();
-}
-*/
-
-//움직이는 인형 stop
+    <!--/content-->
+  </section>
+  <!--내용끝-->
 
 
-</script>
+
+  <%@include file="../include/footer.jsp"%>
+
 <script>
 //level-controller
-$('.easy-btn').on('click', function(event) {
-  $(this).toggleClass('start-fun');
-  var $page = $('.page');
-  $page.toggleClass('color-bg-start')
-    .toggleClass('bg-animate-color');
+	function clickEasy(){
 
-  //change text when when button is clicked
+level = false;
+console.log("EASY!!");
 
-  $(this).hasClass('start-fun') ?
-    $(this).text('stop the fun') :
-    $(this).text('start the fun');
+};
+	function clickHard(){
 
-});
-$('.hard-btn').on('click', function(event) {
-	  $(this).toggleClass('start-fun');
-	  var $page = $('.page');
-	  $page.toggleClass('color-bg-start')
-	    .toggleClass('bg-animate-color');
-
+		level = true;
 	  //change text when when button is clicked
-
-	  $(this).hasClass('start-fun') ?
-	    $(this).text('stop the fun') :
-	    $(this).text('start the fun');
-
-	});
-
+		console.log("HARD");
+	};
 </script>
  <script>
-            (function() {
-                var params = {},
-                    r = /([^&=]+)=?([^&]*)/g;
+    (function() {
+        var params = {},
+            r = /([^&=]+)=?([^&]*)/g;
 
-                function d(s) {
-                    return decodeURIComponent(s.replace(/\+/g, ' '));
-                }
+        function d(s) {
+            return decodeURIComponent(s.replace(/\+/g, ' '));
+        }
 
-                var match, search = window.location.search;
-                while (match = r.exec(search.substring(1))) {
-                    params[d(match[1])] = d(match[2]);
+        var match, search = window.location.search;
+        while (match = r.exec(search.substring(1))) {
+            params[d(match[1])] = d(match[2]);
 
-                    if(d(match[2]) === 'true' || d(match[2]) === 'false') {
-                        params[d(match[1])] = d(match[2]) === 'true' ? true : false;
-                    }
-                }
-                window.params = params;
-            })();
-        </script>
+            if(d(match[2]) === 'true' || d(match[2]) === 'false') {
+                params[d(match[1])] = d(match[2]) === 'true' ? true : false;
+            }
+        }
+        window.params = params;
+    })();
+</script>
 
 
  <script>
         var recordAudio = new Audio();
         
         //1 t
-        function record(){
-            var recordingDIV = document.querySelector('.recordrtc');
+        function record(songFileName){
+        	var recordingDIV = document.querySelector('.recordrtc');
             var recordingPlayer = recordingDIV.querySelector('video');
 						//2 t
-            //recordingDIV.querySelector('button').onclick = function() {
 							console.log("start");
                 var button = this;
 
                 // 3 t
-                //if(button.innerHTML === 'p') {
                 if(recordPlaying == false) {
                     button.disabled = true;
                     button.disableStateWaiting = true;
@@ -841,7 +353,6 @@ $('.hard-btn').on('click', function(event) {
                     }, 2 * 1000);
 
                     recordPlaying = true;
-                    //button.innerHTML = 't';
 
                     function stopStream() {
                         if(button.stream && button.stream.stop) {
@@ -852,13 +363,33 @@ $('.hard-btn').on('click', function(event) {
                     }
                     
                   
-
                     if(button.recordRTC) {
-                        button.recordRTC.stopRecording(function(url) {
-                            button.recordingEndedCallback(url);
-                            stopStream();
-                        });
+                        if(button.recordRTC.length) {
+                            button.recordRTC[0].stopRecording(function(url) {
+                                if(!button.recordRTC[1]) {
+                                    button.recordingEndedCallback(url);
+                                    stopStream();
+
+                                    saveToDiskOrOpenNewTab(button.recordRTC[0]);
+                                    return;
+                                }
+
+                                button.recordRTC[1].stopRecording(function(url) {
+                                    button.recordingEndedCallback(url);
+                                    stopStream();
+                                });
+                            });
+                        }
+                        else {
+                            button.recordRTC.stopRecording(function(url) {
+                                button.recordingEndedCallback(url);
+                                stopStream();
+
+                                saveToDiskOrOpenNewTab(button.recordRTC);
+                            });
+                        }
                     }
+                    
                     return;
                 }
                 //3 p
@@ -872,11 +403,9 @@ $('.hard-btn').on('click', function(event) {
                             button.mediaCapturedCallback();
                         }
                         recordPlaying = false;
-                        //button.innerHTML = 'p';
                         button.disabled = false;
                     },
                     onMediaStopped: function() {
-                       // button.innerHTML = 't';
 												recordPlaying = true;
 												
                         if(!button.disableStateWaiting) {
@@ -905,7 +434,7 @@ $('.hard-btn').on('click', function(event) {
                     
 								//5 t
                     button.mediaCapturedCallback = function() {
-                    
+                    	console.log("HERE!!!!!!!");
                         button.recordRTC = RecordRTC(button.stream, {
                             type: 'audio',
                             bufferSize: typeof params.bufferSize == 'undefined' ? 0 : parseInt(params.bufferSize),
@@ -916,46 +445,25 @@ $('.hard-btn').on('click', function(event) {
                         });
                         
                         button.recordingEndedCallback = function(url) {
-                         
-                         recordAudio.src = url;
-                         recordAudio.controls = true;
+                        	var audio = new Audio();
+                        	audio.src = url;
+                            audio.controls = true;
                             recordingPlayer.parentNode.appendChild(document.createElement('hr'));
-                            recordingPlayer.parentNode.appendChild(recordAudio);
-                            
-                            if(recordAudio.paused) recordAudio.play();
+                            recordingPlayer.parentNode.appendChild(audio);
 
-                            recordAudio.onended = function() {
-                             recordAudio.pause(); 
-                              
-                             playingMelody = false;
-                             //recordAudio.src = URL.createObjectURL(button.recordRTC.blob);
-            
-                                      if(!recordRTC) return alert('No recording found.');
-                                      this.disabled = true;
+                            if(audio.paused) audio.play();
 
-                                      var button = this;
-                                      uploadToServer(recordRTC, function(progress, fileURL) {
-                                          if(progress === 'ended') {
-                                              button.disabled = false;
-                                              //button.innerHTML = 'Click to download from server';
-                                              button.onclick = function() {
-                                                  window.open(fileURL);
-                                              };
-                                              return;
-                                          }
-                                          button.innerHTML = progress;
-                                      });
-                             
+                            audio.onended = function() {
+                                audio.pause();
+                                playingMelody = false;  
+                                audio.src = URL.createObjectURL(button.recordRTC.blob);
                             };
-                            
                         };
-                        button.recordRTC.startRecording();
-                        
-                    };
-                    //5 p
 
-               
-            //};
+                        button.recordRTC.startRecording();
+                        console.log("This is START!!!!");
+                    };
+//                }
 //2 p
             function captureAudio(config) {
                 captureUserMedia({audio: true}, function(audioStream) {
@@ -976,63 +484,55 @@ $('.hard-btn').on('click', function(event) {
                 navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
             }
             
-            // 서버 저장 시작
+         // 서버 저장 시작
             function saveToDiskOrOpenNewTab(recordRTC) {
-            	/*
-            
-                recordingDIV.querySelector('#save-to-disk').parentNode.style.display = 'block';
-                recordingDIV.querySelector('#save-to-disk').onclick = function() {
+              
                     if(!recordRTC) return alert('No recording found.');
-
+                    
                     recordRTC.save();
-                };
-*/
-                //recordingDIV.querySelector('#upload-to-server').disabled = false;
-                //recordingDIV.querySelector('#upload-to-server').onclick = function() {
-                    //if(!recordRTC) return alert('No recording found.');
                     this.disabled = true;
-
+    
                     var button = this;
                     uploadToServer(recordRTC, function(progress, fileURL) {
                         if(progress === 'ended') {
                             button.disabled = false;
+                            button.innerHTML = 'Click to download from server';
                             button.onclick = function() {
                                 window.open(fileURL);
+                                //이걸 바꾸자!
+                                
                             };
                             return;
                         }
                         button.innerHTML = progress;
                     });
-                //};
             }
-
-            //recordingDIV.querySelector('#upload-to-server').disabled = false;
-            recordingDIV.querySelector('#upload-to-server').onclick = function() {
-                if(!recordRTC) return alert('No recording found.');
-                this.disabled = true;
-
-                var button = this;
-                uploadToServer(recordRTC, function(progress, fileURL) {
-                    if(progress === 'ended') {
-                        button.disabled = false;
-                        button.innerHTML = 'Click to download from server';
-                        button.onclick = function() {
-                            window.open(fileURL);
-                        };
-                        return;
-                    }
-                    button.innerHTML = progress;
-                });
-            };
             
             var listOfFilesUploaded = [];
-
+						
             function uploadToServer(recordRTC, callback) {
                 var blob = recordRTC instanceof Blob ? recordRTC : recordRTC.blob;
                 console.log("output : " + blob);
                 var fileType = blob.type.split('/')[0] || 'audio';
-                var fileName = (Math.random() * 1000).toString().replace('.', '');
-
+                var fileName = ''; 
+                console.log('파일 이름 : ' + songFileName);
+                $.ajax({
+          					type : 'post',
+          					url : '/song/upload',
+              			headers : {
+              				"Content-Type" : "application/json",
+              				"X-HTTP-Method-Override" : "POST"
+              			},
+              			dataType : 'text',
+              			data : JSON.stringify({
+              				sfilename : songFileName,
+              			}),
+              			success : function(result) {
+              				console.log(result);
+              				fileName = result;
+              			}
+            		});
+								
                 fileName += '.' + (!!navigator.mozGetUserMedia ? 'ogg' : 'wav');
 
                 // create FormData
@@ -1054,24 +554,47 @@ $('.hard-btn').on('click', function(event) {
 
                     callback('ended', initialURL + fileName);
                     // to make sure we can delete as soon as visitor leaves
-                    listOfFilesUploaded.push(initialURL + fileName);
                 });
             }
-            function saveToDiskOrOpenNewTab(recordRTC) {
-                recordingDIV.querySelector('#save-to-disk').parentNode.style.display = 'block';
-                recordingDIV.querySelector('#save-to-disk').onclick = function() {
-                    if(!recordRTC) return alert('No recording found.');
-
-                    recordRTC.save();
+            
+            function makeXMLHttpRequest(url, data, callback) {
+                var request = new XMLHttpRequest();
+                request.onreadystatechange = function() {
+                    if (request.readyState == 4 && request.status == 200) {
+                        callback('upload-ended');
+                    }
                 };
 
-                recordingDIV.querySelector('#open-new-tab').onclick = function() {
-                    if(!recordRTC) return alert('No recording found.');
-
-                    window.open(recordRTC.toURL());
+                request.upload.onloadstart = function() {
+                    callback('Upload started...');
                 };
 
+                request.upload.onprogress = function(event) {
+                    callback('Upload Progress ' + Math.round(event.loaded / event.total * 100) + "%");
+                };
+
+                request.upload.onload = function() {
+                    callback('progress-about-to-end');
+                };
+
+                request.upload.onload = function() {
+                    callback('progress-ended');
+                };
+
+                request.upload.onerror = function(error) {
+                    callback('Failed to upload to server');
+                    console.error('XMLHttpRequest failed', error);
+                };
+
+                request.upload.onabort = function(error) {
+                    callback('Upload aborted.');
+                    console.error('XMLHttpRequest aborted', error);
+                };
+
+                request.open('POST', url);
+                request.send(data);
             }
+
             //서버 끝
             
         }
@@ -1082,7 +605,7 @@ $('.hard-btn').on('click', function(event) {
 
 
 
- <script> 
+ <script type="text/javascript"> 
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   var level = false;// false : easy,  true : hard
   var recordPlaying = false;
@@ -1113,7 +636,11 @@ $('.hard-btn').on('click', function(event) {
   var lyricsTxtArr = [], lyricsTimeTxtArr = [];
   var checkCnt = 0;
   var noteAc = "";
-  var tick = 0.0016622340425532;
+  var tick =0.0016622340425532;// 나만 안되는 연애 : 0.0023320895522388;
+  // tick = MPQN/1000000/PPQN
+  //			= MSPM/BPM/1000000/PPQN
+  //			= 60000000/BPM/1000000/PPQN
+  // 나만 안되는 연애 : 67bpm, 사랑했나봐 : 94bpm
   var lyricsCnt = 0; // 가사 인덱스
   
   //녹음 관련 변수들
@@ -1456,10 +983,7 @@ $('.hard-btn').on('click', function(event) {
       playingMelody = true;
       
       updatePitch();
-      //record();
-      //echo();
-      
-      
+
       setTimeout("calLyrics()", (lyricsTimeTxtArr[0] * 1000));
    }
    else if(playingMelody == true){
@@ -1588,25 +1112,14 @@ $('.hard-btn').on('click', function(event) {
      		   document.getElementById('songText2').innerHTML = lyricsTxtArr[lyricsCnt];
      		   document.getElementById('songText2').style.color = 'black';
      	  	   document.getElementById('songText1').style.color = 'red';
-     	  	    //document.getElementById('songText2').innerHTML = lyricsTxtArr[lyricsCnt-1];
      	   }
      	   lyricsCnt++;
      	    setTimeout(
      	      "calLyrics()",
      	      ((lyricsTimeTxtArr[lyricsCnt-1] - lyricsTimeTxtArr[lyricsCnt - 2]) * 1000));
-     /*  
-         document.getElementById('songText1').innerHTML = lyricsTxtArr[lyricsCnt-1];
-         document.getElementById('songText2').innerHTML = lyricsTxtArr[lyricsCnt];
-         lyricsCnt++;
-         setTimeout(
-           "calLyrics()",
-           ((lyricsTimeTxtArr[lyricsCnt] - lyricsTimeTxtArr[lyricsCnt - 1]) * 1000));
-         */
         }
 	  }
   }
-  
-
  </script>
 
 </body>

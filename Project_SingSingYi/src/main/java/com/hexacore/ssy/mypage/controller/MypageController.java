@@ -203,6 +203,7 @@ public class MypageController {
 		model.addAttribute("list", list);
 		model.addAttribute("pageMaker", pageMaker);
 	}
+		
 
 	// 나의 녹음저장소 삭제
 	@RequestMapping(value="/removeRecord", method=RequestMethod.POST)

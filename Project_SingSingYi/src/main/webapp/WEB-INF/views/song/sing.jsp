@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <!doctype html>
 <html>
 <head>
-<title>노래방</title>
+<title>노래방9</title>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -16,7 +16,7 @@
 <script src="https://cdn.webrtc-experiment.com/getScreenId.js"></script>
 <script src="https://cdn.webrtc-experiment.com/gumadapter.js"></script>
 <script src="/resources/js/jquery.min.js"></script>
-
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.2.0.min.js"></script>
 <style type="text/css">
 #light {
    width: 140px;
@@ -136,6 +136,17 @@
    border: none;
 }
 
+.normal-btn {
+   width: 130px;
+   height: 120px;
+   background-image: url("/resources/img/easy.png");
+   background-size: 110px, 2px;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-color: transparent;
+   border: none;
+}
+
 .hard-btn {
    width: 130px;
    height: 120px;
@@ -180,6 +191,11 @@ canvas {
    height: 800px;
    background-color: rgba(0, 0, 0, 0.3);
 }
+
+audio {
+  display: none;
+  play: none;
+}
 </style>
 
 </head>
@@ -208,7 +224,7 @@ canvas {
         </div>
 
         <div class="col-lg-3">
-          <iframe width="700px" height="500px" src="http://192.168.0.63:3000/robot" style="border: none;"></iframe>
+          <iframe width="700px" height="500px" src="https://192.168.0.20:3000/robot" style="border: none;"></iframe>
         </div>
       </div>
 
@@ -216,17 +232,20 @@ canvas {
       <div class="col-lg-4" style="border: 2px solid;">
         <div class="music-controller">
           <div class="page">
-            <button class="easy-btn" onclick="clickEasy();"></button>
-            <button class="hard-btn" onclick="clickHard();"></button>
+            <button class="easy-btn" id="easy-btn" onclick="clickEasy();"></button>
+            <button class="normal-btn" id="normal-btn" onclick="clickNormal();"></button>
+            <button class="hard-btn" id="hard-btn" onclick="clickHard();"></button>
           </div>
-          <div class="buttons" style="float: left">
+          <div class="buttons">
             <button id="playbutton" onclick="singAsong()"></button>
             <div class="experiment recordrtc" style="float: left">
-            <button id="recordbutton" onclick="record()"></button>
+            <button id="recordbutton" onclick="record('${song.sfilename}')" hidden></button>
             <!-- Stop recording 후 보여지는 비디오 태그 -->
             <video hidden></video>
             </div>
+            <!-- 
             <button id="upload-to-server"></button>
+             -->
           </div>
 
           <div class="signalbar" style="padding-top: 50px;">
@@ -243,47 +262,26 @@ canvas {
               </div>
               <!-- /.box-header -->
               <div class="box-body no-padding">
-                <table class="table table-striped">
-                  <tbody>
+                <table class="table table-striped type10">
+                  <thead>
                     <tr>
-                      <th style="width: 5px"></th>
-                      <th>곡명</th>
-                      <th style="width: 50px">Artist</th>
-                      <th style="width: 40px">시간</th>
+                      <th style="width: 30%; text-align: center; font-size: 15px;">곡명</th>
+                      <th style="width: 20%; text-align: center; font-size: 15px; ">아티스트</th>
+                      <th style="width: 30%; text-align: center; font-size: 15px;">즉시부르기</th>
                     </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>맞지?</td>
-                      <td>언니쓰</td>
-                      <td>
-                        <span class="badge bg-red">3:30</span>
+                    </thead>
+                    <c:forEach items="${list}" var="favorite" varStatus="stat">  
+                    <tr class="even">
+                      <td style="width: 15px; font-size: 15px; text-align: center;"><b>${favorite.stitle}</b></td>
+                      <td style="font-size: 10px; text-align: center;"><b>${favorite.singer}</b></td>
+                      <td style="width: 5px; text-align: center;">
+                        <form role="form" method="post" action="/song/sing">
+                         <input type="hidden" name="sid" value="${favorite.sid}">
+                         <button><img src="/resources/img/nowsing.png" style="width: 50px; height: 50px;"> </button>
+                         </form>
                       </td>
                     </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>맞지?</td>
-                      <td>언니쓰</td>
-                      <td>
-                        <span class="badge bg-red">3:30</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>맞지?</td>
-                      <td>언니쓰</td>
-                      <td>
-                        <span class="badge bg-red">3:30</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>맞지?</td>
-                      <td>언니쓰</td>
-                      <td>
-                        <span class="badge bg-red">3:30</span>
-                      </td>
-                    </tr>
-                  </tbody>
+                    </c:forEach>
                 </table>
               </div>
               <!-- /.box-body -->
@@ -302,21 +300,7 @@ canvas {
 
   <%@include file="../include/footer.jsp"%>
 
-<script>
-//level-controller
-  function clickEasy(){
 
-level = false;
-console.log("EASY!!");
-
-};
-  function clickHard(){
-
-    level = true;
-    //change text when when button is clicked
-    console.log("HARD");
-  };
-</script>
  <script>
     (function() {
         var params = {},
@@ -344,22 +328,24 @@ console.log("EASY!!");
         
         //1 t
         function record(songFileName){
-          var recordingDIV = document.querySelector('.recordrtc');
+        	var recordingDIV = document.querySelector('.recordrtc');
             var recordingPlayer = recordingDIV.querySelector('video');
-            //2 t
-              console.log("start");
-            console.log("record : "+recordPlaying);
+						//2 t
+						//document.getElementsByTagName('audio').pause();
+							console.log("start");
+						console.log("record : "+recordPlaying);
                 var button = this;
 
                 // 3 t
                 if(recordPlaying == false) {
+                	/*
                     button.disabled = true;
                     button.disableStateWaiting = true;
                     setTimeout(function() {
                         button.disabled = false;
                         button.disableStateWaiting = false;
                     }, 2 * 1000);
-
+*/
                     recordPlaying = true;
 
                     function stopStream() {
@@ -403,7 +389,7 @@ console.log("EASY!!");
                 //3 p
 
                 button.disabled = true;
-                // 4 t
+								// 4 t
                 var commonConfig = {
                     onMediaCaptured: function(stream) {
                         button.stream = stream;
@@ -414,8 +400,8 @@ console.log("EASY!!");
                         button.disabled = false;
                     },
                     onMediaStopped: function() {
-                        recordPlaying = true;
-                        
+												//recordPlaying = true;
+												
                         if(!button.disableStateWaiting) {
                             button.disabled = false;
                         }
@@ -436,13 +422,13 @@ console.log("EASY!!");
                     }
                     
                 };
-                //4 p
+								//4 p
                 
                     captureAudio(commonConfig);
                     
-                //5 t
+								//5 t
                     button.mediaCapturedCallback = function() {
-                      console.log("HERE!!!!!!!");
+                    	console.log("HERE!!!!!!!");
                         button.recordRTC = RecordRTC(button.stream, {
                             type: 'audio',
                             bufferSize: typeof params.bufferSize == 'undefined' ? 0 : parseInt(params.bufferSize),
@@ -453,10 +439,10 @@ console.log("EASY!!");
                         });
                         
                         button.recordingEndedCallback = function(url) {
-                          var audio = new Audio();
-                          audio.src = url;
+                        	var audio = new Audio();
+                        	audio.src = url;
                             audio.controls = true;
-                            recordingPlayer.parentNode.appendChild(document.createElement('hr'));
+                            //recordingPlayer.parentNode.appendChild(document.createElement('hr'));
                             recordingPlayer.parentNode.appendChild(audio);
 
                             if(audio.paused) audio.play();
@@ -498,27 +484,29 @@ console.log("EASY!!");
               
                     if(!recordRTC) return alert('No recording found.');
                     
-                    recordRTC.save();
+                    recordRTC.save();//저장되는 것
                     this.disabled = true;
     
                     var button = this;
                     uploadToServer(recordRTC, function(progress, fileURL) {
+                    	/*
                         if(progress === 'ended') {
                             button.disabled = false;
                             button.innerHTML = 'Click to download from server';
                             button.onclick = function() {
-                                window.open(fileURL);
+                                //window.open(fileURL);
                                 //이걸 바꾸자!
                                 
                             };
                             return;
                         }
+                    	*/
                         button.innerHTML = progress;
                     });
             }
             
             var listOfFilesUploaded = [];
-            
+						
             function uploadToServer(recordRTC, callback) {
                 var blob = recordRTC instanceof Blob ? recordRTC : recordRTC.blob;
                 console.log("output : " + blob);
@@ -526,22 +514,22 @@ console.log("EASY!!");
                 var fileName = ''; 
                 console.log('파일 이름 : ' + songFileName);
                 $.ajax({
-                    type : 'post',
-                    url : '/song/upload',
-                    headers : {
-                      "Content-Type" : "application/json",
-                      "X-HTTP-Method-Override" : "POST"
-                    },
-                    dataType : 'text',
-                    data : JSON.stringify({
-                      sfilename : songFileName,
-                    }),
-                    success : function(result) {
-                      console.log(result);
-                      fileName = result;
-                    }
-                });
-                
+          					type : 'post',
+          					url : '/song/upload',
+              			headers : {
+              				"Content-Type" : "application/json",
+              				"X-HTTP-Method-Override" : "POST"
+              			},
+              			dataType : 'text',
+              			data : JSON.stringify({
+              				sfilename : songFileName,
+              			}),
+              			success : function(result) {
+              				console.log(result);
+              				fileName = result;
+              			}
+            		});
+								
                 fileName += '.' + (!!navigator.mozGetUserMedia ? 'ogg' : 'wav');
 
                 // create FormData
@@ -550,7 +538,7 @@ console.log("EASY!!");
                 formData.append(fileType + '-blob', blob);
 
                 callback('Uploading ' + fileType + ' recording to server.');
-                
+								
                 console.dir("formData : " + formData);
                 
                 makeXMLHttpRequest('https://webrtcweb.com/RecordRTC/', formData, function(progress) {
@@ -616,8 +604,8 @@ console.log("EASY!!");
 
  <script type="text/javascript"> 
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
-  var level = false;// false : easy,  true : hard
-  var recordPlaying = false;
+  var level = 0;// 0 : easy, 1 : normal,   2 : hard
+  var recordPlaying = true;
   var requestId = 0;
   var elm;
   var playing = false;
@@ -646,10 +634,10 @@ console.log("EASY!!");
   var lyricsTxtArr = [], lyricsTimeTxtArr = [];
   var checkCnt = 0;
   var noteAc = "";
-  var tick =0.0016622340425532;// 나만 안되는 연애 : 0.0023320895522388;
+  var tick = 0;//0.0023320895522388;// 나만 안되는 연애 : 0.0023320895522388 사랑했나봐 : 0.0016622340425532;
   // tick = MPQN/1000000/PPQN
-  //      = MSPM/BPM/1000000/PPQN
-  //      = 60000000/BPM/1000000/PPQN
+  //			= MSPM/BPM/1000000/PPQN
+  //			= 60000000/BPM/1000000/PPQN
   // 나만 안되는 연애 : 67bpm, 사랑했나봐 : 94bpm
   var lyricsCnt = 0; // 가사 인덱스
   
@@ -676,8 +664,37 @@ console.log("EASY!!");
   window.onload = function() {
    audioContext = new AudioContext();
    init();
+   
+
+  }
+	
+  //level-controller
+  //$(".easy-btn").click(function(event){
+	  function clickEasy(){
+   level = 0;
+   console.log("EASY!!");
+   //document.getElementById("easy-btn").style.backgroundImage = 'url("/resources/img/easy2.png")';
+   
+   //document.getElementById('easy-btn').src = "/resources/img/easy2.png";
+   //document.getElementById('hard-btn').src = "/resources/img/hard.png";
+  
+   //});
   }
 
+  function clickNormal(){
+	   level = 1;
+	   console.log("NORMAL!!!!!");
+	};
+  
+  	function clickHard(){
+  		level = 2;
+  	  //change text when when button is clicked
+  		console.log("HARD");
+  		//document.getElementById('easy-btn').src = "/resources/img/easy.png";
+  		//document.getElementById('hard-btn').src = "/resources/img/hard2.png";
+  	};
+  	
+  	
   function error() {
    alert('Stream generation failed.');
   }
@@ -819,130 +836,130 @@ console.log("EASY!!");
   function divideNote(ac) {
    // C : 도 , D : 레, E : 미, F : 파, G : 솔, A : 라, B : 시 
    //2옥타브
-    if (ac >= 65 && ac < 69)
-        return "C02";
-       else if (ac >= 69 && ac < 73)
-        return "C#2";
-       else if (ac >= 73 && ac < 78)
-        return "D02";
-       else if (ac >= 78 && ac < 82)
-        return "D#2";
-       else if (ac >= 82 && ac < 87)
-        return "E02";
-       else if (ac >= 87 && ac < 92)
-        return "F02";
-       else if (ac >= 92 && ac < 98)
-        return "F#2";
-       else if (ac >= 98 && ac < 104)
-        return "G02";
-       else if (ac >= 104 && ac < 110)
-        return "G#2";
-       else if (ac >= 110 && ac < 117)
-        return "A02";
-       else if (ac >= 117 && ac < 123)
-        return "A#2";
-       else if (ac >= 123 && ac < 131)
-        return "B02";
-       //3옥타브
-       else if (ac >= 131 && ac < 139)
-        return "C03";
-       else if (ac >= 139 && ac < 147)
-        return "C#3";
-       else if (ac >= 147 && ac < 156)
-        return "D03";
-       else if (ac >= 156 && ac < 165)
-        return "D#3";
-       else if (ac >= 165 && ac < 175)
-        return "E03";
-       else if (ac >= 175 && ac < 185)
-        return "F03";
-       else if (ac >= 185 && ac < 196)
-        return "F#3";
-       else if (ac >= 196 && ac < 208)
-        return "G03";
-       else if (ac >= 208 && ac < 220)
-        return "G#3";
-       else if (ac >= 220 && ac < 233)
-        return "A03";
-       else if (ac >= 233 && ac < 247)
-        return "A#3";
-       else if (ac >= 247 && ac < 262)
-        return "B03";
-       //4옥타브
-       else if (ac >= 262 && ac < 277)
-        return "C04";
-       else if (ac >= 277 && ac < 294)
-        return "C#4";
-       else if (ac >= 294 && ac < 311)
-        return "D04";
-       else if (ac >= 311 && ac < 330)
-        return "D#4";
-       else if (ac >= 330 && ac < 349)
-        return "E04";
-       else if (ac >= 349 && ac < 370)
-        return "F04";
-       else if (ac >= 370 && ac < 392)
-        return "F#4";
-       else if (ac >= 392 && ac < 415)
-        return "G04";
-       else if (ac >= 415 && ac < 440)
-        return "G#4";
-       else if (ac >= 440 && ac < 466)
-        return "A04";
-       else if (ac >= 466 && ac < 494)
-        return "A#4";
-       else if (ac >= 494 && ac < 523)
-        return "B04";
-       //5옥타브
-       else if (ac >= 523 && ac < 554)
-        return "C05";
-       else if (ac >= 554 && ac < 587)
-        return "C#5";
-       else if (ac >= 587 && ac < 622)
-        return "D05";
-       else if (ac >= 622 && ac < 659)
-        return "D#5";
-       else if (ac >= 659 && ac < 698)
-        return "E05";
-       else if (ac >= 698 && ac < 740)
-        return "F05";
-       else if (ac >= 740 && ac < 784)
-        return "F#5";
-       else if (ac >= 784 && ac < 831)
-        return "G05";
-       else if (ac >= 831 && ac < 880)
-        return "G#5";
-       else if (ac >= 880 && ac < 932)
-        return "A05";
-       else if (ac >= 932 && ac < 988)
-        return "A#5";
-       else if (ac >= 988 && ac < 1047)
-        return "B05";
-       //6옥타브
-       else if (ac >= 1047 && ac < 1109)
-        return "C06";
-       else if (ac >= 1109 && ac < 1175)
-        return "C#6";
-       else if (ac >= 1175 && ac < 1245)
-        return "D06";
-       else if (ac >= 1245 && ac < 1319)
-        return "D#6";
-       else if (ac >= 1319 && ac < 1397)
-        return "E06";
-       else if (ac >= 1397 && ac < 1480)
-        return "F06";
-       else if (ac >= 1480 && ac < 1568)
-        return "F#6";
-       else if (ac >= 1568 && ac < 1661)
-        return "G06";
-       else if (ac >= 1661 && ac < 1760)
-        return "G#6";
-       else if (ac >= 1760 && ac < 1865)
-        return "A06";
-       else if (ac >= 1865 && ac < 1976)
-        return "A#6";
-       else if (ac >= 1976 && ac < 2093)
-        return "B06";
+	  if (ac >= 65 && ac < 69)
+		    return "C02";
+		   else if (ac >= 69 && ac < 73)
+		    return "C#2";
+		   else if (ac >= 73 && ac < 78)
+		    return "D02";
+		   else if (ac >= 78 && ac < 82)
+		    return "D#2";
+		   else if (ac >= 82 && ac < 87)
+		    return "E02";
+		   else if (ac >= 87 && ac < 92)
+		    return "F02";
+		   else if (ac >= 92 && ac < 98)
+		    return "F#2";
+		   else if (ac >= 98 && ac < 104)
+		    return "G02";
+		   else if (ac >= 104 && ac < 110)
+		    return "G#2";
+		   else if (ac >= 110 && ac < 117)
+		    return "A02";
+		   else if (ac >= 117 && ac < 123)
+		    return "A#2";
+		   else if (ac >= 123 && ac < 131)
+		    return "B02";
+		   //3옥타브
+		   else if (ac >= 131 && ac < 139)
+		    return "C03";
+		   else if (ac >= 139 && ac < 147)
+		    return "C#3";
+		   else if (ac >= 147 && ac < 156)
+		    return "D03";
+		   else if (ac >= 156 && ac < 165)
+		    return "D#3";
+		   else if (ac >= 165 && ac < 175)
+		    return "E03";
+		   else if (ac >= 175 && ac < 185)
+		    return "F03";
+		   else if (ac >= 185 && ac < 196)
+		    return "F#3";
+		   else if (ac >= 196 && ac < 208)
+		    return "G03";
+		   else if (ac >= 208 && ac < 220)
+		    return "G#3";
+		   else if (ac >= 220 && ac < 233)
+		    return "A03";
+		   else if (ac >= 233 && ac < 247)
+		    return "A#3";
+		   else if (ac >= 247 && ac < 262)
+		    return "B03";
+		   //4옥타브
+		   else if (ac >= 262 && ac < 277)
+		    return "C04";
+		   else if (ac >= 277 && ac < 294)
+		    return "C#4";
+		   else if (ac >= 294 && ac < 311)
+		    return "D04";
+		   else if (ac >= 311 && ac < 330)
+		    return "D#4";
+		   else if (ac >= 330 && ac < 349)
+		    return "E04";
+		   else if (ac >= 349 && ac < 370)
+		    return "F04";
+		   else if (ac >= 370 && ac < 392)
+		    return "F#4";
+		   else if (ac >= 392 && ac < 415)
+		    return "G04";
+		   else if (ac >= 415 && ac < 440)
+		    return "G#4";
+		   else if (ac >= 440 && ac < 466)
+		    return "A04";
+		   else if (ac >= 466 && ac < 494)
+		    return "A#4";
+		   else if (ac >= 494 && ac < 523)
+		    return "B04";
+		   //5옥타브
+		   else if (ac >= 523 && ac < 554)
+		    return "C05";
+		   else if (ac >= 554 && ac < 587)
+		    return "C#5";
+		   else if (ac >= 587 && ac < 622)
+		    return "D05";
+		   else if (ac >= 622 && ac < 659)
+		    return "D#5";
+		   else if (ac >= 659 && ac < 698)
+		    return "E05";
+		   else if (ac >= 698 && ac < 740)
+		    return "F05";
+		   else if (ac >= 740 && ac < 784)
+		    return "F#5";
+		   else if (ac >= 784 && ac < 831)
+		    return "G05";
+		   else if (ac >= 831 && ac < 880)
+		    return "G#5";
+		   else if (ac >= 880 && ac < 932)
+		    return "A05";
+		   else if (ac >= 932 && ac < 988)
+		    return "A#5";
+		   else if (ac >= 988 && ac < 1047)
+		    return "B05";
+		   //6옥타브
+		   else if (ac >= 1047 && ac < 1109)
+		    return "C06";
+		   else if (ac >= 1109 && ac < 1175)
+		    return "C#6";
+		   else if (ac >= 1175 && ac < 1245)
+		    return "D06";
+		   else if (ac >= 1245 && ac < 1319)
+		    return "D#6";
+		   else if (ac >= 1319 && ac < 1397)
+		    return "E06";
+		   else if (ac >= 1397 && ac < 1480)
+		    return "F06";
+		   else if (ac >= 1480 && ac < 1568)
+		    return "F#6";
+		   else if (ac >= 1568 && ac < 1661)
+		    return "G06";
+		   else if (ac >= 1661 && ac < 1760)
+		    return "G#6";
+		   else if (ac >= 1760 && ac < 1865)
+		    return "A06";
+		   else if (ac >= 1865 && ac < 1976)
+		    return "A#6";
+		   else if (ac >= 1976 && ac < 2093)
+		    return "B06";
   }
 
   //마이크 입력을 받기 위해, plaing true로 바꾸고 마이크 입력을 받는 updatePitch를 실행함.
@@ -980,21 +997,21 @@ console.log("EASY!!");
  
   var melodyAudio;
   function singAsong() { // 플레이 버튼을 누르면 이 함수 실행
-      //코인제거
-      var iframeObj = $("#ifm").get(0);
-      var iframeDocument = iframeObj.contentWindow || iframeObj.contentDocument;
-      iframeDocument.postMessage('7000:','http://192.168.0.63:3000/client')
+	    //코인제거
+	    var iframeObj = $("#ifm").get(0);
+	    var iframeDocument = iframeObj.contentWindow || iframeObj.contentDocument;
+	    iframeDocument.postMessage('7000:','https://192.168.0.20:3000/client')
    
    if(playingMelody == false){
-    melodyAudio = new Audio('/resources/music/iloved.mp3');
+    melodyAudio = new Audio('/resources/music/loveExceptMe.mp3');
     melodyAudio.play();
-      readFile("/resources/notes/iloved.txt");
-      readFile("/resources/lyrics/iloved.txt");
-      readFile("/resources/lyrics/ilovedTime.txt");
+      readFile("/resources/notes/loveExceptMe.txt");
+      readFile("/resources/lyrics/loveExceptMe.txt");
+      readFile("/resources/lyrics/loveExceptMeTime.txt");
    
       playing = true;
       playingMelody = true;
-      
+      record('${song.sfilename}');
       updatePitch();
 
       setTimeout("calLyrics()", (lyricsTimeTxtArr[0] * 1000));
@@ -1002,6 +1019,7 @@ console.log("EASY!!");
    else if(playingMelody == true){
     melodyAudio.pause();
     playingMelody = false;
+    record('${song.sfilename}');
     calScore();
    }
   }
@@ -1055,6 +1073,7 @@ console.log("EASY!!");
 
       calNote();
      } else if (filename.indexOf("Time.txt") != -1) {// 가사 시간 data txt일때
+    	 (filename=="ilovedTime.txt")? tick= 0.0016622340425532 : tick = 0.0023320895522388
       lyricsTimeText = this.responseText;
       parsingLyricsTimeText(lyricsTimeText);
      } else {// 가사 data txt일때
@@ -1071,63 +1090,83 @@ console.log("EASY!!");
 
   var noteTotal = 1;
   function calNote() {// 현재 음 계산하는 아이.
-    if (stateArr[checkCnt] == 'On')
-        noteV += Number(intervalArr[checkCnt]);
-       else
-        noteV -= Number(intervalArr[checkCnt]);
-       noteVText = divideNote(noteV)
-        console.log(noteTotal++);
-       console.log("noteVText : " + noteVText);
-       console.log("noteAc : " + noteAc);
-       var str1 = ''+noteAc
-       var str2 = ''+noteVText;
-       if(level == true){ // level hard일 때   
-          if ((str1.substring(0, 1) == str2.substring(0, 1)) 
-              && (str1.substring(2, 1) == str2.substring(2, 1))) {
-            console.log("!!!!!!!!!!!!!!!!!!!!!!1very good!!!!!!!!!!!!!!!!!!!!");
-            goodCount++;
-            noteCorrect = true;
-          } else {
-           noteCorrect = false;
-          }
-       }
-       else if(level == false){ //level easy일 때
-          if(str1.substring(0, 1) == str2.substring(0, 1)){//알파벳만 맞을 경우
-             console.log("!!!!!!!!!!!!!!!!!!!!!!1very good!!!!!!!!!!!!!!!!!!!!!!1");
-          goodCount++;   
-          noteCorrect = true;
-           } else {
-             noteCorrect = false;
-           }
-       }
-       noteCheck();
-       if ((checkCnt < intervalArr.length)&& (playingMelody)) {
-        if (checkCnt == 0)
-         setTimeout("calNote()", timeArr[checkCnt] * 1000 * tick);
-        else
-         setTimeout("calNote()",
-           (timeArr[checkCnt] - timeArr[checkCnt - 1]) * 1000
-             * tick);
-        checkCnt++;
-       }
+	  if (stateArr[checkCnt] == 'On')
+		    noteV += Number(intervalArr[checkCnt]);
+		   else
+		    noteV -= Number(intervalArr[checkCnt]);
+		   noteVText = divideNote(noteV)
+				console.log(noteTotal++);
+		   console.log("noteVText : " + noteVText);
+		   console.log("noteAc : " + noteAc);
+		   var str1 = ''+noteAc
+		   var str2 = ''+noteVText;
+		   if(level == 2){ // level hard일 때   
+		          if ((str1.substring(0, 1) == str2.substring(0, 1)) 
+		              && (str1.substring(2, 1) == str2.substring(2, 1))) {
+		            console.log("!!!!!!!!!!!!!!!!!!!!!!1very good!!!!!!!!!!!!!!!!!!!!");
+		            goodCount++;
+		            noteCorrect = true;
+		          } else {
+		           noteCorrect = false;
+		          }
+		       }
+		       else if(level == 1){ // level normal일 때  
+		          if(str1.substring(0, 1) == str2.substring(0, 1)){//알파벳만 맞을 경우
+		               console.log("!!!!!!!!!!!!!!2222222very good!!!!!!!!!!!!!!!!!!!!!!1");
+		            goodCount++;   
+		            noteCorrect = true;
+		             } else {
+		               noteCorrect = false;
+		             }
+		         }
+		       else if(level == 0){ //level easy일 때
+		          var s1 = str1.charCodeAt(0);
+		          var s2 = str2.charCodeAt(0);
+		  
+		          var minNum, maxNum;
+		          (s2==65)?minNum = 71 : minNum = str2.charCodeAt(0) - 1;
+		          (s2==71)?maxNum = 65 : maxNum = str2.charCodeAt(0) + 1;
+		           if ((s1 == maxNum)
+		              ||(s1 == minNum)
+		              ||(s1 == s2)) {
+		             console.log("!!!!!!!!!!000000001very good!!!!!!!!!!!!!!!!!!!!");
+		             goodCount++;
+		             noteCorrect = true;
+		           } else {
+		            noteCorrect = false;
+		           }
+		       }
+		         noteCheck();
+		         if ((checkCnt < intervalArr.length)&& (playingMelody)) {
+		          if (checkCnt == 0)
+		           setTimeout("calNote()", timeArr[checkCnt] * 1000 * tick);
+		          else
+		           setTimeout("calNote()",
+		             (timeArr[checkCnt] - timeArr[checkCnt - 1]) * 1000
+		               * tick);
+		          checkCnt++;
+		         
+		        }
+		      
   }
 
   function noteCheck() {
    if (noteCorrect) {
-    document.getElementById('light').src = "/resources/img/greenlight.png";
+    document.getElementById('light').src = "/resources/img/good.png";
    } else if (!noteCorrect) {
-    document.getElementById('light').src = "/resources/img/redlight.png";
+    document.getElementById('light').src = "/resources/img/bad.png";
    }
   }
 
   function calLyrics() { //시간에 맞는 가사 보여주는 함수
-    console.log("length : " + lyricsTimeTxtArr.length);
+	  console.log("length : " + lyricsTimeTxtArr.length);
   
-    if((lyricsTimeTxtArr.length > lyricsCnt)&& (playingMelody)){
+	  if((lyricsTimeTxtArr.length > lyricsCnt)&& (playingMelody)){
   
         if (lyricsCnt == 0) {
          document.getElementById('songText1').innerHTML = "이제 곧 노래가 시작됩니다. 준비해주세요."
          document.getElementById('songText2').innerHTML = lyricsTxtArr[0];
+         document.getElementById('songText1').style.color = 'white';
          document.getElementById('songText2').style.color = 'red';
          lyricsCnt++;
          setTimeout("calLyrics()",
@@ -1135,28 +1174,49 @@ console.log("EASY!!");
          
      
         } else if (lyricsCnt != 0) {
-         if(lyricsCnt%2==1){
-           document.getElementById('songText1').innerHTML = lyricsTxtArr[lyricsCnt];
-          document.getElementById('songText1').style.color = 'black';
-           document.getElementById('songText2').style.color = 'red';
-         }
-         else{
-           document.getElementById('songText2').innerHTML = lyricsTxtArr[lyricsCnt];
-           document.getElementById('songText2').style.color = 'black';
-             document.getElementById('songText1').style.color = 'red';
-         }
-         lyricsCnt++;
-          setTimeout(
-            "calLyrics()",
-            ((lyricsTimeTxtArr[lyricsCnt-1] - lyricsTimeTxtArr[lyricsCnt - 2]) * 1000));
+       	   if(lyricsCnt%2==1){
+         		  
+           	    document.getElementById('songText1').innerHTML = lyricsTxtArr[lyricsCnt];
+           	 		document.getElementById('songText1').style.color = 'white';
+         		  
+         	    document.getElementById('songText2').style.color = 'red';
+         	   	if(lyricsTimeTxtArr.length == lyricsCnt - 1){
+         	   		
+         	   		console.log("one!!!!!!!!!!!");
+         	   		document.getElementById('songText2').innerHTML = "  ";
+         	   	}
+       	   }
+       	   else{
+        		  if(lyricsTimeTxtArr.length != lyricsCnt - 2){
+          		   document.getElementById('songText2').innerHTML = lyricsTxtArr[lyricsCnt];
+          		   document.getElementById('songText2').style.color = 'white';
+        		  }
+       	  	   document.getElementById('songText1').style.color = 'red';
+         	  	if(lyricsTimeTxtArr.length == lyricsCnt - 1){
+         	  		
+         	  		console.log("two!!!!!!!!!!!");
+       	   			document.getElementById('songText1').innerHTML = "  ";
+         	  	}
+       	   }
+     	   		lyricsCnt++;
+     	    	setTimeout(
+     	      "calLyrics()",
+     	      ((lyricsTimeTxtArr[lyricsCnt-1] - lyricsTimeTxtArr[lyricsCnt - 2]) * 1000));
         }
-    }
+	  }
+	  else if(lyricsTimeTxtArr.length <= lyricsCnt){//노래 중간에 껐을 때. || 노래 종료되었을 때.
+		  //점수
+		  //record 중지
+		  recordPlaying = false;
+		  record('${song.sfilename}');
+		    calScore();
+	  }
   }
   function calScore(){
-          if(goodCount > 100)
-            goodCount = 100;
-          document.getElementById('score').innerHTML = goodCount;
-      }
+	  			if(goodCount > 100)
+	  				goodCount = 100;
+	  			document.getElementById('score').innerHTML = goodCount;
+	  	}
  </script>
 
 </body>

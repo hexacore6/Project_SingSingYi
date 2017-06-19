@@ -154,15 +154,12 @@ $(document).ready(function(){
                 
                    <thead>  
                     <tr>
-                      <th style="width: 40%; text-align: center; font-size: 20px;">녹음파일명</th>
-                      <th style="width: 20%; text-align: center; font-size: 20px;">녹음된 날짜</th>
-                      <th style="width: 15%; text-align: center; font-size: 20px;">재생</th>
-                      <th style="width: 15%; text-align: center; font-size: 20px;">공유</th>
-                      <th style="width: 15%; text-align: center; font-size: 20px;">삭제</th>
+                      <th style="width: 20px; text-align: center; font-size: 20px;">곡명</th>
+                      <th style="width: 50px; text-align: center; font-size: 20px; ">아티스트</th>
+                      <th style="width: 5px; font-size: 20px;">삭제</th>
                     </tr>
                    </thead>
-                    <tbody>
-                      
+                    <tbody>                     
                       <c:forEach items="${list}" var="record" varStatus="stat">  
                       <tr class="even" id="trRecord${record.rrid}">
                         <%-- <td style="text-align: center">${((pageMaker.cri.page-1)*10)+(stat.index)}</td> --%>
@@ -322,6 +319,18 @@ $(document).ready(function(){
 	  
   }
   </script>
+  
+  <!-- jQuery -->
+  
+  <script src="../resources/js/jquery.easing.1.3.js"></script>
+  <script src="../resources/js/bootstrap.min.js"></script>
+  <script src="../resources/js/jquery.waypoints.min.js"></script>
+  <script src="../resources/js/salvattore.min.js"></script>
+  <!-- Main JS -->
+  <script src="../resources/js/jquery.magnific-popup.min.js"></script>
+  <script src="../resources/js/main.js"></script>
+  <script src="../resources/dist/js/app.min.js" type="text/javascript"></script>
+  <script src="../resources/dist/js/demo.js" type="text/javascript"></script>    
     <jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 

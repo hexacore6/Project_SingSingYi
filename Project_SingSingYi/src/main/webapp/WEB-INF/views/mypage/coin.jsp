@@ -48,7 +48,6 @@ table.type10 .even {
 <link rel="stylesheet" href="../../../resources/css/main.css?ver=1">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../../../resources/css/bootstrap3-wysihtml5.min.css?ver=2">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
@@ -182,6 +181,19 @@ table.type10 .even {
     <!-- /.modal-dialog -->
   </div>
   <!-- /.read modal -->
+    
+  <!-- jQuery -->
+  
+  <script src="../resources/js/jquery.easing.1.3.js"></script>
+  <script src="../resources/js/bootstrap.min.js"></script>
+  <script src="../resources/js/jquery.waypoints.min.js"></script>
+  <script src="../resources/js/salvattore.min.js"></script>
+  <!-- Main JS -->
+  <script src="../resources/js/jquery.magnific-popup.min.js"></script>
+  <script src="../resources/js/main.js"></script>
+  <script src="../resources/dist/js/app.min.js" type="text/javascript"></script>
+  <script src="../resources/dist/js/demo.js" type="text/javascript"></script>
+  
   <jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 

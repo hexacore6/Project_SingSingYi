@@ -98,7 +98,7 @@ public class SongController {
 		
 		logger.info("알알 : " + rrid);
 		
-		String fileName = id + "_" + (rrid+1) + "_" + song.getSfilename();
+		String fileName = song.getSfilename();
 		
 		RecordRepository recordRepository = new RecordRepository();
 		recordRepository.setId(id);

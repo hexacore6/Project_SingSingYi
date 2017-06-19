@@ -86,14 +86,19 @@ public class SongController {
 	public ResponseEntity<Boolean> addFavorite(@RequestBody Song song, HttpSession httpSession){
 		ResponseEntity<Boolean> entity = null;
 		
-		
 		Member member = (Member)httpSession.getAttribute("login");
 		int sid = song.getSid();
 		String id = member.getId();
+		System.out.println("체크 : " + songService.checkFavorite(id, sid));
 		
-		songService.addFavorite(id, sid);
-		entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
-		
+		if(songService.checkFavorite(id, sid)!=null){
+			
+			entity = new ResponseEntity<Boolean>(false, HttpStatus.OK);			
+		} else{
+			songService.addFavorite(id, sid);
+			entity = new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		}
+		System.out.println("엔티티 : " + entity);
 		return entity;
 		
 		//return "redirect:/song/main";

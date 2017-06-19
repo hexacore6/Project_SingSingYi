@@ -7,6 +7,18 @@
 <head>
 <script src="../../resources/js/jquery.min.js"></script>
 <style>
+button{
+  border: none;
+  background-color: #fff;
+}
+
+#buttonimg{
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+}
+
 .reverse {
 	background: Black;
 	color: White;
@@ -129,7 +141,6 @@ function mvolume() {
 			$("#readShcontent").empty();
 			$("#readLikecnt").empty();
 			$("#readCommentcnt").empty();
-			self.location.href='/mypage/sharing';
 		});
 		
 		$("#updateCloseButton").on("click", function() {
@@ -137,7 +148,6 @@ function mvolume() {
 			$("#updateShcontent").empty();
 			$("#updateLikecnt").empty();
 			$("#updateCommentcnt").empty();
-			self.location.href='/mypage/sharing';
 		});
 	});
 </script>
@@ -148,41 +158,61 @@ function mvolume() {
 
   <jsp:include page="../include/header.jsp"></jsp:include>
   <!--해더END-->
-  <div class="row" id="fh5co-main">
+  
     <section id="content" class='container'>
-    <div class="row">
-      <%@include file="side.jsp"%>
-      <div class="col-lg-9">
-        <!--content-->
-        <section class="content-header"> <c:choose>
-          <c:when test="${login.id==id }">
-            <h1 style="float: left; margin-left: 50px;">나의 공유글</h1>
-          </c:when>
-          <c:when test="${following=='following' }">
-            <h1 style="float: left; margin-left: 50px;">${id } 공유글</h1><button id="unfollow" class="btn badge bg-red" onclick="removeFollow('${login.id}', '${id }')" style="float: right; font-size: 30px; margin-top: 20px; "><img id="remove" src="/resources/img/remove.png" width="50px" height="50px"> 언팔로우</button>
-          </c:when>
-          <c:otherwise>
-            <h1 style="float: left; margin-left: 50px;">${id } 공유글</h1><button id="follow" class="btn badge bg-blue" onclick="addFollow('${login.id}', '${id }')" style="float: right; font-size: 30px; margin-top: 20px; "><img id="add" src="/resources/img/add.png" width="50px" height="50px"> 팔로우</button>
-          </c:otherwise>
-        </c:choose> 
+      <div class="row">
+        <%@include file="side.jsp"%>
+        <div class="col-lg-9">
+          <!--content-->
+          <section class="content-header">
+            <c:choose>
+              <c:when test="${login.id==id }">
+                <h1 class="box-title" style="text-align: left; margin-top: 70px;"><img width="50px;" height="50px;" src="/resources/img/mysharing.png"><strong style="color: #e7708d;">  나의 공유글</strong></h1>
+              </c:when>
+              <c:when test="${following=='following' }">
+                <h1 class="box-title" style="text-align: left; margin-top: 70px;"><img width="50px;" height="50px;" src="/resources/img/mysharing.png"><strong style="color: #e7708d;">  나의 공유글</strong></h1>
+                <button id="unfollow" class="btn badge bg-red" onclick="removeFollow('${login.id}', '${id }')" style="float: right; font-size: 30px; margin-top: 20px;">
+                  <img id="remove" src="/resources/img/unfollow.png" width="50px" height="50px"> 언팔로우
+                </button>
+              </c:when>
+              <c:otherwise>
+                <h1 class="box-title" style="text-align: left; margin-top: 70px;"><img width="50px;" height="50px;" src="/resources/img/mysharing.png"><strong style="color: #e7708d;">  나의 공유글</strong></h1>
+                <button id="follow" class="btn badge bg-blue" onclick="addFollow('${login.id}', '${id }')" style="float: right; font-size: 30px; margin-top: 20px;">
+                  <img id="add" src="/resources/img/follow.png" width="50px" height="50px"> 팔로우
+                </button>
+              </c:otherwise>
+            </c:choose>
         
-        </section>
-        <div class="row" style="margin-top: 70px;">
-          <div class="col-md-12">
-            <c:forEach items="${list}" var="sharing">
+          </section>
+          
+          <div class="row" style="margin-top: 70px; font-size: 20px; ">
+            <div class="col-md-12">
+            
+              <c:forEach items="${list}" var="sharing">
 
-              <fmt:parseNumber value="${now.time/(1000)-(sharing.shregdate).time/(1000) }" integerOnly="true" var="secTime"></fmt:parseNumber>
-              <fmt:parseNumber value="${now.time/(1000*60)-(sharing.shregdate).time/(1000*60) }" integerOnly="true" var="minTime"></fmt:parseNumber>
-
-              <div class="item" style="margin-left: 50px; margin-top: 100px; width: 500px; overflow: hidden; background-color: white-space:;">
-                <div class="animate-box" style="width: 500px;">
-
-                <!-- 녹음파일 출력 -->
-                  <div style="margin: 10px;"><h3><strong><span style="color : #d9534f">${sharing.recordfilename}</span></strong></h3></div>
-                    <div style="margin-bottom: 100px;">
-                      <button id="play" onclick="playAudio(${stat.index});">play</button>                             
-                      <button id="pvolume${stat.index}" onclick="pvolume(${stat.index});">+</button>
-                      <button id="mvolume${stat.index}" onclick="mvolume(${stat.index});">-</button>
+                <fmt:parseNumber value="${now.time/(1000)-(sharing.shregdate).time/(1000) }" integerOnly="true" var="secTime"></fmt:parseNumber>
+                <fmt:parseNumber value="${now.time/(1000*60)-(sharing.shregdate).time/(1000*60) }" integerOnly="true" var="minTime"></fmt:parseNumber>
+                  
+                <div class="item" style="margin-left: 100px; margin-top: 100px; overflow: hidden; background-color: #f5f5f0;">
+                
+                  <div class="animate-box">
+                  <div class="row">
+                    <img src="/resources/img/clip.png" width="100px;" height="100px;" style="margin-top: 30px; margin-bottom: 50px;">
+                    <div class="row"></div>
+                    </div>
+                    <!-- 녹음파일 출력 -->
+                    <c:set var="emptyValue" value=""/>
+                    <c:if test="${sharing.recordfilename} ne emptyValue}">
+                    <div class="row" style="margin: 10px; ">               
+                      <h3 style="margin-bottom: 30px;">
+                      
+                        <strong style="text-align: center;"><span style="color: #e7708d; "><b>${sharing.recordfilename}</b></span></strong>
+                      </h3>
+                    </div>
+                    <div style="margin-bottom: 30px; text-align: center;">
+                        <a id="play${stat.index}" onclick="playAudio(${stat.index});"><img id="buttonimg"src="../../../resources/img/play.png"></a>
+                        <a id="pvolume${stat.index}" onclick="pvolume(${stat.index});"><img id="buttonimg" src="../../../resources/img/plus.png" ></a>
+                        <a id="mvolume${stat.index}" onclick="mvolume(${stat.index});"><img id="buttonimg" src="../../../resources/img/remove.png"></a>
                     </div>
                     <audio controls name="media" id="audio${stat.index}" hidden="hidden">
                       <source src="../../../resources/music/woong1_5_오래된 노래.mp3" type="audio/mpeg">
@@ -190,70 +220,85 @@ function mvolume() {
                     <audio controls name="media2" id="audio2${stat.index}" hidden="hidden">
                       <source src="../../../resources/record/woong1_5_오래된 노래.mp3" type="audio/mpeg">
                     </audio>
-                  
+                    </c:if>
 
-                  <img src="displayFile?fileName=/${sharing.eximgfilename}" 
-                  alt="${pageContext.servletContext.contextPath }/resources/img/LOGOsingsing7.png" 
-                  onclick="showReadModal('${sharing.shid}')" style="width: 500px; height: auto; margin-left: auto; margin-right: auto; display: block;">
-                  <!-- data-toggle="modal"
-                  data-target="#myModal2" -->
-                </div>
-                
-                
-                <div style="margin: 10px;">
-                  <span class="time" style="float: right;"><i class="fa fa-clock-o"></i> <c:choose>
-                      <c:when test="${secTime<60 }">
+                    <!-- 이미지 파일 출력 -->
+					<div class="animate-box" style="border-radius: 10px;">
+							<c:set var="eximgfilename" value="${sharing.eximgfilename}"/>
+							<c:set var="emptyString" value="NoImageType"/>
+							<c:if test="${eximgfilename ne null}">
+							<c:if test="${eximgfilename ne emptyString}">
+								<img src="/mypage/displayFile?fileName=/${sharing.eximgfilename}"
+								alt="" onclick="showReadModal('${sharing.shid}')" style="margin-left: auto; margin-right: auto; display: block;">
+							</c:if>
+						</c:if>
+					</div>
+                  </div>
+
+
+                  <div class="row">
+                  <span style="float: right; margin-right: 30px; margin-top: 30px;" >
+                    <img src="/resources/img/clock.png" width="20px;" height="20px;" > <c:choose>
+                        <c:when test="${secTime<60 }">
                        ${secTime}초 전
                     </c:when>
-                      <c:when test="${secTime<3600 }">
+                        <c:when test="${secTime<3600 }">
                       ${minTime}분 전
                     </c:when>
-                      <c:otherwise>
-                        <fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${sharing.shregdate}" />
-                      </c:otherwise>
-                    </c:choose> </span>
-                </div>
-                <div style="margin: 30px;">
-                  <h3>
+                        <c:otherwise>
+                          <fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${sharing.shregdate}" />
+                        </c:otherwise>
+                      </c:choose> 
+                      </span>
+                  </div>
+                  <div class="row" style="margin: 50px; text-align: left;">
 
-                    <span id="sharingId" style="float: left;"><i class="fa fa-user" style="margin-right: 10px;"></i><a href="/mypage/sharing/${sharing.id}">${sharing.id}</a></span>
-                    <c:set var="target" value="${sharing.id}" />
-                    <c:set var="id" value="${login.id }" />
-                    <c:if test="${target eq id}">
-                      <div style="text-align: right; float: right;">
-                        <i class="fa fa-pencil" onclick="showUpdateModal('${sharing.shid}')"></i><span id="sharingId"> </span> <i class="fa fa-trash-o" onclick="showDeleteModal('${sharing.shid}')"></i><span id="sharingId"> </span>
-                      </div>
-                    </c:if>
-                  </h3>
+                      <span id="sharingId" style="text-align: left; font-size: 40px;"><b><i class="fa fa-user" style="margin-right: 10px;"></i><a href="/mypage/sharing/${sharing.id}">${sharing.id}</a></b></span>
+                      <c:set var="target" value="${sharing.id}" />
+                      <c:set var="id" value="${login.id }" />
+                      <c:if test="${target eq id}">
+                          <span style="float: right; margin-right: 80px; font-size: 100px;"><a onclick="showUpdateModal('${sharing.shid}')">
+                          <img src="/resources/img/pencil.png" width="30px;" height="30px;"></a><a onclick="showDeleteModal('${sharing.shid}')"><img src="/resources/img/trash.png" width="30px;" height="30px;" style="margin-left: 10px;"></a></span>
+                        <div class="row">
+                        <b style="float: left; margin-top:30px;  font-size: 25px;">${sharing.shcontent}</b>
+                        </div>
+                        
+                      </c:if>
+                      <div class="row" style="margin-top: 30px;">
+                     <img src="/resources/img/like.png" width="50px;" height="50px;"><b style="margin-left: 10px; color: #e7708d; font-size: 30px;">${sharing.likecnt}</b>
+                        <span style="float: right; margin-right: 90px;"><img src="/resources/img/reply.png" width="50px;" height="50px;"><b style="margin-left: 10px; color: #e7708d; font-size: 30px;">${sharing.commentcnt}</b></span>
+                        </div>
+                  </div>
+
                 </div>
+                  
 
                 <!-- <div class="row" style="margin: 10px;"><i class="fa fa-pencil-square-o">
               <i class="fa fa-trash-o"></div> -->
-              </div>
-              <div class="row" style="margin: 10px;">
-                <span style="float: left; margin-left: 120px;">${sharing.shcontent}</span>
-              </div>
-            </c:forEach>
+                            
+                    
+              </c:forEach>
+               
+            </div>
           </div>
         </div>
+        
       </div>
-    </div>
-  </div>
   </section>
 
   <!-- 상세조회 -->
   <!-- read modal -->
-  <div class="modal" id="readModal" data-backdrop="static" >
+  <div class="modal" id="readModal" data-backdrop="static">
     <div class="modal-dialog">
-      <div class="modal-content" style="background-color: black;;">
+      <div class="modal-content" style="background-color: black;">
 
-        <div class="modal-header">
+        <div class="modal-header" style="background-color: white;">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
 
-        <div class="modal-body">
+        <div class="modal-body" style="background-color: white;">
           <div class="animate-box">
             <img id="readImage" src="" style="margin-left: auto; margin-right: auto; display: block; width: 100%">
             <!-- <img alt="그림이 없습니다." align="center" style="width: 100%;"
@@ -265,7 +310,7 @@ function mvolume() {
             </h3>
           </div>
           <div class="row">
-<%--             <div class="btn-group">
+            <%--             <div class="btn-group">
               <h3>
                 <button class="btn" type="button" style="background-color: #d6d6c2;">
                   <i class="fa fa-heart"><span id="readLikecnt">${sharing.likecnt}</span></i>
@@ -283,7 +328,7 @@ function mvolume() {
 
         </div>
 
-        <div class="modal-footer">
+        <div class="modal-footer" style="background-color: white;">
           <div class="box-header with-border" style="background-color: #d6d6c2; margin: 2px;">
             <div class="row">
               <div class="pull-left">
@@ -551,7 +596,7 @@ function mvolume() {
     					$("#unfollow").attr("onclick", "removeFollow('"+sender+"','"+target+"')");
     					$("#add").attr("id", "remove")
     					$("#remove").attr("src", "/resources/img/add.png")
-    					$("#unfollow").html("<img id='remove' src='/resources/img/remove.png' width='50px' height='50px'> 언팔로우") 
+    					$("#unfollow").html("<img id='remove' src='/resources/img/unfollow.png' width='50px' height='50px'> 언팔로우") 
     	    		} else {
     	    			swal("이미 팔로우 한 유저입니다!", "", "error");
     	    		}
@@ -581,14 +626,14 @@ function mvolume() {
 				$("#follow").attr("class","btn badge bg-blue")
 				$("#follow").attr("onclick","addFollow('"+sender+"','"+target+"')");
 				
-				$("#follow").html("<img id='add' src='/resources/img/add.png' width='50px' height='50px'> 팔로우") 
+				$("#follow").html("<img id='add' src='/resources/img/follow.png' width='50px' height='50px'> 팔로우") 
 			}
 		});
 	}  
 	</script>
-    
-    
-    
+
+
+
 
   <jsp:include page="../include/footer.jsp"></jsp:include>
 

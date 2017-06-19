@@ -4,7 +4,53 @@
 <!DOCTYPE html>
 
 <html>
+
 <head>
+<style type="text/css">
+button{
+  border: none;
+  background-color: #fff;
+}
+
+#buttonimg{
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+}
+
+table.type10 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.type10 thead th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: #e7708d;
+    margin: 20px 10px;
+}
+table.type10 tbody th {
+    width: 150px;
+    padding: 10px;
+}
+table.type10 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+}
+table.type10 .even {
+    background: #fdf3f5;
+}
+
+</style>
+
 <title>노래방</title>
   <!-- 합쳐지고 최소화된 최신 CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -89,7 +135,9 @@ $(document).ready(function(){
           <div class="col-lg-12">
             <div class="box">
               <div class="box-header">
-                <h3 class="box-title">녹음 저장소</h3>
+                <h1 class="box-title" style="text-align: left;">
+                <img width="50px;" height="50px;" src="/resources/img/record1.png"><strong style="color: #e7708d;"> 녹음 저장소</strong>
+              </h1>
                 
                 <!-- <script>
           		cmp.writePlayer();
@@ -102,26 +150,30 @@ $(document).ready(function(){
 
               
               <div class="box-body no-padding">
-                <table class="table table-striped" >
-                  <tbody>
+                <table class="table table-striped type10" >
+                
+                   <thead>  
                     <tr>
                       <th style="width: 40%; text-align: center; font-size: 20px;">녹음파일명</th>
-                      <th style="width: 5%; text-align: center; font-size: 20px;">녹음된 날짜</th>
-                      <th style="width: 20%; text-align: center; font-size: 20px;">재생</th>
-                      <th style="width: 20%; text-align: center; font-size: 20px;">공유</th>
-                      <th style="width: 5%; text-align: center; font-size: 20px;">삭제</th>
-                                   </tr>
+                      <th style="width: 20%; text-align: center; font-size: 20px;">녹음된 날짜</th>
+                      <th style="width: 15%; text-align: center; font-size: 20px;">재생</th>
+                      <th style="width: 15%; text-align: center; font-size: 20px;">공유</th>
+                      <th style="width: 15%; text-align: center; font-size: 20px;">삭제</th>
+                    </tr>
+                   </thead>
+                    <tbody>
+                      
                       <c:forEach items="${list}" var="record" varStatus="stat">  
-                      <tr id="trRecord${record.rrid}">
+                      <tr class="even" id="trRecord${record.rrid}">
                         <%-- <td style="text-align: center">${((pageMaker.cri.page-1)*10)+(stat.index)}</td> --%>
-                        <td style="text-align: center; font-size: 20px;">${record.recordfilename}</td>
+                        <td style="text-align: center; font-size: 20px;"><b>${record.recordfilename}</b></td>
                         <td style="text-align: center;"><span class="badge bg-black" style="font-size: 20px;"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${record.recordregdate}" /></span></td>
                         <td style="text-align: center; font-size: 20px;">
-                        <button id="play${stat.index}" onclick="playAudio(${stat.index});" style="font-size: 20px;">play</button>
-                        <button id="pvolume${stat.index}" onclick="pvolume(${stat.index});" style="font-size: 20px;">+</button>
-                        <button id="mvolume${stat.index}" onclick="mvolume(${stat.index});" style="font-size: 20px;">-</button>
+                        <button id="play${stat.index}" onclick="playAudio(${stat.index});" style="font-size: 20px;"><img id="buttonimg"src="../../../resources/img/play.png"></button>
+                        <button id="pvolume${stat.index}" onclick="pvolume(${stat.index});" style="font-size: 20px;"><img id="buttonimg" src="../../../resources/img/plus.png" ></button>
+                        <button id="mvolume${stat.index}" onclick="mvolume(${stat.index});"  style="font-size: 20px;" ><img id="buttonimg" src="../../../resources/img/remove.png"></button>
                           <audio controls name="media" id="audio${stat.index}" hidden="hidden">
-                            <source src="../../../resources/music/${recordfilename}" type="audio/mpeg">
+                            <source src="../../../resources/music/${mrfilename}" type="audio/mpeg">
                             <!-- <source src="/resources/mp3/123.mp3" type="audio/mpeg"> -->
                           </audio>
                           <c:if test=""></c:if>
@@ -131,13 +183,11 @@ $(document).ready(function(){
                           </audio>
                         </td>
                         <td style="width: 5px; text-align: center; ">
-                          <button type="button" class="btn badge bg-blue" style="font-size: 20px;"
-							 onclick="writeModal('${record.recordfilename}');" data-backdrop="static">
-							<i class="fa fa-pencil" style="color: white;"></i>공유
-						</button>
+							<a onclick="writeModal('${record.recordfilename}');"><img alt="sharing" src="/resources/img/sharing.png" style="width: 40px; height: 40px;"></a>
+
                         </td>
                         <td style="width: 5px; text-align: center; ">
-                          <button class="btn badge bg-red" onclick="removeRecord(${record.rrid})" style="font-size: 20px;">삭제</button>
+                          <a onclick="removeRecord(${record.rrid})"><img alt="remove" src="/resources/img/delete.png" style="width: 40px; height: 40px;"></a>
                         </td>
                       </tr>
                       </c:forEach>

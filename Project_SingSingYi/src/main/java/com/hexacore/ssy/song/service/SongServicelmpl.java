@@ -73,7 +73,7 @@ public class SongServicelmpl implements SongService  {
 	}
 	
 	@Override
-	public int readRecentRecordId() {
+	public Integer readRecentRecordId() {
 		return songDao.readRecentRecordId();
 	}
 }

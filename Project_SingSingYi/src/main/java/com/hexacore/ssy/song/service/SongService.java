@@ -37,5 +37,5 @@ public interface SongService {
 	public void uploadRecord(RecordRepository recordRepository);
 	
 	/** 가장 최근 녹음 파일 번호 가져오기 */
-	public int readRecentRecordId();
+	public Integer readRecentRecordId();
 }

@@ -511,7 +511,7 @@ $(document).ready(function(){
                         		<button id="pvolume${stat.index}" onclick="pvolume(${stat.index});">+</button>
                         		<button id="mvolume${stat.index}" onclick="mvolume(${stat.index});">-</button>
                          		<audio controls name="media" id="audio${stat.index}" hidden="hidden">
-                            		<source src="../../../resources/music/woong1_5_오래된 노래.mp3" type="audio/mpeg">
+                            		<source src="https://webrtcweb.com/RecordRTC/uploads/${recordfilename}.wav" type="audio/mpeg">
                          		 </audio>
                          	<c:if test=""></c:if> 
                          		<audio controls name="media2" id="audio2${stat.index}" hidden="hidden">

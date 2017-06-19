@@ -49,7 +49,15 @@ public class SongController {
 		logger.info("파일 이름 : " + song.getSfilename());
 		Member member = (Member) httpSession.getAttribute("login");
 		String id = member.getId();
-		int rrid = songService.readRecentRecordId();
+		int rrid = 0;
+		
+		if(songService.readRecentRecordId() == null) {
+			rrid = 0;
+		} else {
+			rrid = songService.readRecentRecordId().intValue();
+		}
+		
+		logger.info("알알 : " + rrid);
 		
 		String fileName = id + "_" + (rrid+1) + "_" + song.getSfilename();
 		

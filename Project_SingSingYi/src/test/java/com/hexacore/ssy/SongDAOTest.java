@@ -21,10 +21,20 @@ public class SongDAOTest {
 	
 	Logger logger = Logger.getLogger(SongDAOTest.class);
 	
-	@Test
+	//@Test
 	public void checkFavorite(){
 		String id = "woong1";
 		int sid = 1;		
 		System.out.println("디에오 체크 : " + dao.checkFavorite(id, sid));
+	}
+	
+	//@Test
+	public void readRecentRecordIdTest() {
+		int rrid = 0;
+		if(dao.readRecentRecordId() == null) {
+			rrid = 0;
+		}
+		logger.info("rrdfdfdf" + dao.readRecentRecordId());
+		logger.info("rrid : " + rrid);
 	}
 }

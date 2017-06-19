@@ -77,7 +77,7 @@
 	</insert>
 	
 	<!-- 가장 최근 녹음 파일 번호 가져오기  -->
-	<select id="readRecentRecordId" resultType="int">
+	<select id="readRecentRecordId" resultType="Integer">
 		select rrid
 		from recordrepository
 		order by rrid desc limit 1;

@@ -50,5 +50,6 @@ public class MemberDAOImpl implements MemberDAO {
 	public void coinListAdd(String id) {
 		sqlSession.insert(namespace +".coinListAdd", id);
 	}
+
 	
 }

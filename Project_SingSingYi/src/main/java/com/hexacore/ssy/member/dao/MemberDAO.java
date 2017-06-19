@@ -26,4 +26,5 @@ public interface MemberDAO {
 	/** 게임 성공 후 코인 1개 추가  내역 등록 */
 	public void coinListAdd(String id);
 	
+	
 }

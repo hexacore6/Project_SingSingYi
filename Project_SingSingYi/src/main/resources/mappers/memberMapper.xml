@@ -45,4 +45,9 @@
 	values (#{id}, '지급', '미니게임 성공으로  코인 1개 지급')
 	</insert>
 	
+	<select id="isDupId" resultType="String">
+		select id
+		from members
+		where id = #{id}
+	</select>
 </mapper>

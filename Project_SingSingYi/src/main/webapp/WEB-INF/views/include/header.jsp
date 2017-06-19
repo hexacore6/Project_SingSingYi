@@ -18,7 +18,7 @@
                             <div id='jsonp'></div> -->
 						</div>
              
-                       <iframe src="https://192.168.0.20:3000/client" id="ifm"style="width: 300px;height: 300px; margin-left: 250px;"></iframe>
+                       <iframe src="https://192.168.0.74:3000/client" id="ifm"style="width: 300px;height: 300px; margin-left: 250px;"></iframe>
 					
           
           </div>
@@ -88,12 +88,12 @@ window.onload = function () {
     
     $.ajax({
         type : "GET",
-        url : "https://192.168.0.20:3000/first",
+        url : "https://192.168.0.74:3000/first",
         data : "id="+loginCookie[1],
         dataType : "jsonp",
         success : function(json) {
-            iframeDocument.postMessage('1000:'+loginCookie[1],'https://192.168.0.20:3000/client')
-            iframeDocument.postMessage('4000:'+json.length,'https://192.168.0.20:3000/client')
+            iframeDocument.postMessage('1000:'+loginCookie[1],'https://192.168.0.74:3000/client');
+            iframeDocument.postMessage('4000:'+json.length,'https://192.168.0.74:3000/client');
         },
         error : function(e) {
                 alert("error1");
@@ -102,11 +102,11 @@ window.onload = function () {
     
     $.ajax({
         type : "GET",
-        url : "https://192.168.0.20:3000/coincnt",
+        url : "https://192.168.0.74:3000/coincnt",
         data : "id="+loginCookie[1],
         dataType : "jsonp",
         success : function(data) {
-              iframeDocument.postMessage('5000:'+data[0].coincnt,'https://192.168.0.20:3000/client')  
+              iframeDocument.postMessage('5000:'+data[0].coincnt,'https://192.168.0.74:3000/client');
         },
         error : function(e) {
                 alert("error2");

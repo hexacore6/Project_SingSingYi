@@ -180,6 +180,41 @@ canvas {
    height: 800px;
    background-color: rgba(0, 0, 0, 0.3);
 }
+
+table.type10 {
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 1.5;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  margin: 20px 10px;
+}
+
+table.type10 thead th {
+  width: 150px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #fff;
+  background: #e7708d;
+  margin: 20px 10px;
+}
+
+table.type10 tbody th {
+  width: 150px;
+  padding: 10px;
+}
+
+table.type10 td {
+  width: 350px;
+  padding: 10px;
+  vertical-align: top;
+}
+
+table.type10 .even {
+  background: #fdf3f5;
+}
+
 </style>
 
 </head>
@@ -239,51 +274,30 @@ canvas {
             <!--음악리스트-->
             <div class="box" style="padding: 5px;">
               <div class="box-header">
-                <h3 class="box-title">노래 리스트</h3>
+                <h3 class="box-title" style="color: #e7708d; font-size: 30px;"><b>노래 리스트</b></h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body no-padding">
-                <table class="table table-striped">
-                  <tbody>
+                <table class="table table-striped type10">
+                  <thead>
                     <tr>
-                      <th style="width: 5px"></th>
-                      <th>곡명</th>
-                      <th style="width: 50px">Artist</th>
-                      <th style="width: 40px">시간</th>
+                      <th style="width: 30%; text-align: center; font-size: 15px;">곡명</th>
+                      <th style="width: 20%; text-align: center; font-size: 15px; ">아티스트</th>
+                      <th style="width: 30%; text-align: center; font-size: 15px;">즉시부르기</th>
                     </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>맞지?</td>
-                      <td>언니쓰</td>
-                      <td>
-                        <span class="badge bg-red">3:30</span>
+                    </thead>
+                    <c:forEach items="${list}" var="favorite" varStatus="stat">  
+                    <tr class="even">
+                      <td style="width: 15px; font-size: 15px; text-align: center;"><b>${favorite.stitle}</b></td>
+                      <td style="font-size: 10px; text-align: center;"><b>${favorite.singer}</b></td>
+                      <td style="width: 5px; text-align: center;">
+                        <form role="form" method="post" action="/song/sing">
+                         <input type="hidden" name="sid" value="${favorite.sid}">
+                         <button><img src="/resources/img/nowsing.png" style="width: 50px; height: 50px;"> </button>
+                         </form>
                       </td>
                     </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>맞지?</td>
-                      <td>언니쓰</td>
-                      <td>
-                        <span class="badge bg-red">3:30</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>맞지?</td>
-                      <td>언니쓰</td>
-                      <td>
-                        <span class="badge bg-red">3:30</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>맞지?</td>
-                      <td>언니쓰</td>
-                      <td>
-                        <span class="badge bg-red">3:30</span>
-                      </td>
-                    </tr>
-                  </tbody>
+                    </c:forEach>
                 </table>
               </div>
               <!-- /.box-body -->
@@ -1157,6 +1171,7 @@ console.log("EASY!!");
             goodCount = 100;
           document.getElementById('score').innerHTML = goodCount;
       }
+  
  </script>
 
 </body>

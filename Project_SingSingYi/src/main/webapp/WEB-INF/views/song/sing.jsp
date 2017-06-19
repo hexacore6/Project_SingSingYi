@@ -3,7 +3,7 @@
 <!doctype html>
 <html>
 <head>
-<title>노래방9</title>
+<title>노래방5</title>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -11,6 +11,8 @@
  href="${pageContext.servletContext.contextPath }/resources/css/main.css">
 <link rel="stylesheet"
  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+   <link rel="stylesheet" type="text/css" href="../../resources/css/sweetalert.css">
+   <script src="../../resources/js/sweetalert.min.js"></script>
 <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
 <script src="https://cdn.webrtc-experiment.com/gif-recorder.js"></script>
 <script src="https://cdn.webrtc-experiment.com/getScreenId.js"></script>
@@ -134,6 +136,7 @@
    background-repeat: no-repeat;
    background-color: transparent;
    border: none;
+   
 }
 
 .normal-btn {
@@ -151,6 +154,17 @@
    width: 130px;
    height: 120px;
    background-image: url("/resources/img/hard.png");
+   background-size: 110px, 2px;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-color: transparent;
+   border: none;
+}
+
+.savebutton {
+   width: 130px;
+   height: 120px;
+   background-image: url("/resources/img/save.png");
    background-size: 110px, 2px;
    background-position: center;
    background-repeat: no-repeat;
@@ -208,47 +222,57 @@ audio {
         <!--왼쪽-->
         <div class="music">
           <!--곡명-->
-          <h1 id="title" style="text-align: left; color: white;">곡명</h1>
+          <h1 id="title" style="text-align: center; color: #CCAC2B;">곡명</h1>
         </div>
         
         <div class="music">
           <!--곡명-->
-          <h1 id="singer" style="text-align:right; color: white;" >가수명</h1>
+          <h2 id="singer" style="text-align:right; color: #CCAC2B;" >가수명</h2>
         </div>
+        <!-- 
         <div class="score">
          <h3 id="score"></h3>
-        </div>
+        </div> -->
         <div class="lyrics">
-          <h1 id="songText1" style="color: white;">가사 준비중</h1>
-          <h1 id="songText2" style="color: white;">...</h1>
+          <h3 id="songText1" style="color: white;">가사 준비중</h3>
+          <h3 id="songText2" style="color: white;">...</h3>
         </div>
 
         <div class="col-lg-3">
-          <iframe width="700px" height="500px" src="https://192.168.0.20:3000/robot" style="border: none;"></iframe>
+          <iframe width="700px" height="500px" src="https://192.168.0.74:3000/robot" style="border: none;"></iframe>
         </div>
       </div>
 
       <!-- 수정본  -->
-      <div class="col-lg-4" style="border: 2px solid;">
+      <div class="col-lg-4" style="border: 2px solid; text-align: left">
         <div class="music-controller">
-          <div class="page">
-            <button class="easy-btn" id="easy-btn" onclick="clickEasy();"></button>
-            <button class="normal-btn" id="normal-btn" onclick="clickNormal();"></button>
-            <button class="hard-btn" id="hard-btn" onclick="clickHard();"></button>
+        <div class="buttonss" style="margin-left: 60px; margin-top: 30px;">
+          <div class="page" style="margin-top: 10px;">
+            <button class="easy-btn" onclick="clickEasy();"></button>
           </div>
-          <div class="buttons">
+          <div>
+            <button class="normal-btn" onclick="clickNormal();"></button>
+            
             <button id="playbutton" onclick="singAsong()"></button>
             <div class="experiment recordrtc" style="float: left">
-            <button id="recordbutton" onclick="record('${song.sfilename}')" hidden></button>
+            <button id="recordbutton" onclick="record()" hidden></button><!-- '${song.sfilename}')" hidden></button> -->
             <!-- Stop recording 후 보여지는 비디오 태그 -->
             <video hidden></video>
             </div>
             <!-- 
             <button id="upload-to-server"></button>
-             -->
+             -->   
+         </div>
+          <div>
+            <button class="hard-btn" onclick="clickHard();"></button>
+            <button class="savebutton" id="savebutton"></button>
           </div>
+          </div>
+          
+          
+          
 
-          <div class="signalbar" style="padding-top: 50px;">
+          <div class="signalbar" style="padding-top: 50px; text-align: center;">
             <!--불륨조절-->
             <img src="/resources/img/nostart.png" id="light">
           </div>
@@ -345,10 +369,13 @@ audio {
 
 
  <script>
+
         var recordAudio = new Audio();
         
         //1 t
-        function record(songFileName){
+        function record(){//songFileName){
+        	 
+        
         	var recordingDIV = document.querySelector('.recordrtc');
             var recordingPlayer = recordingDIV.querySelector('video');
 						//2 t
@@ -359,14 +386,14 @@ audio {
 
                 // 3 t
                 if(recordPlaying == false) {
-                	/*
+                	
                     button.disabled = true;
                     button.disableStateWaiting = true;
                     setTimeout(function() {
                         button.disabled = false;
                         button.disableStateWaiting = false;
                     }, 2 * 1000);
-*/
+
                     recordPlaying = true;
 
                     function stopStream() {
@@ -421,7 +448,7 @@ audio {
                         button.disabled = false;
                     },
                     onMediaStopped: function() {
-												//recordPlaying = true;
+												recordPlaying = true;
 												
                         if(!button.disableStateWaiting) {
                             button.disabled = false;
@@ -510,18 +537,48 @@ audio {
     
                     var button = this;
                     uploadToServer(recordRTC, function(progress, fileURL) {
-                    	/*
+                    	
                         if(progress === 'ended') {
                             button.disabled = false;
                             button.innerHTML = 'Click to download from server';
-                            button.onclick = function() {
+                            //button.onclick = function() {
                                 //window.open(fileURL);
                                 //이걸 바꾸자!
                                 
-                            };
+                            //};
+                            document.getElementById('savebutton').onclick = function(){
+                            	window.open(fileURL);
+                            	document.getElementById('savebutton').src = "/resources/img/save2.png"
+                            	
+                            	swal({
+                            		  title: "파일확인!",
+                            		  text: "녹음할 파일을 들어볼까요?",
+                            		  timer: 2000,
+                            		  showConfirmButton: false,
+                            		  imageUrl: "/resources/img/smile.png"
+                            		});
+                            	
+                                $.ajax({
+                          					type : 'post',
+                          					url : '/song/upload',
+                              			headers : {
+                              				"Content-Type" : "application/json",
+                              				"X-HTTP-Method-Override" : "POST"
+                              			},
+                              			dataType : 'text',
+                              			data : JSON.stringify({
+                              				sfilename : fileName,
+                              			}),
+                              			success : function(result) {
+                              				console.log(result);
+                              				fileName = result;
+                              			}
+                            		});
+                								
+                            }
                             return;
                         }
-                    	*/
+                    	
                         button.innerHTML = progress;
                     });
             }
@@ -532,25 +589,9 @@ audio {
                 var blob = recordRTC instanceof Blob ? recordRTC : recordRTC.blob;
                 console.log("output : " + blob);
                 var fileType = blob.type.split('/')[0] || 'audio';
-                var fileName = ''; 
-                console.log('파일 이름 : ' + songFileName);
-                $.ajax({
-          					type : 'post',
-          					url : '/song/upload',
-              			headers : {
-              				"Content-Type" : "application/json",
-              				"X-HTTP-Method-Override" : "POST"
-              			},
-              			dataType : 'text',
-              			data : JSON.stringify({
-              				sfilename : songFileName,
-              			}),
-              			success : function(result) {
-              				console.log(result);
-              				fileName = result;
-              			}
-            		});
-								
+                var fileName = (Math.random() * 1000).toString().replace('.', '');//''; 
+               // console.log('파일 이름 : ' + songFileName);
+                
                 fileName += '.' + (!!navigator.mozGetUserMedia ? 'ogg' : 'wav');
 
                 // create FormData
@@ -687,7 +728,13 @@ audio {
    init();
    document.getElementById('title').innerHTML = '${song.stitle}';
    document.getElementById('singer').innerHTML = '${song.singer}';
-
+   swal({
+	   title: "코인이 소모됩니다!",
+	   text: "I will close in 2 seconds.",
+	   timer: 2000,
+	   showConfirmButton: false,
+	   imageUrl: "/resources/img/insert-coin.png"
+	 });
   }
 	
   //level-controller
@@ -1029,19 +1076,19 @@ audio {
 	    //코인제거
 	    var iframeObj = $("#ifm").get(0);
 	    var iframeDocument = iframeObj.contentWindow || iframeObj.contentDocument;
-	    iframeDocument.postMessage('7000:','https://192.168.0.20:3000/client')
+	    iframeDocument.postMessage('7000:','https://192.168.0.74:3000/client')
 	    
-   
+	    
    if(playingMelody == false){
-    melodyAudio = new Audio('/resources/music/loveExceptMe.mp3');
+    melodyAudio = new Audio('/resources/mr/${song.mrfilename}.mp3');
     melodyAudio.play();
-      readFile("/resources/notes/loveExceptMe.txt");
-      readFile("/resources/lyrics/loveExceptMe.txt");
-      readFile("/resources/lyrics/loveExceptMeTime.txt");
+      readFile("/resources/midi/${song.midifilename}.txt");
+      readFile("/resources/lyrics/${song.lyricsfilename}.txt");
+      readFile("/resources/lyrics/${song.lyricstimefilename}.txt");
    
       playing = true;
       playingMelody = true;
-      record('${song.sfilename}');
+      record();//'${song.sfilename}');
       updatePitch();
 
       setTimeout("calLyrics()", (lyricsTimeTxtArr[0] * 1000));
@@ -1049,8 +1096,13 @@ audio {
    else if(playingMelody == true){
     melodyAudio.pause();
     playingMelody = false;
-    record('${song.sfilename}');
-    calScore();
+    record();//'${song.sfilename}');
+   // calScore();
+    swal({
+    	  title: "코인소모알림!",
+    	  text: "중간에 종료하셔도 코인소모되시는거 아시죠?",
+    	  imageUrl: "/resources/img/wink.png"
+    	});
    }
   }
 
@@ -1134,7 +1186,8 @@ audio {
 		          if ((str1.substring(0, 1) == str2.substring(0, 1)) 
 		              && (str1.substring(2, 1) == str2.substring(2, 1))) {
 		            console.log("!!!!!!!!!!!!!!!!!!!!!!1very good!!!!!!!!!!!!!!!!!!!!");
-		            goodCount++;
+		            //goodCount++;
+		            calScore();
 		            noteCorrect = true;
 		          } else {
 		           noteCorrect = false;
@@ -1143,7 +1196,8 @@ audio {
 		       else if(level == 1){ // level normal일 때  
 		          if(str1.substring(0, 1) == str2.substring(0, 1)){//알파벳만 맞을 경우
 		               console.log("!!!!!!!!!!!!!!2222222very good!!!!!!!!!!!!!!!!!!!!!!1");
-		            goodCount++;   
+		           // goodCount++;   
+		            calScore();
 		            noteCorrect = true;
 		             } else {
 		               noteCorrect = false;
@@ -1160,7 +1214,8 @@ audio {
 		              ||(s1 == minNum)
 		              ||(s1 == s2)) {
 		             console.log("!!!!!!!!!!000000001very good!!!!!!!!!!!!!!!!!!!!");
-		             goodCount++;
+		             //goodCount++;
+		             calScore();
 		             noteCorrect = true;
 		           } else {
 		            noteCorrect = false;
@@ -1235,26 +1290,38 @@ audio {
      	      ((lyricsTimeTxtArr[lyricsCnt-1] - lyricsTimeTxtArr[lyricsCnt - 2]) * 1000));
         }
 	  }
-	  else if(lyricsTimeTxtArr.length <= lyricsCnt){//노래 중간에 껐을 때. || 노래 종료되었을 때.
+	  else if((0 < lyricsCnt)&&(lyricsTimeTxtArr.length <= lyricsCnt)){//노래 중간에 껐을 때. || 노래 종료되었을 때.
 		  //점수
 		  //record 중지
 		  recordPlaying = false;
-		  record('${song.sfilename}');
-		    calScore();
+		  record();//'${song.sfilename}');
+		   // calScore();
 		    /*
 		    console.log("last!!!!!!!!!!")
-		    swal({
-		    	  title: "Sweet!",
-		    	  text: "Here's a custom image."//,
-		    	 // imageUrl: "images/thumbs-up.jpg"
-		    	});
+		    
 		    */
+		    (goodCount > 100) goodCount = 100; : goodCoount = parseInt(goodCoount);
+		    swal({
+      		  title: "your score is",
+      		  text: goodCount,
+      		  imageUrl: "/resources/img/crown.png"
+      		});
 	  }
   }
   function calScore(){
-	  			if(goodCount > 100)
-	  				goodCount = 100;
-	  			document.getElementById('score').innerHTML = goodCount;
+	  			/* if(goodCount > 100)
+	  				goodCount = 100; */
+       
+	  			if(level == 0){ //level easy일 때
+	  				goodCount+=0.6;
+	  			}else if(level == 1){
+	  				goodCount+=0.8;
+	  			}else if(level == 2){
+	  				goodCount+=1;
+	  			}
+	  			
+	  			console.log("good : "+ goodCount);
+	  			//document.getElementById('score').innerHTML = goodCount;
 	  	}
  </script>
 

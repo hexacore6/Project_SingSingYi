@@ -322,6 +322,18 @@ $(document).ready(function(){
 	  
   }
   </script>
+  
+  <!-- jQuery -->
+  
+  <script src="../resources/js/jquery.easing.1.3.js"></script>
+  <script src="../resources/js/bootstrap.min.js"></script>
+  <script src="../resources/js/jquery.waypoints.min.js"></script>
+  <script src="../resources/js/salvattore.min.js"></script>
+  <!-- Main JS -->
+  <script src="../resources/js/jquery.magnific-popup.min.js"></script>
+  <script src="../resources/js/main.js"></script>
+  <script src="../resources/dist/js/app.min.js" type="text/javascript"></script>
+  <script src="../resources/dist/js/demo.js" type="text/javascript"></script>    
     <jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 

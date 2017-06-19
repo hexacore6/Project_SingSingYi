@@ -101,19 +101,19 @@ $(document).ready(function() {
 <body>
   <jsp:include page="../include/header.jsp"></jsp:include>
     <section id="content " class='container'>
-    <div class="row">
+    <div class="row" >
       <%@include file="side.jsp"%>
-      <div class="col-lg-9" style="margin-top: 50px;">
+      <div class="col-lg-9" style="margin-top: 50px;" ">
         <!--content-->
-        <div class="box box-info" style="border: none">
-          <div class="box-header with-border">
+        <div class="box box-info" style="border: none" >
+          <div class="box-header with-border" style="padding-left: 200px;">
             <h1 class="box-title" style="text-align: left;">
                 <img width="50px;" height="50px;" src="/resources/img/modify.png"><strong style="color: #e7708d;"> 비밀번호 변경</strong>
               </h1>
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-            <div class="textbox">
+            <div class="textbox" style="padding-left: 200px;">
               <div class="form-group" style="margin-top: 50px; margin-left: 8px;">
                 <input type="text" placeholder="${login.id }"  id="id" name="id" class="form-control" readonly="readonly" style="width: 300px; font-size: 20px;">
               </div>
@@ -125,7 +125,7 @@ $(document).ready(function() {
                                     <input type="text" id="cPassword" name="cPassword" class="form-control" placeholder="Enter ..." style="width:300px;"> </div> -->
             </div>
             <!-- /.box-body -->
-            <div class="box-footer" style="margin-right: 180px; border: none; text-align: left; margin-left: 55px;">
+            <div class="box-footer" style="margin-right: 180px; border: none; text-align: left; margin-left: 55px; padding-left: 200px;">
               <button id="btnModify" class="btn btn-info"  style="margin-left: 200px; margin-top: 30px; margin-bottom: 30px;"><b style="font-size: 20px;">변경</b></button>
             </div>
             <!-- /.box-footer -->

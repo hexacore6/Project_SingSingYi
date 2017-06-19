@@ -76,9 +76,9 @@ table.type10 .even {
               <table class="table table-striped type10">
                 <thead>
                   <tr>
-                    <th style="width: 20px; text-align: center; font-size: 20px;">곡명</th>
-                    <th style="width: 50px; text-align: center; font-size: 20px; ">아티스트</th>
-                    <th style="width: 5px; font-size: 20px;">삭제</th>
+                    <th style="width: 20%; text-align: center; font-size: 20px;">곡명</th>
+                    <th style="width: 10%; text-align: center; font-size: 20px; ">아티스트</th>
+                    <th style="width: 5%; font-size: 20px;">삭제</th>
                   </tr>
                   </thead>
                   <%-- <c:forEach items="myFavorite" var="favorite"> --%>

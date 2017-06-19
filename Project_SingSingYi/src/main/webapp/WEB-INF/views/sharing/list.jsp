@@ -506,10 +506,10 @@ $(document).ready(function(){
 							<c:set var="emptyValue" value=""/>
 							<c:if test="${recordfilename ne emptyValue}">
 								 <div style="margin: 10px;"><h3><strong><span style="color : #d9534f">${sharing.recordfilename}</span></strong></h3></div>
-								<button id="play" onclick="playAudio(${stat.index});">play</button>
+								<button class="btn btn-primary" id="play" onclick="playAudio(${stat.index});" style="font-size: 20px; background-color: #e7708d; border-color: #e7708d; font-size: 10px;">play</button>
 								
-                        		<button id="pvolume${stat.index}" onclick="pvolume(${stat.index});">+</button>
-                        		<button id="mvolume${stat.index}" onclick="mvolume(${stat.index});">-</button>
+                        		<button id="pvolume${stat.index}" onclick="pvolume(${stat.index});"><img id="buttonimg" src="/resources/img/plus.png" ></button>
+                        		<button id="mvolume${stat.index}" onclick="mvolume(${stat.index});"><img id="buttonimg" src="/resources/img/remove.png"></button>
                          		<audio controls name="media" id="audio${stat.index}" hidden="hidden">
                             		<source src="https://webrtcweb.com/RecordRTC/uploads/${recordfilename}.wav" type="audio/mpeg">
                          		 </audio>

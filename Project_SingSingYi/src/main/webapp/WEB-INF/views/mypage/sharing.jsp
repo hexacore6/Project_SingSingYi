@@ -208,7 +208,7 @@ function mvolume() {
                       </h3>
                     </div>
                     <div style="margin-bottom: 30px; text-align: center;">
-                        <a id="play${stat.index}" onclick="playAudio(${stat.index});"><img id="buttonimg"src="../../../resources/img/play.png"></a>
+                        <button class="btn btn-primary" id="play${stat.index}" onclick="playAudio(${stat.index});" style="font-size: 20px; background-color: #e7708d; border-color: #e7708d"></button>
                         <a id="pvolume${stat.index}" onclick="pvolume(${stat.index});"><img id="buttonimg" src="../../../resources/img/plus.png" ></a>
                         <a id="mvolume${stat.index}" onclick="mvolume(${stat.index});"><img id="buttonimg" src="../../../resources/img/remove.png"></a>
                     </div>

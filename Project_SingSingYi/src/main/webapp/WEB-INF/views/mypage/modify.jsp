@@ -49,22 +49,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	  
-	
-	  var placeholderTarget = $('.textbox input[type="text"], .textbox input[type="password"]');
-	  
-	  //포커스시
-	  placeholderTarget.on('focus', function(){
-		  jQuery(this).siblings('label').fadeOut('fast');
-	  });
-
-	  //포커스아웃시
-	  placeholderTarget.on('focusout', function(){
-	    if(jQuery(this).val() == ''){
-	    	jQuery(this).siblings('label').fadeIn('fast');
-	    }
-	  }); 	
-	
       $("#btnModify").on("click", function() {
     	var password = $("#password").val();
         modify(password);

@@ -35,15 +35,16 @@
 </style>
 <title>노래방</title>
 <!-- 합쳐지고 최소화된 최신 CSS -->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="../../../resources/css/main.css?ver=1">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/resources/css/bootstrap3-wysihtml5.min.css?ver=3">
 <link rel="stylesheet" type="text/css" href="../../resources/css/sweetalert.css">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="/resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+<script src="/resources/js/bootstrap3-wysihtml5.all.min.js?ver=3"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script src="/resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/resources/js/bootstrap3-wysihtml5.all.min.js?ver=3"></script>
 <script src="/resources/js/sweetalert.min.js"></script>
 
 <script type="text/javascript">
@@ -99,7 +100,7 @@ $(document).ready(function() {
           <!-- form start -->
             <div class="textbox" style="padding-left: 200px;">
               <div class="form-group" style="margin-top: 50px; margin-left: 8px;">
-                <input type="text" placeholder="${login.id }"  id="id" name="id" class="form-control" readonly="readonly" style="width: 300px; font-size: 20px;">
+                <input type="text" name="id" value="${login.id }" class="form-control" readonly="readonly" style="width: 300px; font-size: 20px;">
               </div>
               <div class="textbox" style="margin-top: 50px; margin-left: 8px;">
                 <input type="password" placeholder="변경할 비밀번호" id="password" name="password" class="form-control" style="width: 300px; font-size: 20px;">

@@ -38,32 +38,16 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="../../../resources/css/main.css?ver=1">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="../../../resources/css/bootstrap3-wysihtml5.min.css?ver=2">
+<link rel="stylesheet" href="/resources/css/bootstrap3-wysihtml5.min.css?ver=3">
 <link rel="stylesheet" type="text/css" href="../../resources/css/sweetalert.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+<script src="/resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
-<script src="../../resources/js/sweetalert.min.js"></script>
+<script src="/resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+<script src="/resources/js/sweetalert.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	  
-	
-	  var placeholderTarget = $('.textbox input[type="text"], .textbox input[type="password"]');
-	  
-	  //포커스시
-	  placeholderTarget.on('focus', function(){
-		  jQuery(this).siblings('label').fadeOut('fast');
-	  });
-
-	  //포커스아웃시
-	  placeholderTarget.on('focusout', function(){
-	    if(jQuery(this).val() == ''){
-	    	jQuery(this).siblings('label').fadeIn('fast');
-	    }
-	  }); 	
 	
       $("#btnModify").on("click", function() {
     	var password = $("#password").val();

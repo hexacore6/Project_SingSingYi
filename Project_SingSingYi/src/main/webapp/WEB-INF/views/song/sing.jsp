@@ -331,7 +331,7 @@ audio {
                     <c:forEach items="${list}" var="favorite" varStatus="stat">  
                     <tr class="even">
                       <td style="width: 15px; font-size: 15px; text-align: center;"><b>${favorite.stitle}</b></td>
-                      <td style="font-size: 10px; text-align: center;"><b>${favorite.singer}</b></td>
+                      <td style="font-size: 15px; text-align: center;"><b>${favorite.singer}</b></td>
                       <td style="width: 5px; text-align: center;">
                         <form role="form" method="post" action="/song/sing">
                          <input type="hidden" name="sid" value="${favorite.sid}">

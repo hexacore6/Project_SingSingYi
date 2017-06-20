@@ -41,10 +41,10 @@
 <link rel="stylesheet" href="/resources/css/bootstrap3-wysihtml5.min.css?ver=3">
 <link rel="stylesheet" type="text/css" href="../../resources/css/sweetalert.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+<script src="/resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
-<script src="../../resources/js/sweetalert.min.js"></script>
+<script src="/resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+<script src="/resources/js/sweetalert.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {

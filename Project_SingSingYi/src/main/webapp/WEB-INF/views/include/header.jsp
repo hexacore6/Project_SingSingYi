@@ -92,8 +92,10 @@ window.onload = function () {
         data : "id="+loginCookie[1],
         dataType : "jsonp",
         success : function(json) {
+
             iframeDocument.postMessage('1000:'+loginCookie[1],'https://192.168.0.74:3000/client');
             iframeDocument.postMessage('4000:'+json.length,'https://192.168.0.74:3000/client');
+
         },
         error : function(e) {
                 alert("error1");
@@ -106,7 +108,9 @@ window.onload = function () {
         data : "id="+loginCookie[1],
         dataType : "jsonp",
         success : function(data) {
+
               iframeDocument.postMessage('5000:'+data[0].coincnt,'https://192.168.0.74:3000/client');
+
         },
         error : function(e) {
                 alert("error2");

@@ -40,8 +40,32 @@ public class SongController {
 	
 	@RequestMapping(value="/sing", method=RequestMethod.GET)
 	public void readSongData(Criteria cri, Model model, @RequestParam("sid") int sid, HttpSession httpSession){
+		// 나의 애창곡 조회
+		Member member = (Member)httpSession.getAttribute("login");
 		
+		String id = member.getId();
+		List<HashMap<String, Object>> list = mypageService.favoriteCriteria(cri, id);
+		System.out.println("리스트" + list);
+
+		String sfilename = null;
 		
+		for (HashMap<String, Object> hashMap : list) {
+			sfilename =  (String) hashMap.get("sfilename");
+		}
+		
+		model.addAttribute("sfilename", sfilename);
+		model.addAttribute("list", list);
+		model.addAttribute("id", id);
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		
+		pageMaker.setTotalCount(mypageService.countFavoritePaging(cri, id));
+		
+		model.addAttribute("pageMaker", pageMaker);
+		
+		// 나의 애창곡 조회 End
+				
 		songService.updatePlayCnt(sid);
 		
 		model.addAttribute("sid", sid);
@@ -98,7 +122,7 @@ public class SongController {
 		
 		logger.info("알알 : " + rrid);
 		
-		String fileName = id + "_" + (rrid+1) + "_" + song.getSfilename();
+		String fileName = song.getSfilename();
 		
 		RecordRepository recordRepository = new RecordRepository();
 		recordRepository.setId(id);

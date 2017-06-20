@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -184,12 +186,18 @@ public class MypageController {
 		String recordfilename = null;
 		String mrfilename = null;
 		String[] array = null;
+		List<RecordRepository> mrlist = new ArrayList<RecordRepository>();
 		List<RecordRepository> list = service.readMyRecord(cri, id);
+		System.out.println("리스트 : " + list);
+		model.addAttribute("list", list);
+		
 		for (RecordRepository recordRepository : list) {
 			recordfilename = recordRepository.getRecordfilename();
 			if (recordfilename != null){
 				array = recordfilename.split("_");
 				mrfilename = array[2];
+				recordRepository.setRecordfilename(mrfilename);
+				mrlist.add(recordRepository);
 			}
 		}
 		
@@ -197,8 +205,10 @@ public class MypageController {
 		pageMaker.setCri(cri);
 		
 		pageMaker.setTotalCount(service.countRecordPaging(cri, id));
+		//System.out.println(mrlist);
+		System.out.println("엠알 : " + mrlist);
 		
-		model.addAttribute("mrfilename", mrfilename);
+		model.addAttribute("mrlist", mrlist);
 		model.addAttribute("id", id);
 		model.addAttribute("list", list);
 		model.addAttribute("pageMaker", pageMaker);

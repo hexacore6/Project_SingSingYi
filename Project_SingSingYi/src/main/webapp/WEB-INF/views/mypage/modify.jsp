@@ -38,32 +38,16 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="../../../resources/css/main.css?ver=1">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="../../../resources/css/bootstrap3-wysihtml5.min.css?ver=2">
+<link rel="stylesheet" href="/resources/css/bootstrap3-wysihtml5.min.css?ver=3">
 <link rel="stylesheet" type="text/css" href="../../resources/css/sweetalert.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+<script src="/resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script src="../../../resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
-<script src="../../resources/js/sweetalert.min.js"></script>
+<script src="/resources/js/bootstrap3-wysihtml5.all.min.js?ver=2"></script>
+<script src="/resources/js/sweetalert.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	  
-	
-	  var placeholderTarget = $('.textbox input[type="text"], .textbox input[type="password"]');
-	  
-	  //포커스시
-	  placeholderTarget.on('focus', function(){
-		  jQuery(this).siblings('label').fadeOut('fast');
-	  });
-
-	  //포커스아웃시
-	  placeholderTarget.on('focusout', function(){
-	    if(jQuery(this).val() == ''){
-	    	jQuery(this).siblings('label').fadeIn('fast');
-	    }
-	  }); 	
 	
       $("#btnModify").on("click", function() {
     	var password = $("#password").val();
@@ -101,19 +85,19 @@ $(document).ready(function() {
 <body>
   <jsp:include page="../include/header.jsp"></jsp:include>
     <section id="content " class='container'>
-    <div class="row">
+    <div class="row" >
       <%@include file="side.jsp"%>
-      <div class="col-lg-9" style="margin-top: 50px;">
+      <div class="col-lg-9" style="margin-top: 50px;" ">
         <!--content-->
-        <div class="box box-info" style="border: none">
-          <div class="box-header with-border">
+        <div class="box box-info" style="border: none" >
+          <div class="box-header with-border" style="padding-left: 200px;">
             <h1 class="box-title" style="text-align: left;">
                 <img width="50px;" height="50px;" src="/resources/img/modify.png"><strong style="color: #e7708d;"> 비밀번호 변경</strong>
               </h1>
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-            <div class="textbox">
+            <div class="textbox" style="padding-left: 200px;">
               <div class="form-group" style="margin-top: 50px; margin-left: 8px;">
                 <input type="text" placeholder="${login.id }"  id="id" name="id" class="form-control" readonly="readonly" style="width: 300px; font-size: 20px;">
               </div>
@@ -125,7 +109,7 @@ $(document).ready(function() {
                                     <input type="text" id="cPassword" name="cPassword" class="form-control" placeholder="Enter ..." style="width:300px;"> </div> -->
             </div>
             <!-- /.box-body -->
-            <div class="box-footer" style="margin-right: 180px; border: none; text-align: left; margin-left: 55px;">
+            <div class="box-footer" style="margin-right: 180px; border: none; text-align: left; margin-left: 55px; padding-left: 200px;">
               <button id="btnModify" class="btn btn-info"  style="margin-left: 200px; margin-top: 30px; margin-bottom: 30px;"><b style="font-size: 20px;">변경</b></button>
             </div>
             <!-- /.box-footer -->
@@ -138,15 +122,15 @@ $(document).ready(function() {
     
   <!-- jQuery -->
   
-  <script src="../resources/js/jquery.easing.1.3.js"></script>
-  <script src="../resources/js/bootstrap.min.js"></script>
-  <script src="../resources/js/jquery.waypoints.min.js"></script>
-  <script src="../resources/js/salvattore.min.js"></script>
+  <script src="/resources/js/jquery.easing.1.3.js"></script>
+  <script src="/resources/js/bootstrap.min.js"></script>
+  <script src="/resources/js/jquery.waypoints.min.js"></script>
+  <script src="/resources/js/salvattore.min.js"></script>
   <!-- Main JS -->
-  <script src="../resources/js/jquery.magnific-popup.min.js"></script>
-  <script src="../resources/js/main.js"></script>
-  <script src="../resources/dist/js/app.min.js" type="text/javascript"></script>
-  <script src="../resources/dist/js/demo.js" type="text/javascript"></script>
+  <script src="/resources/js/jquery.magnific-popup.min.js"></script>
+  <script src="/resources/js/main.js"></script>
+  <script src="/resources/dist/js/app.min.js" type="text/javascript"></script>
+  <script src="/resources/dist/js/demo.js" type="text/javascript"></script>
 
     <jsp:include page="../include/footer.jsp"></jsp:include>
     

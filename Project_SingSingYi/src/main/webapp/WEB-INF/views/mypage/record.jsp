@@ -88,6 +88,7 @@ table.type10 .even {
                   oAudio.play();
                   oAudio2.play();
                   btn.textContent = "Pause";
+                  
               }
               else {
                   oAudio.pause();
@@ -155,7 +156,9 @@ $(document).ready(function(){
                    <thead>  
                     <tr>
                       <th style="width: 20px; text-align: center; font-size: 20px;">곡명</th>
-                      <th style="width: 50px; text-align: center; font-size: 20px; ">아티스트</th>
+                      <th style="width: 50px; text-align: center; font-size: 20px; ">녹음날짜</th>
+                      <th style="width: 50px; text-align: center; font-size: 20px; ">재생 / 볼륨조절</th>
+                      <th style="width: 50px; text-align: center; font-size: 20px; ">공유</th>                    
                       <th style="width: 5px; font-size: 20px;">삭제</th>
                     </tr>
                    </thead>
@@ -166,16 +169,19 @@ $(document).ready(function(){
                         <td style="text-align: center; font-size: 20px;"><b>${record.recordfilename}</b></td>
                         <td style="text-align: center;"><span class="badge bg-black" style="font-size: 20px;"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${record.recordregdate}" /></span></td>
                         <td style="text-align: center; font-size: 20px;">
-                        <button id="play${stat.index}" onclick="playAudio(${stat.index});" style="font-size: 20px;"><img id="buttonimg"src="../../../resources/img/play.png"></button>
+                        <button class="btn btn-primary" id="play${stat.index}" onclick="playAudio(${stat.index});" style="font-size: 20px; background-color: #e7708d; border-color: #e7708d">play</button>
                         <button id="pvolume${stat.index}" onclick="pvolume(${stat.index});" style="font-size: 20px;"><img id="buttonimg" src="../../../resources/img/plus.png" ></button>
                         <button id="mvolume${stat.index}" onclick="mvolume(${stat.index});"  style="font-size: 20px;" ><img id="buttonimg" src="../../../resources/img/remove.png"></button>
+                          <c:forEach items="${mrlist }" var="mr">
                           <audio controls name="media" id="audio${stat.index}" hidden="hidden">
-                            <source src="../../../resources/music/${mrfilename}" type="audio/mpeg">
+                            <source src="/resources/music/${mr.recordfilename}.mp3" type="audio/mpeg">
+                            
                             <!-- <source src="/resources/mp3/123.mp3" type="audio/mpeg"> -->
                           </audio>
+                          </c:forEach>
                           <c:if test=""></c:if>
                           <audio controls name="media2" id="audio2${stat.index}" hidden="hidden">
-                            <source src="../../../resources/record/${record.recordfilename}" type="audio/mpeg">
+                            <source src="https://webrtcweb.com/RecordRTC/uploads/${record.recordfilename}.wav" type="audio/mpeg">
                             <!-- <source src="/resources/mp3/123.mp3" type="audio/mpeg"> -->
                           </audio>
                         </td>
@@ -200,8 +206,17 @@ $(document).ready(function(){
                   </c:if>
 
                   <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                    <li <c:out value="${pageMaker.cri.page == idx?'class=active':'' }"/>><a href="record${pageMaker.makeQuery(idx)}">${idx }</a></li>
-                  </c:forEach>
+                  
+                  <c:choose>
+                    <c:when test="${pageMaker.cri.page==idx}">
+                      <li class="active" ><a style="background-color:#e7708d; border-color:#e7708d; " href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
+                    </c:when>
+                  <c:otherwise>
+                      <li><a href="coin${pageMaker.makeQuery(idx)}">${idx }</a></li>
+                  </c:otherwise>
+                  </c:choose>
+                 
+                </c:forEach>
 
 
                   <c:if test="${pageMaker.next && pageMaker.endPage > 0 }">

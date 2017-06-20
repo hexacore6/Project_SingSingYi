@@ -75,7 +75,7 @@ public class MemberController {
 	
 	// 회원가입 화면
 	@RequestMapping(value="/regist", method=RequestMethod.GET)
-	public void registGET(@ModelAttribute("dto") LoginDTO dto) {
+	public void registGET() {
 		
 	}
 	

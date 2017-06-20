@@ -86,8 +86,10 @@
 	                success : function(result) {
 	                    if (result == 'SUCCESS') {
 	                    	$("#idcheck").html("<font color=red> 이미 사용중인 아이디 입니다.</font>");
+	                    	$("#registForm").attr('method','get');
 	                    } else {
 	                        $("#idcheck").html("<font color=green> 사용가능한 아이디 입니다.</font>");
+	                        $("#registForm").attr('method','post');
 	                    }
 	                }
 	            }); // end ajax
@@ -276,7 +278,7 @@ select#pwquestion {
 					</div>
 				</div>
 				<div class="main-login main-center">
-					<form class="form-horizontal" method="post" action="/member/regist">
+					<form class="form-horizontal" id="registForm" method="post" action="/member/regist">
 						<div class="form-group">
 							<label class="cols-sm-2 control-label ">아이디</label>
 							<div class="cols-sm-10">
@@ -436,7 +438,7 @@ select#pwquestion {
 
 						<div class="form-group ">
 							<button type="submit"
-								class="btn btn-primary btn-lg btn-block login-button">회원가입</button>
+								class="btn btn-primary btn-lg btn-block login-button" id="regist">회원가입</button>
 						</div>
 						<div class="login-register">
 							<a style="font-size: 15px" href="/member/login">로그인</a>

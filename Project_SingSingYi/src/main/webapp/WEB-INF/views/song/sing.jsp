@@ -104,7 +104,8 @@
 }
 
 #playbutton {
-   background-image: url("/resources/img/musicstart.png");
+
+   background-image: url("/resources/img/play.png");
    background-size: 100px, 2px;
    background-position: center;
    background-repeat: no-repeat;
@@ -1099,6 +1100,8 @@ audio {
       readFile("/resources/lyrics/${song.lyricsfilename}.txt");
       readFile("/resources/lyrics/${song.lyricstimefilename}.txt");
    
+      document.getElementById('playbutton').src = "/resources/img/stop.png";
+      
       playing = true;
       playingMelody = true;
       record();//'${song.sfilename}');
@@ -1313,7 +1316,7 @@ audio {
 		    console.log("last!!!!!!!!!!")
 		    
 		    */
-		    (goodCount > 100) goodCount = 100; : goodCoount = parseInt(goodCoount);
+		    (goodCount > 100)? goodCount = 100 : goodCount = parseInt(goodCount);
 		    swal({
       		  title: "your score is",
       		  text: goodCount,

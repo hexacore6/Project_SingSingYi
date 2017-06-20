@@ -3,7 +3,7 @@
 <!doctype html>
 <html>
 <head>
-<title>노래방9</title>
+<title>노래방11</title>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -193,8 +193,8 @@ canvas {
 }
 
 audio {
-  display: none;
-  play: none;
+  /* display: none; */
+  volume: silent;
 }
 </style>
 
@@ -204,7 +204,7 @@ audio {
   <section id="content" class="container">
     <!--내용시작-->
     <div class="row">
-      <div class="col-lg-8" id="garaok" style="border-collapse: collapse; border: 2px solid; background-color: black;">
+      <div class="col-lg-8" id="garaok" style="border-collapse: collapse; border: 2px solid; background-color: black; height: 1030px;">
         <!--왼쪽-->
         <div class="music">
           <!--곡명-->
@@ -224,7 +224,7 @@ audio {
         </div>
 
         <div class="col-lg-3">
-          <iframe width="700px" height="500px" src="https://192.168.0.20:3000/robot" style="border: none;"></iframe>
+          <iframe width="730px" height="750px" src="https://192.168.0.74:3000/robot" style="border: none;"></iframe>
         </div>
       </div>
 
@@ -332,6 +332,7 @@ audio {
             var recordingPlayer = recordingDIV.querySelector('video');
 						//2 t
 						//document.getElementsByTagName('audio').pause();
+						
 							console.log("start");
 						console.log("record : "+recordPlaying);
                 var button = this;
@@ -525,7 +526,7 @@ audio {
               				sfilename : songFileName,
               			}),
               			success : function(result) {
-              				console.log(result);
+              				console.log("result : "+result);
               				fileName = result;
               			}
             		});
@@ -548,7 +549,7 @@ audio {
                     }
 
                     var initialURL = 'https://webrtcweb.com/RecordRTC/uploads/';
-
+					console.log("file name : "+ fileName );
                     callback('ended', initialURL + fileName);
                     // to make sure we can delete as soon as visitor leaves
                 });
